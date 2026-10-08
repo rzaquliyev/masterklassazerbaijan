@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<title>Qeydiyyat — Bilet kassası</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@500;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF4E2}
+a{color:#1B2A4A}a:hover{color:#E8682A}
+@keyframes stamp{0%{transform:scale(2.4) rotate(-24deg);opacity:0}60%{transform:scale(.92) rotate(-12deg);opacity:1}100%{transform:scale(1) rotate(-12deg);opacity:1}}
+@keyframes printIn{from{transform:translateY(-30px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes confetti{0%{transform:translateY(-20px) rotate(0)}100%{transform:translateY(140px) rotate(320deg);opacity:0}}
+.on .stamp{animation:stamp .55s cubic-bezier(.2,1.5,.4,1) both}
+.on .printIn{animation:printIn .45s ease-out both}
+.on .conf{animation:confetti 1.8s ease-in both}
+input:focus{outline:3px solid #E8682A;outline-offset:2px}
+button:focus-visible,a:focus-visible{outline:3px solid #E8682A;outline-offset:3px}
+</style>
+</helmet>
+<div class="{{motionClass}}" style="width: 390px; height: 1560px; box-sizing: border-box; background: #FFF4E2; color: #1B2A4A; font-family: Nunito, system-ui, sans-serif; overflow: hidden; position: relative; display: flex; flex-direction: column">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px">
+    <a href="Detal.dc.html" style="min-height: 44px; padding: 0 14px; display: flex; align-items: center; border-radius: 16px; background: #FFFFFF; box-shadow: 0 4px 0 #EAD9BE; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; text-decoration: none">← Geri</a>
+    <span style="font-weight: 800; font-size: 14px">Addım {{stepNo}} / 3</span>
+  </div>
+
+  <!-- BOOTH -->
+  <div style="position: relative; margin: 6px 16px 0; height: 210px">
+    <div style="position: absolute; left: 0; right: 0; top: 0; height: 56px; border-radius: 26px 26px 8px 8px; background: repeating-linear-gradient(90deg,#E8682A 0 38px,#FFFFFF 38px 76px); box-shadow: inset 0 -6px 0 rgba(0,0,0,.12)"></div>
+    <div style="position: absolute; left: 10px; right: 10px; top: 52px; bottom: 0; border-radius: 10px 10px 28px 28px; background: #6FA8DC; box-shadow: inset -7px -8px 0 rgba(0,0,0,.14), inset 7px 7px 0 rgba(255,255,255,.3)">
+      <div style="position: absolute; left: 50%; top: 18px; transform: translateX(-50%); font-family: Fredoka, sans-serif; font-weight: 700; font-size: 22px; color: #FFFFFF; background: #1B2A4A; padding: 6px 18px; border-radius: 14px">KASSA</div>
+      <div style="position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 170px; height: 92px; border-radius: 22px 22px 0 0; background: #1B2A4A; box-shadow: inset 0 8px 0 rgba(255,255,255,.1)">
+        <div style="position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 120px; height: 10px; border-radius: 5px 5px 0 0; background: #0F1A30"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TICKET (prints as steps progress) -->
+  <div style="margin: -4px 34px 0; position: relative; z-index: 2">
+    <div class="printIn" style="background: #FFFFFF; border-radius: 0 0 18px 18px; padding: 16px 18px 18px; box-shadow: 0 8px 0 #EAD9BE; position: relative; overflow: hidden">
+      <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 800; color: #3C4B6B"><span>BİLET</span><span>№ {{code}}</span></div>
+      <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 19px; margin-top: 4px">Gil boşqab · Şənbə 11:00</div>
+      <div style="border-top: 2px dashed #EAD9BE; margin: 10px 0"></div>
+      <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 800"><span>Uşaq</span><span>{{childLine}}</span></div>
+      <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 800; margin-top: 4px"><span>Valideyn</span><span>{{parentLine}}</span></div>
+      <div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 800; margin-top: 4px"><span>Məbləğ</span><span>[QİYMƏT] ₼</span></div>
+      <sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+        <div class="stamp" style="position: absolute; right: 14px; top: 34px; border: 4px solid #2E9E5B; color: #2E9E5B; border-radius: 12px; padding: 4px 10px; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px; letter-spacing: .04em; transform: rotate(-12deg); background: rgba(255,255,255,.85)">TƏSDİQLƏNDİ</div>
+      </sc-if>
+    </div>
+  </div>
+
+  <!-- STEP CONTENT -->
+  <div style="padding: 26px 18px 0; position: relative">
+    <sc-if value="{{s1}}" hint-placeholder-val="{{ true }}">
+      <h1 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 28px">Kim gəlir?</h1>
+      <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 16px">
+        <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 800; font-size: 15px">Uşağın adı
+          <input type="text" name="child" autocomplete="off" placeholder="məs. Aysu" onChange="{{setChild}}" style="min-height: 52px; border: 0; border-radius: 16px; padding: 0 16px; font-family: Nunito, sans-serif; font-size: 17px; font-weight: 700; background: #FFFFFF; box-shadow: inset 3px 3px 0 rgba(0,0,0,.06), 0 4px 0 #EAD9BE; color: #1B2A4A">
+        </label>
+        <div style="font-weight: 800; font-size: 15px">Yaşı</div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap">
+          <sc-for list="{{ages}}" as="a" hint-placeholder-count="4">
+            <button onClick="{{a.pick}}" style="{{a.style}}">{{a.label}}</button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{s2}}" hint-placeholder-val="{{ false }}">
+      <h1 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 28px">Sizinlə necə əlaqə saxlayaq?</h1>
+      <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 16px">
+        <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 800; font-size: 15px">Valideynin adı
+          <input type="text" name="parent" autocomplete="name" placeholder="Ad Soyad" onChange="{{setParent}}" style="min-height: 52px; border: 0; border-radius: 16px; padding: 0 16px; font-family: Nunito, sans-serif; font-size: 17px; font-weight: 700; background: #FFFFFF; box-shadow: inset 3px 3px 0 rgba(0,0,0,.06), 0 4px 0 #EAD9BE; color: #1B2A4A">
+        </label>
+        <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 800; font-size: 15px">Telefon
+          <input type="tel" name="phone" autocomplete="tel" inputmode="tel" placeholder="+994 __ ___ __ __" style="min-height: 52px; border: 0; border-radius: 16px; padding: 0 16px; font-family: Nunito, sans-serif; font-size: 17px; font-weight: 700; background: #FFFFFF; box-shadow: inset 3px 3px 0 rgba(0,0,0,.06), 0 4px 0 #EAD9BE; color: #1B2A4A">
+        </label>
+        <label style="display: flex; gap: 10px; align-items: flex-start; font-weight: 700; font-size: 14px; line-height: 1.4"><input type="checkbox" style="width: 22px; height: 22px; margin: 0; accent-color: #E8682A"> Qaydalarla və şəxsi məlumatların emalı ilə razıyam [link]</label>
+      </div>
+    </sc-if>
+    <sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+      <div style="position: absolute; left: 0; right: 0; top: -150px; height: 10px; pointer-events: none">
+        <span class="conf" style="position: absolute; left: 40px; width: 10px; height: 14px; border-radius: 3px; background: #E8682A"></span>
+        <span class="conf" style="position: absolute; left: 110px; width: 12px; height: 12px; border-radius: 50%; background: #FFC23D; animation-delay: .15s"></span>
+        <span class="conf" style="position: absolute; left: 190px; width: 10px; height: 14px; border-radius: 3px; background: #6FA8DC; animation-delay: .3s"></span>
+        <span class="conf" style="position: absolute; left: 260px; width: 12px; height: 12px; border-radius: 50%; background: #7BC67E; animation-delay: .1s"></span>
+        <span class="conf" style="position: absolute; left: 320px; width: 10px; height: 14px; border-radius: 3px; background: #E8682A; animation-delay: .25s"></span>
+      </div>
+      <h1 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 30px">Yer sizindir!</h1>
+      <p style="margin: 10px 0 0; font-size: 16px; font-weight: 700; line-height: 1.5; color: #3C4B6B">Bilet nömrəsi və xatırlatma SMS ilə göndəriləcək. Ödəniş: [ödəniş üsulu].</p>
+      <div style="margin-top: 16px; background: #FFE08A; border-radius: 22px; padding: 16px; box-shadow: inset -5px -6px 0 rgba(0,0,0,.08), inset 5px 5px 0 rgba(255,255,255,.4)">
+        <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 18px">Usta pasportuna 1 möhür!</div>
+        <div style="font-size: 14px; font-weight: 700; margin-top: 4px">5 möhür = 1 pulsuz masterklass</div>
+        <div style="display: flex; gap: 8px; margin-top: 10px">
+          <span style="width: 36px; height: 36px; border-radius: 50%; background: #E8682A; box-shadow: inset -4px -4px 0 rgba(0,0,0,.18)"></span>
+          <span style="width: 36px; height: 36px; border-radius: 50%; border: 3px dashed #1B2A4A; box-sizing: border-box"></span>
+          <span style="width: 36px; height: 36px; border-radius: 50%; border: 3px dashed #1B2A4A; box-sizing: border-box"></span>
+          <span style="width: 36px; height: 36px; border-radius: 50%; border: 3px dashed #1B2A4A; box-sizing: border-box"></span>
+          <span style="width: 36px; height: 36px; border-radius: 50%; border: 3px dashed #1B2A4A; box-sizing: border-box"></span>
+        </div>
+      </div>
+      <a href="#" style="margin-top: 14px; min-height: 52px; display: flex; align-items: center; justify-content: center; border-radius: 18px; background: #FFFFFF; box-shadow: 0 5px 0 #EAD9BE; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 16px; text-decoration: none">Təqvimə əlavə et</a>
+    </sc-if>
+  </div>
+
+  <div style="flex: 1"></div>
+
+  <!-- ACTION BAR -->
+  <div style="margin: 20px 16px 18px; display: flex; gap: 10px">
+    <sc-if value="{{showBack}}" hint-placeholder-val="{{ false }}">
+      <button onClick="{{back}}" style="min-height: 58px; padding: 0 18px; border: 0; border-radius: 20px; background: #FFFFFF; box-shadow: 0 5px 0 #EAD9BE; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 16px; color: #1B2A4A; cursor: pointer">Geri</button>
+    </sc-if>
+    <button onClick="{{next}}" style="flex: 1; min-height: 58px; border: 0; border-radius: 20px; background: {{nextBg}}; color: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 18px; cursor: pointer; box-shadow: inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.3), 0 6px 0 #B44E1D">{{nextLabel}}</button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1560}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { step: 1, child: '', age: '', parent: '' }; }
+  renderVals() {
+    const motion = this.props.motion ?? true;
+    const st = this.state;
+    const ages = ['6', '7', '8', '9'].map((l) => ({
+      label: l + ' yaş',
+      pick: () => this.setState({ age: l }),
+      style: 'min-height: 48px; padding: 0 18px; border: 0; border-radius: 16px; cursor: pointer; font-family: Nunito, sans-serif; font-weight: 800; font-size: 15px; ' + (st.age === l ? 'background: #E8682A; color: #FFFFFF; box-shadow: inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.3)' : 'background: #FFFFFF; color: #1B2A4A; box-shadow: 0 4px 0 #EAD9BE')
+    }));
+    const done = st.step === 3;
+    return {
+      motionClass: motion ? 'on' : '',
+      stepNo: String(st.step),
+      s1: st.step === 1, s2: st.step === 2, done,
+      showBack: st.step === 2,
+      ages,
+      code: 'SAMPLE-0427',
+      childLine: st.child ? st.child + (st.age ? ', ' + st.age + ' yaş' : '') : '—',
+      parentLine: st.parent || '—',
+      setChild: (e) => this.setState({ child: e.target.value }),
+      setParent: (e) => this.setState({ parent: e.target.value }),
+      back: () => this.setState({ step: 1 }),
+      next: () => this.setState({ step: st.step >= 3 ? 1 : st.step + 1 }),
+      nextLabel: st.step === 1 ? 'Davam et →' : st.step === 2 ? 'Bileti təsdiqlə' : 'Yenidən bax',
+      nextBg: done ? '#1B2A4A' : '#E8682A'
+    };
+  }
+}
+</script>
+</body>
+</html>

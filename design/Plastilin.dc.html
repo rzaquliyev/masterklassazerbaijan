@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<title>C — Plastilin şəhəri</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@500;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF4E2}
+a{color:#1B2A4A}a:hover{color:#E8682A}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes drive{0%{offset-distance:0%}100%{offset-distance:100%}}
+@keyframes squish{0%,100%{transform:scale(1,1)}40%{transform:scale(1.06,.92)}70%{transform:scale(.97,1.04)}}
+.on .float{animation:float 3.4s ease-in-out infinite}
+.on .sway{animation:sway 4s ease-in-out infinite;transform-origin:50% 100%}
+.on .squish{animation:squish 2.6s ease-in-out infinite}
+.on .drive{animation:drive 9s linear infinite}
+</style>
+</helmet>
+<div class="{{motionClass}}" style="width: 390px; height: 3620px; box-sizing: border-box; background: #FFF4E2; color: #1B2A4A; font-family: Nunito, system-ui, sans-serif; overflow: hidden; position: relative; display: flex; flex-direction: column">
+
+  <!-- NAV -->
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 18px">
+    <a href="#" style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 21px; text-decoration: none; display: flex; align-items: center; gap: 8px">
+      <span class="squish" style="width: 38px; height: 38px; border-radius: 50%; background: #E8682A; box-shadow: inset -5px -6px 0 rgba(0,0,0,.18), inset 5px 5px 0 rgba(255,255,255,.35)"></span>[Studiya]
+    </a>
+    <button onClick="{{toggleMenu}}" aria-label="Menyu" aria-expanded="{{menuExp}}" style="cursor: pointer; width: 48px; height: 48px; border: 0; border-radius: 16px; background: #FFE08A; box-shadow: inset -4px -5px 0 rgba(0,0,0,.14), inset 4px 4px 0 rgba(255,255,255,.5), 0 5px 0 #D9B24F; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px; color: #1B2A4A">≡</button>
+  </div>
+
+  <!-- HERO TITLE -->
+  <div style="padding: 6px 20px 0">
+    <h1 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 46px; line-height: 1; letter-spacing: -0.02em">Plastilin<br>şəhərinə<br><span style="color: #E8682A">xoş gəldin!</span></h1>
+    <p style="margin: 12px 0 0; font-size: 16px; line-height: 1.45; font-weight: 700; color: #3C4B6B">Bir evə toxun, içində nə düzəltdiyimizi gör. 4–12 yaş.</p>
+  </div>
+
+  <!-- CLAY TOWN (interactive) -->
+  <div style="position: relative; height: 430px; margin-top: 10px">
+    <div class="float" style="position: absolute; right: 34px; top: 4px; width: 64px; height: 64px; border-radius: 50%; background: #FFC23D; box-shadow: inset -7px -8px 0 rgba(0,0,0,.14), inset 6px 6px 0 rgba(255,255,255,.45), 0 0 0 12px rgba(255,194,61,.25)"></div>
+    <div class="float" style="position: absolute; left: 30px; top: 30px; width: 86px; height: 34px; border-radius: 30px; background: #FFFFFF; box-shadow: inset -4px -5px 0 rgba(0,0,0,.08)"></div>
+    <!-- hills -->
+    <div style="position: absolute; left: -60px; bottom: 60px; width: 300px; height: 190px; border-radius: 50%; background: #7BC67E; box-shadow: inset -10px -14px 0 rgba(0,0,0,.12), inset 10px 10px 0 rgba(255,255,255,.25)"></div>
+    <div style="position: absolute; right: -80px; bottom: 50px; width: 320px; height: 220px; border-radius: 50%; background: #5DB06A; box-shadow: inset -10px -14px 0 rgba(0,0,0,.12), inset 10px 10px 0 rgba(255,255,255,.2)"></div>
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 90px; background: #4A9A5A; box-shadow: inset 0 10px 0 rgba(255,255,255,.18)"></div>
+    <!-- houses -->
+    <sc-for list="{{houses}}" as="h" hint-placeholder-count="4">
+      <button onClick="{{h.pick}}" aria-label="{{h.name}}" style="{{h.wrap}}">
+        <span style="{{h.roof}}"></span>
+        <span style="{{h.body}}">
+          <span style="width: 16px; height: 16px; border-radius: 5px; background: #FFF4C2; box-shadow: inset -2px -2px 0 rgba(0,0,0,.12)"></span>
+          <span style="width: 16px; height: 22px; border-radius: 8px 8px 3px 3px; background: #1B2A4A; opacity: .85"></span>
+        </span>
+        <span style="{{h.tag}}">{{h.name}}</span>
+      </button>
+    </sc-for>
+    <svg class="sway" aria-hidden="true" viewBox="0 0 30 60" style="position: absolute; left: 166px; bottom: 74px; width: 26px; height: 52px"><circle cx="15" cy="16" r="14" fill="#3E8E4F"></circle><rect x="12" y="26" width="6" height="32" rx="3" fill="#8A5A3B"></rect></svg>
+  </div>
+
+  <!-- SELECTED HOUSE PANEL -->
+  <div style="padding: 0 16px; margin-top: -26px; position: relative">
+    <div style="background: #FFFFFF; border-radius: 28px; padding: 20px 18px; box-shadow: inset -6px -8px 0 rgba(0,0,0,.06), 0 10px 0 #EAD9BE, 0 22px 30px rgba(120,80,30,.15)">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="{{sel.chip}}">{{sel.name}}</span>
+        <span style="font-weight: 800; font-size: 14px; color: #3C4B6B">{{sel.when}}</span>
+      </div>
+      <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 25px; line-height: 1.05; margin-top: 12px">{{sel.title}}</div>
+      <div style="font-size: 15px; line-height: 1.45; margin-top: 6px; color: #3C4B6B; font-weight: 700">{{sel.desc}}</div>
+      <div style="display: flex; gap: 6px; margin-top: 16px; flex-wrap: wrap">
+        <sc-for list="{{sel.balls}}" as="b" hint-placeholder-count="10"><span style="{{b}}"></span></sc-for>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; gap: 10px">
+        <div><div style="font-weight: 800; font-size: 14px">{{sel.left}}</div><div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 22px">[QİYMƏT] ₼</div></div>
+        <a href="Detal.dc.html" style="min-height: 54px; padding: 0 22px; display: flex; align-items: center; border-radius: 20px; background: #E8682A; color: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 17px; text-decoration: none; box-shadow: inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.3), 0 6px 0 #B44E1D">Yer tut</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROAD: how it works -->
+  <div style="margin-top: 50px; background: #1B2A4A; color: #FFF4E2; padding: 40px 20px 46px; border-radius: 40px 40px 0 0; position: relative">
+    <h2 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 32px; line-height: 1">Yol xəritəsi</h2>
+    <div style="font-size: 15px; font-weight: 700; color: #C9D3E8; margin-top: 6px">Evdən emalatxanaya 4 dayanacaq</div>
+    <div style="position: relative; height: 470px; margin-top: 16px">
+      <svg aria-hidden="true" viewBox="0 0 350 470" style="position: absolute; inset: 0; width: 350px; height: 470px"><path d="M30 20 C 330 20, 330 150, 175 150 S 20 280, 175 290 S 330 420, 60 450" fill="none" stroke="#2E3F63" stroke-width="34" stroke-linecap="round"></path><path d="M30 20 C 330 20, 330 150, 175 150 S 20 280, 175 290 S 330 420, 60 450" fill="none" stroke="#FFE08A" stroke-width="3" stroke-dasharray="12 12" stroke-linecap="round"></path></svg>
+      <div class="drive" style="position: absolute; left: 0; top: 0; offset-path: path('M30 20 C 330 20, 330 150, 175 150 S 20 280, 175 290 S 330 420, 60 450'); offset-rotate: auto; width: 56px; height: 38px">
+        <svg aria-hidden="true" viewBox="0 0 56 38" style="width: 56px; height: 38px; overflow: visible">
+          <ellipse cx="28" cy="22" rx="27" ry="15" fill="rgba(0,0,0,.28)"></ellipse>
+          <rect x="8" y="1" width="12" height="8" rx="3.5" fill="#14203A"></rect>
+          <rect x="36" y="1" width="12" height="8" rx="3.5" fill="#14203A"></rect>
+          <rect x="8" y="29" width="12" height="8" rx="3.5" fill="#14203A"></rect>
+          <rect x="36" y="29" width="12" height="8" rx="3.5" fill="#14203A"></rect>
+          <rect x="2" y="5" width="52" height="28" rx="12" fill="#E8682A"></rect>
+          <rect x="2" y="5" width="52" height="28" rx="12" fill="none" stroke="#B44E1D" stroke-width="2"></rect>
+          <path d="M8 10 C 14 7, 30 7, 40 9" stroke="rgba(255,255,255,.55)" stroke-width="3" fill="none" stroke-linecap="round"></path>
+          <rect x="16" y="10" width="22" height="18" rx="7" fill="#FF9A5C"></rect>
+          <path d="M38 11 C 44 13, 44 25, 38 27 Z" fill="#BFE3FF"></path>
+          <path d="M16 12 C 12 15, 12 23, 16 26 Z" fill="#9CCBEF"></path>
+          <rect x="20" y="17.5" width="14" height="3" rx="1.5" fill="#FFFFFF" opacity=".9"></rect>
+          <circle cx="51" cy="11" r="2.6" fill="#FFE08A"></circle>
+          <circle cx="51" cy="27" r="2.6" fill="#FFE08A"></circle>
+          <circle cx="4.5" cy="11" r="1.8" fill="#C0392B"></circle>
+          <circle cx="4.5" cy="27" r="1.8" fill="#C0392B"></circle>
+        </svg>
+      </div>
+      <div style="position: absolute; left: 0; top: 40px; width: 200px"><div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 19px; color: #FFE08A">1 · Seç</div><div style="font-size: 14px; font-weight: 700; color: #C9D3E8">Yaşa və evə görə</div></div>
+      <div style="position: absolute; right: 0; top: 168px; width: 170px; text-align: right"><div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 19px; color: #FFE08A">2 · Qeydiyyat</div><div style="font-size: 14px; font-weight: 700; color: #C9D3E8">1 dəqiqə, telefondan</div></div>
+      <div style="position: absolute; left: 0; top: 304px; width: 170px"><div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 19px; color: #FFE08A">3 · Yarat</div><div style="font-size: 14px; font-weight: 700; color: #C9D3E8">Materiallar bizdən</div></div>
+      <div style="position: absolute; right: 0; top: 400px; width: 170px; text-align: right"><div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 19px; color: #FFE08A">4 · Evə əsərlə</div><div style="font-size: 14px; font-weight: 700; color: #C9D3E8">Qürurla göstər</div></div>
+    </div>
+  </div>
+
+  <!-- GALLERY: clay frames -->
+  <div style="background: #1B2A4A; padding: 0 16px 50px">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; margin: 0 4px 16px"><h2 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 32px; color: #FFF4E2">Şəhər muzeyi</h2><a href="Qalereya.dc.html" style="color: #FFE08A; font-weight: 800; font-size: 14px">Hamısı →</a></div>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+      <div style="grid-column: span 2; height: 170px; border-radius: 26px; background: #FFE08A; padding: 8px; box-shadow: inset -5px -6px 0 rgba(0,0,0,.14), inset 5px 5px 0 rgba(255,255,255,.4)"><div style="height: 100%; border-radius: 20px; background: repeating-linear-gradient(45deg,#F4EEE2 0 8px,#E9E1D0 8px 16px); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #6B5B45">[FOTO 1]</div></div>
+      <div style="height: 170px; border-radius: 50px; background: #E8682A; padding: 8px; box-shadow: inset -5px -6px 0 rgba(0,0,0,.16), inset 5px 5px 0 rgba(255,255,255,.3)"><div style="height: 100%; border-radius: 44px; background: repeating-linear-gradient(-45deg,#F4EEE2 0 8px,#E9E1D0 8px 16px); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #6B5B45">[FOTO 2]</div></div>
+      <div style="height: 120px; border-radius: 50%; background: #7BC67E; padding: 8px; box-shadow: inset -5px -6px 0 rgba(0,0,0,.14), inset 5px 5px 0 rgba(255,255,255,.3)"><div style="height: 100%; border-radius: 50%; background: repeating-linear-gradient(45deg,#F4EEE2 0 8px,#E9E1D0 8px 16px); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #6B5B45">[FOTO 3]</div></div>
+      <div style="grid-column: span 2; height: 120px; border-radius: 26px; background: #6FA8DC; padding: 8px; box-shadow: inset -5px -6px 0 rgba(0,0,0,.14), inset 5px 5px 0 rgba(255,255,255,.3)"><div style="height: 100%; border-radius: 20px; background: repeating-linear-gradient(-45deg,#F4EEE2 0 8px,#E9E1D0 8px 16px); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #6B5B45">[FOTO 4]</div></div>
+    </div>
+  </div>
+
+  <!-- TOWN MAP: all places -->
+  <div style="padding: 44px 16px 0">
+    <h2 style="margin: 0 4px; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 30px; line-height: 1.05">Şəhəri gəz</h2>
+    <div style="font-size: 15px; font-weight: 700; color: #3C4B6B; margin: 6px 4px 16px">Hər küçədə başqa bir macəra</div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+      <sc-for list="{{places}}" as="pl" hint-placeholder-count="8">
+        <a href="{{pl.href}}" style="{{pl.card}}">
+          <span style="{{pl.icon}}"></span>
+          <span style="display: block; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 17px; line-height: 1.1; margin-top: 12px">{{pl.place}}</span>
+          <span style="display: block; font-size: 13px; font-weight: 800; margin-top: 3px; opacity: .85">{{pl.what}}</span>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- TRUST -->
+  <div style="padding: 44px 18px 0">
+    <h2 style="margin: 0 0 14px; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 28px; line-height: 1.05">Valideynlər üçün<br>bələdiyyə lövhəsi</h2>
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; gap: 12px; align-items: center; background: #FFFFFF; border-radius: 20px; padding: 14px 16px; box-shadow: 0 5px 0 #EAD9BE"><span style="min-width: 40px; height: 40px; border-radius: 50%; background: #7BC67E; box-shadow: inset -4px -4px 0 rgba(0,0,0,.14)"></span><div><div style="font-weight: 800; font-size: 16px">Təhlükəsiz materiallar</div><div style="font-size: 14px; color: #3C4B6B; font-weight: 700">[Sertifikat məlumatı]</div></div></div>
+      <div style="display: flex; gap: 12px; align-items: center; background: #FFFFFF; border-radius: 20px; padding: 14px 16px; box-shadow: 0 5px 0 #EAD9BE"><span style="min-width: 40px; height: 40px; border-radius: 12px; background: #FFC23D; box-shadow: inset -4px -4px 0 rgba(0,0,0,.14)"></span><div><div style="font-weight: 800; font-size: 16px">Kiçik qruplar</div><div style="font-size: 14px; color: #3C4B6B; font-weight: 700">Ən çox [N] uşaq</div></div></div>
+      <div style="display: flex; gap: 12px; align-items: center; background: #FFFFFF; border-radius: 20px; padding: 14px 16px; box-shadow: 0 5px 0 #EAD9BE"><span style="min-width: 40px; height: 40px; border-radius: 50% 50% 12px 12px; background: #6FA8DC; box-shadow: inset -4px -4px 0 rgba(0,0,0,.14)"></span><div><div style="font-weight: 800; font-size: 16px">Asan ləğv</div><div style="font-size: 14px; color: #3C4B6B; font-weight: 700">[Ləğv qaydası]</div></div></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="flex: 1; margin-top: 44px; background: #E8682A; color: #FFFFFF; padding: 36px 20px; display: flex; flex-direction: column; gap: 14px; border-radius: 40px 40px 0 0; box-shadow: inset 0 8px 0 rgba(255,255,255,.2)">
+    <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 34px; line-height: 1">Şənbə şəhərdə<br>görüşürük?</div>
+    <a href="Teqvim.dc.html" style="min-height: 56px; background: #FFFFFF; color: #1B2A4A; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 17px; text-decoration: none; box-shadow: 0 6px 0 #B44E1D">Yer tut</a>
+    <a href="#" style="color: #FFFFFF; font-size: 15px; font-weight: 700">WhatsApp-da yaz</a>
+    <div style="font-size: 13px; font-weight: 700; color: #FFE4D2">[Ünvan] · @masterklassazerbaijan</div>
+  </div>
+
+  <!-- MENU OVERLAY -->
+  <sc-if value="{{menuOpen}}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; left: 0; right: 0; top: 0; height: 900px; background: rgba(27,42,74,.6); z-index: 20">
+      <div style="margin: 76px 12px 0; background: #FFF4E2; border-radius: 30px; padding: 16px; box-shadow: 0 10px 0 #0F1A30">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 6px 10px">
+          <span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 22px">Şəhər xəritəsi</span>
+          <button onClick="{{toggleMenu}}" aria-label="Bağla" style="width: 44px; height: 44px; border: 0; border-radius: 50%; background: #1B2A4A; color: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px; cursor: pointer">×</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <sc-for list="{{places}}" as="m" hint-placeholder-count="8">
+            <a href="{{m.href}}" style="min-height: 50px; display: flex; align-items: center; gap: 12px; padding: 0 12px; border-radius: 16px; background: #FFFFFF; box-shadow: 0 3px 0 #EAD9BE; text-decoration: none"><span style="{{m.dot}}"></span><span style="font-family: Fredoka, sans-serif; font-weight: 600; font-size: 16px">{{m.what}}</span><span style="margin-left: auto; font-size: 12px; font-weight: 800; color: #3C4B6B">{{m.place}}</span></a>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":3620}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { pick: 'gil', menu: false }; }
+  renderVals() {
+    const motion = this.props.motion ?? true;
+    const clay = 'box-shadow: inset -6px -7px 0 rgba(0,0,0,.16), inset 6px 6px 0 rgba(255,255,255,.35);';
+    const data = [
+      { id: 'resm', name: 'Rəsm evi', c: '#6FA8DC', roof: '#E8682A', x: 14, b: 96, w: 82, h: 74, title: 'Kosmos rəsmi: öz planetini çək', when: 'Bazar · 12:00', desc: '4–6 yaş · 60 dəq · akril və parıltı. Rəsmi çərçivədə evə aparırsınız.', taken: 4 },
+      { id: 'gil', name: 'Gil evi', c: '#E8682A', roof: '#1B2A4A', x: 104, b: 118, w: 92, h: 92, title: 'Gil boşqab: öz naxışını çək', when: 'Şənbə · 11:00', desc: '6–9 yaş · 90 dəq · bütün materiallar bizdən. Bişirilmiş boşqab 1 həftəyə hazırdır.', taken: 7 },
+      { id: 'metbex', name: 'Mətbəx', c: '#FFC23D', roof: '#7A3E2A', x: 206, b: 100, w: 80, h: 78, title: 'Balaca aşpaz: öz pizzanı bişir', when: 'Şənbə · 15:00', desc: '7–12 yaş · 90 dəq · xəmirdən sobaya. Allergiya qeydini qeydiyyatda yazın.', taken: 9 },
+      { id: 'elm', name: 'Elm evi', c: '#7BC67E', roof: '#2E3F63', x: 294, b: 84, w: 80, h: 70, title: 'Vulkan və köpük təcrübələri', when: 'Bazar · 15:00', desc: '8–12 yaş · 75 dəq · təhlükəsiz təcrübələr, eynək bizdən.', taken: 2 }
+    ];
+    const pick = this.state.pick;
+    const houses = data.map((d) => {
+      const on = d.id === pick;
+      return {
+        name: d.name,
+        pick: () => this.setState({ pick: d.id }),
+        wrap: 'position: absolute; left: ' + d.x + 'px; bottom: ' + d.b + 'px; width: ' + d.w + 'px; border: 0; background: transparent; padding: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; transform: ' + (on ? 'translateY(-10px) scale(1.06)' : 'none') + '; transition: transform .35s cubic-bezier(.3,1.6,.5,1)',
+        roof: 'width: 0; height: 0; border-left: ' + (d.w / 2 + 6) + 'px solid transparent; border-right: ' + (d.w / 2 + 6) + 'px solid transparent; border-bottom: 34px solid ' + d.roof + '; margin-bottom: -2px',
+        body: 'width: ' + d.w + 'px; height: ' + d.h + 'px; border-radius: 10px 10px 14px 14px; background: ' + d.c + '; ' + clay + ' display: flex; align-items: flex-end; justify-content: center; gap: 10px; padding-bottom: 10px; box-sizing: border-box',
+        tag: 'margin-top: 6px; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 13px; padding: 4px 10px; border-radius: 99px; white-space: nowrap; color: ' + (on ? '#FFFFFF' : '#1B2A4A') + '; background: ' + (on ? '#1B2A4A' : 'rgba(255,255,255,.92)')
+      };
+    });
+    const d = data.find((x) => x.id === pick) || data[1];
+    const sel = {
+      name: d.name, title: d.title, when: d.when, desc: d.desc,
+      left: '10 yerdən ' + (10 - d.taken) + ' yer qalıb',
+      chip: 'font-family: Fredoka, sans-serif; font-weight: 600; font-size: 14px; padding: 6px 12px; border-radius: 99px; color: #1B2A4A; background: ' + d.c + '; ' + clay,
+      balls: Array.from({ length: 10 }, (_, i) => 'width: 24px; height: 24px; border-radius: 50%; ' + (i < d.taken ? 'background: ' + d.c + '; ' + clay : 'background: #F1E6D2; box-shadow: inset 3px 3px 0 rgba(0,0,0,.08)'))
+    };
+    const P = [
+      ['Teqvim.dc.html', 'Avtobus dayanacağı', 'Təqvim', '#6FA8DC', '50% 50% 10px 10px'],
+      ['OyunParki.dc.html', 'Oyun parkı', 'Oyunlar', '#7BC67E', '50%'],
+      ['Kampaniyalar.dc.html', 'Bazar meydanı', 'Kampaniyalar', '#FFC23D', '14px 14px 4px 4px'],
+      ['AdGunu.dc.html', 'Bayram meydanı', 'Ad günü', '#F28AA6', '50% 50% 46% 46%'],
+      ['Qalereya.dc.html', 'Şəhər muzeyi', 'Qalereya', '#E8682A', '6px 6px 14px 14px'],
+      ['Telimciler.dc.html', 'Şəhər sakinləri', 'Təlimçilər', '#C9A0DC', '50% 50% 50% 0'],
+      ['Suallar.dc.html', 'Məlumat bürosu', 'Suallar', '#FFE08A', '50%'],
+      ['Elaqe.dc.html', 'Şəhər poçtu', 'Əlaqə', '#1B2A4A', '40px 40px 10px 10px']
+    ];
+    const places = P.map(([href, place, what, c, r]) => {
+      const dark = c === '#1B2A4A';
+      return {
+        href, place, what,
+        card: 'display: block; text-decoration: none; min-height: 130px; box-sizing: border-box; border-radius: 26px; padding: 16px; color: ' + (dark ? '#FFF4E2' : '#1B2A4A') + '; background: ' + (dark ? '#1B2A4A' : '#FFFFFF') + '; box-shadow: ' + (dark ? '0 6px 0 #0F1A30' : '0 6px 0 #EAD9BE'),
+        icon: 'display: block; width: 44px; height: 40px; border-radius: ' + r + '; background: ' + (dark ? '#E8682A' : c) + '; box-shadow: inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.35)',
+        dot: 'min-width: 20px; height: 20px; border-radius: ' + r + '; background: ' + (dark ? '#E8682A' : c) + '; box-shadow: inset -2px -3px 0 rgba(0,0,0,.16)'
+      };
+    });
+    const menuOpen = !!this.state.menu;
+    return { motionClass: motion ? 'on' : '', houses, sel, places, menuOpen, menuExp: menuOpen ? 'true' : 'false', toggleMenu: () => this.setState({ menu: !menuOpen }) };
+  }
+}
+</script>
+</body>
+</html>

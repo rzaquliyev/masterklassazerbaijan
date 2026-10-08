@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<title>Təqvim — Avtobus dayanacağı</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@500;700;800&amp;family=Space+Mono:wght@700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF4E2}
+a{color:#1B2A4A}a:hover{color:#E8682A}
+@keyframes busIn{0%{transform:translateX(-260px)}70%{transform:translateX(8px)}85%{transform:translateX(-3px)}100%{transform:translateX(0)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.on .busIn{animation:busIn 1.4s cubic-bezier(.2,.8,.3,1) both}
+.on .bounce{animation:bounce .5s ease-in-out infinite}
+.on .blink{animation:blink 1.2s steps(2) infinite}
+button:focus-visible,a:focus-visible{outline:3px solid #E8682A;outline-offset:3px}
+</style>
+</helmet>
+<div class="{{motionClass}}" style="width: 390px; height: 1820px; box-sizing: border-box; background: #FFF4E2; color: #1B2A4A; font-family: Nunito, system-ui, sans-serif; overflow: hidden; position: relative; display: flex; flex-direction: column">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px">
+    <a href="Plastilin.dc.html" style="min-height: 44px; padding: 0 14px; display: flex; align-items: center; border-radius: 16px; background: #FFFFFF; box-shadow: 0 4px 0 #EAD9BE; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; text-decoration: none">← Şəhərə</a>
+    <span style="font-weight: 800; font-size: 14px">[AY] [İL]</span>
+  </div>
+
+  <!-- STOP SCENE -->
+  <div style="position: relative; height: 250px; margin: 0 0 0">
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 70px; background: #8C96A8; box-shadow: inset 0 8px 0 rgba(255,255,255,.18)"></div>
+    <div style="position: absolute; left: 0; right: 0; bottom: 30px; height: 4px; background: repeating-linear-gradient(90deg,#FFFFFF 0 26px,transparent 26px 50px)"></div>
+    <!-- sign -->
+    <div style="position: absolute; right: 34px; bottom: 70px; width: 8px; height: 150px; border-radius: 4px; background: #1B2A4A"></div>
+    <div style="position: absolute; right: 8px; bottom: 182px; width: 60px; height: 60px; border-radius: 50%; background: #FFC23D; box-shadow: inset -5px -6px 0 rgba(0,0,0,.16), inset 5px 5px 0 rgba(255,255,255,.4); display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 26px">M</div>
+    <!-- bus -->
+    <div class="busIn" style="position: absolute; left: 16px; bottom: 46px; width: 250px; height: 120px">
+      <div class="bounce" style="position: absolute; left: 0; top: 0; width: 250px; height: 98px; border-radius: 30px 40px 16px 16px; background: #E8682A; box-shadow: inset -8px -9px 0 rgba(0,0,0,.16), inset 8px 8px 0 rgba(255,255,255,.3)">
+        <div style="position: absolute; left: 16px; top: 16px; display: flex; gap: 8px">
+          <span style="width: 40px; height: 34px; border-radius: 10px; background: #BFE3FF"></span>
+          <span style="width: 40px; height: 34px; border-radius: 10px; background: #BFE3FF"></span>
+          <span style="width: 40px; height: 34px; border-radius: 10px; background: #BFE3FF"></span>
+          <span style="width: 44px; height: 34px; border-radius: 10px 22px 10px 10px; background: #BFE3FF"></span>
+        </div>
+        <div style="position: absolute; left: 16px; bottom: 12px; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 14px; color: #FFFFFF">MASTERKLASS XƏTTİ</div>
+        <span style="position: absolute; right: 8px; bottom: 16px; width: 12px; height: 12px; border-radius: 50%; background: #FFE08A"></span>
+      </div>
+      <span style="position: absolute; left: 36px; bottom: 0; width: 40px; height: 40px; border-radius: 50%; background: #1B2A4A; box-shadow: inset 0 0 0 10px #1B2A4A, inset 0 0 0 16px #C9D3E8"></span>
+      <span style="position: absolute; right: 40px; bottom: 0; width: 40px; height: 40px; border-radius: 50%; background: #1B2A4A; box-shadow: inset 0 0 0 10px #1B2A4A, inset 0 0 0 16px #C9D3E8"></span>
+    </div>
+  </div>
+
+  <div style="padding: 22px 20px 0">
+    <h1 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 34px; line-height: 1">Növbəti<br>reyslər</h1>
+    <p style="margin: 8px 0 0; font-size: 15px; font-weight: 700; color: #3C4B6B">Marşrutu (yaşı) seç, avtobusa min.</p>
+  </div>
+
+  <!-- ROUTE FILTER -->
+  <div style="display: flex; gap: 8px; padding: 16px 16px 0; flex-wrap: wrap">
+    <sc-for list="{{routes}}" as="r" hint-placeholder-count="4">
+      <button onClick="{{r.pick}}" style="{{r.style}}"><span style="{{r.dot}}"></span>{{r.label}}</button>
+    </sc-for>
+  </div>
+
+  <!-- DAY TABS -->
+  <div style="display: flex; gap: 6px; padding: 14px 16px 0">
+    <sc-for list="{{days}}" as="d" hint-placeholder-count="4">
+      <button onClick="{{d.pick}}" style="{{d.style}}"><span style="display: block; font-size: 12px; font-weight: 800">{{d.wd}}</span><span style="display: block; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px">{{d.n}}</span></button>
+    </sc-for>
+  </div>
+
+  <!-- DEPARTURES BOARD -->
+  <div style="margin: 18px 12px 0; background: #1B2A4A; border-radius: 26px; padding: 16px 12px; box-shadow: 0 8px 0 #0F1A30">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 6px 10px; border-bottom: 2px solid #2E3F63">
+      <span style="font-family: 'Space Mono', monospace; font-weight: 700; font-size: 13px; color: #FFE08A; letter-spacing: .08em">REYSLƏR</span>
+      <span class="blink" style="font-family: 'Space Mono', monospace; font-weight: 700; font-size: 12px; color: #7BC67E">● CANLI</span>
+    </div>
+    <sc-if value="{{empty}}" hint-placeholder-val="{{ false }}">
+      <div style="padding: 26px 8px; text-align: center; color: #C9D3E8; font-weight: 700; font-size: 15px">Bu gün bu marşrutda reys yoxdur. Başqa günə bax.</div>
+    </sc-if>
+    <sc-for list="{{rows}}" as="x" hint-placeholder-count="4">
+      <a href="Detal.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 12px 6px; border-bottom: 2px solid #2E3F63; text-decoration: none; color: #FFF4E2">
+        <span style="min-width: 58px; display: flex; gap: 2px">
+          <sc-for list="{{x.flaps}}" as="f" hint-placeholder-count="5"><span style="width: 11px; height: 22px; border-radius: 3px; background: #0F1A30; color: #FFE08A; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center">{{f}}</span></sc-for>
+        </span>
+        <span style="{{x.dot}}"></span>
+        <span style="flex: 1; min-width: 0"><span style="display: block; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 16px; line-height: 1.15">{{x.title}}</span><span style="display: block; font-size: 12px; font-weight: 800; color: #C9D3E8">{{x.house}} · {{x.age}} yaş</span></span>
+        <span style="{{x.seatStyle}}">{{x.seats}}</span>
+      </a>
+    </sc-for>
+  </div>
+
+  <div style="padding: 20px 20px 0; display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; font-weight: 800; color: #3C4B6B">
+    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #7BC67E"></span>yer çoxdur</span>
+    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #FFC23D"></span>az qalıb</span>
+    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #8C96A8"></span>dolub</span>
+  </div>
+
+  <div style="flex: 1"></div>
+  <div style="margin: 24px 16px 18px; background: #FFE08A; border-radius: 24px; padding: 16px 18px; box-shadow: inset -5px -6px 0 rgba(0,0,0,.08), inset 5px 5px 0 rgba(255,255,255,.4)">
+    <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 18px">Yer qalmayıb?</div>
+    <div style="font-size: 14px; font-weight: 700; margin-top: 4px">Gözləmə siyahısına yazılın, yer açılan kimi SMS gəlsin.</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1820}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { route: 'all', day: 0 }; }
+  renderVals() {
+    const motion = this.props.motion ?? true;
+    const st = this.state;
+    const R = [
+      { id: 'all', label: 'Hamısı', c: '#1B2A4A' },
+      { id: 'a', label: '4–6', c: '#6FA8DC' },
+      { id: 'b', label: '7–9', c: '#E8682A' },
+      { id: 'c', label: '10–12', c: '#7BC67E' }
+    ];
+    const routes = R.map((r) => {
+      const on = st.route === r.id;
+      return {
+        label: r.label, pick: () => this.setState({ route: r.id }),
+        dot: 'width: 12px; height: 12px; border-radius: 50%; background: ' + (on ? '#FFFFFF' : r.c),
+        style: 'min-height: 44px; padding: 0 14px; border: 0; border-radius: 99px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-family: Nunito, sans-serif; font-weight: 800; font-size: 14px; ' + (on ? 'background: ' + r.c + '; color: #FFFFFF; box-shadow: inset -3px -4px 0 rgba(0,0,0,.18)' : 'background: #FFFFFF; color: #1B2A4A; box-shadow: 0 4px 0 #EAD9BE')
+      };
+    });
+    const D = [{ wd: 'Şən', n: '[11]' }, { wd: 'Baz', n: '[12]' }, { wd: 'Şən', n: '[18]' }, { wd: 'Baz', n: '[19]' }];
+    const days = D.map((d, i) => ({ ...d, pick: () => this.setState({ day: i }), style: 'flex: 1; min-height: 58px; border: 0; border-radius: 18px; cursor: pointer; font-family: Nunito, sans-serif; color: ' + (st.day === i ? '#FFFFFF' : '#1B2A4A') + '; background: ' + (st.day === i ? '#E8682A' : '#FFFFFF') + '; box-shadow: ' + (st.day === i ? 'inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.3)' : '0 4px 0 #EAD9BE') }));
+    const all = [
+      { d: 0, t: '11:00', title: 'Gil boşqab', house: 'Gil evi', r: 'b', left: 3 },
+      { d: 0, t: '12:30', title: 'Kosmos rəsmi', house: 'Rəsm evi', r: 'a', left: 6 },
+      { d: 0, t: '15:00', title: 'Balaca aşpaz: pizza', house: 'Mətbəx', r: 'c', left: 1 },
+      { d: 1, t: '11:00', title: 'Vulkan təcrübəsi', house: 'Elm evi', r: 'c', left: 8 },
+      { d: 1, t: '13:00', title: 'Barmaq teatrı', house: 'Rəsm evi', r: 'a', left: 0 },
+      { d: 2, t: '11:00', title: 'Gil fincan', house: 'Gil evi', r: 'b', left: 5 },
+      { d: 3, t: '12:00', title: 'Kekslər', house: 'Mətbəx', r: 'b', left: 4 }
+    ];
+    const col = { a: '#6FA8DC', b: '#E8682A', c: '#7BC67E' };
+    const ageL = { a: '4–6', b: '7–9', c: '10–12' };
+    const rows = all.filter((x) => x.d === st.day && (st.route === 'all' || x.r === st.route)).map((x) => ({
+      title: x.title, house: x.house, age: ageL[x.r],
+      flaps: x.t.split(''),
+      dot: 'min-width: 14px; height: 14px; border-radius: 50%; background: ' + col[x.r],
+      seats: x.left === 0 ? 'DOLUB' : x.left + ' yer',
+      seatStyle: 'font-family: Space Mono, monospace; font-weight: 700; font-size: 12px; padding: 6px 8px; border-radius: 10px; white-space: nowrap; color: #1B2A4A; background: ' + (x.left === 0 ? '#8C96A8' : x.left <= 3 ? '#FFC23D' : '#7BC67E')
+    }));
+    return { motionClass: motion ? 'on' : '', routes, days, rows, empty: rows.length === 0 };
+  }
+}
+</script>
+</body>
+</html>

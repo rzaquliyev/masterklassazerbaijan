@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<title>Kampaniyalar — Bazar meydanı</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@500;700;800&amp;family=Space+Mono:wght@700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF4E2}
+a{color:#1B2A4A}a:hover{color:#E8682A}
+@keyframes flag{0%,100%{transform:skewY(0)}50%{transform:skewY(-6deg)}}
+@keyframes stampIn{0%{transform:scale(2) rotate(-30deg);opacity:0}60%{transform:scale(.9) rotate(-8deg);opacity:1}100%{transform:scale(1) rotate(-8deg)}}
+@keyframes wiggle{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.on .flag{animation:flag 1.6s ease-in-out infinite;transform-origin:0 50%}
+.on .stampIn{animation:stampIn .5s cubic-bezier(.2,1.5,.4,1) both}
+.on .wiggle{animation:wiggle 2.2s ease-in-out infinite}
+button:focus-visible,a:focus-visible{outline:3px solid #E8682A;outline-offset:3px}
+</style>
+</helmet>
+<div class="{{motionClass}}" style="width: 390px; height: 2480px; box-sizing: border-box; background: #FFF4E2; color: #1B2A4A; font-family: Nunito, system-ui, sans-serif; overflow: hidden; position: relative; display: flex; flex-direction: column">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px">
+    <a href="Plastilin.dc.html" style="min-height: 44px; padding: 0 14px; display: flex; align-items: center; border-radius: 16px; background: #FFFFFF; box-shadow: 0 4px 0 #EAD9BE; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; text-decoration: none">← Şəhərə</a>
+  </div>
+
+  <!-- MARKET SCENE: bunting + tents -->
+  <div style="position: relative; height: 230px; margin: 0">
+    <svg aria-hidden="true" viewBox="0 0 390 60" style="position: absolute; left: 0; top: 0; width: 390px; height: 60px"><path d="M0 10 Q 195 50 390 10" fill="none" stroke="#1B2A4A" stroke-width="2"></path>
+      <path class="flag" d="M30 16 l14 0 l-7 18 z" fill="#E8682A"></path><path class="flag" d="M80 24 l14 0 l-7 18 z" fill="#FFC23D"></path><path class="flag" d="M130 29 l14 0 l-7 18 z" fill="#6FA8DC"></path><path class="flag" d="M180 31 l14 0 l-7 18 z" fill="#7BC67E"></path><path class="flag" d="M230 30 l14 0 l-7 18 z" fill="#E8682A"></path><path class="flag" d="M280 26 l14 0 l-7 18 z" fill="#FFC23D"></path><path class="flag" d="M330 19 l14 0 l-7 18 z" fill="#6FA8DC"></path></svg>
+    <div style="position: absolute; left: 20px; top: 56px">
+      <h1 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 38px; line-height: 1">Bazar<br>meydanı</h1>
+      <div style="font-size: 15px; font-weight: 700; color: #3C4B6B; margin-top: 6px">Hər çadırda bir sürpriz</div>
+    </div>
+    <div class="wiggle" style="position: absolute; right: 20px; top: 70px; width: 130px; height: 140px">
+      <div style="position: absolute; left: 0; right: 0; top: 0; height: 44px; border-radius: 20px 20px 8px 8px; background: repeating-linear-gradient(90deg,#E8682A 0 22px,#FFFFFF 22px 44px); box-shadow: inset 0 -5px 0 rgba(0,0,0,.12)"></div>
+      <div style="position: absolute; left: 10px; right: 10px; top: 42px; bottom: 0; border-radius: 6px 6px 20px 20px; background: #FFE08A; box-shadow: inset -5px -6px 0 rgba(0,0,0,.1), inset 5px 5px 0 rgba(255,255,255,.4); display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 34px; color: #E8682A">%</div>
+    </div>
+  </div>
+
+  <!-- PASSPORT -->
+  <div style="padding: 10px 16px 0">
+    <div style="background: #1B2A4A; color: #FFF4E2; border-radius: 28px; padding: 20px; box-shadow: 0 8px 0 #0F1A30">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start">
+        <div>
+          <div style="font-family: 'Space Mono', monospace; font-weight: 700; font-size: 12px; letter-spacing: .1em; color: #FFE08A">PLASTİLİN ŞƏHƏRİ</div>
+          <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 26px; line-height: 1.05; margin-top: 4px">Usta pasportu</div>
+        </div>
+        <span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 15px; background: #E8682A; padding: 6px 12px; border-radius: 99px">{{count}} / 5</span>
+      </div>
+      <div style="font-size: 14px; font-weight: 700; color: #C9D3E8; margin-top: 8px">Hər masterklass = 1 möhür. 5 möhür = 1 pulsuz masterklass.</div>
+      <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-top: 16px; background: #FFF4E2; border-radius: 18px; padding: 14px 10px">
+        <sc-for list="{{stamps}}" as="s" hint-placeholder-count="5">
+          <div style="aspect-ratio: 1 / 1; border-radius: 50%; border: 3px dashed #C9B89A; box-sizing: border-box; display: flex; align-items: center; justify-content: center; position: relative">
+            <sc-if value="{{s.on}}" hint-placeholder-val="{{ false }}"><span class="stampIn" style="{{s.style}}">{{s.label}}</span></sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: flex; gap: 10px; margin-top: 14px">
+        <button onClick="{{add}}" style="flex: 1; min-height: 50px; border: 0; border-radius: 16px; background: #E8682A; color: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.3)">{{addLabel}}</button>
+      </div>
+      <div style="font-size: 12px; font-weight: 700; color: #8FA0C2; margin-top: 10px">Nümunə: möhürlər valideynin telefon nömrəsinə bağlıdır.</div>
+    </div>
+  </div>
+
+  <!-- REFERRAL -->
+  <div style="padding: 26px 16px 0">
+    <div style="background: #6FA8DC; border-radius: 28px; padding: 20px; box-shadow: inset -6px -7px 0 rgba(0,0,0,.14), inset 6px 6px 0 rgba(255,255,255,.3), 0 6px 0 #4C84B8">
+      <div style="display: flex; gap: 12px; align-items: center">
+        <span style="display: flex"><span style="width: 44px; height: 44px; border-radius: 50%; background: #FFC23D; box-shadow: inset -4px -5px 0 rgba(0,0,0,.16)"></span><span style="width: 44px; height: 44px; border-radius: 50%; background: #E8682A; margin-left: -14px; box-shadow: inset -4px -5px 0 rgba(0,0,0,.16)"></span></span>
+        <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.05">Dostunu gətir</div>
+      </div>
+      <div style="font-size: 15px; font-weight: 700; margin-top: 10px">Dostun ilk masterklassda [X]% endirim alır, siz də növbətidə [X]%.</div>
+      <div style="display: flex; gap: 8px; margin-top: 14px; align-items: stretch">
+        <div style="flex: 1; min-height: 50px; border-radius: 14px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 17px; letter-spacing: .08em; border: 3px dashed #1B2A4A">SAMPLE-DOST</div>
+        <button onClick="{{copy}}" style="min-width: 104px; border: 0; border-radius: 14px; background: #1B2A4A; color: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; cursor: pointer">{{copyLabel}}</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EARLY BIRD -->
+  <div style="padding: 26px 16px 0">
+    <div style="background: #FFFFFF; border-radius: 28px; padding: 20px; box-shadow: 0 8px 0 #EAD9BE">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 22px">Erkən quş</div>
+        <span style="font-size: 13px; font-weight: 800; background: #FFE08A; padding: 6px 10px; border-radius: 99px">[N] gün qalıb</span>
+      </div>
+      <div style="font-size: 15px; font-weight: 700; color: #3C4B6B; margin-top: 6px">Hər masterklassın ilk 3 yeri daha ucuz.</div>
+      <div style="display: flex; gap: 6px; margin-top: 14px; flex-wrap: wrap">
+        <span style="width: 26px; height: 26px; border-radius: 50%; background: #FFC23D; box-shadow: inset -4px -4px 0 rgba(0,0,0,.16), 0 0 0 3px #1B2A4A"></span>
+        <span style="width: 26px; height: 26px; border-radius: 50%; background: #FFC23D; box-shadow: inset -4px -4px 0 rgba(0,0,0,.16), 0 0 0 3px #1B2A4A"></span>
+        <span style="width: 26px; height: 26px; border-radius: 50%; background: #FFC23D; box-shadow: inset -4px -4px 0 rgba(0,0,0,.16), 0 0 0 3px #1B2A4A"></span>
+        <span style="width: 26px; height: 26px; border-radius: 50%; background: #F1E6D2"></span><span style="width: 26px; height: 26px; border-radius: 50%; background: #F1E6D2"></span><span style="width: 26px; height: 26px; border-radius: 50%; background: #F1E6D2"></span><span style="width: 26px; height: 26px; border-radius: 50%; background: #F1E6D2"></span><span style="width: 26px; height: 26px; border-radius: 50%; background: #F1E6D2"></span><span style="width: 26px; height: 26px; border-radius: 50%; background: #F1E6D2"></span><span style="width: 26px; height: 26px; border-radius: 50%; background: #F1E6D2"></span>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-top: 10px; font-weight: 800; font-size: 14px"><span>Erkən: [QİYMƏT] ₼</span><span style="color: #8C96A8; text-decoration: line-through">[QİYMƏT] ₼</span></div>
+    </div>
+  </div>
+
+  <!-- BIRTHDAY MONTH + HIDE&SEEK -->
+  <div style="padding: 26px 16px 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+    <a href="AdGunu.dc.html" style="text-decoration: none; background: #F28AA6; border-radius: 26px; padding: 18px; min-height: 180px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: inset -6px -7px 0 rgba(0,0,0,.12), inset 6px 6px 0 rgba(255,255,255,.3), 0 6px 0 #C9637F">
+      <span style="display: flex; gap: 4px; align-items: flex-end"><span style="width: 8px; height: 22px; border-radius: 4px; background: #FFE08A"></span><span style="width: 8px; height: 28px; border-radius: 4px; background: #FFFFFF"></span><span style="width: 8px; height: 22px; border-radius: 4px; background: #FFE08A"></span></span>
+      <span><span style="display: block; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 19px; line-height: 1.05">Ad günü ayı</span><span style="display: block; font-size: 13px; font-weight: 800; margin-top: 4px">Ad günü ayında [X]% endirim</span></span>
+    </a>
+    <a href="OyunParki.dc.html" style="text-decoration: none; background: #1B2A4A; color: #FFF4E2; border-radius: 26px; padding: 18px; min-height: 180px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 6px 0 #0F1A30">
+      <span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px; color: #FFE08A">★ ★ ☆ ☆ ☆</span>
+      <span><span style="display: block; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 19px; line-height: 1.05">Gizlənqaç</span><span style="display: block; font-size: 13px; font-weight: 800; margin-top: 4px; color: #C9D3E8">5 ulduz tap, endirim kodu qazan</span></span>
+    </a>
+  </div>
+
+  <div style="flex: 1"></div>
+  <div style="margin: 26px 16px 18px; font-size: 13px; font-weight: 700; color: #3C4B6B; line-height: 1.5; background: #FFFFFF; border-radius: 18px; padding: 14px 16px; box-shadow: 0 4px 0 #EAD9BE">Qaydalar: bir telefon nömrəsi bir kod; endirimlər birləşmir; kodun müddəti [N] gündür. [Tam şərtlər]</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":2480}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { n: 2, copied: false }; }
+  componentWillUnmount() { clearTimeout(this.t); }
+  renderVals() {
+    const motion = this.props.motion ?? true;
+    const n = this.state.n;
+    const cols = ['#E8682A', '#6FA8DC', '#7BC67E', '#FFC23D', '#F28AA6'];
+    const houses = ['GİL', 'RƏSM', 'ELM', 'MƏTBƏX', 'HƏDİYYƏ'];
+    const stamps = cols.map((c, i) => ({
+      on: i < n, label: houses[i],
+      style: 'position: absolute; inset: 4px; border-radius: 50%; border: 3px solid ' + c + '; color: ' + c + '; display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 9px; letter-spacing: .02em; background: rgba(255,255,255,.6); transform: rotate(-8deg)'
+    }));
+    return {
+      motionClass: motion ? 'on' : '', stamps, count: String(n),
+      add: () => this.setState({ n: n >= 5 ? 0 : n + 1 }),
+      addLabel: n >= 5 ? 'Pulsuz masterklass qazandınız! Yenidən başla' : 'Möhür vur (nümunə)',
+      copy: () => { this.setState({ copied: true }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ copied: false }), 1500); },
+      copyLabel: this.state.copied ? 'Kopyalandı ✓' : 'Kopyala'
+    };
+  }
+}
+</script>
+</body>
+</html>

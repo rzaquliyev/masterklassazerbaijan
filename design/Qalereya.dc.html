@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<title>Qalereya — Şəhər muzeyi</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@500;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF4E2}
+a{color:#1B2A4A}a:hover{color:#E8682A}
+@keyframes zoomIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes swingS{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.on .zoomIn{animation:zoomIn .35s cubic-bezier(.3,1.5,.5,1) both}
+.on .swingS{animation:swingS 3.5s ease-in-out infinite;transform-origin:50% 0}
+button:focus-visible,a:focus-visible{outline:3px solid #E8682A;outline-offset:3px}
+</style>
+</helmet>
+<div class="{{motionClass}}" style="width: 390px; height: 2100px; box-sizing: border-box; background: #FFF4E2; color: #1B2A4A; font-family: Nunito, system-ui, sans-serif; overflow: hidden; position: relative; display: flex; flex-direction: column">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px">
+    <a href="Plastilin.dc.html" style="min-height: 44px; padding: 0 14px; display: flex; align-items: center; border-radius: 16px; background: #FFFFFF; box-shadow: 0 4px 0 #EAD9BE; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; text-decoration: none">← Şəhərə</a>
+  </div>
+
+  <!-- MUSEUM FACADE -->
+  <div style="position: relative; height: 230px; margin: 0 16px">
+    <div style="position: absolute; left: 0; right: 0; top: 0; height: 0; border-left: 179px solid transparent; border-right: 179px solid transparent; border-bottom: 64px solid #E8682A"></div>
+    <div style="position: absolute; left: 10px; right: 10px; top: 64px; height: 26px; border-radius: 6px; background: #FFFFFF; box-shadow: inset -4px -5px 0 rgba(0,0,0,.08); display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 15px; letter-spacing: .14em">ŞƏHƏR MUZEYİ</div>
+    <div style="position: absolute; left: 22px; right: 22px; top: 96px; height: 110px; display: flex; justify-content: space-between">
+      <span style="width: 30px; height: 110px; border-radius: 10px; background: #FFE08A; box-shadow: inset -5px 0 0 rgba(0,0,0,.1), inset 5px 0 0 rgba(255,255,255,.4)"></span>
+      <span style="width: 30px; height: 110px; border-radius: 10px; background: #FFE08A; box-shadow: inset -5px 0 0 rgba(0,0,0,.1), inset 5px 0 0 rgba(255,255,255,.4)"></span>
+      <span style="width: 90px; height: 110px; border-radius: 45px 45px 0 0; background: #1B2A4A"></span>
+      <span style="width: 30px; height: 110px; border-radius: 10px; background: #FFE08A; box-shadow: inset -5px 0 0 rgba(0,0,0,.1), inset 5px 0 0 rgba(255,255,255,.4)"></span>
+      <span style="width: 30px; height: 110px; border-radius: 10px; background: #FFE08A; box-shadow: inset -5px 0 0 rgba(0,0,0,.1), inset 5px 0 0 rgba(255,255,255,.4)"></span>
+    </div>
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 24px; border-radius: 8px; background: #C9B89A; box-shadow: inset 0 -5px 0 rgba(0,0,0,.12)"></div>
+  </div>
+
+  <div style="padding: 22px 20px 0">
+    <h1 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 34px; line-height: 1">Kiçik ustaların<br>sərgisi</h1>
+    <div style="font-size: 15px; font-weight: 700; color: #3C4B6B; margin-top: 6px">Əsərə toxun, yaxından bax.</div>
+  </div>
+
+  <div style="display: flex; gap: 8px; padding: 16px 16px 0; flex-wrap: wrap">
+    <sc-for list="{{filters}}" as="f" hint-placeholder-count="5">
+      <button onClick="{{f.pick}}" style="{{f.style}}">{{f.label}}</button>
+    </sc-for>
+  </div>
+
+  <!-- WALL -->
+  <div style="margin: 18px 0 0; padding: 24px 16px 30px; background: #F3D9C2; background-image: radial-gradient(circle at 8px 8px, rgba(255,255,255,.35) 2.5px, transparent 3.5px); background-size: 28px 28px; position: relative">
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 16px">
+      <sc-for list="{{works}}" as="w" hint-placeholder-count="6">
+        <button onClick="{{w.open}}" aria-label="{{w.alt}}" class="swingS" style="{{w.frame}}">
+          <span style="position: absolute; left: 50%; top: -16px; width: 2px; height: 16px; background: #8A5A3B"></span>
+          <span style="{{w.inner}}">[FOTO]</span>
+          <span style="display: block; margin-top: 8px; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 13px; text-align: center">{{w.title}}</span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="flex: 1"></div>
+  <div style="margin: 24px 16px 18px; background: #FFE08A; border-radius: 24px; padding: 16px 18px; box-shadow: inset -5px -6px 0 rgba(0,0,0,.08), inset 5px 5px 0 rgba(255,255,255,.4)">
+    <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 18px">Uşağınızın işi burada olsun?</div>
+    <div style="font-size: 14px; font-weight: 700; margin-top: 4px">Yalnız sizin razılığınızla paylaşırıq. Üz şəkli olmadan da olar.</div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <sc-if value="{{hasOpen}}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; inset: 0; background: rgba(27,42,74,.82); display: flex; align-items: flex-start; justify-content: center; padding-top: 420px; z-index: 10">
+      <div class="zoomIn" style="width: 330px; background: #FFFFFF; border-radius: 30px; padding: 16px; box-shadow: 0 12px 0 #0F1A30">
+        <div style="height: 300px; border-radius: 20px; background: repeating-linear-gradient(45deg,#F4EEE2 0 10px,#E9E1D0 10px 20px); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #6B5B45">[BÖYÜK FOTO]</div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px">
+          <div><div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px">{{cur.title}}</div><div style="font-size: 14px; font-weight: 800; color: #3C4B6B">[Uşağın adı], [yaş] · {{cur.house}}</div></div>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 14px">
+          <button onClick="{{prev}}" aria-label="Əvvəlki" style="width: 52px; min-height: 50px; border: 0; border-radius: 16px; background: #FFF4E2; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px; color: #1B2A4A; cursor: pointer; box-shadow: 0 4px 0 #EAD9BE">←</button>
+          <button onClick="{{close}}" style="flex: 1; min-height: 50px; border: 0; border-radius: 16px; background: #1B2A4A; color: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 16px; cursor: pointer">Bağla</button>
+          <button onClick="{{next}}" aria-label="Növbəti" style="width: 52px; min-height: 50px; border: 0; border-radius: 16px; background: #FFF4E2; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px; color: #1B2A4A; cursor: pointer; box-shadow: 0 4px 0 #EAD9BE">→</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":2100}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { f: 'all', open: -1 }; }
+  renderVals() {
+    const motion = this.props.motion ?? true;
+    const st = this.state;
+    const H = { gil: ['Gil evi', '#E8682A'], resm: ['Rəsm evi', '#6FA8DC'], elm: ['Elm evi', '#7BC67E'], metbex: ['Mətbəx', '#FFC23D'] };
+    const F = [['all', 'Hamısı', '#1B2A4A'], ['gil', 'Gil', '#E8682A'], ['resm', 'Rəsm', '#6FA8DC'], ['elm', 'Elm', '#7BC67E'], ['metbex', 'Mətbəx', '#FFC23D']];
+    const filters = F.map(([id, label, c]) => ({ label, pick: () => this.setState({ f: id, open: -1 }), style: 'min-height: 44px; padding: 0 14px; border: 0; border-radius: 99px; cursor: pointer; font-family: Nunito, sans-serif; font-weight: 800; font-size: 14px; ' + (st.f === id ? 'background: ' + c + '; color: #FFFFFF; box-shadow: inset -3px -4px 0 rgba(0,0,0,.18)' : 'background: #FFFFFF; color: #1B2A4A; box-shadow: 0 4px 0 #EAD9BE') }));
+    const all = [
+      { t: 'Naxışlı boşqab', h: 'gil', shape: '50%' }, { t: 'Mənim planetim', h: 'resm', shape: '18px' },
+      { t: 'Köpük vulkanı', h: 'elm', shape: '50% 50% 14px 14px' }, { t: 'Pizza ustası', h: 'metbex', shape: '18px' },
+      { t: 'Gil fincan', h: 'gil', shape: '18px' }, { t: 'Gecə şəhəri', h: 'resm', shape: '50%' },
+      { t: 'Kristal böyütdük', h: 'elm', shape: '18px' }, { t: 'Kekslər', h: 'metbex', shape: '50% 50% 14px 14px' }
+    ];
+    const list = st.f === 'all' ? all : all.filter((w) => w.h === st.f);
+    const works = list.map((w, i) => ({
+      title: w.t, alt: w.t + ' — böyüt',
+      open: () => this.setState({ open: i }),
+      frame: 'position: relative; border: 0; cursor: pointer; padding: 10px; border-radius: 22px; background: ' + H[w.h][1] + '; box-shadow: inset -5px -6px 0 rgba(0,0,0,.16), inset 5px 5px 0 rgba(255,255,255,.3), 0 8px 12px rgba(100,60,20,.18); color: #1B2A4A; animation-delay: ' + (i * 0.3) + 's',
+      inner: 'display: flex; align-items: center; justify-content: center; height: 130px; border-radius: ' + w.shape + '; background: repeating-linear-gradient(45deg,#F4EEE2 0 8px,#E9E1D0 8px 16px); font-size: 11px; font-weight: 800; color: #6B5B45'
+    }));
+    const idx = st.open;
+    const cur = idx >= 0 && list[idx] ? { title: list[idx].t, house: H[list[idx].h][0] } : { title: '', house: '' };
+    return {
+      motionClass: motion ? 'on' : '', filters, works, cur, hasOpen: idx >= 0 && !!list[idx],
+      close: () => this.setState({ open: -1 }),
+      prev: () => this.setState({ open: (idx - 1 + list.length) % list.length }),
+      next: () => this.setState({ open: (idx + 1) % list.length })
+    };
+  }
+}
+</script>
+</body>
+</html>

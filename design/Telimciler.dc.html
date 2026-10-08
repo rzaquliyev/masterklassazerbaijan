@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<title>Təlimçilər — Şəhər sakinləri</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@500;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF4E2}
+a{color:#1B2A4A}a:hover{color:#E8682A}
+@keyframes blinkEye{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes wave{0%,100%{transform:rotate(0)}50%{transform:rotate(-24deg)}}
+@keyframes flipIn{from{transform:rotateY(80deg);opacity:0}to{transform:rotateY(0);opacity:1}}
+.on .eye{animation:blinkEye 4s infinite}
+.on .wave{animation:wave 1.2s ease-in-out infinite;transform-origin:100% 100%}
+.on .flipIn{animation:flipIn .35s ease-out both}
+button:focus-visible,a:focus-visible{outline:3px solid #E8682A;outline-offset:3px}
+</style>
+</helmet>
+<div class="{{motionClass}}" style="width: 390px; height: 1960px; box-sizing: border-box; background: #FFF4E2; color: #1B2A4A; font-family: Nunito, system-ui, sans-serif; overflow: hidden; position: relative; display: flex; flex-direction: column">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px">
+    <a href="Plastilin.dc.html" style="min-height: 44px; padding: 0 14px; display: flex; align-items: center; border-radius: 16px; background: #FFFFFF; box-shadow: 0 4px 0 #EAD9BE; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; text-decoration: none">← Şəhərə</a>
+  </div>
+
+  <div style="padding: 10px 20px 0; position: relative">
+    <h1 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 36px; line-height: 1">Şəhərin<br>sakinləri</h1>
+    <div style="font-size: 15px; font-weight: 700; color: #3C4B6B; margin-top: 8px; width: 230px">Hər evin öz ustası var. Kartına toxun, tanış ol.</div>
+    <!-- waving mascot -->
+    <div style="position: absolute; right: 22px; top: 0; width: 96px; height: 120px">
+      <div style="position: absolute; left: 14px; bottom: 0; width: 68px; height: 56px; border-radius: 30px 30px 14px 14px; background: #E8682A; box-shadow: inset -5px -6px 0 rgba(0,0,0,.16), inset 5px 5px 0 rgba(255,255,255,.3)"></div>
+      <div class="wave" style="position: absolute; right: -6px; bottom: 34px; width: 16px; height: 40px; border-radius: 8px; background: #E8682A"></div>
+      <div style="position: absolute; left: 18px; top: 0; width: 60px; height: 60px; border-radius: 50%; background: #F6C9A6; box-shadow: inset -5px -6px 0 rgba(0,0,0,.1), inset 5px 5px 0 rgba(255,255,255,.4)">
+        <span class="eye" style="position: absolute; left: 16px; top: 24px; width: 7px; height: 9px; border-radius: 50%; background: #1B2A4A"></span>
+        <span class="eye" style="position: absolute; right: 16px; top: 24px; width: 7px; height: 9px; border-radius: 50%; background: #1B2A4A"></span>
+        <span style="position: absolute; left: 22px; top: 38px; width: 16px; height: 8px; border-radius: 0 0 10px 10px; background: #B44E1D"></span>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 26px 16px 0; display: flex; flex-direction: column; gap: 14px">
+    <sc-for list="{{people}}" as="p" hint-placeholder-count="4">
+      <button onClick="{{p.flip}}" style="{{p.card}}">
+        <sc-if value="{{p.front}}" hint-placeholder-val="{{ true }}">
+          <span style="display: flex; gap: 16px; align-items: center; width: 100%">
+            <span style="position: relative; min-width: 92px; height: 104px; display: block">
+              <span style="{{p.body}}"></span>
+              <span style="{{p.face}}">
+                <span style="{{p.hair}}"></span>
+                <span class="eye" style="position: absolute; left: 18px; top: 30px; width: 7px; height: 9px; border-radius: 50%; background: #1B2A4A"></span>
+                <span class="eye" style="position: absolute; right: 18px; top: 30px; width: 7px; height: 9px; border-radius: 50%; background: #1B2A4A"></span>
+                <span style="position: absolute; left: 12px; top: 42px; width: 10px; height: 6px; border-radius: 50%; background: rgba(232,104,42,.35)"></span>
+                <span style="position: absolute; right: 12px; top: 42px; width: 10px; height: 6px; border-radius: 50%; background: rgba(232,104,42,.35)"></span>
+                <span style="position: absolute; left: 26px; top: 46px; width: 16px; height: 7px; border-radius: 0 0 10px 10px; background: #8A3A1A"></span>
+              </span>
+            </span>
+            <span style="flex: 1; text-align: left">
+              <span style="{{p.tag}}">{{p.house}}</span>
+              <span style="display: block; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px; margin-top: 8px">[Təlimçinin adı]</span>
+              <span style="display: block; font-size: 14px; font-weight: 800; color: #3C4B6B; margin-top: 2px">{{p.role}}</span>
+              <span style="display: block; font-size: 13px; font-weight: 800; margin-top: 8px; color: #E8682A">Tanış ol →</span>
+            </span>
+          </span>
+        </sc-if>
+        <sc-if value="{{p.back}}" hint-placeholder-val="{{ false }}">
+          <span class="flipIn" style="display: block; width: 100%; text-align: left">
+            <span style="display: block; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 18px">Haqqında</span>
+            <span style="display: block; font-size: 14px; font-weight: 700; line-height: 1.5; margin-top: 6px">[Təhsil və ixtisas] · [Neçə ildir uşaqlarla işləyir] · [Sevdiyi material]</span>
+            <span style="display: block; font-size: 14px; font-weight: 800; margin-top: 10px">Bu ay: {{p.next}}</span>
+            <span style="display: block; font-size: 13px; font-weight: 800; margin-top: 10px; opacity: .8">← geri çevir</span>
+          </span>
+        </sc-if>
+      </button>
+    </sc-for>
+  </div>
+
+  <div style="flex: 1"></div>
+  <div style="margin: 26px 16px 18px; background: #1B2A4A; color: #FFF4E2; border-radius: 24px; padding: 18px; box-shadow: 0 6px 0 #0F1A30">
+    <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 19px">Sakin olmaq istəyirsiniz?</div>
+    <div style="font-size: 14px; font-weight: 700; color: #C9D3E8; margin-top: 4px">Masterklass aparan müəllimləri komandaya dəvət edirik.</div>
+    <a href="#" style="display: inline-flex; margin-top: 12px; min-height: 48px; align-items: center; padding: 0 18px; border-radius: 16px; background: #FFE08A; color: #1B2A4A; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; text-decoration: none">Müraciət et</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":1960}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { flipped: -1 }; }
+  renderVals() {
+    const motion = this.props.motion ?? true;
+    const clay = 'box-shadow: inset -5px -6px 0 rgba(0,0,0,.16), inset 5px 5px 0 rgba(255,255,255,.3);';
+    const P = [
+      { house: 'Gil evi', c: '#E8682A', role: 'Keramika ustası', hair: '#5A3A28', hs: '50% 50% 10px 10px', skin: '#F6C9A6', next: 'Gil boşqab, Gil fincan' },
+      { house: 'Rəsm evi', c: '#6FA8DC', role: 'Rəssam', hair: '#1B2A4A', hs: '50% 50% 50% 0', skin: '#E9B48C', next: 'Kosmos rəsmi' },
+      { house: 'Mətbəx', c: '#FFC23D', role: 'Aşpaz', hair: '#FFFFFF', hs: '18px 18px 4px 4px', skin: '#F6C9A6', next: 'Pizza, Kekslər' },
+      { house: 'Elm evi', c: '#7BC67E', role: 'Kiçik alimlərin müəllimi', hair: '#8A5A3B', hs: '50%', skin: '#D9A07A', next: 'Vulkan, Kristallar' }
+    ];
+    const fl = this.state.flipped;
+    const people = P.map((p, i) => {
+      const back = fl === i;
+      return {
+        house: p.house, role: p.role, next: p.next, front: !back, back,
+        flip: () => this.setState({ flipped: back ? -1 : i }),
+        card: 'display: block; width: 100%; min-height: 140px; border: 0; border-radius: 28px; padding: 16px; cursor: pointer; font-family: Nunito, sans-serif; color: ' + (back ? '#FFFFFF' : '#1B2A4A') + '; background: ' + (back ? p.c : '#FFFFFF') + '; box-shadow: ' + (back ? 'inset -6px -7px 0 rgba(0,0,0,.16), inset 6px 6px 0 rgba(255,255,255,.3), 0 6px 0 rgba(0,0,0,.18)' : '0 6px 0 #EAD9BE'),
+        tag: 'display: inline-block; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 13px; padding: 4px 10px; border-radius: 99px; color: #1B2A4A; background: ' + p.c + '; ' + clay,
+        body: 'position: absolute; left: 10px; bottom: 0; width: 72px; height: 44px; border-radius: 30px 30px 14px 14px; background: ' + p.c + '; ' + clay,
+        face: 'position: absolute; left: 12px; top: 0; width: 68px; height: 68px; border-radius: 50%; background: ' + p.skin + '; box-shadow: inset -5px -6px 0 rgba(0,0,0,.1), inset 5px 5px 0 rgba(255,255,255,.4)',
+        hair: 'position: absolute; left: 4px; top: -4px; width: 60px; height: 26px; border-radius: ' + p.hs + '; background: ' + p.hair + '; box-shadow: inset -4px -4px 0 rgba(0,0,0,.15)'
+      };
+    });
+    return { motionClass: motion ? 'on' : '', people };
+  }
+}
+</script>
+</body>
+</html>

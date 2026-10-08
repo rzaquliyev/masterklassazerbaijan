@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<title>Əlaqə — Poçt</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@500;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF4E2}
+a{color:#1B2A4A}a:hover{color:#E8682A}
+@keyframes flyIn{0%{transform:translate(0,0) scale(1) rotate(0)}60%{transform:translate(40px,-200px) scale(.5) rotate(-12deg)}100%{transform:translate(60px,-300px) scale(.15) rotate(-20deg);opacity:0}}
+@keyframes flagUp{from{transform:rotate(90deg)}to{transform:rotate(0)}}
+@keyframes pin{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.on .flyIn{animation:flyIn .9s ease-in both}
+.on .flagUp{animation:flagUp .5s .6s cubic-bezier(.3,1.6,.5,1) both;transform-origin:0 100%}
+.on .pin{animation:pin 1.6s ease-in-out infinite}
+.on .fadeUp{animation:fadeUp .4s .7s ease-out both}
+button:focus-visible,a:focus-visible,input:focus,textarea:focus{outline:3px solid #E8682A;outline-offset:3px}
+</style>
+</helmet>
+<div class="{{motionClass}}" style="width: 390px; height: 2060px; box-sizing: border-box; background: #FFF4E2; color: #1B2A4A; font-family: Nunito, system-ui, sans-serif; overflow: hidden; position: relative; display: flex; flex-direction: column">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px">
+    <a href="Plastilin.dc.html" style="min-height: 44px; padding: 0 14px; display: flex; align-items: center; border-radius: 16px; background: #FFFFFF; box-shadow: 0 4px 0 #EAD9BE; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; text-decoration: none">← Şəhərə</a>
+  </div>
+
+  <!-- MAILBOX HERO -->
+  <div style="display: flex; gap: 14px; align-items: flex-end; padding: 6px 20px 0">
+    <div>
+      <h1 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 38px; line-height: 1">Şəhər<br>poçtu</h1>
+      <div style="font-size: 15px; font-weight: 700; color: #3C4B6B; margin-top: 8px">Məktub yazın, tez cavab verək.</div>
+    </div>
+    <div style="position: relative; width: 130px; height: 170px; margin-left: auto; flex: none">
+      <div style="position: absolute; left: 58px; bottom: 0; width: 14px; height: 70px; background: #8A5A3B; border-radius: 4px"></div>
+      <div style="position: absolute; left: 10px; bottom: 64px; width: 110px; height: 86px; border-radius: 50px 50px 14px 14px; background: #6FA8DC; box-shadow: inset -7px -8px 0 rgba(0,0,0,.16), inset 7px 7px 0 rgba(255,255,255,.3)">
+        <div style="position: absolute; left: 20px; top: 34px; width: 70px; height: 10px; border-radius: 5px; background: #1B2A4A"></div>
+      </div>
+      <sc-if value="{{sent}}" hint-placeholder-val="{{ false }}">
+        <div class="flagUp" style="position: absolute; right: 2px; bottom: 120px; width: 6px; height: 40px; background: #E8682A; border-radius: 3px"><span style="position: absolute; left: 6px; top: 0; width: 22px; height: 16px; background: #E8682A; border-radius: 0 6px 6px 0"></span></div>
+      </sc-if>
+    </div>
+  </div>
+
+  <!-- ENVELOPE FORM -->
+  <div style="padding: 26px 16px 0; position: relative">
+    <sc-if value="{{editing}}" hint-placeholder-val="{{ true }}">
+      <div class="{{flyClass}}" style="position: relative; background: #FFFFFF; border-radius: 26px; padding: 64px 18px 18px; box-shadow: 0 8px 0 #EAD9BE; overflow: hidden">
+        <div style="position: absolute; left: 0; right: 0; top: 0; height: 52px; background: #FFE08A; clip-path: polygon(0 0,100% 0,50% 100%)"></div>
+        <div style="position: absolute; right: 16px; top: 10px; width: 46px; height: 52px; border-radius: 6px; background: #E8682A; border: 3px dashed #FFFFFF; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 18px; color: #FFFFFF; transform: rotate(6deg)">M</div>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 800; font-size: 15px">Adınız
+            <input type="text" autocomplete="name" style="min-height: 50px; border: 0; border-bottom: 3px dashed #EAD9BE; padding: 0 4px; font-family: Nunito, sans-serif; font-size: 17px; font-weight: 700; background: transparent; color: #1B2A4A">
+          </label>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 800; font-size: 15px">Telefon
+            <input type="tel" autocomplete="tel" inputmode="tel" placeholder="+994 __ ___ __ __" style="min-height: 50px; border: 0; border-bottom: 3px dashed #EAD9BE; padding: 0 4px; font-family: Nunito, sans-serif; font-size: 17px; font-weight: 700; background: transparent; color: #1B2A4A">
+          </label>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 800; font-size: 15px">Mesaj
+            <textarea rows="4" style="border: 0; border-radius: 14px; padding: 12px; font-family: Nunito, sans-serif; font-size: 16px; font-weight: 700; background: #FFF4E2; color: #1B2A4A; resize: vertical; background-image: repeating-linear-gradient(transparent 0 27px, #EAD9BE 27px 29px); line-height: 29px"></textarea>
+          </label>
+          <button onClick="{{send}}" style="min-height: 56px; border: 0; border-radius: 18px; background: #E8682A; color: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 17px; cursor: pointer; box-shadow: inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.3), 0 6px 0 #B44E1D">Məktubu poçta at</button>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+      <div class="fadeUp" style="background: #7BC67E; border-radius: 26px; padding: 22px 18px; box-shadow: inset -6px -7px 0 rgba(0,0,0,.12), inset 6px 6px 0 rgba(255,255,255,.3), 0 6px 0 #57A05A">
+        <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px">Məktub çatdı!</div>
+        <div style="font-size: 15px; font-weight: 800; margin-top: 6px">[İş saatları] ərzində zəng edəcəyik.</div>
+        <button onClick="{{again}}" style="margin-top: 14px; min-height: 48px; padding: 0 18px; border: 0; border-radius: 16px; background: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; color: #1B2A4A; cursor: pointer">Yeni məktub</button>
+      </div>
+    </sc-if>
+  </div>
+
+  <!-- MAP -->
+  <div style="padding: 28px 16px 0">
+    <div style="position: relative; height: 230px; border-radius: 28px; overflow: hidden; background: #CFE8C9; box-shadow: 0 8px 0 #EAD9BE">
+      <div style="position: absolute; left: -20px; right: -20px; top: 96px; height: 34px; background: #FFFFFF; transform: rotate(-8deg)"></div>
+      <div style="position: absolute; left: 150px; top: -20px; bottom: -20px; width: 30px; background: #FFFFFF; transform: rotate(12deg)"></div>
+      <div style="position: absolute; left: 20px; top: 20px; width: 80px; height: 56px; border-radius: 14px; background: #7BC67E; box-shadow: inset -4px -5px 0 rgba(0,0,0,.1)"></div>
+      <div style="position: absolute; right: 26px; bottom: 24px; width: 100px; height: 60px; border-radius: 30px; background: #BFE3FF; box-shadow: inset -4px -5px 0 rgba(0,0,0,.08)"></div>
+      <div class="pin" style="position: absolute; left: 190px; top: 60px; width: 40px; height: 40px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #E8682A; box-shadow: inset -4px -4px 0 rgba(0,0,0,.18)"><span style="position: absolute; left: 12px; top: 12px; width: 16px; height: 16px; border-radius: 50%; background: #FFFFFF"></span></div>
+      <a href="#" style="position: absolute; left: 14px; bottom: 14px; min-height: 44px; padding: 0 16px; display: flex; align-items: center; border-radius: 14px; background: #1B2A4A; color: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 14px; text-decoration: none">Xəritədə aç</a>
+    </div>
+  </div>
+
+  <!-- INFO -->
+  <div style="padding: 22px 16px 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+    <div style="grid-column: span 2; background: #FFFFFF; border-radius: 20px; padding: 14px 16px; box-shadow: 0 5px 0 #EAD9BE"><div style="font-size: 13px; font-weight: 800; color: #3C4B6B">Ünvan</div><div style="font-weight: 800; font-size: 16px; margin-top: 2px">[Küçə, bina], Bakı</div></div>
+    <div style="background: #FFFFFF; border-radius: 20px; padding: 14px 16px; box-shadow: 0 5px 0 #EAD9BE"><div style="font-size: 13px; font-weight: 800; color: #3C4B6B">İş saatları</div><div style="font-weight: 800; font-size: 15px; margin-top: 2px">[Şən–Baz 10:00–19:00]</div></div>
+    <div style="background: #FFFFFF; border-radius: 20px; padding: 14px 16px; box-shadow: 0 5px 0 #EAD9BE"><div style="font-size: 13px; font-weight: 800; color: #3C4B6B">Telefon</div><a href="#" style="display: block; font-weight: 800; font-size: 15px; margin-top: 2px">[+994 …]</a></div>
+    <a href="#" style="min-height: 56px; display: flex; align-items: center; justify-content: center; border-radius: 18px; background: #7BC67E; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 16px; text-decoration: none; box-shadow: inset -4px -5px 0 rgba(0,0,0,.12), 0 5px 0 #57A05A">WhatsApp</a>
+    <a href="#" style="min-height: 56px; display: flex; align-items: center; justify-content: center; border-radius: 18px; background: #F28AA6; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; text-decoration: none; box-shadow: inset -4px -5px 0 rgba(0,0,0,.12), 0 5px 0 #C9637F">Instagram</a>
+  </div>
+
+  <div style="flex: 1"></div>
+  <div style="margin: 26px 0 0; background: #1B2A4A; color: #C9D3E8; padding: 22px 20px; font-size: 13px; font-weight: 700; border-radius: 30px 30px 0 0">© [İL] [Studiya adı] · @masterklassazerbaijan · Məxfilik siyasəti</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":2060}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { phase: 'edit' }; }
+  componentWillUnmount() { clearTimeout(this.t); }
+  renderVals() {
+    const motion = this.props.motion ?? true;
+    const ph = this.state.phase;
+    return {
+      motionClass: motion ? 'on' : '',
+      editing: ph !== 'done', done: ph === 'done', sent: ph !== 'edit',
+      flyClass: ph === 'flying' ? 'flyIn' : '',
+      send: () => { this.setState({ phase: 'flying' }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ phase: 'done' }), motion ? 900 : 0); },
+      again: () => this.setState({ phase: 'edit' })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<title>Valideyn sualları — Məlumat bürosu</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@500;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF4E2}
+a{color:#1B2A4A}a:hover{color:#E8682A}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes open{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.on .bob{animation:bob 2.6s ease-in-out infinite}
+.on .open{animation:open .25s ease-out both}
+button:focus-visible,a:focus-visible{outline:3px solid #E8682A;outline-offset:3px}
+</style>
+</helmet>
+<div class="{{motionClass}}" style="width: 390px; height: 2000px; box-sizing: border-box; background: #FFF4E2; color: #1B2A4A; font-family: Nunito, system-ui, sans-serif; overflow: hidden; position: relative; display: flex; flex-direction: column">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px">
+    <a href="Plastilin.dc.html" style="min-height: 44px; padding: 0 14px; display: flex; align-items: center; border-radius: 16px; background: #FFFFFF; box-shadow: 0 4px 0 #EAD9BE; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; text-decoration: none">← Şəhərə</a>
+  </div>
+
+  <!-- KIOSK -->
+  <div style="display: flex; gap: 16px; align-items: flex-end; padding: 6px 20px 0">
+    <div style="position: relative; width: 120px; height: 170px; flex: none">
+      <div class="bob" style="position: absolute; left: 22px; top: 0; width: 76px; height: 76px; border-radius: 50%; background: #6FA8DC; box-shadow: inset -6px -7px 0 rgba(0,0,0,.16), inset 6px 6px 0 rgba(255,255,255,.35); display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 44px; color: #FFFFFF">i</div>
+      <div style="position: absolute; left: 54px; top: 76px; width: 12px; height: 30px; background: #1B2A4A"></div>
+      <div style="position: absolute; left: 0; bottom: 0; width: 120px; height: 66px; border-radius: 18px 18px 10px 10px; background: #FFE08A; box-shadow: inset -6px -7px 0 rgba(0,0,0,.1), inset 6px 6px 0 rgba(255,255,255,.4)"></div>
+    </div>
+    <div>
+      <h1 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 32px; line-height: 1">Məlumat<br>bürosu</h1>
+      <div style="font-size: 14px; font-weight: 700; color: #3C4B6B; margin-top: 6px">Valideynlərin ən çox soruşduqları</div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 8px; padding: 22px 16px 0; flex-wrap: wrap">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+      <button onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+    </sc-for>
+  </div>
+
+  <div style="padding: 16px 16px 0; display: flex; flex-direction: column; gap: 10px">
+    <sc-for list="{{qs}}" as="q" hint-placeholder-count="5">
+      <div style="background: #FFFFFF; border-radius: 22px; box-shadow: 0 5px 0 #EAD9BE; overflow: hidden">
+        <button onClick="{{q.toggle}}" aria-expanded="{{q.exp}}" style="width: 100%; min-height: 62px; border: 0; background: transparent; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; text-align: left; font-family: Nunito, sans-serif; color: #1B2A4A">
+          <span style="font-weight: 800; font-size: 16px; line-height: 1.3">{{q.q}}</span>
+          <span style="{{q.icon}}">{{q.sign}}</span>
+        </button>
+        <sc-if value="{{q.isOpen}}" hint-placeholder-val="{{ false }}">
+          <div class="open" style="padding: 0 16px 16px; font-size: 15px; font-weight: 700; line-height: 1.5; color: #3C4B6B">{{q.a}}</div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="flex: 1"></div>
+  <div style="margin: 26px 16px 18px; background: #7BC67E; border-radius: 26px; padding: 18px; box-shadow: inset -6px -7px 0 rgba(0,0,0,.12), inset 6px 6px 0 rgba(255,255,255,.3), 0 6px 0 #57A05A">
+    <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px">Cavabı tapmadınız?</div>
+    <div style="font-size: 14px; font-weight: 800; margin-top: 4px">Bir mesaj yazın, [iş saatları] cavab veririk.</div>
+    <div style="display: flex; gap: 10px; margin-top: 12px">
+      <a href="#" style="flex: 1; min-height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 16px; background: #1B2A4A; color: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; text-decoration: none">WhatsApp</a>
+      <a href="Elaqe.dc.html" style="flex: 1; min-height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 16px; background: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; text-decoration: none">Poçta yaz</a>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":2000}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { tab: 'q', open: 0 }; }
+  renderVals() {
+    const motion = this.props.motion ?? true;
+    const st = this.state;
+    const T = [['q', 'Qeydiyyat', '#E8682A'], ['o', 'Ödəniş', '#FFC23D'], ['t', 'Təhlükəsizlik', '#7BC67E'], ['g', 'Gün özü', '#6FA8DC']];
+    const tabs = T.map(([id, label, c]) => ({ label, pick: () => this.setState({ tab: id, open: 0 }), style: 'min-height: 44px; padding: 0 14px; border: 0; border-radius: 99px; cursor: pointer; font-family: Nunito, sans-serif; font-weight: 800; font-size: 14px; ' + (st.tab === id ? 'background: ' + c + '; color: #1B2A4A; box-shadow: inset -3px -4px 0 rgba(0,0,0,.18), 0 0 0 2px #1B2A4A' : 'background: #FFFFFF; color: #1B2A4A; box-shadow: 0 4px 0 #EAD9BE') }));
+    const Q = {
+      q: [
+        ['Qeydiyyat nə qədər vaxt aparır?', 'Təxminən 1 dəqiqə: uşağın adı və yaşı, valideynin adı və telefonu.'],
+        ['Yer qalmayıbsa nə edim?', 'Gözləmə siyahısına yazılın. Yer açılan kimi SMS göndəririk.'],
+        ['Ləğv və ya tarix dəyişmək olar?', '[Ləğv qaydası: neçə saat əvvəl, pulun qaytarılması şərtləri]']
+      ],
+      o: [
+        ['Ödənişi necə edə bilərəm?', '[Ödəniş üsulları: kart, nağd, köçürmə]'],
+        ['Qardaş-bacı endirimi varmı?', '[Endirim şərtləri]']
+      ],
+      t: [
+        ['Materiallar uşaq üçün təhlükəsizdirmi?', '[Material növləri və sertifikat məlumatı]'],
+        ['Qrupda neçə uşaq olur?', 'Ən çox [N] uşaq. Hər qrupda [N] təlimçi var.'],
+        ['Allergiya barədə harada yazım?', 'Qeydiyyat formasında xüsusi qeyd sahəsi var. Mətbəx masterklasslarında tərkibi əvvəlcədən göndəririk.']
+      ],
+      g: [
+        ['Valideyn içəridə qala bilər?', '[Bəli / Xeyr, gözləmə zonası]'],
+        ['Uşaq nə geyinməlidir?', 'Ləkələnməsindən qorxmadığınız rahat paltar. Önlük bizdən.'],
+        ['Əl işini nə vaxt evə aparırıq?', 'Çox işi elə həmin gün. Gil işləri bişirildiyi üçün [N] gün sonra hazır olur.']
+      ]
+    };
+    const list = Q[st.tab];
+    const qs = list.map(([q, a], i) => {
+      const isOpen = st.open === i;
+      return { q, a, isOpen, exp: isOpen ? 'true' : 'false', sign: isOpen ? '−' : '+',
+        toggle: () => this.setState({ open: isOpen ? -1 : i }),
+        icon: 'min-width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 22px; color: #FFFFFF; background: ' + (isOpen ? '#1B2A4A' : '#E8682A') };
+    });
+    return { motionClass: motion ? 'on' : '', tabs, qs };
+  }
+}
+</script>
+</body>
+</html>

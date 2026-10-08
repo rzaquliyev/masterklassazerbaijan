@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<title>Oyun — Plastilin yoğur</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@500;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF4E2}
+a{color:#1B2A4A}a:hover{color:#E8682A}
+@keyframes pop{0%{transform:scale(.4)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+@keyframes blinkEye{0%,90%,100%{transform:scaleY(1)}94%{transform:scaleY(.1)}}
+.pop{animation:pop .35s cubic-bezier(.3,1.6,.5,1) both}
+.eyeB{animation:blinkEye 3.6s infinite}
+button:focus-visible,a:focus-visible{outline:3px solid #E8682A;outline-offset:3px}
+</style>
+</helmet>
+<div style="width: 390px; height: 1240px; box-sizing: border-box; background: #FFF4E2; color: #1B2A4A; font-family: Nunito, system-ui, sans-serif; overflow: hidden; position: relative; display: flex; flex-direction: column">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px">
+    <a href="OyunParki.dc.html" style="min-height: 44px; padding: 0 14px; display: flex; align-items: center; border-radius: 16px; background: #FFFFFF; box-shadow: 0 4px 0 #EAD9BE; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; text-decoration: none">← Oyun parkı</a>
+    <span style="font-weight: 800; font-size: 14px; background: #FFE08A; padding: 8px 12px; border-radius: 99px">{{squeezes}} dəfə yoğruldu</span>
+  </div>
+
+  <div style="padding: 6px 20px 0">
+    <h1 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 32px; line-height: 1">Plastilin yoğur</h1>
+    <div style="font-size: 15px; font-weight: 700; color: #3C4B6B; margin-top: 6px">Barmağınla basıb dart: plastilin uzanır, buraxanda geri tullanır.</div>
+  </div>
+
+  <!-- PLAY AREA -->
+  <div onPointerDown="{{down}}" onPointerMove="{{move}}" onPointerUp="{{up}}" onPointerCancel="{{up}}" onPointerLeave="{{up}}" style="position: relative; margin: 18px 16px 0; height: 400px; border-radius: 32px; background: #A86B43; box-shadow: inset 0 12px 0 rgba(255,255,255,.15), inset 0 -10px 0 rgba(0,0,0,.12); touch-action: none; cursor: grab; display: flex; align-items: center; justify-content: center; user-select: none; -webkit-user-select: none">
+    <div style="position: absolute; inset: 0; border-radius: 32px; background-image: repeating-linear-gradient(90deg, rgba(0,0,0,.05) 0 2px, transparent 2px 46px)"></div>
+    <div style="{{shadow}}"></div>
+    <div style="{{blob}}">
+      <sc-if value="{{hasFace}}" hint-placeholder-val="{{ false }}">
+        <span class="pop" style="position: absolute; left: 50%; top: 38%; width: 70px; margin-left: -35px; display: flex; justify-content: space-between">
+          <span class="eyeB" style="width: 16px; height: 20px; border-radius: 50%; background: #1B2A4A; box-shadow: inset 4px 4px 0 #FFFFFF"></span>
+          <span class="eyeB" style="width: 16px; height: 20px; border-radius: 50%; background: #1B2A4A; box-shadow: inset 4px 4px 0 #FFFFFF"></span>
+        </span>
+        <span class="pop" style="{{mouth}}"></span>
+      </sc-if>
+    </div>
+    <div style="position: absolute; bottom: 14px; left: 0; right: 0; text-align: center; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 14px; color: rgba(255,255,255,.85)">{{hint}}</div>
+  </div>
+
+  <!-- COLORS -->
+  <div style="padding: 20px 16px 0">
+    <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 18px; margin: 0 4px 10px">Rəng seç</div>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap">
+      <sc-for list="{{colors}}" as="c" hint-placeholder-count="6">
+        <button onClick="{{c.pick}}" aria-label="{{c.name}}" style="{{c.style}}"></button>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- SHAPES + ACTIONS -->
+  <div style="padding: 20px 16px 0">
+    <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 18px; margin: 0 4px 10px">Forma</div>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap">
+      <sc-for list="{{shapes}}" as="s" hint-placeholder-count="4">
+        <button onClick="{{s.pick}}" style="{{s.style}}">{{s.name}}</button>
+      </sc-for>
+    </div>
+  </div>
+  <div style="padding: 20px 16px 0; display: flex; gap: 10px">
+    <button onClick="{{toggleFace}}" style="flex: 1; min-height: 54px; border: 0; border-radius: 18px; background: #1B2A4A; color: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 16px; cursor: pointer">{{faceLabel}}</button>
+    <button onClick="{{reset}}" style="min-height: 54px; padding: 0 18px; border: 0; border-radius: 18px; background: #FFFFFF; color: #1B2A4A; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 16px; cursor: pointer; box-shadow: 0 4px 0 #EAD9BE">Yenidən</button>
+  </div>
+
+  <div style="flex: 1"></div>
+  <div style="margin: 20px 16px 18px; font-size: 13px; font-weight: 700; color: #3C4B6B; background: #FFFFFF; border-radius: 18px; padding: 14px 16px; box-shadow: 0 4px 0 #EAD9BE">Real plastilinlə daha maraqlıdır! Gil evində şənbə masterklassına bax →</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1240}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = { dx: 0, dy: 0, pressing: false, color: 0, shape: 0, face: true, n: 0 };
+    this.start = null;
+  }
+  renderVals() {
+    const st = this.state;
+    const C = [['Narıncı', '#E8682A'], ['Mavi', '#6FA8DC'], ['Yaşıl', '#7BC67E'], ['Sarı', '#FFC23D'], ['Çəhrayı', '#F28AA6'], ['Bənövşəyi', '#9B7BD4']];
+    const S = [['Top', '50%'], ['Damla', '50% 50% 50% 50% / 60% 60% 40% 40%'], ['Kub', '34px'], ['Yumurta', '50% 50% 50% 50% / 64% 64% 36% 36%']];
+    const col = C[st.color][1];
+    // stretch: pull direction stretches that axis, squashes the other
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    let sx = 1 + clamp(Math.abs(st.dx) / 160, 0, 0.9) - clamp(Math.abs(st.dy) / 320, 0, 0.35);
+    let sy = 1 + clamp(Math.abs(st.dy) / 160, 0, 0.9) - clamp(Math.abs(st.dx) / 320, 0, 0.35);
+    if (st.pressing && Math.abs(st.dx) < 6 && Math.abs(st.dy) < 6) { sx = 1.12; sy = 0.86; }
+    const tx = clamp(st.dx * 0.35, -60, 60), ty = clamp(st.dy * 0.35, -60, 60);
+    const transition = st.pressing ? 'transform .06s linear, border-radius .3s' : 'transform .6s cubic-bezier(.25,1.8,.45,1), border-radius .3s';
+    const blob = 'position: relative; width: 170px; height: 170px; border-radius: ' + S[st.shape][1] + '; background: ' + col + '; box-shadow: inset -14px -16px 0 rgba(0,0,0,.16), inset 14px 14px 0 rgba(255,255,255,.35); transform: translate(' + tx + 'px,' + ty + 'px) scale(' + sx.toFixed(3) + ',' + sy.toFixed(3) + '); transition: ' + transition + '; pointer-events: none';
+    const shadow = 'position: absolute; left: 50%; top: 50%; width: 170px; height: 36px; margin: 70px 0 0 -85px; border-radius: 50%; background: rgba(0,0,0,.22); transform: translateX(' + tx + 'px) scaleX(' + sx.toFixed(3) + '); transition: ' + transition;
+    const mouth = 'position: absolute; left: 50%; top: 60%; width: 34px; height: ' + (st.pressing ? 26 : 14) + 'px; margin-left: -17px; border-radius: ' + (st.pressing ? '50%' : '0 0 20px 20px') + '; background: #1B2A4A; transition: height .15s, border-radius .15s';
+    return {
+      blob, shadow, mouth, hasFace: st.face, squeezes: String(st.n),
+      hint: st.pressing ? 'Dart, dart!' : 'Bas və dart',
+      down: (e) => { try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {} this.start = { x: e.clientX, y: e.clientY }; this.setState({ pressing: true, dx: 0, dy: 0 }); },
+      move: (e) => { if (!this.start) return; this.setState({ dx: e.clientX - this.start.x, dy: e.clientY - this.start.y }); },
+      up: () => { if (!this.start) return; this.start = null; this.setState({ pressing: false, dx: 0, dy: 0, n: st.n + 1 }); },
+      colors: C.map(([name, c], i) => ({ name, pick: () => this.setState({ color: i }), style: 'width: 48px; height: 48px; border: 0; border-radius: 50%; cursor: pointer; background: ' + c + '; box-shadow: inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.35)' + (i === st.color ? ', 0 0 0 4px #FFF4E2, 0 0 0 7px #1B2A4A' : '') })),
+      shapes: S.map(([name], i) => ({ name, pick: () => this.setState({ shape: i }), style: 'min-height: 46px; padding: 0 16px; border: 0; border-radius: 16px; cursor: pointer; font-family: Nunito, sans-serif; font-weight: 800; font-size: 14px; ' + (i === st.shape ? 'background: ' + col + '; color: #1B2A4A; box-shadow: inset -3px -4px 0 rgba(0,0,0,.16)' : 'background: #FFFFFF; color: #1B2A4A; box-shadow: 0 4px 0 #EAD9BE') })),
+      toggleFace: () => this.setState({ face: !st.face }),
+      faceLabel: st.face ? 'Üzünü gizlət' : 'Üz əlavə et',
+      reset: () => this.setState({ dx: 0, dy: 0, pressing: false, color: 0, shape: 0, face: true, n: 0 })
+    };
+  }
+}
+</script>
+</body>
+</html>

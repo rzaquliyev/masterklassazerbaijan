@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<title>Ad günü — Bayram meydanı</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@500;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF4E2}
+a{color:#1B2A4A}a:hover{color:#E8682A}
+@keyframes rise{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+@keyframes flicker{0%,100%{transform:scale(1,1)}50%{transform:scale(.85,1.15)}}
+@keyframes smoke{0%{transform:translateY(0);opacity:.7}100%{transform:translateY(-30px);opacity:0}}
+@keyframes confetti{0%{transform:translateY(-10px) rotate(0)}100%{transform:translateY(200px) rotate(360deg);opacity:0}}
+.on .rise{animation:rise 4s ease-in-out infinite}
+.on .flicker{animation:flicker .5s ease-in-out infinite;transform-origin:50% 100%}
+.on .smoke{animation:smoke 1.4s ease-out both}
+.on .conf{animation:confetti 2s ease-in both}
+button:focus-visible,a:focus-visible,input:focus{outline:3px solid #E8682A;outline-offset:3px}
+</style>
+</helmet>
+<div class="{{motionClass}}" style="width: 390px; height: 2300px; box-sizing: border-box; background: #FFF4E2; color: #1B2A4A; font-family: Nunito, system-ui, sans-serif; overflow: hidden; position: relative; display: flex; flex-direction: column">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; position: relative; z-index: 3">
+    <a href="Plastilin.dc.html" style="min-height: 44px; padding: 0 14px; display: flex; align-items: center; border-radius: 16px; background: #FFFFFF; box-shadow: 0 4px 0 #EAD9BE; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; text-decoration: none">← Şəhərə</a>
+  </div>
+
+  <!-- BALLOONS + CAKE -->
+  <div style="position: relative; height: 400px">
+    <div class="rise" style="position: absolute; left: 18px; top: 0; width: 58px; height: 72px; border-radius: 50% 50% 46% 46%; background: #E8682A; box-shadow: inset -6px -8px 0 rgba(0,0,0,.14), inset 6px 6px 0 rgba(255,255,255,.35)"><span style="position: absolute; left: 28px; top: 72px; width: 2px; height: 80px; background: #1B2A4A"></span></div>
+    <div class="rise" style="position: absolute; left: 70px; top: 40px; width: 52px; height: 64px; border-radius: 50% 50% 46% 46%; background: #6FA8DC; box-shadow: inset -6px -8px 0 rgba(0,0,0,.14), inset 6px 6px 0 rgba(255,255,255,.35); animation-delay: .6s"><span style="position: absolute; left: 25px; top: 64px; width: 2px; height: 60px; background: #1B2A4A"></span></div>
+    <div class="rise" style="position: absolute; right: 24px; top: 10px; width: 60px; height: 74px; border-radius: 50% 50% 46% 46%; background: #FFC23D; box-shadow: inset -6px -8px 0 rgba(0,0,0,.14), inset 6px 6px 0 rgba(255,255,255,.45); animation-delay: 1.1s"><span style="position: absolute; left: 29px; top: 74px; width: 2px; height: 70px; background: #1B2A4A"></span></div>
+    <div class="rise" style="position: absolute; right: 80px; top: 50px; width: 46px; height: 58px; border-radius: 50% 50% 46% 46%; background: #F28AA6; box-shadow: inset -5px -7px 0 rgba(0,0,0,.12), inset 5px 5px 0 rgba(255,255,255,.35); animation-delay: .3s"><span style="position: absolute; left: 22px; top: 58px; width: 2px; height: 50px; background: #1B2A4A"></span></div>
+
+    <h1 style="position: absolute; left: 0; right: 0; top: 118px; margin: 0; text-align: center; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 36px; line-height: 1">Ad günü<br>bizdə keçsin!</h1>
+
+    <!-- cake -->
+    <div style="position: absolute; left: 50%; bottom: 0; width: 230px; margin-left: -115px; height: 170px">
+      <sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+        <span class="conf" style="position: absolute; left: 10px; top: -60px; width: 10px; height: 14px; border-radius: 3px; background: #E8682A"></span>
+        <span class="conf" style="position: absolute; left: 70px; top: -80px; width: 12px; height: 12px; border-radius: 50%; background: #6FA8DC; animation-delay: .2s"></span>
+        <span class="conf" style="position: absolute; left: 140px; top: -70px; width: 10px; height: 14px; border-radius: 3px; background: #7BC67E; animation-delay: .1s"></span>
+        <span class="conf" style="position: absolute; left: 200px; top: -90px; width: 12px; height: 12px; border-radius: 50%; background: #FFC23D; animation-delay: .3s"></span>
+      </sc-if>
+      <div style="position: absolute; left: 40px; right: 40px; top: 28px; display: flex; justify-content: space-around">
+        <sc-for list="{{candles}}" as="c" hint-placeholder-count="5">
+          <span style="position: relative; width: 10px; height: 34px; border-radius: 4px; background: {{c.color}}">
+            <sc-if value="{{c.lit}}" hint-placeholder-val="{{ true }}"><span class="flicker" style="position: absolute; left: -3px; top: -20px; width: 16px; height: 20px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; background: #FFC23D; box-shadow: 0 0 12px 4px rgba(255,194,61,.6)"></span></sc-if>
+            <sc-if value="{{c.out}}" hint-placeholder-val="{{ false }}"><span class="smoke" style="position: absolute; left: 1px; top: -16px; width: 8px; height: 14px; border-radius: 6px; background: #C9D3E8"></span></sc-if>
+          </span>
+        </sc-for>
+      </div>
+      <div style="position: absolute; left: 30px; right: 30px; top: 60px; height: 50px; border-radius: 18px 18px 8px 8px; background: #F28AA6; box-shadow: inset -6px -7px 0 rgba(0,0,0,.12), inset 6px 6px 0 rgba(255,255,255,.35)"></div>
+      <div style="position: absolute; left: 30px; right: 30px; top: 56px; height: 16px; border-radius: 12px; background: #FFFFFF; clip-path: polygon(0 0,100% 0,100% 50%,92% 100%,84% 50%,76% 100%,68% 50%,60% 100%,52% 50%,44% 100%,36% 50%,28% 100%,20% 50%,12% 100%,4% 50%,0 80%)"></div>
+      <div style="position: absolute; left: 10px; right: 10px; top: 106px; height: 56px; border-radius: 18px 18px 10px 10px; background: #FFE08A; box-shadow: inset -6px -7px 0 rgba(0,0,0,.1), inset 6px 6px 0 rgba(255,255,255,.45)"></div>
+      <div style="position: absolute; left: -6px; right: -6px; bottom: 0; height: 12px; border-radius: 6px; background: #FFFFFF; box-shadow: 0 4px 0 #EAD9BE"></div>
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: center; padding-top: 18px">
+    <button onClick="{{blow}}" style="min-height: 52px; padding: 0 24px; border: 0; border-radius: 99px; background: {{blowBg}}; color: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 16px; cursor: pointer; box-shadow: inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.3)">{{blowLabel}}</button>
+  </div>
+
+  <!-- PACKAGES -->
+  <div style="padding: 32px 16px 0">
+    <h2 style="margin: 0 0 4px 4px; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 26px">Paketini seç</h2>
+    <div style="font-size: 14px; font-weight: 700; color: #3C4B6B; margin: 0 0 14px 4px">Bütün paketlərə masterklass və materiallar daxildir</div>
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <sc-for list="{{packs}}" as="p" hint-placeholder-count="3">
+        <button onClick="{{p.pick}}" style="{{p.style}}">
+          <span style="display: flex; justify-content: space-between; align-items: center; width: 100%">
+            <span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px">{{p.name}}</span>
+            <span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 18px">[QİYMƏT] ₼</span>
+          </span>
+          <span style="display: block; text-align: left; font-size: 14px; font-weight: 700; margin-top: 6px; line-height: 1.45">{{p.desc}}</span>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- BUILDER -->
+  <div style="padding: 26px 16px 0">
+    <div style="background: #FFFFFF; border-radius: 28px; padding: 20px; box-shadow: 0 8px 0 #EAD9BE">
+      <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px">Neçə qonaq?</div>
+      <div style="display: flex; align-items: center; gap: 14px; margin-top: 10px">
+        <button onClick="{{minus}}" aria-label="Azalt" style="width: 52px; height: 52px; border: 0; border-radius: 50%; background: #FFF4E2; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 26px; color: #1B2A4A; cursor: pointer; box-shadow: 0 4px 0 #EAD9BE">−</button>
+        <span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 36px; min-width: 56px; text-align: center">{{kids}}</span>
+        <button onClick="{{plus}}" aria-label="Artır" style="width: 52px; height: 52px; border: 0; border-radius: 50%; background: #E8682A; color: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 26px; cursor: pointer; box-shadow: inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.3)">+</button>
+        <span style="font-size: 13px; font-weight: 800; color: #3C4B6B">uşaq<br>(maks. [N])</span>
+      </div>
+      <div style="display: flex; gap: 4px; margin-top: 14px; flex-wrap: wrap">
+        <sc-for list="{{heads}}" as="h" hint-placeholder-count="8"><span style="{{h}}"></span></sc-for>
+      </div>
+      <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 800; font-size: 15px; margin-top: 18px">Tarix
+        <input type="date" style="min-height: 52px; border: 0; border-radius: 16px; padding: 0 14px; font-family: Nunito, sans-serif; font-size: 16px; font-weight: 700; background: #FFF4E2; color: #1B2A4A">
+      </label>
+      <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 800; font-size: 15px; margin-top: 12px">Telefon
+        <input type="tel" autocomplete="tel" inputmode="tel" placeholder="+994 __ ___ __ __" style="min-height: 52px; border: 0; border-radius: 16px; padding: 0 14px; font-family: Nunito, sans-serif; font-size: 16px; font-weight: 700; background: #FFF4E2; color: #1B2A4A">
+      </label>
+    </div>
+  </div>
+
+  <div style="flex: 1"></div>
+  <div style="margin: 24px 12px 16px; background: #1B2A4A; color: #FFFFFF; border-radius: 26px; padding: 14px 14px 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 10px; box-shadow: 0 8px 0 #0F1A30">
+    <div><div style="font-size: 13px; font-weight: 800; color: #C9D3E8">{{summary}}</div><div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 18px">Qiymət təsdiqdə</div></div>
+    <a href="#" style="min-height: 54px; padding: 0 18px; display: flex; align-items: center; border-radius: 20px; background: #E8682A; color: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 16px; text-decoration: none; box-shadow: inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.3)">Sorğu göndər</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":2300}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { out: false, pack: 1, kids: 8 }; }
+  renderVals() {
+    const motion = this.props.motion ?? true;
+    const st = this.state;
+    const cc = ['#6FA8DC', '#E8682A', '#7BC67E', '#FFC23D', '#F28AA6'];
+    const candles = cc.map((c) => ({ color: c, lit: !st.out, out: st.out }));
+    const P = [
+      { name: 'Mini', desc: '60 dəq masterklass · bir mövzu · [N] uşağa qədər' },
+      { name: 'Usta', desc: '90 dəq masterklass · mövzu seçimi · ad günü tortu masası · [N] uşağa qədər' },
+      { name: 'Super', desc: '2 masterklass · animator · bəzək · hər uşağa hədiyyə əl işi · [N] uşağa qədər' }
+    ];
+    const pcol = ['#6FA8DC', '#E8682A', '#7BC67E'];
+    const packs = P.map((p, i) => {
+      const on = st.pack === i;
+      return { ...p, pick: () => this.setState({ pack: i }),
+        style: 'display: block; width: 100%; text-align: left; border: 0; border-radius: 24px; padding: 18px; cursor: pointer; font-family: Nunito, sans-serif; color: ' + (on ? '#FFFFFF' : '#1B2A4A') + '; background: ' + (on ? pcol[i] : '#FFFFFF') + '; box-shadow: ' + (on ? 'inset -6px -7px 0 rgba(0,0,0,.16), inset 6px 6px 0 rgba(255,255,255,.3), 0 0 0 3px #1B2A4A' : '0 6px 0 #EAD9BE') };
+    });
+    const kids = st.kids;
+    const heads = Array.from({ length: kids }, (_, i) => 'width: 26px; height: 26px; border-radius: 50%; background: ' + cc[i % 5] + '; box-shadow: inset -3px -4px 0 rgba(0,0,0,.16), inset 3px 3px 0 rgba(255,255,255,.35)');
+    return {
+      motionClass: motion ? 'on' : '', candles, done: st.out, packs, heads, kids: String(kids),
+      blow: () => this.setState({ out: !st.out }),
+      blowLabel: st.out ? 'Şamları yenidən yandır' : 'Şamları üfür!',
+      blowBg: st.out ? '#7BC67E' : '#E8682A',
+      minus: () => this.setState({ kids: Math.max(4, kids - 1) }),
+      plus: () => this.setState({ kids: Math.min(20, kids + 1) }),
+      summary: P[st.pack].name + ' paket · ' + kids + ' uşaq'
+    };
+  }
+}
+</script>
+</body>
+</html>

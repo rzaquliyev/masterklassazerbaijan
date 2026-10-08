@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<title>Oyun parkı</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@500;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF4E2}
+a{color:#1B2A4A}a:hover{color:#E8682A}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes swing{0%,100%{transform:rotate(-16deg)}50%{transform:rotate(16deg)}}
+@keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.12)}100%{transform:scale(1)}}
+@keyframes squish{0%,100%{transform:scale(1,1)}40%{transform:scale(1.12,.86)}70%{transform:scale(.94,1.06)}}
+.on .spin{animation:spin 10s linear infinite}
+.on .swing{animation:swing 2.4s ease-in-out infinite;transform-origin:50% 0}
+.on .pop{animation:pop .35s cubic-bezier(.3,1.6,.5,1) both}
+.on .squish{animation:squish 1.8s ease-in-out infinite}
+button:focus-visible,a:focus-visible{outline:3px solid #E8682A;outline-offset:3px}
+</style>
+</helmet>
+<div class="{{motionClass}}" style="width: 390px; height: 2200px; box-sizing: border-box; background: #FFF4E2; color: #1B2A4A; font-family: Nunito, system-ui, sans-serif; overflow: hidden; position: relative; display: flex; flex-direction: column">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px">
+    <a href="Plastilin.dc.html" style="min-height: 44px; padding: 0 14px; display: flex; align-items: center; border-radius: 16px; background: #FFFFFF; box-shadow: 0 4px 0 #EAD9BE; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; text-decoration: none">← Şəhərə</a>
+    <span style="display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 14px; background: #FFE08A; padding: 8px 12px; border-radius: 99px">★ 2 / 5 ulduz</span>
+  </div>
+
+  <!-- PARK SCENE -->
+  <div style="position: relative; height: 260px; margin: 0 16px; border-radius: 32px; overflow: hidden; background: #BFE3FF">
+    <div style="position: absolute; left: -40px; right: -40px; bottom: 0; height: 90px; border-radius: 50% 50% 0 0; background: #7BC67E; box-shadow: inset 0 10px 0 rgba(255,255,255,.2)"></div>
+    <!-- ferris wheel -->
+    <div style="position: absolute; right: 26px; bottom: 40px; width: 8px; height: 110px; background: #1B2A4A; transform: rotate(14deg); transform-origin: bottom"></div>
+    <div style="position: absolute; right: 62px; bottom: 40px; width: 8px; height: 110px; background: #1B2A4A; transform: rotate(-14deg); transform-origin: bottom"></div>
+    <div class="spin" style="position: absolute; right: 8px; bottom: 96px; width: 136px; height: 136px; border-radius: 50%; border: 6px solid #E8682A; box-sizing: border-box">
+      <span style="position: absolute; left: 50%; top: 50%; width: 124px; height: 4px; margin: -2px 0 0 -62px; background: #E8682A"></span>
+      <span style="position: absolute; left: 50%; top: 50%; width: 124px; height: 4px; margin: -2px 0 0 -62px; background: #E8682A; transform: rotate(60deg)"></span>
+      <span style="position: absolute; left: 50%; top: 50%; width: 124px; height: 4px; margin: -2px 0 0 -62px; background: #E8682A; transform: rotate(120deg)"></span>
+      <span style="position: absolute; left: 50%; top: -14px; margin-left: -12px; width: 24px; height: 22px; border-radius: 8px; background: #FFC23D"></span>
+      <span style="position: absolute; left: 50%; bottom: -14px; margin-left: -12px; width: 24px; height: 22px; border-radius: 8px; background: #6FA8DC"></span>
+      <span style="position: absolute; left: -14px; top: 50%; margin-top: -11px; width: 24px; height: 22px; border-radius: 8px; background: #7BC67E"></span>
+      <span style="position: absolute; right: -14px; top: 50%; margin-top: -11px; width: 24px; height: 22px; border-radius: 8px; background: #FFFFFF"></span>
+    </div>
+    <!-- swing -->
+    <div style="position: absolute; left: 24px; bottom: 74px; width: 120px; height: 10px; border-radius: 5px; background: #8A5A3B"></div>
+    <div style="position: absolute; left: 24px; bottom: 0; width: 8px; height: 84px; background: #8A5A3B"></div>
+    <div style="position: absolute; left: 136px; bottom: 0; width: 8px; height: 84px; background: #8A5A3B"></div>
+    <div class="swing" style="position: absolute; left: 64px; bottom: 22px; width: 40px; height: 56px">
+      <span style="position: absolute; left: 4px; top: 0; width: 3px; height: 46px; background: #1B2A4A"></span>
+      <span style="position: absolute; right: 4px; top: 0; width: 3px; height: 46px; background: #1B2A4A"></span>
+      <span style="position: absolute; left: 0; bottom: 0; width: 40px; height: 10px; border-radius: 5px; background: #E8682A"></span>
+    </div>
+    <div style="position: absolute; left: 18px; top: 18px; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 34px; line-height: 1">Oyun<br>parkı</div>
+  </div>
+
+  <!-- MEMORY GAME -->
+  <div style="padding: 26px 16px 0">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end">
+      <div>
+        <h2 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 26px">Usta cütləri</h2>
+        <div style="font-size: 14px; font-weight: 700; color: #3C4B6B">Eyni plastilin fiqurları tap</div>
+      </div>
+      <div style="text-align: right; font-weight: 800; font-size: 14px">{{moves}} gediş<br>{{found}} / 6 cüt</div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 14px">
+      <sc-for list="{{cards}}" as="c" hint-placeholder-count="12">
+        <button onClick="{{c.flip}}" aria-label="{{c.label}}" style="{{c.btn}}">
+          <sc-if value="{{c.open}}" hint-placeholder-val="{{ false }}">
+            <span class="pop" style="{{c.shape}}"></span>
+          </sc-if>
+          <sc-if value="{{c.closed}}" hint-placeholder-val="{{ true }}">
+            <span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 26px; color: #FFE08A">?</span>
+          </sc-if>
+        </button>
+      </sc-for>
+    </div>
+    <sc-if value="{{won}}" hint-placeholder-val="{{ false }}">
+      <div class="pop" style="margin-top: 14px; background: #7BC67E; border-radius: 22px; padding: 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px; box-shadow: inset -5px -6px 0 rgba(0,0,0,.12), inset 5px 5px 0 rgba(255,255,255,.3)">
+        <div><div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px">Bravo, usta!</div><div style="font-size: 14px; font-weight: 800">{{moves}} gedişdə tapdın</div></div>
+        <button onClick="{{reset}}" style="min-height: 48px; padding: 0 16px; border: 0; border-radius: 16px; background: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; color: #1B2A4A; cursor: pointer; box-shadow: 0 4px 0 #57A05A">Yenidən</button>
+      </div>
+    </sc-if>
+  </div>
+
+  <!-- OTHER GAMES -->
+  <div style="padding: 34px 16px 0">
+    <h2 style="margin: 0 0 14px 4px; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 26px">Daha nə oynayaq?</h2>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+      <a href="Yogur.dc.html" style="grid-column: span 2; display: flex; align-items: center; gap: 16px; text-decoration: none; background: #E8682A; color: #FFFFFF; border-radius: 26px; padding: 18px; box-shadow: inset -6px -7px 0 rgba(0,0,0,.16), inset 6px 6px 0 rgba(255,255,255,.3), 0 6px 0 #B44E1D">
+        <span class="squish" style="min-width: 70px; height: 70px; border-radius: 50%; background: #FFC23D; box-shadow: inset -7px -8px 0 rgba(0,0,0,.16), inset 6px 6px 0 rgba(255,255,255,.45)"></span>
+        <span><span style="display: block; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px">Plastilin yoğur</span><span style="display: block; font-size: 14px; font-weight: 800">Barmağınla sıx, formasını dəyiş</span></span>
+      </a>
+      <a href="#" style="text-decoration: none; background: #6FA8DC; border-radius: 26px; padding: 16px; min-height: 160px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: inset -6px -7px 0 rgba(0,0,0,.14), inset 6px 6px 0 rgba(255,255,255,.3), 0 6px 0 #4C84B8">
+        <span style="display: flex; gap: 4px"><span style="width: 22px; height: 22px; border-radius: 50%; background: #E8682A"></span><span style="width: 22px; height: 22px; border-radius: 50%; background: #FFC23D"></span><span style="width: 22px; height: 22px; border-radius: 50%; background: #7BC67E"></span></span>
+        <span><span style="display: block; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 18px">Rəngləmə</span><span style="display: block; font-size: 13px; font-weight: 800">Şəhəri boya, şəkli yüklə</span></span>
+      </a>
+      <a href="#" style="text-decoration: none; background: #1B2A4A; color: #FFF4E2; border-radius: 26px; padding: 16px; min-height: 160px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 6px 0 #0F1A30">
+        <span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 28px; color: #FFE08A">★★☆☆☆</span>
+        <span><span style="display: block; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 18px">Gizlənqaç</span><span style="display: block; font-size: 13px; font-weight: 800; color: #C9D3E8">Saytda 5 ulduz tap, endirim qazan</span></span>
+      </a>
+    </div>
+  </div>
+
+  <div style="flex: 1"></div>
+  <div style="margin: 26px 16px 18px; font-size: 13px; font-weight: 700; color: #3C4B6B; line-height: 1.5; background: #FFFFFF; border-radius: 18px; padding: 14px 16px; box-shadow: 0 4px 0 #EAD9BE">Oyunlar qeydiyyatsız işləyir, uşaqdan heç bir məlumat toplanmır. Endirim kodu yalnız valideynin telefonuna göndərilir.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":2200}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { open: [], done: [], moves: 0, lock: false }; }
+  componentWillUnmount() { clearTimeout(this.t); }
+  renderVals() {
+    const motion = this.props.motion ?? true;
+    const clay = 'box-shadow: inset -5px -6px 0 rgba(0,0,0,.18), inset 4px 4px 0 rgba(255,255,255,.4);';
+    const S = {
+      top: 'width: 46px; height: 46px; border-radius: 50%; background: #E8682A; ' + clay,
+      kub: 'width: 42px; height: 42px; border-radius: 12px; background: #6FA8DC; ' + clay,
+      ucbucaq: 'width: 48px; height: 44px; background: #7BC67E; clip-path: polygon(50% 0, 100% 100%, 0 100%)',
+      kapsul: 'width: 52px; height: 26px; border-radius: 13px; background: #FFC23D; ' + clay,
+      halqa: 'width: 44px; height: 44px; border-radius: 50%; box-sizing: border-box; border: 11px solid #1B2A4A',
+      damla: 'width: 40px; height: 40px; border-radius: 50% 0 50% 50%; transform: rotate(-45deg); background: #F28AA6; ' + clay
+    };
+    const order = ['top','halqa','kub','damla','ucbucaq','kapsul','kub','top','kapsul','ucbucaq','damla','halqa'];
+    const st = this.state;
+    const flipAt = (i) => {
+      if (st.lock || st.open.includes(i) || st.done.includes(i)) return;
+      const open = [...st.open, i];
+      if (open.length < 2) { this.setState({ open }); return; }
+      const moves = st.moves + 1;
+      if (order[open[0]] === order[open[1]]) { this.setState({ open: [], done: [...st.done, ...open], moves }); return; }
+      this.setState({ open, moves, lock: true });
+      this.t = setTimeout(() => this.setState({ open: [], lock: false }), 800);
+    };
+    const cards = order.map((k, i) => {
+      const isDone = st.done.includes(i), isOpen = isDone || st.open.includes(i);
+      return {
+        open: isOpen, closed: !isOpen,
+        label: isOpen ? k : 'Kart ' + (i + 1),
+        shape: S[k],
+        flip: () => flipAt(i),
+        btn: 'aspect-ratio: 1 / 1; min-height: 76px; border: 0; border-radius: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; ' + (isOpen ? 'background: #FFFFFF; box-shadow: 0 5px 0 ' + (isDone ? '#7BC67E' : '#EAD9BE') : 'background: #1B2A4A; box-shadow: inset -4px -5px 0 rgba(0,0,0,.25), inset 4px 4px 0 rgba(255,255,255,.12), 0 5px 0 #0F1A30')
+      };
+    });
+    return {
+      motionClass: motion ? 'on' : '', cards,
+      moves: String(st.moves), found: String(st.done.length / 2),
+      won: st.done.length === 12,
+      reset: () => this.setState({ open: [], done: [], moves: 0, lock: false })
+    };
+  }
+}
+</script>
+</body>
+</html>
