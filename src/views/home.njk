@@ -124,7 +124,7 @@
   <p class="page-lead">{{ t.home.tourLead }}</p>
   <div class="card-grid cols-4" style="margin-top:16px;">
     {% for p in t.places %}
-    <a class="town-tile" href="{{ p.href | replace('{lang}', lang) }}" style="background:{{ p.color }};">
+    <a class="town-tile {{ 'town-tile--dark' if p.color == '#1B2A4A' }}" href="{{ p.href | replace('{lang}', lang) }}" style="background:{{ p.color }};">
       <span class="town-tile-icon clay-sm" aria-hidden="true"></span>
       <span class="town-tile-place">{{ p.place }}</span>
       <span class="town-tile-what">{{ p.what }}</span>
