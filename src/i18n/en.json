@@ -257,6 +257,11 @@
     "birthdayLead": "A discount in your birthday month",
     "huntTitle": "Hide & Seek",
     "huntLead": "Find 5 stars, earn a discount code",
+    "seasonalBadge": "November–December",
+    "seasonalTitle": "New Year celebrations are coming!",
+    "seasonalLead": "In November and December we're planning special New Year-themed workshops and group events. Get in touch for dates and details.",
+    "seasonalCta": "Get details",
+    "seasonalWhatsappText": "Hi! I'd like to know more about the November-December New Year events.",
     "rulesNote": "Rules: one phone number, one code; discounts don't stack."
   },
   "notFound": {

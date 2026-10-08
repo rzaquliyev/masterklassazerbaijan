@@ -10,6 +10,15 @@
 </section>
 
 <section class="container" style="margin-top:22px;">
+  <div class="trust-card" style="background:var(--green); color:var(--white); box-shadow:0 8px 0 var(--green-deep);">
+    <span class="chip-solid" style="background:var(--white); color:var(--green-deep);">{{ t.kampaniyalar.seasonalBadge }}</span>
+    <div style="font-family:var(--font-display); font-weight:700; font-size:1.25rem; margin-top:12px;">{{ t.kampaniyalar.seasonalTitle }}</div>
+    <div style="margin-top:6px; font-weight:700; font-size:.9rem;">{{ t.kampaniyalar.seasonalLead }}</div>
+    <a class="btn-dark" style="margin-top:16px; display:inline-flex;" href="https://wa.me/994000000000?text={{ t.kampaniyalar.seasonalWhatsappText | urlencode }}" target="_blank" rel="noopener">{{ t.kampaniyalar.seasonalCta }}</a>
+  </div>
+</section>
+
+<section class="container" style="margin-top:22px;">
   <div class="trust-card" style="background:var(--night); color:var(--cream); box-shadow:0 8px 0 var(--night-deep);">
     <div style="display:flex; justify-content:space-between; align-items:flex-start;">
       <div>
