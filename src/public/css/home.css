@@ -32,20 +32,18 @@
 .roadmap-title{ font-family:var(--font-display); font-weight:700; font-size:1.1rem; color:var(--sun); }
 .roadmap-text{ font-size:.9rem; font-weight:700; color:#C9D3E8; margin-top:2px; }
 
-/* Yol xəritəsi — əyri yol + sürən maşın (bir dəfəlik, scroll ilə işə düşür) */
-.roadmap-visual{ position:relative; max-width:350px; margin:28px auto 0; aspect-ratio:350/470; }
+/* Yol xəritəsi — əyri yol (sol zolaqda) + sürən maşın, addımlar yolun kənarında sağda (bir dəfəlik, scroll ilə işə düşür) */
+.roadmap-visual{ position:relative; max-width:420px; margin:28px auto 0; aspect-ratio:350/470; }
 .roadmap-road-svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
-.roadmap-road-base{ fill:none; stroke:var(--night-2); stroke-width:34; stroke-linecap:round; }
+.roadmap-road-base{ fill:none; stroke:var(--night-2); stroke-width:30; stroke-linecap:round; }
 .roadmap-road-dash{ fill:none; stroke:var(--sun); stroke-width:3; stroke-dasharray:12 12; stroke-linecap:round; }
-.roadmap-steps--road{ position:absolute; inset:0; margin:0; padding:0; display:block; z-index:2; }
-.roadmap-steps--road .roadmap-step{
-  position:absolute; max-width:46%; background:var(--night); border-radius:14px; padding:6px 8px;
-  box-shadow:0 0 0 8px var(--night);
-}
-.roadmap-step-1{ left:0; top:6%; }
-.roadmap-step-2{ right:0; top:34%; justify-content:flex-end; text-align:right; }
-.roadmap-step-3{ left:0; top:62%; }
-.roadmap-step-4{ right:0; top:82%; justify-content:flex-end; text-align:right; }
+.roadmap-stop{ r:6; fill:var(--night); stroke:var(--sun); stroke-width:3; }
+.roadmap-steps--road{ position:absolute; inset:0; margin:0; padding:0; z-index:2; }
+.roadmap-steps--road .roadmap-step{ position:absolute; left:58%; right:2%; transform:translateY(-50%); }
+.roadmap-step-1{ top:4.3%; }
+.roadmap-step-2{ top:31.9%; }
+.roadmap-step-3{ top:61.7%; }
+.roadmap-step-4{ top:89.4%; }
 
 .museum-teaser{ background:var(--night); padding:0 0 50px; }
 .museum-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:16px; }

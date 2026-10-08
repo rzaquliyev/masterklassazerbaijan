@@ -57,9 +57,13 @@
     <div class="page-lead" style="color:#C9D3E8;">{{ t.home.roadmapLead }}</div>
     <div class="roadmap-visual">
       <svg class="roadmap-road-svg" viewBox="0 0 350 470" aria-hidden="true" focusable="false">
-        <path class="roadmap-road-base" d="M30 20 C 330 20, 330 150, 175 150 S 20 280, 175 290 S 330 420, 60 450"></path>
-        <path class="roadmap-road-dash" d="M30 20 C 330 20, 330 150, 175 150 S 20 280, 175 290 S 330 420, 60 450"></path>
-        <g class="roadmap-car" id="roadmap-car" transform="translate(30,20)">
+        <path class="roadmap-road-base" d="M85 20 C 160 20, 160 150, 85 150 S 10 280, 85 290 S 160 420, 85 420"></path>
+        <path class="roadmap-road-dash" d="M85 20 C 160 20, 160 150, 85 150 S 10 280, 85 290 S 160 420, 85 420"></path>
+        <circle class="roadmap-stop" cx="85" cy="20"></circle>
+        <circle class="roadmap-stop" cx="85" cy="150"></circle>
+        <circle class="roadmap-stop" cx="85" cy="290"></circle>
+        <circle class="roadmap-stop" cx="85" cy="420"></circle>
+        <g class="roadmap-car" id="roadmap-car" transform="translate(85,20)">
           <ellipse cx="0" cy="3" rx="27" ry="15" fill="rgba(0,0,0,.28)"></ellipse>
           <rect x="-20" y="-18" width="12" height="8" rx="3.5" fill="#14203A"></rect>
           <rect x="8" y="-18" width="12" height="8" rx="3.5" fill="#14203A"></rect>
