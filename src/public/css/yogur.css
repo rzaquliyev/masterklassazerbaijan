@@ -7,6 +7,7 @@
 .yogur-area:active{ cursor:grabbing; }
 .yogur-shadow{ position:absolute; left:50%; top:50%; width:150px; height:32px; margin:66px 0 0 -75px; border-radius:50%; background:rgba(0,0,0,.22); pointer-events:none; }
 .yogur-blob{ position:relative; width:150px; height:150px; border-radius:50%; background:var(--orange); box-shadow:inset -14px -16px 0 rgba(0,0,0,.16), inset 14px 14px 0 rgba(255,255,255,.35); pointer-events:none; }
+.yogur-face[hidden]{ display:none; }
 .yogur-face{ position:absolute; left:50%; top:38%; width:70px; margin-left:-35px; display:flex; justify-content:space-between; }
 .yogur-eye{ width:14px; height:18px; border-radius:50%; background:var(--night); box-shadow:inset 3px 3px 0 #fff; }
 .yogur-mouth{ position:absolute; left:50%; top:60%; width:30px; height:14px; margin-left:-15px; border-radius:0 0 18px 18px; background:var(--night); transition:height .15s, border-radius .15s; }

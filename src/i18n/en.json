@@ -161,11 +161,18 @@
     "shapes": ["Ball", "Drop", "Cube", "Egg"]
   },
   "rengleme": {
-    "title": "Coloring",
-    "lead": "Pick a color, tap a house to color it, download the picture.",
-    "download": "Download as PNG",
-    "reset": "Clear",
-    "privacyNote": "No data is stored — the picture downloads only to your device."
+    "title": "Coloring corner",
+    "lead": "Pick a picture, pick a color, tap a part.",
+    "progressLabel": "parts",
+    "finishedTitle": "Master artist!",
+    "download": "Download the picture",
+    "undo": "Undo",
+    "sampleBtn": "Preview",
+    "clearBtn": "Clear",
+    "eraserLabel": "Eraser",
+    "privacyNote": "Pictures aren't saved or sent anywhere. Download the one you like and print it.",
+    "pictureNames": { "city": "Playdough City", "space": "Space Journey", "ocean": "Under the Sea", "buta": "Buta Pattern", "baku": "Baku at Night", "dino": "Dino Friend" },
+    "levels": { "easy": "Easy", "medium": "Medium", "hard": "Hard" }
   },
   "gizlenqach": {
     "counterLabel": "stars",

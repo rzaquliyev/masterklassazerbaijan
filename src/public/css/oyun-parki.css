@@ -19,6 +19,7 @@
 .shape-drop{ width:56%; height:56%; border-radius:50% 0 50% 50%; transform:rotate(-45deg); background:var(--pink); }
 .shape-triangle{ width:60%; height:52%; background:var(--green); clip-path:polygon(50% 0, 100% 100%, 0 100%); }
 .shape-capsule{ width:68%; height:36%; border-radius:999px; background:var(--sun); }
+.memory-won[hidden]{ display:none; }
 .memory-won{ margin-top:16px; background:var(--green); border-radius:22px; padding:16px; display:flex; justify-content:space-between; align-items:center; gap:10px; box-shadow:inset -5px -6px 0 rgba(0,0,0,.12), inset 5px 5px 0 rgba(255,255,255,.3); }
 .memory-won-title{ font-family:var(--font-display); font-weight:700; font-size:1.15rem; }
 .memory-won-sub{ font-size:.85rem; font-weight:800; }

@@ -161,11 +161,18 @@
     "shapes": ["Top", "Damla", "Kub", "Yumurta"]
   },
   "rengleme": {
-    "title": "Rəngləmə",
-    "lead": "Rəng seç, evi toxunub boyat, şəkli yüklə.",
-    "download": "PNG kimi yüklə",
-    "reset": "Təmizlə",
-    "privacyNote": "Data saxlanmır — şəkil yalnız sizin cihazınıza yüklənir."
+    "title": "Rəngləmə guşəsi",
+    "lead": "Şəkil seç, rəng seç, hissəyə toxun.",
+    "progressLabel": "hissə",
+    "finishedTitle": "Usta rəssam!",
+    "download": "Şəkli yüklə",
+    "undo": "Geri al",
+    "sampleBtn": "Nümunə",
+    "clearBtn": "Təmizlə",
+    "eraserLabel": "Pozan",
+    "privacyNote": "Şəkillər saxlanmır və heç yerə göndərilmir. Bəyəndiyinizi yükləyib çap edin.",
+    "pictureNames": { "city": "Plastilin şəhəri", "space": "Kosmos səyahəti", "ocean": "Dəniz altı", "buta": "Buta naxışı", "baku": "Bakı gecəsi", "dino": "Dost dinozavr" },
+    "levels": { "easy": "Asan", "medium": "Orta", "hard": "Çətin" }
   },
   "gizlenqach": {
     "counterLabel": "ulduz",

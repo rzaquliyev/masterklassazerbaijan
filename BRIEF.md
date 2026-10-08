@@ -45,6 +45,7 @@ Vizual istiqamət artıq seçilib və 11 səhifənin hamısı maket kimi hazırd
 | Təqvim | `Teqvim.dc.html` | Avtobus dayanacağı (reys tablosu) |
 | Oyun parkı | `OyunParki.dc.html` | Oyun parkı |
 | Oyun: Plastilin yoğur | `Yogur.dc.html` | Oyun parkının içi |
+| Oyun: Rəngləmə guşəsi | `Rengleme.dc.html` | Oyun parkının içi (6 şəkil) |
 | Kampaniyalar | `Kampaniyalar.dc.html` | Bazar meydanı |
 | Ad günü | `AdGunu.dc.html` | Bayram meydanı |
 | Qalereya | `Qalereya.dc.html` | Şəhər muzeyi |
@@ -111,7 +112,7 @@ Maketlərdə bəzi elementlər yalnız görünüşdür: düymə heç yerə aparm
 | Masterklass detalı | Seanslar DB-dən; dolu seans seçilmir; qalan yer real; "Kassaya →" seçilmiş seansla qeydiyyata; qonşu ev linkləri; təlimçi admin-dən |
 | Qeydiyyat | Real bron: validasiya (ad, yaş, +994 telefon), razılıq qutusu məcburi, **son yer üçün yarışda yalnız bir bron keçir** (tranzaksiya/lock), unikal bilet nömrəsi, SMS/WhatsApp təsdiqi, "Təqvimə əlavə et" `.ics` faylı, pasporta möhür real bronla bağlı |
 | Təqvim | Reyslər DB-dən; yaş və gün filtrləri real data üzərində; boş gün mesajı; **gözləmə siyahısı forması işləyir** (yer açılanda bildiriş) |
-| Oyun parkı | Yaddaş oyunu (maketdə işləyir, port et); **Plastilin yoğur** (`Yogur.dc.html`, işləyir, port et: pointer events, `touch-action: none`); **Rəngləmə** (maketdə YOXDUR — qur: SVG şəhər evləri, rəng palitrası, toxunanda boyama, PNG kimi yükləmə, data saxlanmır); **Gizlənqaç** (maketdə YOXDUR — qur: saytın 5 səhifəsində gizli ulduz, tapılanlar `localStorage`-da, başlıqdakı "★ N / 5" sayğacı real, 5/5-də valideyn telefonu ilə kod alma) |
+| Oyun parkı | Yaddaş oyunu (maketdə işləyir, port et); **Plastilin yoğur** (`Yogur.dc.html`, işləyir, port et: pointer events, `touch-action: none`); **Rəngləmə** (`Rengleme.dc.html`, işləyir, port et: 6 orijinal şəkil — Plastilin şəhəri, Kosmos, Dəniz altı, Buta naxışı, Bakı gecəsi, Dost dinozavr; hər hissə ayrıca `<path>`, 14 rəngli palitra + pozan, geri al, nümunə, təmizlə, irəliləyiş sayğacı; real saytda "Şəkli yüklə" PNG versiyası ver; yeni şəkilləri admin-dən əlavə etmək imkanı arzuolunandır); **Gizlənqaç** (maketdə YOXDUR — qur: saytın 5 səhifəsində gizli ulduz, tapılanlar `localStorage`-da, başlıqdakı "★ N / 5" sayğacı real, 5/5-də valideyn telefonu ilə kod alma) |
 | Kampaniyalar | Usta pasportu real bronlardan hesablanır (valideyn telefonu ilə giriş/OTP); "Dostunu gətir" kodu hər valideyn üçün unikal yaradılır, "Kopyala" düyməsi həqiqətən `navigator.clipboard` ilə kopyalayır; erkən quş qiyməti avtomatik tətbiq olunur; bütün kod qaydaları serverdə yoxlanır (bir telefon = bir kod, müddət) |
 | Ad günü | Şam üfürmə (işləyir, port et); paket seçimi, qonaq sayğacı, tarix, telefon → **admin-ə sorğu** + təsdiq mesajı |
 | Qalereya | Fotolar admin paneldən yüklənir, **hər fotoda valideyn razılığı bayrağı**; filtrlər və lightbox (klaviatura: Esc, ← →) |
@@ -164,7 +165,7 @@ Bunlardan heç biri olmamalıdır. Sonda `redesign-existing-projects` skillinin 
 | 1 | `design/` maketlərini öyrən, hər səhifənin komponent və davranış siyahısını çıxar | `docs/PAGES.md` | təsdiqləyirəm |
 | 2 | `DESIGN.md` (tokenlər, şriftlər, komponentlər, hərəkət qaydaları, qadağalar) + `docs/ARCHITECTURE.md` | 2 fayl | təsdiqləyirəm |
 | 3 | Data modeli, miqrasiyalar, bron servisi + testlər | işləyən backend nüvəsi | — |
-| 4 | Dizayn sistemi + 12 səhifə maketlərə uyğun + §5 cədvəlindəki hər element işlək | sayt | baxıram, rəy verirəm |
+| 4 | Dizayn sistemi + 13 səhifə maketlərə uyğun + §5 cədvəlindəki hər element işlək | sayt | baxıram, rəy verirəm |
 | 5 | Qeydiyyat axını + admin panel | tam funksionallıq | test edirəm |
 | 6 | Keyfiyyət: Playwright ilə 375px və 1440px ekran şəkilləri, `web-design-guidelines` auditi, `design-motion-principles` Audit rejimi, `redesign-existing-projects` ilə AI-naxış yoxlaması | `docs/QA.md` | — |
 | 7 | Düzəlişlər, sənədlər, təhvil qeydi | README, DEPLOY | — |
@@ -179,9 +180,9 @@ Sayt yalnız bunların hamısı ödənəndə hazır sayılır:
 
 - [ ] Qeydiyyat telefonda 60 saniyədən az çəkir, son yer üçün iki eyni anda bron testindən yalnız biri keçir
 - [ ] §6-dakı qadağalardan heç biri yoxdur (`docs/QA.md`-də bir-bir qeyd olunub)
-- [ ] 12 səhifənin hamısı maketlərə uyğundur, `docs/QA.md`-də hər səhifə ≥ 8/10 bal alıb
+- [ ] 13 səhifənin hamısı maketlərə uyğundur, `docs/QA.md`-də hər səhifə ≥ 8/10 bal alıb
 - [ ] §5 cədvəlindəki hər element işləyir: saytda `href="#"`, boş düymə, göndərilməyən forma, hardcode nümunə rəqəm yoxdur (grep ilə yoxla)
-- [ ] Rəngləmə və Gizlənqaç oyunları qurulub və test edilib, hamısı reduced-motion və klaviatura ilə yoxlanılıb
+- [ ] Rəngləmə portu və Gizlənqaç oyunu qurulub və test edilib, hamısı reduced-motion və klaviatura ilə yoxlanılıb
 - [ ] Bütün xarici resurslar `docs/ASSETS.md`-də lisenziyası ilə qeyd olunub, başqa saytdan kopyalanmış heç nə yoxdur
 - [ ] Azərbaycan hərfləri bütün şriftlərdə düzgün görünür
 - [ ] `web-design-guidelines` auditində kritik problem qalmayıb

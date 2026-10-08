@@ -6,45 +6,44 @@
 
 {% block content %}
 <section class="container page-head">
-  <a class="back-link" href="/{{ lang }}/oyun-parki">← {{ t.oyunParki.title }}</a>
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <a class="back-link" href="/{{ lang }}/oyun-parki">← {{ t.oyunParki.title }}</a>
+    <span class="chip-solid" style="background:var(--butter);" id="rg-progress">0 / 0 {{ t.rengleme.progressLabel }}</span>
+  </div>
   <h1 style="margin-top:14px;">{{ t.rengleme.title }}</h1>
   <p class="page-lead">{{ t.rengleme.lead }}</p>
 </section>
 
-<section class="container" style="margin-top:18px;">
-  <div class="rengleme-colors" id="rengleme-colors" role="group" aria-label="{{ t.yogur.colorPick }}"></div>
+<section class="container" style="margin-top:6px;">
+  <div class="rg-thumbs" id="rg-thumbs" role="group" aria-label="{{ t.rengleme.title }}"></div>
 
-  <div class="rengleme-canvas-wrap">
-    <svg id="rengleme-svg" viewBox="0 0 360 260" role="img" aria-label="{{ t.rengleme.title }}">
-      <rect width="360" height="260" fill="#FFF4E2"></rect>
-      <circle data-colorable cx="300" cy="46" r="26" fill="#F1E6D2"></circle>
-      <rect data-colorable x="0" y="190" width="360" height="70" fill="#CFE8C9"></rect>
-
-      <g data-colorable-group="house1">
-        <polygon points="40,150 90,150 65,110" data-colorable fill="#F1E6D2"></polygon>
-        <rect x="40" y="150" width="50" height="50" rx="8" data-colorable fill="#F1E6D2"></rect>
-      </g>
-      <g data-colorable-group="house2">
-        <polygon points="130,150 190,150 160,100" data-colorable fill="#F1E6D2"></polygon>
-        <rect x="132" y="150" width="56" height="56" rx="8" data-colorable fill="#F1E6D2"></rect>
-      </g>
-      <g data-colorable-group="house3">
-        <polygon points="220,150 276,150 248,108" data-colorable fill="#F1E6D2"></polygon>
-        <rect x="222" y="150" width="52" height="52" rx="8" data-colorable fill="#F1E6D2"></rect>
-      </g>
-      <g data-colorable-group="house4">
-        <polygon points="300,150 350,150 325,114" data-colorable fill="#F1E6D2"></polygon>
-        <rect x="300" y="150" width="48" height="48" rx="8" data-colorable fill="#F1E6D2"></rect>
-      </g>
-    </svg>
+  <div class="rg-canvas-wrap">
+    <svg id="rg-canvas" viewBox="0 0 320 320" role="img" aria-label="{{ t.rengleme.title }}"></svg>
+    <div class="rg-finished" id="rg-finished" hidden>
+      <span class="rg-finished-title">{{ t.rengleme.finishedTitle }}</span>
+      <button type="button" class="btn-secondary" id="rg-download">{{ t.rengleme.download }}</button>
+    </div>
   </div>
 
-  <div class="kassa-actions" style="margin-top:18px;">
-    <button type="button" class="btn-secondary" style="flex:1;" id="rengleme-reset">{{ t.rengleme.reset }}</button>
-    <button type="button" class="btn-primary" style="flex:1;" id="rengleme-download">{{ t.rengleme.download }}</button>
+  <div class="rg-palette" id="rg-palette" role="group" aria-label="Rəng palitrası"></div>
+
+  <div class="rg-tools">
+    <button type="button" class="btn-secondary" id="rg-undo">↶ {{ t.rengleme.undo }}</button>
+    <button type="button" class="btn-secondary" style="background:var(--butter);" id="rg-sample">{{ t.rengleme.sampleBtn }}</button>
+    <button type="button" class="btn-dark" id="rg-clear">{{ t.rengleme.clearBtn }}</button>
   </div>
-  <div class="sample-notice" style="margin-top:14px;">{{ t.rengleme.privacyNote }}</div>
+
+  <div class="sample-notice" style="margin-top:16px; background:var(--white); border-radius:var(--radius-md); padding:14px 16px; box-shadow:0 4px 0 var(--card-shadow);">{{ t.rengleme.privacyNote }}</div>
 </section>
 {% endblock %}
 
-{% block extra_js %}<script src="/js/rengleme.js?v={{ assetV }}" defer></script>{% endblock %}
+{% block extra_js %}
+<script type="application/json" id="rg-i18n">{{ {
+  "pictureNames": t.rengleme.pictureNames,
+  "levels": t.rengleme.levels,
+  "eraserLabel": t.rengleme.eraserLabel,
+  "progressLabel": t.rengleme.progressLabel
+} | dump | safe }}</script>
+<script src="/js/rengleme-data.js?v={{ assetV }}" defer></script>
+<script src="/js/rengleme.js?v={{ assetV }}" defer></script>
+{% endblock %}
