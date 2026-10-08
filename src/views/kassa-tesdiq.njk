@@ -1,0 +1,46 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}{{ t.kassa.doneTitle }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.kassa.doneLead }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/kassa.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<section class="container kassa-page">
+  <div class="ticket-card clay-card" style="margin-top:16px; position:relative;">
+    {% if booking.status == 'confirmed' %}
+    <div class="ticket-stamp" aria-hidden="true">{{ t.kassa.confirmed }}</div>
+    {% endif %}
+    <div class="ticket-head"><span>{{ t.kassa.ticketLabel }}</span><span>№ {{ booking.reference }}</span></div>
+    <div class="ticket-title">{{ booking.masterclass_title }} · {{ booking.starts_at | formatDateAz }}</div>
+    <div class="ticket-sep"></div>
+    <div class="ticket-row"><span>{{ t.kassa.ticketChild }}</span><span>{{ booking.child_first_name }}</span></div>
+    <div class="ticket-row"><span>{{ t.kassa.ticketParent }}</span><span>{{ booking.parent_name }}</span></div>
+    <div class="ticket-row"><span>{{ t.kassa.ticketAmount }}</span><span>{{ booking.price_azn | formatMoney }}</span></div>
+  </div>
+
+  {% if booking.status == 'confirmed' %}
+  <div class="page-head">
+    <h1>{{ t.kassa.doneTitle }}</h1>
+    <p class="page-lead">{{ t.kassa.doneLead }}</p>
+  </div>
+
+  <div class="callout" style="margin-top:20px;">
+    <div style="font-family:var(--font-display); font-weight:700; font-size:1.1rem;">{{ t.kassa.stampTitle }}</div>
+    <div style="margin-top:4px; font-weight:700; font-size:.92rem;">{{ t.kassa.stampText }}</div>
+  </div>
+
+  <div class="kassa-actions" style="margin-top:20px;">
+    <a class="btn-secondary" style="flex:1;" href="/api/ics/{{ booking.id }}">{{ t.kassa.addToCalendar }}</a>
+    <a class="btn-dark" style="flex:1;" target="_blank" rel="noopener"
+      href="https://wa.me/994000000000?text={{ ('Bron nömrəm: ' + booking.reference) | urlencode }}">{{ t.kassa.whatsappConfirm }}</a>
+  </div>
+  {% else %}
+  <div class="page-head">
+    <h1>{{ t.kassa.waitlistTitle }}</h1>
+    <p class="page-lead">{{ t.kassa.waitlistLead }}</p>
+  </div>
+  {% endif %}
+
+  <a class="btn-secondary" style="margin-top:20px; display:inline-flex;" href="/{{ lang }}/m/{{ booking.masterclass_slug }}">← {{ t.nav.catalog }}</a>
+</section>
+{% endblock %}

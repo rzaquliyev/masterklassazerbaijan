@@ -1,0 +1,61 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}{{ t.yogur.title }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.yogur.lead }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/yogur.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<section class="container page-head">
+  <a class="back-link" href="/{{ lang }}/oyun-parki">← {{ t.oyunParki.title }}</a>
+  <span class="chip-solid" style="background:var(--butter); float:right;" id="squeeze-counter">0 {{ t.yogur.squeezes }}</span>
+  <h1 style="margin-top:14px;">{{ t.yogur.title }}</h1>
+  <p class="page-lead">{{ t.yogur.lead }}</p>
+</section>
+
+<section class="container" style="margin-top:18px;">
+  <div class="yogur-area" id="yogur-area" tabindex="0" role="application" aria-label="{{ t.yogur.title }}">
+    <div class="yogur-shadow" id="yogur-shadow" aria-hidden="true"></div>
+    <div class="yogur-blob" id="yogur-blob" aria-hidden="true">
+      <span class="yogur-face" id="yogur-face" hidden>
+        <span class="yogur-eye"></span><span class="yogur-eye"></span>
+        <span class="yogur-mouth" id="yogur-mouth"></span>
+      </span>
+    </div>
+    <div class="yogur-hint" id="yogur-hint">{{ t.yogur.hintPress }}</div>
+  </div>
+</section>
+
+<section class="container" style="margin-top:22px;">
+  <h2 style="font-size:1.1rem;">{{ t.yogur.colorPick }}</h2>
+  <div class="yogur-colors" id="yogur-colors"></div>
+</section>
+
+<section class="container" style="margin-top:20px;">
+  <h2 style="font-size:1.1rem;">{{ t.yogur.shapePick }}</h2>
+  <div class="pill-group" id="yogur-shapes"></div>
+</section>
+
+<section class="container" style="margin-top:20px; display:flex; gap:10px;">
+  <button type="button" class="btn-dark" style="flex:1;" id="yogur-toggle-face">{{ t.yogur.addFace }}</button>
+  <button type="button" class="btn-secondary" id="yogur-reset">{{ t.yogur.reset }}</button>
+</section>
+
+<section class="container" style="padding-top:26px;">
+  <div class="sample-notice" style="background:var(--white); border-radius:var(--radius-md); padding:14px 16px; box-shadow:0 4px 0 var(--card-shadow);">{{ t.yogur.footerNote }}</div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+{# application/json skript brauzerdə icra olunmur — CSP script-src tərəfindən bloklanmır,
+   server-dən client JS-ə data ötürməyin təhlükəsiz üsuludur. #}
+<script type="application/json" id="yogur-i18n">{{ {
+  "colors": [["Narıncı","#E8682A"],["Mavi","#6FA8DC"],["Yaşıl","#7BC67E"],["Sarı","#FFC23D"],["Çəhrayı","#F28AA6"],["Bənövşəyi","#9B7BD4"]],
+  "shapes": t.yogur.shapes,
+  "hintPress": t.yogur.hintPress,
+  "hintDrag": t.yogur.hintDrag,
+  "addFace": t.yogur.addFace,
+  "hideFace": t.yogur.hideFace,
+  "squeezes": t.yogur.squeezes
+} | dump | safe }}</script>
+<script src="/js/yogur.js?v={{ assetV }}" defer></script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}{{ t.nav.catalog }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.home.tourLead }}{% endblock %}
+
+{% block content %}
+<section class="container page-head">
+  <h1>{{ t.nav.catalog }}</h1>
+  <form method="get" action="/{{ lang }}/masterclasses" class="pill-group" style="margin-top:16px; align-items:center;">
+    <label for="age-filter" class="visually-hidden">{{ t.card.ageLabel }}</label>
+    <select id="age-filter" name="age" class="pill" data-auto-submit style="padding-right:30px;">
+      <option value="">{{ t.detail.sessionPicker }}: {{ t.card.ageLabel }}</option>
+      {% for age in range(3, 13) %}
+      <option value="{{ age }}" {{ 'selected' if ageFilter == age else '' }}>{{ age }} {{ t.card.ageLabel }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="pill">OK</button>
+  </form>
+
+  {% if list.length == 0 %}
+    <p style="margin-top:24px;">{{ t.home.noUpcoming }}</p>
+  {% else %}
+  <div class="card-grid cols-3" style="margin-top:24px;">
+    {% for item in list %}
+    <a href="/{{ lang }}/m/{{ item.slug }}" class="trust-card" style="text-decoration:none; display:block;">
+      <span class="chip-solid" style="background:{{ item.house_color }};">{{ item.house_name }}</span>
+      <h3 style="margin:10px 0 4px; font-size:1.15rem;">{{ item.title }}</h3>
+      <div class="trust-sub">{{ item.age_min }}–{{ item.age_max }} {{ t.card.ageLabel }}</div>
+      {% if item.next_session_id %}
+      <div class="trust-sub" style="margin-top:6px;">{{ item.next_starts_at | formatDateAz }} · {{ item.next_price_azn | formatMoney }}</div>
+      {% endif %}
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

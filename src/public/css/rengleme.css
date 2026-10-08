@@ -1,0 +1,6 @@
+.rengleme-colors{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+.rengleme-color-btn{ width:44px; height:44px; border:0; border-radius:50%; cursor:pointer; box-shadow:inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.35); }
+.rengleme-color-btn.is-active{ box-shadow:inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.35), 0 0 0 4px var(--cream), 0 0 0 7px var(--night); }
+.rengleme-canvas-wrap{ background:var(--white); border-radius:var(--radius-lg); padding:10px; box-shadow:0 8px 0 var(--card-shadow); }
+#rengleme-svg{ width:100%; height:auto; display:block; }
+#rengleme-svg [data-colorable]{ cursor:pointer; stroke:var(--night); stroke-width:1.5; }

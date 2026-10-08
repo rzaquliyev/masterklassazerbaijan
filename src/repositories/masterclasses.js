@@ -57,6 +57,19 @@ export async function getSessionById(db, sessionId) {
   return rows[0] ?? null;
 }
 
+export async function listAllUpcomingSessions(db) {
+  const { rows } = await db.query(`
+    SELECT s.*, m.title AS masterclass_title, m.slug AS masterclass_slug, m.age_min, m.age_max,
+           h.name AS house_name, h.color_hex AS house_color, h.slug AS house_slug
+    FROM sessions s
+    JOIN masterclasses m ON m.id = s.masterclass_id
+    LEFT JOIN houses h ON h.id = m.house_id
+    WHERE s.status = 'scheduled' AND s.starts_at > now() AND m.is_published = true
+    ORDER BY s.starts_at ASC
+  `);
+  return rows;
+}
+
 export async function listHouses(db) {
   const { rows } = await db.query('SELECT * FROM houses ORDER BY sort_order ASC');
   return rows;

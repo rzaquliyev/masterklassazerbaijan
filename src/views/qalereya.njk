@@ -1,0 +1,50 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block title %}{{ t.qalereya.title | replace('\n',' ') }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.qalereya.lead }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/qalereya.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<section class="container page-head">
+  <h1 style="white-space:pre-line;">{{ t.qalereya.title }}</h1>
+  <p class="page-lead">{{ t.qalereya.lead }}</p>
+
+  <form method="get" action="/{{ lang }}/qalereya" class="pill-group" style="margin-top:16px;">
+    <button type="submit" name="ev" value="" class="pill {{ 'is-active' if not houseFilter }}">{{ t.qalereya.allHouses }}</button>
+    {% for h in houses %}
+    <button type="submit" name="ev" value="{{ h.slug }}" class="pill {{ 'is-active' if houseFilter == h.slug }}" style="{{ 'background:' + h.color_hex + '; color:var(--white);' if houseFilter == h.slug }}">{{ h.name }}</button>
+    {% endfor %}
+  </form>
+
+  {% if photos.length == 0 %}
+  <p style="margin-top:24px;">{{ t.qalereya.empty }}</p>
+  {% else %}
+  <div class="gallery-wall">
+    {% for p in photos %}
+    <button type="button" class="gallery-frame clay-sm" style="background:{{ p.house_color or 'var(--butter)' }};" data-lightbox-open="{{ loop.index0 }}" aria-label="{{ p.house_name }}">
+      <span class="foto-placeholder" style="height:100%;">[FOTO]</span>
+    </button>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="callout" style="margin-top:28px; position:relative;">
+    <div style="font-family:var(--font-display); font-weight:700; font-size:1.1rem;">{{ t.qalereya.consentNote }}</div>
+    <div style="position:absolute; top:14px; right:14px;">{{ m.hiddenStar('qalereya') }}</div>
+  </div>
+</section>
+
+<div id="lightbox" class="lightbox" hidden role="dialog" aria-modal="true" aria-label="{{ t.qalereya.title }}">
+  <div class="lightbox-card">
+    <div class="lightbox-photo">[BÖYÜK FOTO]</div>
+    <div class="lightbox-actions">
+      <button type="button" class="btn-secondary" id="lightbox-prev">← {{ t.qalereya.lightboxPrev }}</button>
+      <button type="button" class="btn-dark" id="lightbox-close">{{ t.qalereya.lightboxClose }}</button>
+      <button type="button" class="btn-secondary" id="lightbox-next">{{ t.qalereya.lightboxNext }} →</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}<script src="/js/qalereya.js?v={{ assetV }}" defer></script>{% endblock %}

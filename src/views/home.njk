@@ -1,0 +1,124 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block title %}{{ t.siteName }} — {{ t.home.title | replace('\n', ' ') }}{% endblock %}
+{% block meta_description %}{{ t.home.metaDescription }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/home.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<section class="container page-head">
+  <h1 style="white-space:pre-line;">{{ t.home.title }}</h1>
+  <p class="page-lead">{{ t.home.lead }}</p>
+</section>
+
+<section class="town-scene" id="town-scene" aria-label="Plastilin şəhəri — ev seçimi">
+  <div class="town-sky" aria-hidden="true">
+    <span class="town-sun float"></span>
+    <span class="town-cloud float"></span>
+  </div>
+  <div class="town-ground" aria-hidden="true"></div>
+  <div class="town-houses container">
+    {% for house in featured %}
+    <button type="button"
+      class="town-house house-{{ house.house_slug }} {{ 'is-active' if loop.first else '' }}"
+      data-house-btn data-target="house-panel-{{ loop.index0 }}"
+      aria-pressed="{{ 'true' if loop.first else 'false' }}">
+      <span class="town-house-roof" style="border-bottom-color:{{ house.house_color }};"></span>
+      <span class="town-house-body clay" style="background:{{ house.house_color }};"></span>
+      <span class="town-house-tag">{{ house.house_name }}</span>
+    </button>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="container" style="margin-top:-18px; position:relative; z-index:2;">
+  {% for house in featured %}
+  <div class="trust-card house-panel" id="house-panel-{{ loop.index0 }}" {{ 'hidden' if not loop.first }}>
+    {{ m.houseChip(house.house_name, house.house_color) }}
+    <h2 style="margin:12px 0 4px; font-size:1.4rem;">{{ house.title }}</h2>
+    {% if house.next_session_id %}
+    <div class="trust-sub">{{ house.next_starts_at | formatDateAz }}</div>
+    <div class="trust-top" style="margin-top:14px;">
+      <span class="price">{{ house.next_price_azn | formatMoney }} <span class="sample-tag">{{ t.card.sample }}</span></span>
+      {{ m.seatBeads(house.next_capacity, house.next_booked, t) }}
+    </div>
+    <a class="btn-primary" style="margin-top:16px; width:100%;" href="/{{ lang }}/m/{{ house.slug }}">{{ t.nav.register }}</a>
+    {% else %}
+    <p class="page-lead">{{ t.home.noUpcoming }}</p>
+    <a class="btn-secondary" href="/{{ lang }}/m/{{ house.slug }}">{{ t.detail.sessionPicker }}</a>
+    {% endif %}
+  </div>
+  {% endfor %}
+</section>
+
+<section class="roadmap" id="roadmap">
+  <div class="container">
+    <h2 style="color:var(--cream);">{{ t.home.roadmapTitle }}</h2>
+    <div class="page-lead" style="color:#C9D3E8;">{{ t.home.roadmapLead }}</div>
+    <ol class="roadmap-steps">
+      {% for step in t.home.steps %}
+      <li class="roadmap-step">
+        <span class="roadmap-num" aria-hidden="true">{{ step.n }}</span>
+        <div>
+          <div class="roadmap-title">{{ step.title }}</div>
+          <div class="roadmap-text">{{ step.text }}</div>
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="museum-teaser">
+  <div class="container">
+    <div style="display:flex; justify-content:space-between; align-items:baseline;">
+      <h2 style="color:var(--cream);">{{ t.home.museumTitle }}</h2>
+      <a href="/{{ lang }}/qalereya" style="color:var(--sun); font-weight:800; font-size:.9rem; text-decoration:none;">{{ t.home.museumAll }}</a>
+    </div>
+    <div class="museum-grid">
+      {% for photo in gallery %}
+      <div class="museum-frame clay-sm" style="background:{{ photo.house_color or '#FFE08A' }};">
+        <div class="foto-placeholder" style="height:100%;">[FOTO]</div>
+      </div>
+      {% else %}
+      {% for i in range(0, 4) %}
+      <div class="museum-frame clay-sm" style="background:var(--butter);">
+        <div class="foto-placeholder" style="height:100%;">[FOTO] ({{ t.card.sample }})</div>
+      </div>
+      {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="container" id="tour" style="padding-top:44px;">
+  <h2>{{ t.home.tourTitle }}</h2>
+  <p class="page-lead">{{ t.home.tourLead }}</p>
+  <div class="card-grid cols-4" style="margin-top:16px;">
+    {% for p in t.places %}
+    <a class="town-tile" href="{{ p.href | replace('{lang}', lang) }}" style="background:{{ p.color }};">
+      <span class="town-tile-icon clay-sm" aria-hidden="true"></span>
+      <span class="town-tile-place">{{ p.place }}</span>
+      <span class="town-tile-what">{{ p.what }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="container" style="padding-top:44px;">
+  <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+    <h2 style="white-space:pre-line;">{{ t.home.trustTitle }}</h2>
+    {{ m.hiddenStar('home') }}
+  </div>
+  <div class="stack" style="margin-top:14px;">
+    {% for item in t.home.trust %}
+    <div style="display:flex; gap:12px; align-items:center; background:var(--white); border-radius:var(--radius-md); padding:14px 16px; box-shadow:0 5px 0 var(--card-shadow);">
+      <span class="clay-sm" style="min-width:40px; height:40px; border-radius:50%; background:var(--green); flex:none;" aria-hidden="true"></span>
+      <div><div style="font-weight:800; font-size:1rem;">{{ item.title }}</div><div style="font-size:.9rem; color:var(--night-2); font-weight:700;">{{ item.text }}</div></div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}<script src="/js/home.js?v={{ assetV }}" defer></script>{% endblock %}

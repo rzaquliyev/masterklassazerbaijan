@@ -1,0 +1,102 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block title %}{{ masterclass.title }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ masterclass.description or masterclass.title }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/detail.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<article class="container detail-page">
+  <a class="back-link" href="/{{ lang }}/">← {{ t.nav.catalog }}</a>
+
+  <div class="house-interior clay" style="background:{{ masterclass.house_color }}1a; margin-top:14px;">
+    <div class="house-interior-plate clay" aria-hidden="true" style="background:{{ masterclass.house_color }};"></div>
+  </div>
+
+  <div class="page-head" style="padding-top:22px;">
+    {{ m.houseChip(masterclass.house_name, masterclass.house_color) }}
+    <h1 style="margin-top:12px;">{{ masterclass.title }}</h1>
+    <div class="pill-group" style="margin-top:12px;">
+      <span class="chip">{{ masterclass.age_min }}–{{ masterclass.age_max }} {{ t.card.ageLabel }}</span>
+      <span class="chip">90 {{ t.detail.minutes }}</span>
+      <span class="chip">{{ t.detail.materialsIncluded }}</span>
+    </div>
+    <p class="page-lead" style="margin-top:14px;">{{ masterclass.description or t.detail.bringNothingText }}</p>
+  </div>
+
+  <section style="margin-top:28px;">
+    <h2>{{ t.detail.sessionPicker }}</h2>
+    {% if sessions.length == 0 %}
+      <p>{{ t.home.noUpcoming }}</p>
+    {% else %}
+    <div class="stack" style="margin-top:14px;">
+      {% for s in sessions %}
+      {% set left = s.capacity - s.booked %}
+      {% if left > 0 %}
+      <a class="trust-card session-row" href="/{{ lang }}/kassa/{{ s.id }}">
+        <div class="trust-top">
+          <span>{{ s.starts_at | formatDateAz }}</span>
+          <span class="price">{{ s.price_azn | formatMoney }} <span class="sample-tag">{{ t.card.sample }}</span></span>
+        </div>
+        <div class="trust-sub">{{ s.location }}</div>
+        <div style="margin-top:10px;">{{ m.seatBeads(s.capacity, s.booked, t) }}</div>
+      </a>
+      {% else %}
+      <div class="trust-card session-row is-full">
+        <div class="trust-top">
+          <span>{{ s.starts_at | formatDateAz }}</span>
+          <span class="price">{{ s.price_azn | formatMoney }}</span>
+        </div>
+        <div class="trust-sub">{{ s.location }}</div>
+        <div style="margin-top:10px;">{{ m.seatBeads(s.capacity, s.booked, t) }}</div>
+        <a class="btn-secondary" style="margin-top:10px; width:100%;" href="/{{ lang }}/kassa/{{ s.id }}">{{ t.detail.full }} — {{ t.kassa.waitlistTitle }}</a>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+  </section>
+
+  <section style="margin-top:36px;">
+    <h2>{{ t.detail.whatHappens }}</h2>
+    <div class="stack" style="margin-top:14px;">
+      {% for step in t.detail.steps %}
+      <div style="display:flex; gap:14px; align-items:center;">
+        <span class="clay-sm" style="min-width:52px; height:52px; border-radius:50%; background:{{ masterclass.house_color }}; flex:none;" aria-hidden="true"></span>
+        <div><div style="font-weight:800;">{{ step.title }}</div><div style="font-size:.88rem; color:var(--night-2); font-weight:700;">{{ step.text }}</div></div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="callout" style="margin-top:30px; position:relative;">
+    <div style="font-family:var(--font-display); font-weight:700; font-size:1.3rem;">{{ t.detail.bringNothingTitle }}</div>
+    <div style="margin-top:6px; font-weight:700;">{{ t.detail.bringNothingText }}</div>
+    <div style="position:absolute; top:14px; right:14px;">{{ m.hiddenStar('detail') }}</div>
+  </section>
+
+  {% if instructor %}
+  <section style="margin-top:30px;">
+    <h2>{{ t.detail.teacherTitle }}</h2>
+    <div style="display:flex; gap:14px; align-items:center; background:var(--white); border-radius:var(--radius-md); padding:14px; box-shadow:0 6px 0 var(--card-shadow); margin-top:14px;">
+      <div class="foto-placeholder" style="min-width:76px; height:76px; border-radius:50%;">[FOTO]</div>
+      <div><div style="font-weight:800; font-size:1.05rem;">{{ instructor.name }}</div><div style="font-size:.88rem; color:var(--night-2); font-weight:700;">{{ instructor.bio }}</div></div>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if neighbors.length %}
+  <section style="margin-top:30px;">
+    <h2>{{ t.detail.neighborsTitle }}</h2>
+    <div class="card-grid cols-3" style="margin-top:14px;">
+      {% for n in neighbors %}
+      <a href="/{{ lang }}/m/{{ n.slug }}" class="clay-sm" style="display:block; text-decoration:none; color:var(--night); background:{{ n.house_color }}; border-radius:var(--radius-md); padding:14px 12px;">
+        <div style="font-family:var(--font-display); font-weight:600; font-size:.95rem;">{{ n.house_name }}</div>
+        <div style="font-size:.82rem; font-weight:800; margin-top:4px;">{{ n.title }}</div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

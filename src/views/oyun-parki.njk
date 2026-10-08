@@ -1,0 +1,67 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}{{ t.oyunParki.title }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.oyunParki.memoryLead }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/oyun-parki.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<section class="container page-head park-hero">
+  <h1>{{ t.oyunParki.title }}</h1>
+  <span class="chip-solid" style="background:var(--butter);" id="hunt-counter-display">★ <span data-star-counter>0</span>/5 {{ t.gizlenqach.counterLabel }}</span>
+</section>
+
+<section class="container" style="margin-top:26px;">
+  <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+    <div>
+      <h2>{{ t.oyunParki.memoryTitle }}</h2>
+      <div class="page-lead">{{ t.oyunParki.memoryLead }}</div>
+    </div>
+    <div class="memory-stats" id="memory-stats" data-moves-label="{{ t.oyunParki.moves }}" data-pairs-label="{{ t.oyunParki.pairs }}">0 {{ t.oyunParki.moves }}<br>0/6 {{ t.oyunParki.pairs }}</div>
+  </div>
+
+  <div class="memory-grid" id="memory-grid" aria-label="{{ t.oyunParki.memoryTitle }}"></div>
+  <div class="memory-won" id="memory-won" hidden>
+    <div><div class="memory-won-title">{{ t.oyunParki.won }}</div><div class="memory-won-sub" id="memory-won-moves"></div></div>
+    <button type="button" class="btn-secondary" id="memory-reset">{{ t.oyunParki.wonAgain }}</button>
+  </div>
+</section>
+
+<section class="container" style="margin-top:40px;">
+  <h2>{{ t.oyunParki.moreTitle }}</h2>
+  <div class="card-grid cols-2" style="margin-top:14px;">
+    <a href="/{{ lang }}/oyun-parki/yogur" class="park-tile wide" style="background:var(--orange); color:var(--white);">
+      <span class="park-tile-icon clay" style="background:var(--sun);" aria-hidden="true"></span>
+      <span><span class="park-tile-title">{{ t.oyunParki.yogurTitle }}</span><span class="park-tile-text">{{ t.oyunParki.yogurLead }}</span></span>
+    </a>
+    <a href="/{{ lang }}/oyun-parki/rengleme" class="park-tile" style="background:var(--blue); color:var(--white);">
+      <span class="park-tile-icon clay" aria-hidden="true"></span>
+      <span><span class="park-tile-title">{{ t.oyunParki.rengTitle }}</span><span class="park-tile-text">{{ t.oyunParki.rengLead }}</span></span>
+    </a>
+    <a href="/{{ lang }}/#tour" class="park-tile" style="background:var(--night); color:var(--cream);" id="hunt-tile">
+      <span class="park-tile-stars" aria-hidden="true">★★★★★</span>
+      <span><span class="park-tile-title">{{ t.oyunParki.huntTitle }}</span><span class="park-tile-text">{{ t.oyunParki.huntLead }}</span></span>
+    </a>
+  </div>
+</section>
+
+<section class="container" id="hunt-reward" hidden style="padding-top:34px;">
+  <div class="callout">
+    <div style="font-family:var(--font-display); font-weight:700; font-size:1.2rem;">{{ t.gizlenqach.allFoundTitle }}</div>
+    <form id="hunt-reward-form" class="stack" style="margin-top:14px;"
+      data-result-template="{{ t.gizlenqach.codeResult }}" data-already-text="{{ t.gizlenqach.already }}">
+      <div class="field" style="margin-bottom:0;">
+        <label for="hunt-phone">{{ t.gizlenqach.phoneLabel }}</label>
+        <input type="tel" id="hunt-phone" name="phone" inputmode="tel" required placeholder="{{ t.kassa.phonePlaceholder }}">
+      </div>
+      <button type="submit" class="btn-primary">{{ t.gizlenqach.getCode }}</button>
+    </form>
+    <div id="hunt-reward-result" class="form-alert success" hidden style="margin-top:14px; margin-bottom:0;"></div>
+  </div>
+</section>
+
+<section class="container" style="padding-top:30px;">
+  <div class="sample-notice" style="background:var(--white); border-radius:var(--radius-md); padding:14px 16px; box-shadow:0 4px 0 var(--card-shadow);">{{ t.oyunParki.privacyNote }}</div>
+</section>
+{% endblock %}
+
+{% block extra_js %}<script src="/js/memory.js?v={{ assetV }}" defer></script>{% endblock %}

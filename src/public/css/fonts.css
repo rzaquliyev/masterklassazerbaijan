@@ -1,0 +1,18 @@
+/* Self-host edilib (Fontsource) — latin + latin-ext, Azərbaycan hərfləri daxil (ə,ı,ğ,ş,ç,ö,ü,
+   latin-ext unicode-range U+0100-02BA bunların hamısını əhatə edir). BRIEF §7. */
+@font-face { font-family:'Fredoka'; font-style:normal; font-weight:500; font-display:swap; src:url('/fonts/fredoka-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family:'Fredoka'; font-style:normal; font-weight:500; font-display:swap; unicode-range:U+0100-02BA,U+1E00-1EFF,U+2020,U+2C60-2C7F,U+A720-A7FF; src:url('/fonts/fredoka-latin-ext-500-normal.woff2') format('woff2'); }
+@font-face { font-family:'Fredoka'; font-style:normal; font-weight:600; font-display:swap; src:url('/fonts/fredoka-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family:'Fredoka'; font-style:normal; font-weight:600; font-display:swap; unicode-range:U+0100-02BA,U+1E00-1EFF,U+2020,U+2C60-2C7F,U+A720-A7FF; src:url('/fonts/fredoka-latin-ext-600-normal.woff2') format('woff2'); }
+@font-face { font-family:'Fredoka'; font-style:normal; font-weight:700; font-display:swap; src:url('/fonts/fredoka-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family:'Fredoka'; font-style:normal; font-weight:700; font-display:swap; unicode-range:U+0100-02BA,U+1E00-1EFF,U+2020,U+2C60-2C7F,U+A720-A7FF; src:url('/fonts/fredoka-latin-ext-700-normal.woff2') format('woff2'); }
+
+@font-face { font-family:'Nunito'; font-style:normal; font-weight:500; font-display:swap; src:url('/fonts/nunito-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family:'Nunito'; font-style:normal; font-weight:500; font-display:swap; unicode-range:U+0100-02BA,U+1E00-1EFF,U+2020,U+2C60-2C7F,U+A720-A7FF; src:url('/fonts/nunito-latin-ext-500-normal.woff2') format('woff2'); }
+@font-face { font-family:'Nunito'; font-style:normal; font-weight:700; font-display:swap; src:url('/fonts/nunito-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family:'Nunito'; font-style:normal; font-weight:700; font-display:swap; unicode-range:U+0100-02BA,U+1E00-1EFF,U+2020,U+2C60-2C7F,U+A720-A7FF; src:url('/fonts/nunito-latin-ext-700-normal.woff2') format('woff2'); }
+@font-face { font-family:'Nunito'; font-style:normal; font-weight:800; font-display:swap; src:url('/fonts/nunito-latin-800-normal.woff2') format('woff2'); }
+@font-face { font-family:'Nunito'; font-style:normal; font-weight:800; font-display:swap; unicode-range:U+0100-02BA,U+1E00-1EFF,U+2020,U+2C60-2C7F,U+A720-A7FF; src:url('/fonts/nunito-latin-ext-800-normal.woff2') format('woff2'); }
+
+/* Space Mono: yalnız rəqəm/latın-böyük-hərf mətnlər üçün (DESIGN.md §2) — AZ hərfli mətndə işlədilmir. */
+@font-face { font-family:'Space Mono'; font-style:normal; font-weight:700; font-display:swap; src:url('/fonts/space-mono-latin-700-normal.woff2') format('woff2'); }

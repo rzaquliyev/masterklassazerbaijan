@@ -1,0 +1,67 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block title %}{{ t.nav.teqvim }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.teqvim.lead }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/teqvim.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<section class="container page-head">
+  <h1 style="white-space:pre-line;">{{ t.teqvim.title }}</h1>
+  <p class="page-lead">{{ t.teqvim.lead }}</p>
+
+  <form method="get" action="/{{ lang }}/teqvim" class="pill-group" style="margin-top:18px;">
+    <input type="hidden" name="gun" value="{{ dayFilter }}">
+    <button type="submit" name="ev" value="" class="pill {{ 'is-active' if not houseFilter }}">{{ t.teqvim.allHouses }}</button>
+    {% for h in houses %}
+    <button type="submit" name="ev" value="{{ h.slug }}" class="pill {{ 'is-active' if houseFilter == h.slug }}" style="{{ 'background:' + h.color_hex + '; color:var(--white);' if houseFilter == h.slug }}">{{ h.name }}</button>
+    {% endfor %}
+  </form>
+
+  {% if dates.length %}
+  <form method="get" action="/{{ lang }}/teqvim" class="day-tabs">
+    <input type="hidden" name="ev" value="{{ houseFilter or '' }}">
+    {% for d in dates %}
+    <button type="submit" name="gun" value="{{ d }}" class="day-tab {{ 'is-active' if d == dayFilter }}">
+      {{ d | formatDayMonthAz }}
+    </button>
+    {% endfor %}
+  </form>
+  {% endif %}
+
+  <div class="board">
+    <div class="board-head"><span>REYSLƏR</span><span class="board-live">● CANLI</span></div>
+    {% if rows.length == 0 %}
+    <div class="board-empty">{{ t.teqvim.empty }}</div>
+    {% endif %}
+    {% for s in rows %}
+    {% set left = s.capacity - s.booked %}
+    <a href="/{{ lang }}/kassa/{{ s.id }}" class="board-row">
+      <span class="board-time">{{ s.starts_at | formatTimeAz }}</span>
+      <span class="board-dot" style="background:{{ s.house_color }};" aria-hidden="true"></span>
+      <span class="board-info">
+        <span class="board-title">{{ s.masterclass_title }}</span>
+        <span class="board-sub">{{ s.house_name }} · {{ s.age_min }}–{{ s.age_max }} {{ t.card.ageLabel }}</span>
+      </span>
+      <span class="board-seats {{ 'full' if left <= 0 else ('low' if left <= 3 else '') }}">
+        {{ t.detail.full if left <= 0 else left }}
+      </span>
+    </a>
+    {% endfor %}
+  </div>
+
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+    <div class="pill-group" style="font-weight:800; font-size:.82rem; color:var(--night-2);">
+      <span style="display:flex; align-items:center; gap:6px;"><span style="width:12px; height:12px; border-radius:50%; background:var(--green);"></span>{{ t.teqvim.legendMany }}</span>
+      <span style="display:flex; align-items:center; gap:6px;"><span style="width:12px; height:12px; border-radius:50%; background:var(--sun);"></span>{{ t.teqvim.legendFew }}</span>
+      <span style="display:flex; align-items:center; gap:6px;"><span style="width:12px; height:12px; border-radius:50%; background:#8C96A8;"></span>{{ t.teqvim.legendFull }}</span>
+    </div>
+    {{ m.hiddenStar('teqvim') }}
+  </div>
+
+  <div class="callout" style="margin-top:28px;">
+    <div style="font-family:var(--font-display); font-weight:700; font-size:1.1rem;">{{ t.teqvim.waitlistTitle }}</div>
+    <div style="margin-top:4px; font-weight:700; font-size:.9rem;">{{ t.teqvim.waitlistLead }}</div>
+  </div>
+</section>
+{% endblock %}

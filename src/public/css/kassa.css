@@ -1,0 +1,20 @@
+.kassa-page{ max-width:520px; padding-top:20px; padding-bottom:50px; }
+.ticket-card{ background:var(--white); border-radius:0 0 18px 18px; padding:18px; position:relative; overflow:hidden; }
+.ticket-head{ display:flex; justify-content:space-between; font-size:.78rem; font-weight:800; color:var(--night-2); }
+.ticket-title{ font-family:var(--font-display); font-weight:700; font-size:1.15rem; margin-top:4px; }
+.ticket-sep{ border-top:2px dashed var(--card-shadow); margin:10px 0; }
+.ticket-row{ display:flex; justify-content:space-between; font-size:.9rem; font-weight:800; margin-top:4px; }
+.ticket-stamp{
+  position:absolute; right:14px; top:30px; border:4px solid var(--green-deep); color:var(--green-deep);
+  border-radius:12px; padding:4px 10px; font-family:var(--font-display); font-weight:700; font-size:1.1rem;
+  letter-spacing:.04em; transform:rotate(-12deg); background:rgba(255,255,255,.85);
+}
+@media (prefers-reduced-motion:no-preference){
+  .ticket-stamp{ animation:stampIn .5s cubic-bezier(.2,1.5,.4,1) both; }
+  @keyframes stampIn{ 0%{ transform:rotate(-12deg) scale(2); opacity:0; } 60%{ transform:rotate(-12deg) scale(.92); opacity:1; } 100%{ transform:rotate(-12deg) scale(1); } }
+}
+
+.kassa-stepbar{ margin-top:18px; font-weight:800; font-size:.85rem; color:var(--night-2); }
+.kassa-fieldset{ border:0; padding:0; margin:14px 0 0; }
+.kassa-fieldset[hidden]{ display:none; }
+.kassa-actions{ display:flex; gap:10px; margin-top:16px; }

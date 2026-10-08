@@ -1,0 +1,6 @@
+.house-interior{ height:220px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.house-interior-plate{ width:150px; height:150px; border-radius:50%; }
+.session-row{ text-decoration:none; color:var(--night); display:block; transition:transform .15s ease; }
+.session-row:hover{ transform:translateY(-2px); }
+.session-row.is-full{ opacity:.85; }
+.callout{ background:var(--butter); border-radius:var(--radius-lg); padding:20px; box-shadow:inset -6px -8px 0 rgba(0,0,0,.08), inset 6px 6px 0 rgba(255,255,255,.4); }

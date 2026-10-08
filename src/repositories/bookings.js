@@ -78,6 +78,24 @@ export async function earliestWaitlistBooking(db, sessionId) {
   return rows[0] ?? null;
 }
 
+export async function getBookingWithDetails(db, bookingId) {
+  const { rows } = await db.query(
+    `SELECT b.*, c.full_name AS parent_name, c.phone_e164,
+            ch.first_name AS child_first_name,
+            s.starts_at, s.location, s.capacity, s.booked,
+            m.title AS masterclass_title, m.slug AS masterclass_slug
+     FROM bookings b
+     JOIN customers c ON c.id = b.customer_id
+     LEFT JOIN booking_children bc ON bc.booking_id = b.id
+     LEFT JOIN children ch ON ch.id = bc.child_id
+     JOIN sessions s ON s.id = b.session_id
+     JOIN masterclasses m ON m.id = s.masterclass_id
+     WHERE b.id = $1`,
+    [bookingId],
+  );
+  return rows[0] ?? null;
+}
+
 export async function listBookingsByCustomer(db, customerId) {
   const { rows } = await db.query(
     'SELECT * FROM bookings WHERE customer_id = $1 ORDER BY created_at DESC',

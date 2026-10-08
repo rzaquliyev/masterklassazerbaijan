@@ -1,0 +1,267 @@
+/* Baza + paylaşılan komponentlər. "Plastilin şəhəri". Yalnız transform/opacity animasiya olunur. */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--night);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; }
+button { font-family: inherit; }
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.05; margin: 0 0 var(--space-3); }
+h1 { font-size: clamp(2rem, 7vw, 2.9rem); }
+h2 { font-size: clamp(1.5rem, 5vw, 2rem); }
+p { margin: 0 0 var(--space-4); }
+
+.skip-link{
+  position:absolute; left:-999px; top:0; z-index:200;
+  background:var(--orange); color:var(--white);
+  padding:10px 16px; border-radius:0 0 12px 0; font-weight:700;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{ outline:3px solid var(--orange); outline-offset:3px; border-radius:6px; }
+
+.container{ max-width:var(--container-max); margin:0 auto; padding:0 20px; }
+
+/* ---------- Plastilin ("clay") effekti — DESIGN.md §3 ---------- */
+.clay{ box-shadow: inset -6px -7px 0 rgba(0,0,0,.16), inset 6px 6px 0 rgba(255,255,255,.35); }
+.clay-sm{ box-shadow: inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.3); }
+.clay-press{ box-shadow: 0 6px 0 var(--orange-deep); }
+.clay-card{ box-shadow: 0 5px 0 var(--card-shadow); }
+.clay-dark{ box-shadow: 0 6px 0 var(--night-deep); }
+
+/* ---------- Topbar ---------- */
+.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 0; position:relative; z-index:3;
+}
+.logo{
+  display:flex; align-items:center; gap:8px;
+  font-family:var(--font-display); font-weight:700; font-size:1.3rem; text-decoration:none; color:var(--night);
+}
+.logo-dot{ width:34px; height:34px; border-radius:50%; background:var(--orange); flex:none; }
+.main-nav{ display:none; gap:20px; font-size:.92rem; font-weight:800; list-style:none; margin:0; padding:0; align-items:center; }
+.main-nav a{ text-decoration:none; padding:8px 4px; }
+.main-nav a:hover{ color:var(--orange); }
+@media (min-width:860px){ .main-nav{ display:flex; } }
+.lang-switch{ display:flex; gap:4px; font-size:.75rem; font-weight:800; }
+.lang-switch a{ padding:4px 8px; border-radius:var(--radius-pill); text-decoration:none; color:var(--night-2); }
+.lang-switch a[aria-current="true"]{ background:var(--sun); color:var(--night); }
+.topbar-right{ display:flex; align-items:center; gap:10px; }
+.btn-nav{
+  background:var(--orange); color:var(--white);
+  padding:11px 20px; border-radius:var(--radius-pill);
+  font-family:var(--font-display); font-size:.92rem; font-weight:600; text-decoration:none; white-space:nowrap;
+}
+.menu-btn{
+  cursor:pointer; width:48px; height:48px; border:0; border-radius:16px; background:var(--butter);
+  box-shadow: inset -4px -5px 0 rgba(0,0,0,.14), inset 4px 4px 0 rgba(255,255,255,.5), 0 5px 0 var(--sun-deep);
+  font-family:var(--font-display); font-weight:700; font-size:20px; color:var(--night);
+  transition: transform .12s ease;
+}
+.menu-btn:active{ transform:translateY(3px); }
+
+/* ---------- Menyu overlay (bütün səhifələrdə ortaq) ---------- */
+.menu-overlay{
+  position:fixed; inset:0; background:rgba(27,42,74,.62); z-index:50;
+  display:flex; align-items:flex-start; justify-content:center;
+  padding:76px 16px 16px; overflow-y:auto;
+}
+.menu-overlay[hidden]{ display:none; }
+.menu-panel{
+  width:100%; max-width:420px; background:var(--cream); border-radius:30px; padding:16px;
+  box-shadow: 0 10px 0 var(--night-deep);
+}
+.menu-panel-head{ display:flex; justify-content:space-between; align-items:center; padding:0 6px 10px; }
+.menu-panel-title{ font-family:var(--font-display); font-weight:700; font-size:1.3rem; }
+.menu-close{
+  width:44px; height:44px; border:0; border-radius:50%; background:var(--night); color:var(--white);
+  font-family:var(--font-display); font-weight:700; font-size:20px; cursor:pointer;
+}
+.menu-list{ display:flex; flex-direction:column; gap:6px; list-style:none; margin:0; padding:0; }
+.menu-list a{
+  min-height:50px; display:flex; align-items:center; gap:12px; padding:0 14px; border-radius:16px;
+  background:var(--white); box-shadow:0 3px 0 var(--card-shadow); text-decoration:none; color:var(--night);
+  font-family:var(--font-display); font-weight:600; font-size:1rem;
+}
+.menu-list .dot{ min-width:18px; height:18px; border-radius:50%; flex:none; }
+.menu-list .place{ margin-left:auto; font-size:.75rem; font-weight:800; color:var(--night-2); font-family:var(--font-body); }
+
+/* ---------- Buttons ---------- */
+.btn-primary{
+  display:inline-flex; align-items:center; justify-content:center; text-align:center;
+  background:var(--orange); color:var(--white);
+  font-family:var(--font-display); font-weight:600; font-size:1rem;
+  padding:0 22px; min-height:54px; border-radius:var(--radius-md);
+  text-decoration:none; border:none; cursor:pointer;
+  box-shadow: inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.3), 0 6px 0 var(--orange-deep);
+  transition: transform .1s ease;
+}
+.btn-primary:active{ transform:translateY(4px); box-shadow: inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.3), 0 2px 0 var(--orange-deep); }
+.btn-primary[aria-disabled="true"]{ opacity:.55; cursor:not-allowed; }
+.btn-secondary{
+  display:inline-flex; align-items:center; justify-content:center;
+  background:var(--white); color:var(--night);
+  font-family:var(--font-display); font-weight:600; font-size:.95rem;
+  padding:0 18px; min-height:50px; border-radius:var(--radius-md);
+  text-decoration:none; border:0; cursor:pointer; box-shadow:0 4px 0 var(--card-shadow);
+  transition: transform .1s ease;
+}
+.btn-secondary:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--card-shadow); }
+.btn-dark{
+  display:inline-flex; align-items:center; justify-content:center;
+  background:var(--night); color:var(--white);
+  font-family:var(--font-display); font-weight:600; font-size:.95rem;
+  padding:0 18px; min-height:50px; border-radius:var(--radius-md);
+  text-decoration:none; border:0; cursor:pointer;
+}
+
+/* ---------- Info-çip / etiket ---------- */
+.chip{
+  display:inline-flex; align-items:center; padding:7px 13px; border-radius:var(--radius-sm);
+  background:var(--white); box-shadow:0 4px 0 var(--card-shadow); font-weight:800; font-size:.85rem;
+}
+.chip-solid{
+  display:inline-flex; align-items:center; padding:7px 13px; border-radius:var(--radius-pill);
+  font-family:var(--font-display); font-weight:600; font-size:.85rem; color:var(--night);
+}
+
+/* ---------- Muncuq qabı (qalan yer) ---------- */
+.beads{ display:inline-flex; gap:6px; flex-wrap:wrap; }
+.bead{ width:22px; height:22px; border-radius:50%; background:#F1E6D2; box-shadow:inset 3px 3px 0 rgba(0,0,0,.08); }
+.bead.filled{ background:var(--orange); box-shadow:inset -3px -4px 0 rgba(0,0,0,.16), inset 3px 3px 0 rgba(255,255,255,.3); }
+.seats-left{ font-weight:800; font-size:.9rem; }
+.seats-left.low{ color:var(--orange-deep); }
+.seats-left .sold-out{ color:var(--orange-deep); }
+
+/* ---------- Trust-card / seans kartı ---------- */
+.trust-card{ background:var(--white); border-radius:var(--radius-lg); padding:20px; box-shadow:0 8px 0 var(--card-shadow); }
+.trust-top{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; font-weight:800; }
+.trust-sub{ font-size:.9rem; color:var(--night-2); margin-top:4px; }
+.price{ font-family:var(--font-display); font-weight:700; font-size:1.3rem; }
+.sample-tag{ font-size:.55em; font-weight:700; color:#9c9184; vertical-align:middle; }
+
+/* ---------- Flip-kart (3D) ---------- */
+.flip-card{ position:relative; perspective:1200px; }
+.flip-card-inner{
+  position:relative; width:100%; min-height:100%; transition:transform .5s cubic-bezier(.2,.8,.2,1); transform-style:preserve-3d;
+}
+.flip-card.is-flipped .flip-card-inner{ transform:rotateY(180deg); }
+@media (prefers-reduced-motion:reduce){ .flip-card-inner{ transition:none; } }
+.flip-face{ position:absolute; inset:0; backface-visibility:hidden; border-radius:var(--radius-lg); }
+.flip-face-back{ transform:rotateY(180deg); }
+
+/* ---------- Akkordeon (Suallar) ---------- */
+.accordion-item{ background:var(--white); border-radius:var(--radius-md); box-shadow:0 5px 0 var(--card-shadow); overflow:hidden; }
+.accordion-trigger{
+  width:100%; min-height:62px; border:0; background:transparent; padding:14px 16px;
+  display:flex; justify-content:space-between; align-items:center; gap:12px; cursor:pointer; text-align:left;
+  font-family:var(--font-body); color:var(--night); font-weight:800; font-size:1rem;
+}
+.accordion-icon{
+  min-width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-weight:700; font-size:22px; color:var(--white); background:var(--orange);
+  flex:none;
+}
+.accordion-trigger[aria-expanded="true"] .accordion-icon{ background:var(--night); }
+.accordion-panel{ padding:0 16px 16px; font-size:.95rem; line-height:1.5; color:var(--night-2); }
+.accordion-panel[hidden]{ display:none; }
+
+/* ---------- Lightbox (Qalereya) ---------- */
+.lightbox{ position:fixed; inset:0; background:rgba(27,42,74,.82); z-index:60; display:flex; align-items:center; justify-content:center; padding:20px; }
+.lightbox[hidden]{ display:none; }
+.lightbox-card{ width:100%; max-width:420px; background:var(--white); border-radius:var(--radius-lg); padding:16px; box-shadow:0 12px 0 var(--night-deep); }
+.lightbox-photo{
+  height:280px; border-radius:20px; background:repeating-linear-gradient(45deg,#F4EEE2 0 10px,#E9E1D0 10px 20px);
+  display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:#6B5B45;
+}
+.lightbox-actions{ display:flex; gap:8px; margin-top:14px; }
+.lightbox-actions .btn-secondary, .lightbox-actions .btn-dark{ flex:1; }
+
+/* ---------- Forms ---------- */
+.field{ display:flex; flex-direction:column; gap:6px; font-weight:800; font-size:.92rem; margin-bottom:14px; }
+.field input, .field textarea, .field select{
+  min-height:52px; border:0; border-radius:16px; padding:0 16px; font-family:var(--font-body); font-size:1rem; font-weight:700;
+  background:var(--white); box-shadow:inset 3px 3px 0 rgba(0,0,0,.06), 0 4px 0 var(--card-shadow); color:var(--night);
+}
+.field textarea{ padding:12px 16px; min-height:100px; resize:vertical; }
+.field input:focus, .field textarea:focus, .field select:focus{ outline:3px solid var(--orange); outline-offset:2px; }
+.field-check{ display:flex; gap:10px; align-items:flex-start; font-weight:700; font-size:.88rem; line-height:1.4; }
+.field-check input{ width:22px; height:22px; margin:0; accent-color:var(--orange); flex:none; }
+.field-error{ color:var(--orange-deep); font-size:.82rem; font-weight:800; margin-top:-8px; margin-bottom:10px; }
+.form-alert{ border-radius:var(--radius-md); padding:16px 18px; font-weight:700; margin-bottom:16px; }
+.form-alert.success{ background:var(--green); box-shadow:inset -6px -7px 0 rgba(0,0,0,.12), inset 6px 6px 0 rgba(255,255,255,.3); }
+.form-alert.error{ background:var(--pink); box-shadow:inset -6px -7px 0 rgba(0,0,0,.12), inset 6px 6px 0 rgba(255,255,255,.3); }
+
+/* ---------- Pill filter / tabs ---------- */
+.pill-group{ display:flex; gap:8px; flex-wrap:wrap; }
+.pill{
+  min-height:44px; padding:0 16px; border:0; border-radius:var(--radius-pill); cursor:pointer;
+  font-family:var(--font-body); font-weight:800; font-size:.88rem; background:var(--white); color:var(--night);
+  box-shadow:0 4px 0 var(--card-shadow); text-decoration:none; display:inline-flex; align-items:center;
+}
+.pill[aria-current="true"], .pill.is-active{ color:var(--white); background:var(--orange); box-shadow:inset -3px -4px 0 rgba(0,0,0,.18); }
+
+/* ---------- Card grid ---------- */
+.card-grid{ display:grid; gap:16px; grid-template-columns:1fr; }
+@media (min-width:640px){ .card-grid.cols-2{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:860px){ .card-grid.cols-3{ grid-template-columns:repeat(3,1fr); } .card-grid.cols-4{ grid-template-columns:repeat(4,1fr); } }
+
+/* ---------- Footer ---------- */
+.site-footer{
+  margin-top:60px; background:var(--orange); color:var(--white);
+  padding:40px 20px; border-radius:40px 40px 0 0;
+  box-shadow: inset 0 8px 0 rgba(255,255,255,.2);
+}
+.site-footer .container{ display:flex; flex-direction:column; gap:14px; }
+.site-footer .foot-title{ font-family:var(--font-display); font-weight:700; font-size:clamp(1.6rem,6vw,2.1rem); line-height:1.05; }
+.site-footer a.btn-secondary{ width:fit-content; }
+.site-footer .foot-links{ display:flex; gap:16px; flex-wrap:wrap; font-weight:700; font-size:.92rem; }
+.site-footer .foot-links a{ text-decoration:underline; color:var(--white); }
+.site-footer .foot-meta{ font-size:.8rem; font-weight:700; color:#FFE4D2; }
+
+/* ---------- Səhifə başlıq bölməsi (ortaq) ---------- */
+.page-head{ padding:28px 0 0; }
+.page-lead{ font-size:1rem; font-weight:700; color:var(--night-2); margin-top:6px; }
+.back-link{
+  min-height:44px; padding:0 14px; display:inline-flex; align-items:center; border-radius:16px;
+  background:var(--white); box-shadow:0 4px 0 var(--card-shadow); font-family:var(--font-display);
+  font-weight:600; font-size:.92rem; text-decoration:none; color:var(--night);
+}
+
+/* ---------- FOTO placeholder ---------- */
+.foto-placeholder{
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  background:repeating-linear-gradient(45deg,#F4EEE2 0 10px,#E9E1D0 10px 20px);
+  font-size:.8rem; font-weight:800; color:#6B5B45; border-radius:var(--radius-md);
+}
+
+/* ---------- Ev rəng utility-ləri (admin/seed-dən gələn house.color_hex ilə inline style əvəzinə) ---------- */
+.house-gil{ --house-color:var(--orange); } .house-resm{ --house-color:var(--blue); }
+.house-metbex{ --house-color:var(--sun); } .house-elm{ --house-color:var(--green); }
+
+/* ---------- Gizlənqaç ulduzu (5 səhifədə gizli, oyun mexanikası) ---------- */
+.hidden-star{
+  display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border:0;
+  background:none; cursor:pointer; color:var(--card-shadow); opacity:.55; transition:transform .15s ease, color .15s ease, opacity .15s ease;
+}
+.hidden-star:hover, .hidden-star:focus-visible{ opacity:1; transform:scale(1.15); }
+.hidden-star[data-found="true"]{ color:var(--sun); opacity:1; }
+.hidden-star svg{ width:100%; height:100%; }
+
+/* ---------- Utility ---------- */
+.visually-hidden{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.sample-notice{ font-size:.78rem; color:var(--night-2); font-weight:700; }
+.stack{ display:flex; flex-direction:column; gap:12px; }
+.mt-0{ margin-top:0; }
+.center-text{ text-align:center; }

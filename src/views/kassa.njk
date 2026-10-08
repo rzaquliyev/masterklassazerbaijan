@@ -1,0 +1,81 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}{{ t.nav.register }} — {{ masterclass.title }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.kassa.s1Title }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/kassa.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<section class="container kassa-page">
+  <a class="back-link" href="/{{ lang }}/m/{{ masterclass.slug }}">← {{ t.kassa.back }}</a>
+
+  <div class="ticket-card clay-card" style="margin-top:16px;">
+    <div class="ticket-head"><span>{{ t.kassa.ticketLabel }}</span><span>{{ masterclass.house_name }}</span></div>
+    <div class="ticket-title">{{ masterclass.title }}</div>
+    <div class="ticket-sep"></div>
+    <div class="ticket-row"><span>{{ session.starts_at | formatDateAz }}</span><span>{{ session.price_azn | formatMoney }}</span></div>
+  </div>
+
+  {% set left = session.capacity - session.booked %}
+  {% if left <= 0 %}
+  <div class="form-alert error" style="margin-top:18px;">{{ t.kassa.soldOutNotice }}</div>
+  {% endif %}
+
+  {% if errors.generic %}<div class="form-alert error">{{ t.kassa.errorGeneric }}</div>{% endif %}
+  {% if errors.validation %}<div class="form-alert error">{{ t.kassa.errorGeneric }}</div>{% endif %}
+  {% if errors.phone %}<div class="form-alert error">{{ t.kassa.errorPhone }}</div>{% endif %}
+
+  <form method="post" action="/{{ lang }}/kassa/{{ session.id }}" id="kassa-form" novalidate style="margin-top:18px;">
+    <input type="hidden" name="idempotencyKey" value="{{ idempotencyKey }}">
+    <input type="text" name="website" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+    <div class="kassa-stepbar"><span id="kassa-step-label">{{ t.kassa.step | replace('{n}', '1') }}</span></div>
+
+    <fieldset data-step="1" class="kassa-fieldset">
+      <h1>{{ t.kassa.s1Title }}</h1>
+      <div class="field">
+        <label for="childFirstName">{{ t.kassa.childName }}</label>
+        <input type="text" id="childFirstName" name="childFirstName" autocomplete="off" required maxlength="80"
+          placeholder="{{ t.kassa.childNamePlaceholder }}" value="{{ formValues.childFirstName or '' }}">
+      </div>
+      <div class="field">
+        <label for="childBirthYear">{{ t.kassa.age }}</label>
+        <select id="childBirthYear" name="childBirthYear">
+          <option value="">—</option>
+          {% for age in range(3, 13) %}
+          <option value="{{ currentYear - age }}" {{ 'selected' if formValues.childBirthYear == (currentYear - age)|string else '' }}>{{ age }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="button" class="btn-primary" data-kassa-next style="width:100%;">{{ t.kassa.continueBtn }}</button>
+    </fieldset>
+
+    <fieldset data-step="2" class="kassa-fieldset">
+      <h1>{{ t.kassa.s2Title }}</h1>
+      <div class="field">
+        <label for="parentFullName">{{ t.kassa.parentName }}</label>
+        <input type="text" id="parentFullName" name="parentFullName" autocomplete="name" required maxlength="120"
+          placeholder="{{ t.kassa.parentNamePlaceholder }}" value="{{ formValues.parentFullName or '' }}">
+      </div>
+      <div class="field">
+        <label for="parentPhone">{{ t.kassa.phone }}</label>
+        <input type="tel" id="parentPhone" name="parentPhone" autocomplete="tel" inputmode="tel" required
+          placeholder="{{ t.kassa.phonePlaceholder }}" value="{{ formValues.parentPhone or '' }}">
+      </div>
+      <label class="field-check">
+        <input type="checkbox" name="consent" required {{ 'checked' if formValues.consent == 'on' else '' }}>
+        {{ t.kassa.consent }}
+      </label>
+      <label class="field-check" style="margin-top:10px;">
+        <input type="checkbox" name="marketing" {{ 'checked' if formValues.marketing == 'on' else '' }}>
+        {{ t.kassa.marketing }}
+      </label>
+      <div class="kassa-actions">
+        <button type="button" class="btn-secondary" data-kassa-back>{{ t.kassa.back }}</button>
+        <button type="submit" class="btn-primary" style="flex:1;" {{ 'aria-disabled="true"' if left <= 0 }}>{{ t.kassa.confirmBtn }}</button>
+      </div>
+    </fieldset>
+  </form>
+</section>
+{% endblock %}
+
+{% block extra_js %}<script src="/js/kassa.js?v={{ assetV }}" defer></script>{% endblock %}

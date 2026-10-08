@@ -1,0 +1,21 @@
+{% macro seatBeads(capacity, booked, t) %}
+{% set left = capacity - booked %}
+<span class="seats-left {{ 'low' if left <= 2 and left > 0 else '' }}">
+  {% if left <= 0 %}<span class="sold-out">{{ t.card.soldOut }}</span>
+  {% else %}{{ t.card.seatsLeftTemplate | replace("{left}", left) }}{% if left <= 2 %} · {{ t.card.hurry }}{% endif %}
+  {% endif %}
+  <span class="beads" aria-hidden="true">
+    {% for i in range(0, capacity) %}<span class="bead {{ 'filled' if i < booked else '' }}"></span>{% endfor %}
+  </span>
+</span>
+{% endmacro %}
+
+{% macro houseChip(houseName, houseColor) %}
+<span class="chip-solid" style="background:{{ houseColor }};">{{ houseName }}</span>
+{% endmacro %}
+
+{% macro hiddenStar(pageId) %}
+<button type="button" class="hidden-star" data-star="{{ pageId }}" aria-label="Gizlənqaç ulduzu">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.6 6.9L22 11l-6.4 2.6L12 20l-2.7-6.4L3 11l6.6-2.2L12 2z"/></svg>
+</button>
+{% endmacro %}

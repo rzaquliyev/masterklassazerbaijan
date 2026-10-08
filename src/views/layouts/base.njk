@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ t.siteName }}{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}{{ t.home.metaDescription }}{% endblock %}">
+<link rel="canonical" href="/{{ lang }}{{ currentPath or '' }}">
+{% for l in supportedLangs %}
+<link rel="alternate" hreflang="{{ l }}" href="/{{ l }}{{ currentPath or '' }}">
+{% endfor %}
+<link rel="stylesheet" href="/css/fonts.css?v={{ assetV }}">
+<link rel="stylesheet" href="/css/tokens.css?v={{ assetV }}">
+<link rel="stylesheet" href="/css/site.css?v={{ assetV }}">
+{% block extra_css %}{% endblock %}
+</head>
+<body>
+<a class="skip-link" href="#main">{{ t.nav.skip }}</a>
+
+<header class="container topbar">
+  <a class="logo" href="/{{ lang }}/">
+    <span class="logo-dot clay" aria-hidden="true"></span>{{ t.siteName }}
+  </a>
+  <nav class="main-nav" aria-label="Əsas naviqasiya">
+    <a href="/{{ lang }}/#tour">{{ t.nav.catalog }}</a>
+    <a href="/{{ lang }}/teqvim">{{ t.nav.teqvim }}</a>
+    <a href="/{{ lang }}/suallar">{{ t.nav.about }}</a>
+  </nav>
+  <div class="topbar-right">
+    <div class="lang-switch" aria-label="Dil seçimi">
+      {% for l in supportedLangs %}
+      <a href="/{{ l }}{{ currentPath or '' }}" aria-current="{{ 'true' if l == lang else 'false' }}">{{ l | upper }}</a>
+      {% endfor %}
+    </div>
+    <a class="btn-nav" href="/{{ lang }}/teqvim">{{ t.nav.register }}</a>
+    <button id="menu-btn" class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-overlay" aria-label="{{ t.nav.menuTitle }}">≡</button>
+  </div>
+</header>
+
+<main id="main">
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="foot-title" style="white-space:pre-line;">{{ t.footer.title }}</div>
+    <a class="btn-secondary" href="/{{ lang }}/teqvim">{{ t.footer.cta }}</a>
+    <a class="foot-links" href="https://wa.me/994000000000" target="_blank" rel="noopener">{{ t.footer.whatsapp }}</a>
+    <div class="foot-links">
+      <a href="/{{ lang }}/mexfilik">{{ t.footer.privacy }}</a>
+      <a href="https://instagram.com/masterklassazerbaijan" target="_blank" rel="noopener">Instagram</a>
+    </div>
+    <div class="foot-meta">© {{ currentYear }} {{ t.siteName }} — {{ t.footer.rights }}</div>
+    <div class="foot-meta">{{ t.footer.sampleNotice }}</div>
+  </div>
+</footer>
+
+<div id="menu-overlay" class="menu-overlay" hidden role="dialog" aria-modal="true" aria-label="{{ t.nav.menuTitle }}">
+  <div class="menu-panel">
+    <div class="menu-panel-head">
+      <span class="menu-panel-title">{{ t.nav.menuTitle }}</span>
+      <button id="menu-close" class="menu-close" type="button" aria-label="{{ t.nav.menuClose }}">×</button>
+    </div>
+    <ul class="menu-list">
+      {% for p in t.places %}
+      <li><a href="{{ p.href | replace('{lang}', lang) }}"><span class="dot" style="background:{{ p.color }};" aria-hidden="true"></span>{{ p.what }}<span class="place">{{ p.place }}</span></a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<script src="/js/site.js?v={{ assetV }}" defer></script>
+<script src="/js/gizlenqach.js?v={{ assetV }}" defer></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

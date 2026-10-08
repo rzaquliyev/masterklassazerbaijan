@@ -1,0 +1,46 @@
+/* Ana səhifə — "clay town" səhnəsi. Mobile-first, pozisiyalar nisbi (maketin fiksə pikselləri yox). */
+.town-scene{ position:relative; height:260px; margin-top:18px; overflow:hidden; }
+.town-sky{ position:absolute; inset:0; }
+.town-sun{ position:absolute; right:30px; top:6px; width:56px; height:56px; border-radius:50%; background:var(--sun); box-shadow:inset -6px -7px 0 rgba(0,0,0,.14), inset 5px 5px 0 rgba(255,255,255,.4), 0 0 0 10px rgba(255,194,61,.22); }
+.town-cloud{ position:absolute; left:26px; top:26px; width:76px; height:30px; border-radius:30px; background:var(--white); box-shadow:inset -4px -5px 0 rgba(0,0,0,.06); }
+@media (prefers-reduced-motion:no-preference){
+  .float{ animation:townFloat 3.4s ease-in-out 3; }
+  @keyframes townFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-7px); } }
+}
+.town-ground{ position:absolute; left:0; right:0; bottom:0; height:84px; border-radius:50% 50% 0 0 / 30px 30px 0 0; background:var(--green); box-shadow:inset 0 10px 0 rgba(255,255,255,.18); }
+
+.town-houses{ position:relative; z-index:1; height:100%; display:flex; align-items:flex-end; justify-content:space-evenly; gap:8px; padding-bottom:24px; }
+.town-house{ background:none; border:0; padding:0; cursor:pointer; display:flex; flex-direction:column; align-items:center; transition:transform .3s cubic-bezier(.3,1.6,.5,1); }
+.town-house.is-active{ transform:translateY(-10px) scale(1.06); }
+.town-house-roof{ width:0; height:0; border-left:34px solid transparent; border-right:34px solid transparent; border-bottom:28px solid var(--night); margin-bottom:-2px; }
+.town-house-body{ width:62px; height:58px; border-radius:10px 10px 14px 14px; }
+.town-house-tag{
+  margin-top:8px; font-family:var(--font-display); font-weight:600; font-size:.72rem; padding:4px 10px; border-radius:99px;
+  white-space:nowrap; background:rgba(255,255,255,.92); color:var(--night);
+}
+.town-house.is-active .town-house-tag{ background:var(--night); color:var(--white); }
+
+.house-panel[hidden]{ display:none; }
+
+.roadmap{ margin-top:50px; background:var(--night); color:var(--cream); padding:40px 0 46px; border-radius:40px 40px 0 0; }
+.roadmap-steps{ list-style:none; margin:22px 0 0; padding:0; display:grid; gap:20px; }
+.roadmap-step{ display:flex; gap:14px; align-items:flex-start; }
+.roadmap-num{
+  flex:none; width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,.08);
+  display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; color:var(--sun);
+}
+.roadmap-title{ font-family:var(--font-display); font-weight:700; font-size:1.1rem; color:var(--sun); }
+.roadmap-text{ font-size:.9rem; font-weight:700; color:#C9D3E8; margin-top:2px; }
+
+.museum-teaser{ background:var(--night); padding:0 0 50px; }
+.museum-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:16px; }
+.museum-frame{ height:150px; border-radius:22px; padding:8px; }
+@media (min-width:640px){ .museum-grid{ grid-template-columns:repeat(4,1fr); } }
+
+.town-tile{
+  display:block; text-decoration:none; min-height:130px; border-radius:var(--radius-md); padding:16px; color:var(--night);
+  box-shadow:0 6px 0 var(--card-shadow);
+}
+.town-tile-icon{ display:block; width:40px; height:36px; border-radius:14px 14px 4px 4px; background:rgba(255,255,255,.55); }
+.town-tile-place{ display:block; margin-top:12px; font-family:var(--font-display); font-weight:700; font-size:.95rem; line-height:1.1; }
+.town-tile-what{ display:block; margin-top:3px; font-size:.78rem; font-weight:800; opacity:.85; }

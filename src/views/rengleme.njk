@@ -1,0 +1,50 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}{{ t.rengleme.title }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.rengleme.lead }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/rengleme.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<section class="container page-head">
+  <a class="back-link" href="/{{ lang }}/oyun-parki">← {{ t.oyunParki.title }}</a>
+  <h1 style="margin-top:14px;">{{ t.rengleme.title }}</h1>
+  <p class="page-lead">{{ t.rengleme.lead }}</p>
+</section>
+
+<section class="container" style="margin-top:18px;">
+  <div class="rengleme-colors" id="rengleme-colors" role="group" aria-label="{{ t.yogur.colorPick }}"></div>
+
+  <div class="rengleme-canvas-wrap">
+    <svg id="rengleme-svg" viewBox="0 0 360 260" role="img" aria-label="{{ t.rengleme.title }}">
+      <rect width="360" height="260" fill="#FFF4E2"></rect>
+      <circle data-colorable cx="300" cy="46" r="26" fill="#F1E6D2"></circle>
+      <rect data-colorable x="0" y="190" width="360" height="70" fill="#CFE8C9"></rect>
+
+      <g data-colorable-group="house1">
+        <polygon points="40,150 90,150 65,110" data-colorable fill="#F1E6D2"></polygon>
+        <rect x="40" y="150" width="50" height="50" rx="8" data-colorable fill="#F1E6D2"></rect>
+      </g>
+      <g data-colorable-group="house2">
+        <polygon points="130,150 190,150 160,100" data-colorable fill="#F1E6D2"></polygon>
+        <rect x="132" y="150" width="56" height="56" rx="8" data-colorable fill="#F1E6D2"></rect>
+      </g>
+      <g data-colorable-group="house3">
+        <polygon points="220,150 276,150 248,108" data-colorable fill="#F1E6D2"></polygon>
+        <rect x="222" y="150" width="52" height="52" rx="8" data-colorable fill="#F1E6D2"></rect>
+      </g>
+      <g data-colorable-group="house4">
+        <polygon points="300,150 350,150 325,114" data-colorable fill="#F1E6D2"></polygon>
+        <rect x="300" y="150" width="48" height="48" rx="8" data-colorable fill="#F1E6D2"></rect>
+      </g>
+    </svg>
+  </div>
+
+  <div class="kassa-actions" style="margin-top:18px;">
+    <button type="button" class="btn-secondary" style="flex:1;" id="rengleme-reset">{{ t.rengleme.reset }}</button>
+    <button type="button" class="btn-primary" style="flex:1;" id="rengleme-download">{{ t.rengleme.download }}</button>
+  </div>
+  <div class="sample-notice" style="margin-top:14px;">{{ t.rengleme.privacyNote }}</div>
+</section>
+{% endblock %}
+
+{% block extra_js %}<script src="/js/rengleme.js?v={{ assetV }}" defer></script>{% endblock %}
