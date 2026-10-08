@@ -22,11 +22,3 @@
 .memory-won{ margin-top:16px; background:var(--green); border-radius:22px; padding:16px; display:flex; justify-content:space-between; align-items:center; gap:10px; box-shadow:inset -5px -6px 0 rgba(0,0,0,.12), inset 5px 5px 0 rgba(255,255,255,.3); }
 .memory-won-title{ font-family:var(--font-display); font-weight:700; font-size:1.15rem; }
 .memory-won-sub{ font-size:.85rem; font-weight:800; }
-
-.park-tile{ display:flex; gap:14px; align-items:center; text-decoration:none; border-radius:var(--radius-lg); padding:18px; min-height:160px; box-shadow:0 6px 0 var(--night-deep); }
-.park-tile.wide{ grid-column:1/-1; min-height:auto; }
-@media (min-width:640px){ .park-tile.wide{ grid-column:span 2; } }
-.park-tile-icon{ min-width:56px; height:56px; border-radius:50%; flex:none; }
-.park-tile-title{ display:block; font-family:var(--font-display); font-weight:700; font-size:1.1rem; }
-.park-tile-text{ display:block; font-size:.85rem; font-weight:700; margin-top:4px; opacity:.9; }
-.park-tile-stars{ display:block; font-family:var(--font-display); font-weight:700; font-size:1.3rem; color:var(--sun); }

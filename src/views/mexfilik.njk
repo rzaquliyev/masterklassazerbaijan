@@ -1,0 +1,19 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}{{ t.mexfilik.title }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.mexfilik.intro }}{% endblock %}
+
+{% block content %}
+<section class="container page-head" style="max-width:720px; padding-bottom:50px;">
+  <h1>{{ t.mexfilik.title }}</h1>
+  <p class="form-alert error">{{ t.mexfilik.intro }}</p>
+  <div class="stack" style="margin-top:10px;">
+    {% for s in t.mexfilik.sections %}
+    <div>
+      <h2 style="font-size:1.1rem;">{{ s.h }}</h2>
+      <p>{{ s.p }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -4,11 +4,15 @@ import {
   listPublishedMasterclassesWithNextSession, findMasterclassBySlug,
   listUpcomingSessionsForMasterclass, listHouses, getSessionById, listAllUpcomingSessions,
 } from '../repositories/masterclasses.js';
-import { listPublishedGalleryPhotos, listPublishedInstructors, listFaqByTab, insertInquiry, insertInstructorApplication } from '../repositories/content.js';
+import {
+  listPublishedGalleryPhotos, listPublishedInstructors, listFaqByTab, insertInquiry,
+  insertInstructorApplication, getLoyaltyByPhoneAndBookingCode,
+} from '../repositories/content.js';
 import { getBookingWithDetails } from '../repositories/bookings.js';
 import { reserveSeat, SessionNotFoundError } from '../services/booking.js';
+import { getOrCreateReferralCode } from '../services/codes.js';
 import { bookingInputSchema } from '../schemas/booking.js';
-import { InvalidPhoneError } from '../lib/phone.js';
+import { InvalidPhoneError, normalizePhoneAz } from '../lib/phone.js';
 import { checkRateLimit } from '../lib/rateLimit.js';
 
 export function createPublicRouter(db) {
@@ -195,7 +199,27 @@ export function createPublicRouter(db) {
   });
 
   router.get('/kampaniyalar', async (req, res) => {
-    res.render('kampaniyalar.njk', {});
+    res.render('kampaniyalar.njk', { lookup: null, lookupError: null });
+  });
+
+  router.post('/kampaniyalar/passport', async (req, res) => {
+    if (!checkRateLimit(`passport:${req.ip}`, 10, 60_000)) {
+      return res.status(429).render('kampaniyalar.njk', { lookup: null, lookupError: true });
+    }
+    try {
+      const phoneE164 = normalizePhoneAz(req.body.phone || '');
+      const loyalty = await getLoyaltyByPhoneAndBookingCode(db, phoneE164, (req.body.reference || '').trim().toUpperCase());
+      if (!loyalty) {
+        return res.render('kampaniyalar.njk', { lookup: null, lookupError: true });
+      }
+      const referral = await getOrCreateReferralCode(db, loyalty.customer_id);
+      res.render('kampaniyalar.njk', { lookup: { ...loyalty, referralCode: referral.code, referralPercent: referral.percent }, lookupError: null });
+    } catch (err) {
+      if (err instanceof InvalidPhoneError) {
+        return res.status(400).render('kampaniyalar.njk', { lookup: null, lookupError: true });
+      }
+      throw err;
+    }
   });
 
   router.get('/oyun-parki', (req, res) => res.render('oyun-parki.njk', {}));

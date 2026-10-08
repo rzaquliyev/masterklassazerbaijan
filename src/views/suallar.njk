@@ -1,0 +1,49 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block title %}{{ t.suallar.title | replace('\n',' ') }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.suallar.lead }}{% endblock %}
+
+{% block content %}
+<section class="container page-head">
+  <h1 style="white-space:pre-line;">{{ t.suallar.title }}</h1>
+  <p class="page-lead">{{ t.suallar.lead }}</p>
+
+  <div class="pill-group" style="margin-top:18px;" role="tablist">
+    {% for tabId, label in t.suallar.tabs %}
+    <a href="#tab-{{ tabId }}" class="pill" data-tab-link="{{ tabId }}" role="tab">{{ label }}</a>
+    {% endfor %}
+  </div>
+
+  <div class="stack" style="margin-top:14px;">
+    {% for tabId, items in faqByTab %}
+    {% set isDefaultTab = tabId == 'q' %}
+    <div data-tab-panel="{{ tabId }}" {{ 'hidden' if not isDefaultTab }}>
+      {% for item in items %}
+      <div class="accordion-item" style="margin-bottom:10px;">
+        <button type="button" class="accordion-trigger" data-accordion-trigger aria-expanded="{{ 'true' if loop.first and isDefaultTab else 'false' }}" aria-controls="faq-{{ tabId }}-{{ loop.index0 }}">
+          <span>{{ item.question }}</span>
+          <span class="accordion-icon" aria-hidden="true">{{ '−' if loop.first and isDefaultTab else '+' }}</span>
+        </button>
+        <div class="accordion-panel" id="faq-{{ tabId }}-{{ loop.index0 }}" {{ 'hidden' if not (loop.first and isDefaultTab) }}>{{ item.answer }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>{{ t.home.noUpcoming }}</p>
+    {% endfor %}
+  </div>
+
+  <div class="callout" style="margin-top:30px; background:var(--green); position:relative;">
+    <div style="font-family:var(--font-display); font-weight:700; font-size:1.2rem;">{{ t.suallar.notFoundTitle }}</div>
+    <div style="margin-top:4px; font-weight:700; font-size:.92rem;">{{ t.suallar.notFoundLead }}</div>
+    <div class="btn-row" style="margin-top:14px;">
+      <a class="btn-dark" style="flex:1;" href="https://wa.me/994000000000" target="_blank" rel="noopener">{{ t.suallar.whatsapp }}</a>
+      <a class="btn-secondary" style="flex:1;" href="/{{ lang }}/elaqe">{{ t.suallar.writeEmail }}</a>
+    </div>
+    <div style="position:absolute; top:14px; right:14px;">{{ m.hiddenStar('suallar') }}</div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}<script src="/js/suallar.js?v={{ assetV }}" defer></script>{% endblock %}

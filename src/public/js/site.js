@@ -55,6 +55,8 @@
       var open = btn.getAttribute('aria-expanded') === 'true';
       btn.setAttribute('aria-expanded', String(!open));
       panel.hidden = open;
+      var icon = btn.querySelector('.accordion-icon');
+      if (icon) icon.textContent = open ? '+' : '−';
     });
   });
 

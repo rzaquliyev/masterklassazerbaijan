@@ -1,0 +1,81 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}{{ t.kampaniyalar.title | replace('\n',' ') }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.kampaniyalar.lead }}{% endblock %}
+
+{% block content %}
+<section class="container page-head">
+  <h1 style="white-space:pre-line;">{{ t.kampaniyalar.title }}</h1>
+  <p class="page-lead">{{ t.kampaniyalar.lead }}</p>
+</section>
+
+<section class="container" style="margin-top:22px;">
+  <div class="trust-card" style="background:var(--night); color:var(--cream); box-shadow:0 8px 0 var(--night-deep);">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+      <div>
+        <div style="font-family:var(--font-mono); font-weight:700; font-size:.7rem; letter-spacing:.1em; color:var(--sun);">PLASTİLİN ŞƏHƏRİ</div>
+        <div style="font-family:var(--font-display); font-weight:700; font-size:1.4rem; margin-top:4px;">{{ t.kampaniyalar.passportTitle }}</div>
+      </div>
+      {% if lookup %}
+      <span class="chip-solid" style="background:var(--orange); color:var(--white);">{{ lookup.stamp_count or 0 }} / 5</span>
+      {% endif %}
+    </div>
+    <div style="font-size:.88rem; font-weight:700; color:#C9D3E8; margin-top:8px;">{{ t.kampaniyalar.passportLead }}</div>
+
+    {% if lookup %}
+    <div class="stamp-grid">
+      {% for i in range(0, 5) %}
+      <div class="stamp-slot {{ 'is-filled' if i < lookup.stamp_count }}"></div>
+      {% endfor %}
+    </div>
+    {% if lookup.free_sessions_available > 0 %}
+    <div class="form-alert success" style="margin-top:14px; margin-bottom:0;">{{ lookup.free_sessions_available }} × pulsuz masterklass!</div>
+    {% endif %}
+
+    <div style="margin-top:18px; background:var(--cream); border-radius:18px; padding:16px;">
+      <div style="color:var(--night); font-family:var(--font-display); font-weight:700; font-size:1.1rem;">{{ t.kampaniyalar.referralTitle }}</div>
+      <div style="color:var(--night-2); font-size:.85rem; font-weight:700; margin-top:4px;">{{ t.kampaniyalar.referralLead }}</div>
+      <div class="btn-row" style="margin-top:12px;">
+        <div class="code-box">{{ lookup.referralCode }}</div>
+        <button type="button" class="btn-dark" data-copy="{{ lookup.referralCode }}" data-copy-label="{{ t.kampaniyalar.copiedBtn }}">{{ t.kampaniyalar.copyBtn }}</button>
+      </div>
+    </div>
+    {% else %}
+    {% if lookupError %}<div class="form-alert error" style="margin-top:14px; margin-bottom:0;">{{ t.kassa.errorGeneric }}</div>{% endif %}
+    <form method="post" action="/{{ lang }}/kampaniyalar/passport" style="margin-top:14px;">
+      <div class="field" style="margin-bottom:10px;">
+        <label for="passport-phone" style="color:var(--cream);">{{ t.kassa.phone }}</label>
+        <input type="tel" id="passport-phone" name="phone" required placeholder="{{ t.kassa.phonePlaceholder }}">
+      </div>
+      <div class="field" style="margin-bottom:10px;">
+        <label for="passport-ref" style="color:var(--cream);">{{ t.kampaniyalar.bookingRefLabel }}</label>
+        <input type="text" id="passport-ref" name="reference" required placeholder="ABCD-1234">
+      </div>
+      <button type="submit" class="btn-primary" style="width:100%;">{{ t.kampaniyalar.passportCheckBtn }}</button>
+    </form>
+    <div style="font-size:.76rem; font-weight:700; color:#8FA0C2; margin-top:10px;">{{ t.kampaniyalar.passportNote }}</div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="container" style="margin-top:24px;">
+  <div class="trust-card" style="background:var(--white);">
+    <div style="font-family:var(--font-display); font-weight:700; font-size:1.2rem;">{{ t.kampaniyalar.earlyBirdTitle }}</div>
+    <div style="margin-top:6px; font-weight:700; font-size:.9rem; color:var(--night-2);">{{ t.kampaniyalar.earlyBirdLead }}</div>
+  </div>
+</section>
+
+<section class="container card-grid cols-2" style="margin-top:20px;">
+  <a href="/{{ lang }}/ad-gunu" class="park-tile" style="background:var(--pink); color:var(--white); min-height:150px;">
+    <span><span class="park-tile-title">{{ t.kampaniyalar.birthdayTitle }}</span><span class="park-tile-text">{{ t.kampaniyalar.birthdayLead }}</span></span>
+  </a>
+  <a href="/{{ lang }}/oyun-parki" class="park-tile" style="background:var(--night); color:var(--cream); min-height:150px;">
+    <span class="park-tile-stars" aria-hidden="true">★★★★★</span>
+    <span><span class="park-tile-title">{{ t.kampaniyalar.huntTitle }}</span><span class="park-tile-text">{{ t.kampaniyalar.huntLead }}</span></span>
+  </a>
+</section>
+
+<section class="container" style="padding-top:26px;">
+  <div class="sample-notice" style="background:var(--white); border-radius:var(--radius-md); padding:14px 16px; box-shadow:0 4px 0 var(--card-shadow);">{{ t.kampaniyalar.rulesNote }}</div>
+</section>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}{{ t.adGunu.title | replace('\n',' ') }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.adGunu.lead }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/ad-gunu.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<section class="container page-head birthday-hero">
+  <div class="birthday-balloons" aria-hidden="true">
+    <span class="balloon clay-sm" style="background:var(--orange);"></span>
+    <span class="balloon clay-sm" style="background:var(--blue); top:36px;"></span>
+    <span class="balloon clay-sm" style="background:var(--sun); top:6px;"></span>
+  </div>
+  <h1 style="white-space:pre-line; text-align:center; margin-top:60px;">{{ t.adGunu.title }}</h1>
+  <p class="page-lead center-text">{{ t.adGunu.lead }}</p>
+</section>
+
+{% if sent %}
+<section class="container" style="margin-top:20px;">
+  <div class="callout" style="background:var(--green);">
+    <div style="font-family:var(--font-display); font-weight:700; font-size:1.3rem;">{{ t.adGunu.sentTitle }}</div>
+    <div style="margin-top:6px; font-weight:700;">{{ t.adGunu.sentLead }}</div>
+  </div>
+</section>
+{% else %}
+<section class="container" style="margin-top:30px;">
+  <h2>{{ t.adGunu.packagesTitle }}</h2>
+  <p class="page-lead">{{ t.adGunu.packagesLead }}</p>
+
+  {% if error %}<div class="form-alert error">{{ t.adGunu.error }}</div>{% endif %}
+
+  <form method="post" action="/{{ lang }}/ad-gunu">
+    <input type="text" name="website" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="stack" style="margin-top:14px;">
+      {% for pack in t.adGunu.packages %}
+      <label class="package-option trust-card">
+        <input type="radio" name="package" value="{{ pack.name }}" {{ 'checked' if loop.first }} required style="width:20px; height:20px; accent-color:var(--orange);">
+        <span style="flex:1;">
+          <span style="display:flex; justify-content:space-between; font-family:var(--font-display); font-weight:700; font-size:1.1rem;">{{ pack.name }}<span>[QİYMƏT] ₼</span></span>
+          <span style="display:block; font-size:.88rem; font-weight:700; color:var(--night-2); margin-top:4px;">{{ pack.desc }}</span>
+        </span>
+      </label>
+      {% endfor %}
+    </div>
+
+    <div class="trust-card" style="margin-top:24px;">
+      <div style="font-family:var(--font-display); font-weight:700; font-size:1.1rem;">{{ t.adGunu.guestsTitle }}</div>
+      <div class="field" style="margin-top:14px;">
+        <label for="kids-count" class="visually-hidden">{{ t.adGunu.guestsMax }}</label>
+        <select id="kids-count" name="kids">
+          {% for n in range(4, 21) %}<option value="{{ n }}" {{ 'selected' if n == 8 }}>{{ n }} {{ t.adGunu.guestsMax }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="field"><label for="bday-date">{{ t.adGunu.dateLabel }}</label><input type="date" id="bday-date" name="date"></div>
+      <div class="field" style="margin-bottom:0;"><label for="bday-phone">{{ t.adGunu.phoneLabel }}</label><input type="tel" id="bday-phone" name="phone" required></div>
+    </div>
+
+    <div class="trust-card" style="margin-top:18px; background:var(--night); color:var(--white); display:flex; justify-content:space-between; align-items:center;">
+      <span style="font-weight:800; font-size:.9rem;">{{ t.adGunu.priceNote }}</span>
+      <button type="submit" class="btn-primary">{{ t.adGunu.send }}</button>
+    </div>
+  </form>
+</section>
+{% endif %}
+{% endblock %}

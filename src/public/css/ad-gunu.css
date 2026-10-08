@@ -1,0 +1,5 @@
+.birthday-hero{ position:relative; padding-top:10px; }
+.birthday-balloons{ position:absolute; left:50%; top:0; transform:translateX(-50%); display:flex; gap:16px; }
+.balloon{ width:40px; height:50px; border-radius:50% 50% 46% 46%; position:relative; top:0; }
+.package-option{ display:flex; gap:14px; align-items:flex-start; cursor:pointer; }
+.package-option:has(input:checked){ box-shadow:0 8px 0 var(--orange-deep); outline:2px solid var(--orange); }

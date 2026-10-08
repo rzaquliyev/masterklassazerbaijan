@@ -250,6 +250,24 @@ p { margin: 0 0 var(--space-4); }
 .house-gil{ --house-color:var(--orange); } .house-resm{ --house-color:var(--blue); }
 .house-metbex{ --house-color:var(--sun); } .house-elm{ --house-color:var(--green); }
 
+/* ---------- Park/park-tile kartları (Oyun parkı, Kampaniyalar) ---------- */
+.park-tile{ display:flex; gap:14px; align-items:center; text-decoration:none; border-radius:var(--radius-lg); padding:18px; min-height:160px; box-shadow:0 6px 0 var(--night-deep); }
+.park-tile.wide{ grid-column:1/-1; min-height:auto; }
+@media (min-width:640px){ .park-tile.wide{ grid-column:span 2; } }
+.park-tile-icon{ min-width:56px; height:56px; border-radius:50%; flex:none; }
+.park-tile-title{ display:block; font-family:var(--font-display); font-weight:700; font-size:1.1rem; }
+.park-tile-text{ display:block; font-size:.85rem; font-weight:700; margin-top:4px; opacity:.9; }
+.park-tile-stars{ display:block; font-family:var(--font-display); font-weight:700; font-size:1.3rem; color:var(--sun); }
+
+/* ---------- Usta pasportu möhürləri + kod qutusu (Kampaniyalar) ---------- */
+.stamp-grid{ display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:8px; margin-top:16px; background:var(--cream); border-radius:18px; padding:14px 10px; }
+.stamp-slot{ aspect-ratio:1/1; border-radius:50%; border:3px dashed #C9B89A; box-sizing:border-box; }
+.stamp-slot.is-filled{ border-style:solid; border-color:var(--orange); background:rgba(232,104,42,.15); }
+.code-box{
+  flex:1; min-height:50px; border-radius:14px; background:var(--white); display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-mono); font-weight:700; font-size:1.05rem; letter-spacing:.08em; border:3px dashed var(--night); color:var(--night);
+}
+
 /* ---------- Gizlənqaç ulduzu (5 səhifədə gizli, oyun mexanikası) ---------- */
 .hidden-star{
   display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border:0;
@@ -263,5 +281,6 @@ p { margin: 0 0 var(--space-4); }
 .visually-hidden{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 .sample-notice{ font-size:.78rem; color:var(--night-2); font-weight:700; }
 .stack{ display:flex; flex-direction:column; gap:12px; }
+.btn-row{ display:flex; gap:10px; flex-wrap:wrap; }
 .mt-0{ margin-top:0; }
 .center-text{ text-align:center; }

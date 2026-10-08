@@ -29,7 +29,8 @@ export async function createApp() {
           // script-src 'unsafe-inline'/'unsafe-eval' OLMADAN tam məhdud qalır (XSS-in əsas vektoru).
           styleSrc: ["'self'", "'unsafe-inline'"],
           scriptSrc: ["'self'"],
-          imgSrc: ["'self'", 'data:'],
+          // 'blob:' Rəngləmə oyununun PNG export-u üçün (SVG -> Blob URL -> <img> -> canvas).
+          imgSrc: ["'self'", 'data:', 'blob:'],
           fontSrc: ["'self'"],
           connectSrc: ["'self'"],
           objectSrc: ["'none'"],
