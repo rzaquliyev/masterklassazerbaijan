@@ -16,7 +16,6 @@
     { "href": "/{lang}/kampaniyalar", "place": "Bazar meydanı", "what": "Kampaniyalar", "color": "#FFC23D" },
     { "href": "/{lang}/ad-gunu", "place": "Bayram meydanı", "what": "Ad günü", "color": "#F28AA6" },
     { "href": "/{lang}/qalereya", "place": "Şəhər muzeyi", "what": "Qalereya", "color": "#E8682A" },
-    { "href": "/{lang}/telimciler", "place": "Şəhər sakinləri", "what": "Təlimçilər", "color": "#C9A0DC" },
     { "href": "/{lang}/suallar", "place": "Məlumat bürosu", "what": "Suallar", "color": "#FFE08A" },
     { "href": "/{lang}/elaqe", "place": "Şəhər poçtu", "what": "Əlaqə", "color": "#1B2A4A" }
   ],
@@ -70,7 +69,6 @@
     ],
     "bringNothingTitle": "Nə gətirməli? Heç nə.",
     "bringNothingText": "Önlük, materiallar bizdən. Sadəcə ləkələnməsindən qorxmadığınız paltar. [Dəqiqləşdirin]",
-    "teacherTitle": "Bu evin sakini",
     "neighborsTitle": "Qonşu evlərə də bax",
     "sessionPicker": "Seans seç",
     "full": "Dolub",
@@ -192,22 +190,6 @@
     "lightboxPrev": "Əvvəlki",
     "lightboxNext": "Növbəti",
     "lightboxClose": "Bağla"
-  },
-  "telimciler": {
-    "title": "Şəhərin\nsakinləri",
-    "lead": "Hər evin öz ustası var. Kartına toxun, tanış ol.",
-    "meet": "Tanış ol →",
-    "flipBack": "← geri çevir",
-    "empty": "Təlimçi siyahısı tezliklə əlavə olunacaq.",
-    "applyTitle": "Sakin olmaq istəyirsiniz?",
-    "applyLead": "Masterklass aparan müəllimləri komandaya dəvət edirik.",
-    "applyBtn": "Müraciət et",
-    "formName": "Adınız",
-    "formPhone": "Telefon",
-    "formMessage": "Qısa mesaj (ixtiyari)",
-    "send": "Göndər",
-    "sent": "Müraciətiniz göndərildi, təşəkkür edirik!",
-    "error": "Ad və telefon mütləqdir."
   },
   "suallar": {
     "title": "Məlumat\nbürosu",

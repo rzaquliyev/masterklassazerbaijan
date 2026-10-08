@@ -5,8 +5,7 @@ import {
   listUpcomingSessionsForMasterclass, listHouses, getSessionById, listAllUpcomingSessions,
 } from '../repositories/masterclasses.js';
 import {
-  listPublishedGalleryPhotos, listPublishedInstructors, listFaqByTab, insertInquiry,
-  insertInstructorApplication, getLoyaltyByPhoneAndBookingCode,
+  listPublishedGalleryPhotos, listFaqByTab, insertInquiry, getLoyaltyByPhoneAndBookingCode,
 } from '../repositories/content.js';
 import { getBookingWithDetails } from '../repositories/bookings.js';
 import { reserveSeat, SessionNotFoundError } from '../services/booking.js';
@@ -48,9 +47,7 @@ export function createPublicRouter(db) {
     const all = await listPublishedMasterclassesWithNextSession(db);
     const neighbors = all.filter((m) => m.id !== masterclass.id && m.house_id === masterclass.house_id).slice(0, 3);
     const otherNeighbors = all.filter((m) => m.id !== masterclass.id && m.house_id !== masterclass.house_id).slice(0, 3 - neighbors.length);
-    const instructors = await listPublishedInstructors(db);
-    const instructor = instructors.find((i) => i.house_id === masterclass.house_id) || null;
-    res.render('detail.njk', { masterclass, sessions, neighbors: neighbors.concat(otherNeighbors), instructor });
+    res.render('detail.njk', { masterclass, sessions, neighbors: neighbors.concat(otherNeighbors) });
   });
 
   router.get('/kassa/:sessionId', async (req, res) => {
@@ -140,22 +137,6 @@ export function createPublicRouter(db) {
     const houseFilter = req.query.ev || null;
     const photos = await listPublishedGalleryPhotos(db, houseFilter);
     res.render('qalereya.njk', { photos, houses, houseFilter });
-  });
-
-  router.get('/telimciler', async (req, res) => {
-    const instructors = await listPublishedInstructors(db);
-    res.render('telimciler.njk', { instructors });
-  });
-
-  router.post('/telimciler/muraciet', async (req, res) => {
-    if (!checkRateLimit(`apply:${req.ip}`, 3, 60_000) || req.body.website) {
-      return res.render('telimciler.njk', { instructors: await listPublishedInstructors(db), applicationError: true });
-    }
-    if (!req.body.name || !req.body.phone) {
-      return res.status(400).render('telimciler.njk', { instructors: await listPublishedInstructors(db), applicationError: true });
-    }
-    await insertInstructorApplication(db, { name: req.body.name, phone: req.body.phone, message: req.body.message });
-    res.render('telimciler.njk', { instructors: await listPublishedInstructors(db), applicationSent: true });
   });
 
   router.get('/suallar', async (req, res) => {

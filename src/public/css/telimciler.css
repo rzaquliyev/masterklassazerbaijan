@@ -1,7 +1,0 @@
-.instructor-card{ min-height:150px; }
-.instructor-face-front, .instructor-face-back{
-  display:flex; align-items:center; gap:14px; padding:16px; background:var(--white); box-shadow:0 6px 0 var(--card-shadow);
-}
-.instructor-face-back{ color:var(--night); flex-direction:column; align-items:flex-start; justify-content:center; font-weight:700; font-size:.9rem; }
-.instructor-info{ flex:1; }
-.instructor-name{ font-family:var(--font-display); font-weight:700; font-size:1.05rem; margin-top:6px; }

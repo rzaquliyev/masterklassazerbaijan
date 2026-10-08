@@ -75,15 +75,6 @@
     <div style="position:absolute; top:14px; right:14px;">{{ m.hiddenStar('detail') }}</div>
   </section>
 
-  {% if instructor %}
-  <section style="margin-top:30px;">
-    <h2>{{ t.detail.teacherTitle }}</h2>
-    <div style="display:flex; gap:14px; align-items:center; background:var(--white); border-radius:var(--radius-md); padding:14px; box-shadow:0 6px 0 var(--card-shadow); margin-top:14px;">
-      <div class="foto-placeholder" style="min-width:76px; height:76px; border-radius:50%;">[FOTO]</div>
-      <div><div style="font-weight:800; font-size:1.05rem;">{{ instructor.name }}</div><div style="font-size:.88rem; color:var(--night-2); font-weight:700;">{{ instructor.bio }}</div></div>
-    </div>
-  </section>
-  {% endif %}
 
   {% if neighbors.length %}
   <section style="margin-top:30px;">

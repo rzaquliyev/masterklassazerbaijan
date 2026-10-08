@@ -16,7 +16,6 @@
     { "href": "/{lang}/kampaniyalar", "place": "Market square", "what": "Promotions", "color": "#FFC23D" },
     { "href": "/{lang}/ad-gunu", "place": "Festival square", "what": "Birthday", "color": "#F28AA6" },
     { "href": "/{lang}/qalereya", "place": "City museum", "what": "Gallery", "color": "#E8682A" },
-    { "href": "/{lang}/telimciler", "place": "Town residents", "what": "Instructors", "color": "#C9A0DC" },
     { "href": "/{lang}/suallar", "place": "Information desk", "what": "Questions", "color": "#FFE08A" },
     { "href": "/{lang}/elaqe", "place": "Town post office", "what": "Contact", "color": "#1B2A4A" }
   ],
@@ -70,7 +69,6 @@
     ],
     "bringNothingTitle": "What to bring? Nothing.",
     "bringNothingText": "Apron and materials included. Just wear clothes you don't mind getting messy. [Clarify]",
-    "teacherTitle": "This house's resident",
     "neighborsTitle": "Check out the neighbors",
     "sessionPicker": "Choose a session",
     "full": "Full",
@@ -192,22 +190,6 @@
     "lightboxPrev": "Previous",
     "lightboxNext": "Next",
     "lightboxClose": "Close"
-  },
-  "telimciler": {
-    "title": "Town\nresidents",
-    "lead": "Every house has its own master. Tap a card to meet them.",
-    "meet": "Meet them →",
-    "flipBack": "← flip back",
-    "empty": "The instructor list is coming soon.",
-    "applyTitle": "Want to become a resident?",
-    "applyLead": "We're inviting masterclass instructors to join the team.",
-    "applyBtn": "Apply",
-    "formName": "Your name",
-    "formPhone": "Phone",
-    "formMessage": "Short message (optional)",
-    "send": "Send",
-    "sent": "Your application was sent, thank you!",
-    "error": "Name and phone are required."
   },
   "suallar": {
     "title": "Information\ndesk",

@@ -250,6 +250,10 @@ p { margin: 0 0 var(--space-4); }
 .house-gil{ --house-color:var(--orange); } .house-resm{ --house-color:var(--blue); }
 .house-metbex{ --house-color:var(--sun); } .house-elm{ --house-color:var(--green); }
 
+/* ---------- Callout (vurğu qutusu) — paylaşılan, 8 səhifədə istifadə olunur ---------- */
+.callout{ background:var(--butter); border-radius:var(--radius-lg); padding:20px; box-shadow:inset -6px -8px 0 rgba(0,0,0,.08), inset 6px 6px 0 rgba(255,255,255,.4); }
+.callout.on-green{ background:var(--green); box-shadow:inset -6px -7px 0 rgba(0,0,0,.12), inset 6px 6px 0 rgba(255,255,255,.3); }
+
 /* ---------- Park/park-tile kartları (Oyun parkı, Kampaniyalar) ---------- */
 .park-tile{ display:flex; gap:14px; align-items:center; text-decoration:none; border-radius:var(--radius-lg); padding:18px; min-height:160px; box-shadow:0 6px 0 var(--night-deep); }
 .park-tile.wide{ grid-column:1/-1; min-height:auto; }

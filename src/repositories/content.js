@@ -1,23 +1,5 @@
 import { randomUUID } from 'node:crypto';
 
-export async function listPublishedInstructors(db) {
-  const { rows } = await db.query(
-    `SELECT i.*, h.name AS house_name, h.color_hex AS house_color, h.slug AS house_slug
-     FROM instructors i LEFT JOIN houses h ON h.id = i.house_id
-     WHERE i.is_published = true ORDER BY i.sort_order ASC`,
-  );
-  return rows;
-}
-
-export async function insertInstructorApplication(db, { name, phone, message }) {
-  const id = randomUUID();
-  await db.query(
-    'INSERT INTO instructor_applications (id, name, phone, message) VALUES ($1,$2,$3,$4)',
-    [id, name, phone, message ?? null],
-  );
-  return id;
-}
-
 export async function listFaqByTab(db) {
   const { rows } = await db.query('SELECT * FROM faq_items ORDER BY tab ASC, sort_order ASC');
   const byTab = {};

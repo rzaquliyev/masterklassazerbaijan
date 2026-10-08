@@ -55,17 +55,42 @@
   <div class="container">
     <h2 style="color:var(--cream);">{{ t.home.roadmapTitle }}</h2>
     <div class="page-lead" style="color:#C9D3E8;">{{ t.home.roadmapLead }}</div>
-    <ol class="roadmap-steps">
-      {% for step in t.home.steps %}
-      <li class="roadmap-step">
-        <span class="roadmap-num" aria-hidden="true">{{ step.n }}</span>
-        <div>
-          <div class="roadmap-title">{{ step.title }}</div>
-          <div class="roadmap-text">{{ step.text }}</div>
-        </div>
-      </li>
-      {% endfor %}
-    </ol>
+    <div class="roadmap-visual">
+      <svg class="roadmap-road-svg" viewBox="0 0 350 470" aria-hidden="true" focusable="false">
+        <path class="roadmap-road-base" d="M30 20 C 330 20, 330 150, 175 150 S 20 280, 175 290 S 330 420, 60 450"></path>
+        <path class="roadmap-road-dash" d="M30 20 C 330 20, 330 150, 175 150 S 20 280, 175 290 S 330 420, 60 450"></path>
+        <g class="roadmap-car" id="roadmap-car" transform="translate(30,20)">
+          <ellipse cx="0" cy="3" rx="27" ry="15" fill="rgba(0,0,0,.28)"></ellipse>
+          <rect x="-20" y="-18" width="12" height="8" rx="3.5" fill="#14203A"></rect>
+          <rect x="8" y="-18" width="12" height="8" rx="3.5" fill="#14203A"></rect>
+          <rect x="-20" y="10" width="12" height="8" rx="3.5" fill="#14203A"></rect>
+          <rect x="8" y="10" width="12" height="8" rx="3.5" fill="#14203A"></rect>
+          <rect x="-26" y="-14" width="52" height="28" rx="12" fill="#E8682A"></rect>
+          <rect x="-26" y="-14" width="52" height="28" rx="12" fill="none" stroke="#B44E1D" stroke-width="2"></rect>
+          <path d="M-20 -9 C -14 -12, 2 -12, 12 -10" stroke="rgba(255,255,255,.55)" stroke-width="3" fill="none" stroke-linecap="round"></path>
+          <rect x="-12" y="-9" width="22" height="18" rx="7" fill="#FF9A5C"></rect>
+          <path d="M10 -8 C 16 -6, 16 6, 10 8 Z" fill="#BFE3FF"></path>
+          <path d="M-12 -7 C -16 -4, -16 4, -12 7 Z" fill="#9CCBEF"></path>
+          <rect x="-8" y="-1.5" width="14" height="3" rx="1.5" fill="#FFFFFF" opacity=".9"></rect>
+          <circle cx="23" cy="-8" r="2.6" fill="#FFE08A"></circle>
+          <circle cx="23" cy="8" r="2.6" fill="#FFE08A"></circle>
+          <circle cx="-23.5" cy="-8" r="1.8" fill="#C0392B"></circle>
+          <circle cx="-23.5" cy="8" r="1.8" fill="#C0392B"></circle>
+          <animateMotion id="roadmap-car-anim" dur="3.5s" begin="indefinite" fill="freeze" rotate="auto" path="M0 0 C 300 0, 300 130, 145 130 S -10 260, 145 270 S 300 400, 30 430"></animateMotion>
+        </g>
+      </svg>
+      <ol class="roadmap-steps roadmap-steps--road">
+        {% for step in t.home.steps %}
+        <li class="roadmap-step roadmap-step-{{ loop.index }}">
+          <span class="roadmap-num" aria-hidden="true">{{ step.n }}</span>
+          <div>
+            <div class="roadmap-title">{{ step.title }}</div>
+            <div class="roadmap-text">{{ step.text }}</div>
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
   </div>
 </section>
 

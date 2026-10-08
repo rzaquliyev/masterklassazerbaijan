@@ -38,11 +38,13 @@ Uşaq yaradıcılıq studiyası üçün çoxsəhifəli sayt: sayt kiçik bir **p
 
 | Rol | Şrift | Çəki | AZ dəstək |
 |---|---|---|---|
-| Başlıq (display) | **Fredoka** | 500–700 | self-host ediləndə render-yoxlaması aparılacaq (ə,ı,ğ,ş,ç,ö,ü) |
-| Mətn (body) | **Nunito** | 500–800 | eyni yoxlama |
-| Reys lövhəsi / kod / bilet № | **Space Mono** | 700 | yalnız rəqəm+latın böyük hərf üçün işlədilir (Space Mono-nun Azərbaycan hərf dəstəyi zəifdir) — **AZ hərfi olan heç bir məzmun bu şriftlə yazılmır**, yalnız saat (`11:00`), bilet kodu (`SAMPLE-0427`), kateqoriya etiketi kimi latın/rəqəm sabit-enli mətnlər |
+| Başlıq (display) | **Baloo 2** | 500–700 | `fonttools` ilə cmap birbaşa yoxlanıldı: ə,ı,ğ,ş,ç,ö,ü,İ hamısı var (latin+latin-ext birlikdə) |
+| Mətn (body) | **Nunito** | 500–800 | eyni üsulla yoxlanıldı |
+| Reys lövhəsi / kod / bilet № | **Space Mono** | 700 | yalnız rəqəm+latın böyük hərf üçün işlədilir (Space Mono-nun latin-ext self-host edilməyib) — **AZ hərfi olan heç bir məzmun bu şriftlə yazılmır**, yalnız saat (`11:00`), bilet kodu (`SAMPLE-0427`), kateqoriya etiketi kimi latın/rəqəm sabit-enli mətnlər |
 
-Fontsource namizədləri: `@fontsource/fredoka`, `@fontsource/nunito`, `@fontsource/space-mono`. Hər biri Mərhələ 4-də self-host ediləndə Azərbaycan hərfləri canlı render edilib təsdiqlənəcək; dəstəkləmirsə BRIEF §7 qaydasına görə istifadə edilməyəcək və mənə bildiriləcək.
+**Font dəyişikliyi (2026-10-08, real xəta düzəlişi):** ilkin seçim **Fredoka** idi (maketlərdəki kimi), amma istifadəçi saytda "ə hərfi fərqli görünür" bildirdi. Araşdırma: `fonttools` ilə Fredoka-nın HƏR İKİ faylının (latin, latin-ext) cmap cədvəli birbaşa yoxlanıldı — nəticə göstərdi ki, Fredoka-nın heç bir Fontsource subset-i (statik də, variable paket də) ə/Ə/ş/Ş/İ qlif-lərini daşımır. Bu, subset bölgüsü xətası deyil, Fredoka-nın öz qlif dəstinin (Google Fonts-dakı əsil fayl) məhdudiyyətidir — yalnız unicode-range ədədi hesabla (U+0259 aralıqdadır) yoxlamaq kifayət etmir, glyph-in faktiki mövcudluğu ayrıca yoxlanılmalıdır. Nəticədə bu hərflər səssizcə sistem şriftinə keçib başqa görünürdü. 6 namizəd (Baloo 2, Quicksand, Varela Round, Comfortaa, Mali, həmçinin Grandstander/Lilita One/Bagel Fat One/Sniglet/Concert One rədd edildi) eyni üsulla yoxlanıldı — **Baloo 2** seçildi: tam AZ dəstəyi (həm latin, həm latin-ext faylda), Fredoka-ya ən yaxın bold/rounded "clay" xarakteri, tam çəki aralığı (400–800).
+
+Fontsource namizədləri: `@fontsource/baloo-2`, `@fontsource/nunito`, `@fontsource/space-mono`. Hər biri self-host ediləndə Azərbaycan hərfləri canlı render edilib təsdiqləndi.
 
 ## 3. "Plastilin" effekti — imza CSS utility
 
@@ -91,7 +93,7 @@ Bu qaydalar Mərhələ 4 tətbiqində `design-motion-principles` (Jhey Tompkins 
 - [ ] Eyni-ölçülü 3 "feature" kart yan-yana yoxdur (ev kartları fərqli ölçü/forma, trust-badge-lər siyahı şəklində)
 - [ ] Emoji ikon kimi istifadə olunmayıb (hamısı əl-çəkilmiş CSS-"gil" forma/SVG)
 - [ ] Hər yerdə glassmorphism yoxdur (plastilin inset-kölgə effekti, şüşə-effekt deyil)
-- [ ] Inter + slate-900 cütlüyü yoxdur (Fredoka + Nunito)
+- [ ] Inter + slate-900 cütlüyü yoxdur (Baloo 2 + Nunito)
 - [ ] Stok foto yoxdur — bütün foto yerləri `[FOTO]`/SAMPLE etiketli
 - [ ] Uydurma rəy/rəqəm yoxdur
 - [ ] Generic mətn yoxdur — konkret ton ("Şənbə 11:00, gil boşqab düzəldirik")
