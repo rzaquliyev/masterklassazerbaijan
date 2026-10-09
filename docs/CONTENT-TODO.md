@@ -2,12 +2,11 @@
 
 > BRIEF.md §4-ə görə: maketlərdəki/koddakı bütün `[...]` yer tutucuları (placeholder) real məlumatla əvəz olunmalıdır. Heç nə uydurulmayıb — aşağıdakı siyahı kodda indi görünən bütün belə yerləri və onların harada olduğunu göstərir. Studiya sahibi bunları cavablandırana qədər sayt bu vəziyyətdə **istehsala (production) buraxıla bilməz**.
 
-## 1. Brend adı (ən prioritetli)
+## 1. Brend adı ✅ TƏSDİQLƏNDİ (2026-10-09)
 
-- **Harada:** `siteName` açarı — `src/i18n/az.json:3`, `ru.json`, `en.json` (bütün səhifə başlıqlarında, naviqasiyada, footer-də görünür)
-- **Hazırkı vəziyyət:** `"[Studio adı]"` — hələ seçilməyib
-- **Niyə boş qalıb:** BRIEF.md §0/§2 "Ad və domen riski" bəndinə görə, "Masterclass Azerbaijan" adı və `masterclass.az` domeni Bakıda artıq başqa, əlaqəsiz bir biznesə məxsusdur (avtomobil mövzulu media səhifəsi, ~146K izləyici). Qarışıqlıq riski olduğu üçün **dəqiq brend adı və domen adı studiya sahibindən təsdiqlənməlidir**.
-- **Qeyd:** Instagram hesabı `@masterklassazerbaijan` artıq BRIEF.md §0-da təsdiqlənib və kodda düzgün istifadə olunur (`src/views/layouts/base.njk:51`, `src/views/elaqe.njk:33`) — bu, boşluq DEYİL.
+- **Qərar:** rəsmi ad **"Masterklass Azerbaijan"** (yazılışda "k" ilə — "masterklass", "masterclass" yox) — Instagram hesabı `@masterklassazerbaijan` ilə eyni, BRIEF.md §0/§2-dəki ad/domen qarışıqlığı riski bununla aradan qalxır, çünki mövcud əlaqəsiz biznes "masterclass" (ingilis yazılışı, "c" ilə) adını və domenini istifadə edir.
+- **Tətbiq olundu:** `siteName` açarı `src/i18n/az.json`, `ru.json`, `en.json`-da `"Masterklass Azerbaijan"` olaraq dəyişdirildi (bütün səhifə başlıqlarında, naviqasiyada, footer-də avtomatik görünür).
+- Domen adı hələ ayrıca təsdiqlənməlidir (məs. `masterklassazerbaijan.az` və ya oxşar — "masterclass.az" YOX, çünki o, başqa birinə məxsusdur).
 
 ## 2. Əlaqə məlumatları
 
