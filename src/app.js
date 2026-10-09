@@ -5,6 +5,7 @@ import nunjucks from 'nunjucks';
 import helmet from 'helmet';
 import { getDb } from './lib/db.js';
 import { createPublicRouter } from './routes/public.js';
+import { createAdminRouter } from './routes/admin.js';
 import { dictionaries, SUPPORTED_LANGS, DEFAULT_LANG } from './i18n/index.js';
 import { getBookingWithDetails } from './repositories/bookings.js';
 import { buildIcsEvent } from './lib/ics.js';
@@ -14,9 +15,9 @@ import { checkRateLimit } from './lib/rateLimit.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export async function createApp() {
+export async function createApp(db) {
   const app = express();
-  const db = await getDb();
+  db = db || (await getDb());
 
   app.use(
     helmet({
@@ -93,6 +94,11 @@ export async function createApp() {
       throw err;
     }
   });
+
+  app.use('/admin', (req, res, next) => {
+    res.set('X-Robots-Tag', 'noindex, nofollow');
+    next();
+  }, createAdminRouter(db));
 
   app.use('/:lang', (req, res, next) => {
     const { lang } = req.params;

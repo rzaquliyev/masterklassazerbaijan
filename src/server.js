@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'production') {
   }
 }
 
-const app = await createApp();
+const app = await createApp(db);
 app.listen(port, () => {
   console.log(`Server http://localhost:${port} ünvanında işləyir (${process.env.DATABASE_URL ? 'Postgres' : 'PGlite'}${process.env.PGLITE_DATA_DIR ? ', fayl: ' + process.env.PGLITE_DATA_DIR : ', yaddaşda/müvəqqəti'})`);
 });

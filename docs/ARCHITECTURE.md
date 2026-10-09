@@ -47,7 +47,6 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 | 9 | `/kampaniyalar` | Kampaniyalar | Bazar meydanı |
 | 10 | `/ad-gunu` | Ad günü | Bayram meydanı |
 | 11 | `/qalereya` | Qalereya | Şəhər muzeyi |
-| 12 | `/telimciler` | Təlimçilər | Şəhər sakinləri |
 | 13 | `/suallar` | Valideyn sualları | Məlumat bürosu |
 | 14 | `/elaqe` | Əlaqə | Şəhər poçtu |
 | — | `/mexfilik`, `/sertler` | Statik | — |
@@ -55,19 +54,16 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 
 `sitemap.xml`, `robots.txt`, `Event`/`LocalBusiness` JSON-LD (masterklass/seans səhifələrində).
 
-**Admin** (autentifikasiya arxasında, indekslənmir, tək `owner` rolu — Phase 0 cavabı):
-- Giriş, dashboard
-- Masterklass/seans/ev idarəetməsi (yarat/redaktə/ləğv/tutum/qiymət, erkən-quş qaydası)
-- Bronlar (axtarış, status, qeyd, gözləmə siyahısından köçürmə)
-- Müştərilər (valideyn+uşaq, tarixçə, loyallıq möhür sayı)
-- Ad günü sorğuları
-- Qalereya (yüklə, **razılıq bayrağı** məcburi sahə)
-- Təlimçilər (CRUD) + müraciətlər siyahısı
-- Suallar (CRUD, tab-görə qruplaşdırma)
-- Əlaqə mesajları
-- Endirim/referral kodları (yarat/ləğv et, qayda parametrləri: faiz, müddət)
-- CSV ixrac (UTF-8 BOM)
-- Audit jurnalı
+**Admin** (`/admin`, autentifikasiya arxasında, `X-Robots-Tag: noindex`, `owner`/`staff` rolları — Mərhələ 5-də tətbiq olundu):
+- Giriş (argon2id, DB-dəstəkli sessiya, HttpOnly/SameSite cookie, CSRF hər formda, login rate-limit), çıxış, dashboard
+- Masterklass CRUD (yarat/redaktə/dərc et-gizlət) + seans CRUD (tutum/qiymət/erkən-quş/ünvan, ləğv et) — `src/routes/admin.js`, `src/repositories/admin.js`
+- Bronlar: axtarış+status filtri, status dəyişikliyi (ləğv etmə mövcud `cancelBooking` servisini çağırır — yer azad olur, gözləmə siyahısı avtomatik köçürülür), daxili qeyd
+- Müştərilər: siyahı/axtarış, detal, daxili qeyd, **anonimləşdirmə** (owner-yalnız, ad/telefonu silir, bron tarixçəsini saxlayır — BRIEF məxfilik tələbi)
+- Sorğular (Əlaqə/Ad günü): filtrlə, status dəyişdir
+- CSV ixrac (bronlar, UTF-8 BOM, owner-yalnız)
+- İstifadəçi/rol idarəsi (owner yaradır, owner/staff), Audit jurnalı (owner-yalnız) — hər həssas əməliyyat (giriş/çıxış, dərc/gizlət, status dəyişikliyi, ixrac, anonimləşdirmə, istifadəçi yaratma) qeyd olunur
+
+**Hələ tətbiq olunmayıb** (gələcək iş, bloklamır): qalereya foto yükləmə (EXIF/GPS təmizləmə daxil), ev (`houses`) CRUD, FAQ CRUD, endirim/referral kod idarəsi admin UI-dan — bunlar hələlik yalnız birbaşa DB/seed vasitəsilə dəyişdirilə bilər. Təlimçilər (instructors) funksiyası istifadəçi tələbi ilə ictimai saytdan tamamilə silindi (bax commit tarixçəsi), uyğun admin bölməsi də planlaşdırılmır.
 
 ## 5. Data modeli
 
@@ -103,17 +99,21 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 - **Rəngləmə** (yeni) — SVG/`<canvas>`, client-only, PNG export (`canvas.toDataURL`), **data saxlanmır**
 - **Gizlənqaç** (yeni) — 5 səhifədə gizli ulduz, `localStorage` progress, 5/5-də server endpoint (`POST /api/gizlenqach/mukafat`) telefon qəbul edib `discount_codes`-a `type=hide-seek` yazır, rate-limitli
 
-## 8. Təhlükəsizlik bazası (icra Mərhələ 5-6, qaydalar indidən qeyd olunur)
+## 8. Təhlükəsizlik bazası
 
-argon2id/bcrypt, HttpOnly+Secure+SameSite cookie, CSRF, login/form rate-limit + honeypot (Əlaqə forması xüsusilə), parametrli SQL, auto-escape template, CSP, Helmet başlıqları, qalereya foto upload EXIF/GPS təmizlənməsi, minimal data toplama (uşaq tam adı yox, ixtiyari label), silinmə/anonimləşdirmə skripti. Tam siyahı: skilin "Security baseline" bölməsi.
+**Admin panel üçün tətbiq olundu (Mərhələ 5):** argon2id parol hash, server-side sessiya (DB-də, 12 saat TTL), HttpOnly + SameSite=Lax + (production-da) Secure cookie, hər state-dəyişdirən formda CSRF tokeni, giriş üçün IP+email əsaslı rate-limit, rol-əsaslı icazə (`owner`/`staff`, server-side yoxlanılır, UI-da gizlətmə kifayət deyil), `X-Robots-Tag: noindex`, bütün həssas əməliyyatlar `audit_log`-a yazılır. Test: `tests/admin.test.js` (sessiyasız/səhv-parol/CSRF/rol yoxlamaları, CSV BOM).
+
+**Hələ tətbiq olunmayıb:** qalereya foto upload (və onunla birgə EXIF/GPS təmizlənməsi) — upload funksiyası özü hələ yoxdur. Honeypot (`website` gizli sahə, server-side yoxlanılır `src/routes/public.js`-də), parametrli SQL, auto-escape, CSP, Helmet layihənin əvvəlindən mövcuddur.
 
 ## 9. Hosting
 
 Açıq sual (istifadəçi: Mərhələ 7-yə qədər gözlənilə bilər). Namizədlər: Render/Railway (Postgres, ephemeral-disk riski olmadan).
 
-## 10. Açıq suallar (bloklamır, Phase 0 mesajında soruşulub, cavab gözlənilir)
+## 10. Açıq suallar (bloklamır)
 
-- Dəqiq brend adı və domen (`[Studio adı]` placeholder davam edir)
-- Ünvan/rayon, WhatsApp nömrəsi, Instagram hesabı (SAMPLE davam edir)
+Tam, yenilənən siyahı: `docs/CONTENT-TODO.md`. Qısa xülasə:
+- ✅ Brend adı ("Masterklass Azerbaijan"), ünvan, telefon/WhatsApp — təsdiqləndi (2026-10-09)
+- ❌ İş saatları hələ gözlənilir
+- ❌ Qiymətlər, say həddləri, bəzi qayda mətnləri (ləğv qaydası, saxlama müddəti) hələ `SAMPLE`/placeholder
 - Loqo/brend rəngləri (maketin rəngləri ilə davam edilir)
 - Hosting büdcəsi/seçimi

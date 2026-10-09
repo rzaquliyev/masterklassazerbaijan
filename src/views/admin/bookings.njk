@@ -1,0 +1,67 @@
+{% extends "admin/layout.njk" %}
+{% block title %}Bronlar{% endblock %}
+{% block content %}
+<h1 class="admin-h1">Bronlar</h1>
+
+<form class="admin-filters" method="get" action="/admin/bookings">
+  <div class="admin-field" style="margin:0;">
+    <label for="q">Axtar (ad, telefon, bilet №)</label>
+    <input type="text" id="q" name="q" value="{{ search }}">
+  </div>
+  <div class="admin-field" style="margin:0;">
+    <label for="status">Status</label>
+    <select id="status" name="status">
+      <option value="" {{ 'selected' if status == '' }}>Hamısı</option>
+      {% for s in ['pending','confirmed','attended','cancelled','waitlist'] %}
+      <option value="{{ s }}" {{ 'selected' if status == s }}>{{ s }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <button type="submit" class="admin-btn secondary">Filtrlə</button>
+</form>
+
+<div class="admin-card">
+  <table class="admin-table">
+    <thead><tr><th>Bilet №</th><th>Masterklass</th><th>Tarix</th><th>Uşaq</th><th>Valideyn</th><th>Telefon</th><th>Qiymət</th><th>Status</th><th>Qeyd</th><th></th></tr></thead>
+    <tbody>
+      {% for b in list %}
+      <tr>
+        <td>{{ b.reference }}</td>
+        <td>{{ b.masterclass_title }}</td>
+        <td>{{ b.starts_at | formatDateAz }}</td>
+        <td>{{ b.child_first_name }}</td>
+        <td>{{ b.parent_name }}</td>
+        <td><a href="tel:{{ b.phone_e164 }}">{{ b.phone_e164 }}</a></td>
+        <td>{{ b.price_azn | formatMoney }}</td>
+        <td><span class="admin-badge {{ b.status }}">{{ b.status }}</span></td>
+        <td style="max-width:160px;">
+          <form method="post" action="/admin/bookings/{{ b.id }}/notes" style="display:flex; gap:4px;">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <input type="text" name="notes" value="{{ b.admin_notes or '' }}" placeholder="qeyd..." style="min-height:30px; font-size:.78rem;">
+            <button type="submit" class="admin-btn secondary small">✓</button>
+          </form>
+        </td>
+        <td>
+          {% if b.status in ['pending','confirmed','waitlist'] %}
+          <form method="post" action="/admin/bookings/{{ b.id }}/status" class="admin-row-form" onsubmit="return confirm('Bu bronu ləğv etmək istədiyinizə əminsiniz?');">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <input type="hidden" name="status" value="cancelled">
+            <button type="submit" class="admin-btn danger small">Ləğv et</button>
+          </form>
+          {% endif %}
+          {% if b.status == 'confirmed' %}
+          <form method="post" action="/admin/bookings/{{ b.id }}/status" class="admin-row-form">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <input type="hidden" name="status" value="attended">
+            <button type="submit" class="admin-btn secondary small">Gəldi ✓</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="10">Nəticə yoxdur.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

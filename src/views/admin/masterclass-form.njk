@@ -1,0 +1,36 @@
+{% extends "admin/layout.njk" %}
+{% block title %}Yeni masterklass{% endblock %}
+{% block content %}
+<h1 class="admin-h1">Yeni masterklass</h1>
+<div class="admin-card" style="max-width:560px;">
+  {% if errors %}<div class="admin-alert error">Formu yoxlayın — sahələrdən biri səhvdir.</div>{% endif %}
+  <form method="post" action="/admin/masterclasses">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <div class="admin-field">
+      <label for="title">Başlıq</label>
+      <input type="text" id="title" name="title" required value="{{ item.title or '' }}">
+    </div>
+    <div class="admin-field">
+      <label for="slug">Slug (URL, yalnız kiçik hərf/rəqəm/tire)</label>
+      <input type="text" id="slug" name="slug" required pattern="[a-z0-9-]+" value="{{ item.slug or '' }}">
+    </div>
+    <div class="admin-field">
+      <label for="houseId">Ev</label>
+      <select id="houseId" name="houseId">
+        <option value="">— seçilməyib —</option>
+        {% for h in houses %}<option value="{{ h.id }}" {{ 'selected' if item.houseId == h.id }}>{{ h.name }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="admin-grid-2">
+      <div class="admin-field"><label for="ageMin">Min yaş</label><input type="number" id="ageMin" name="ageMin" min="0" max="18" required value="{{ item.ageMin or 4 }}"></div>
+      <div class="admin-field"><label for="ageMax">Maks yaş</label><input type="number" id="ageMax" name="ageMax" min="0" max="18" required value="{{ item.ageMax or 12 }}"></div>
+    </div>
+    <div class="admin-field">
+      <label for="description">Təsvir</label>
+      <textarea id="description" name="description">{{ item.description or '' }}</textarea>
+    </div>
+    <button type="submit" class="admin-btn">Yarat</button>
+    <a href="/admin/masterclasses" class="admin-btn secondary">Ləğv et</a>
+  </form>
+</div>
+{% endblock %}

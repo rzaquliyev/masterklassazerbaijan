@@ -1,0 +1,94 @@
+{% extends "admin/layout.njk" %}
+{% block title %}{{ item.title }}{% endblock %}
+{% block content %}
+<h1 class="admin-h1">{{ item.title }}</h1>
+
+<div class="admin-card" style="max-width:560px;">
+  <h2 class="admin-h2">Məlumatlar</h2>
+  {% if errors %}<div class="admin-alert error">Formu yoxlayın — sahələrdən biri səhvdir.</div>{% endif %}
+  <form method="post" action="/admin/masterclasses/{{ item.id }}">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <div class="admin-field">
+      <label for="title">Başlıq</label>
+      <input type="text" id="title" name="title" required value="{{ item.title }}">
+    </div>
+    <div class="admin-field">
+      <label for="slug">Slug</label>
+      <input type="text" id="slug" name="slug" required pattern="[a-z0-9-]+" value="{{ item.slug }}">
+    </div>
+    <div class="admin-field">
+      <label for="houseId">Ev</label>
+      <select id="houseId" name="houseId">
+        <option value="">— seçilməyib —</option>
+        {% for h in houses %}<option value="{{ h.id }}" {{ 'selected' if item.house_id == h.id }}>{{ h.name }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="admin-grid-2">
+      <div class="admin-field"><label for="ageMin">Min yaş</label><input type="number" id="ageMin" name="ageMin" min="0" max="18" required value="{{ item.age_min }}"></div>
+      <div class="admin-field"><label for="ageMax">Maks yaş</label><input type="number" id="ageMax" name="ageMax" min="0" max="18" required value="{{ item.age_max }}"></div>
+    </div>
+    <div class="admin-field">
+      <label for="description">Təsvir</label>
+      <textarea id="description" name="description">{{ item.description or '' }}</textarea>
+    </div>
+    <button type="submit" class="admin-btn">Yadda saxla</button>
+  </form>
+</div>
+
+{% if sessionError %}<div class="admin-alert error">{{ sessionError }}</div>{% endif %}
+<div class="admin-card">
+  <h2 class="admin-h2">Seanslar</h2>
+  <table class="admin-table">
+    <thead><tr><th>Tarix (Bakı)</th><th>Yer tutumu</th><th>Qiymət ₼</th><th>Erkən quş</th><th>Ünvan</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      {% for s in sessions %}
+      <tr>
+        <td colspan="7" style="padding:0;">
+          <form method="post" action="/admin/sessions/{{ s.id }}" style="display:flex; gap:8px; align-items:center; padding:9px 10px; flex-wrap:wrap;">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <input type="hidden" name="masterclassId" value="{{ item.id }}">
+            <input type="datetime-local" name="startsAt" value="{{ s.startsAtLocal }}" required style="min-width:170px;">
+            <input type="number" name="capacity" value="{{ s.capacity }}" min="1" max="200" required style="width:70px;" title="Tutum">
+            <input type="number" name="priceAzn" value="{{ s.price_azn }}" min="0" step="0.01" required style="width:80px;" title="Qiymət">
+            <input type="number" name="earlyBirdPriceAzn" value="{{ s.early_bird_price_azn or '' }}" min="0" step="0.01" style="width:90px;" title="Erkən quş qiyməti" placeholder="erkən ₼">
+            <input type="number" name="earlyBirdSlots" value="{{ s.early_bird_slots }}" min="0" max="200" style="width:60px;" title="Erkən quş yeri">
+            <input type="text" name="location" value="{{ s.location }}" required style="width:160px;" title="Ünvan">
+            <span class="admin-badge {{ 'cancelled' if s.status == 'cancelled' else ('read' if s.status == 'completed' else 'confirmed') }}">{{ s.booked }}/{{ s.capacity }} · {{ s.status }}</span>
+            <button type="submit" class="admin-btn small">Yadda saxla</button>
+          </form>
+        </td>
+      </tr>
+      {% if s.status == 'scheduled' %}
+      <tr>
+        <td colspan="7" style="padding:0 10px 10px;">
+          <form method="post" action="/admin/sessions/{{ s.id }}/cancel" onsubmit="return confirm('Bu seansı ləğv etmək istədiyinizə əminsiniz?');">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <input type="hidden" name="masterclassId" value="{{ item.id }}">
+            <button type="submit" class="admin-btn danger small">Seansı ləğv et</button>
+          </form>
+        </td>
+      </tr>
+      {% endif %}
+      {% else %}
+      <tr><td colspan="7">Hələ seans yoxdur.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="admin-card" style="max-width:640px;">
+  <h2 class="admin-h2">Yeni seans əlavə et</h2>
+  <form method="post" action="/admin/masterclasses/{{ item.id }}/sessions">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <div class="admin-grid-2">
+      <div class="admin-field"><label for="newStartsAt">Tarix/saat (Bakı)</label><input type="datetime-local" id="newStartsAt" name="startsAt" required></div>
+      <div class="admin-field"><label for="newLocation">Ünvan</label><input type="text" id="newLocation" name="location" required></div>
+      <div class="admin-field"><label for="newCapacity">Yer tutumu</label><input type="number" id="newCapacity" name="capacity" min="1" max="200" required value="8"></div>
+      <div class="admin-field"><label for="newPrice">Qiymət (₼)</label><input type="number" id="newPrice" name="priceAzn" min="0" step="0.01" required></div>
+      <div class="admin-field"><label for="newEbPrice">Erkən quş qiyməti (₼, opsional)</label><input type="number" id="newEbPrice" name="earlyBirdPriceAzn" min="0" step="0.01"></div>
+      <div class="admin-field"><label for="newEbSlots">Erkən quş yer sayı</label><input type="number" id="newEbSlots" name="earlyBirdSlots" min="0" max="200" value="0"></div>
+    </div>
+    <button type="submit" class="admin-btn">Seans əlavə et</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "admin/layout.njk" %}
+{% block title %}Sorğular{% endblock %}
+{% block content %}
+<h1 class="admin-h1">Sorğular</h1>
+
+<form class="admin-filters" method="get" action="/admin/inquiries">
+  <div class="admin-field" style="margin:0;">
+    <label for="type">Növ</label>
+    <select id="type" name="type">
+      <option value="" {{ 'selected' if type == '' }}>Hamısı</option>
+      <option value="contact" {{ 'selected' if type == 'contact' }}>Əlaqə</option>
+      <option value="birthday" {{ 'selected' if type == 'birthday' }}>Ad günü</option>
+    </select>
+  </div>
+  <div class="admin-field" style="margin:0;">
+    <label for="status">Status</label>
+    <select id="status" name="status">
+      <option value="" {{ 'selected' if status == '' }}>Hamısı</option>
+      {% for s in ['new','read','replied','closed'] %}
+      <option value="{{ s }}" {{ 'selected' if status == s }}>{{ s }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <button type="submit" class="admin-btn secondary">Filtrlə</button>
+</form>
+
+<div class="admin-card">
+  <table class="admin-table">
+    <thead><tr><th>Növ</th><th>Ad</th><th>Telefon</th><th>Mesaj</th><th>Status</th><th>Tarix</th><th></th></tr></thead>
+    <tbody>
+      {% for i in list %}
+      <tr>
+        <td>{{ i.type }}</td>
+        <td>{{ i.name }}</td>
+        <td>{% if i.phone %}<a href="tel:{{ i.phone }}">{{ i.phone }}</a>{% endif %}</td>
+        <td style="max-width:260px;">{{ i.message or (i.birthday_package + ' · ' + (i.birthday_guest_count|string) + ' qonaq' if i.birthday_package else '') }}</td>
+        <td><span class="admin-badge {{ i.status }}">{{ i.status }}</span></td>
+        <td>{{ i.created_at | formatDateAz }}</td>
+        <td>
+          <form method="post" action="/admin/inquiries/{{ i.id }}/status" style="display:flex; gap:4px;">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <select name="status" onchange="this.form.submit()">
+              {% for s in ['new','read','replied','closed'] %}
+              <option value="{{ s }}" {{ 'selected' if i.status == s }}>{{ s }}</option>
+              {% endfor %}
+            </select>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7">Sorğu yoxdur.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "admin/layout.njk" %}
+{% block title %}İdarə paneli{% endblock %}
+{% block content %}
+<h1 class="admin-h1">İdarə paneli</h1>
+
+<div class="admin-stats">
+  <div class="admin-stat"><div class="admin-stat-num">{{ stats.upcomingSessions }}</div><div class="admin-stat-label">Gələcək seanslar</div></div>
+  <div class="admin-stat"><div class="admin-stat-num">{{ stats.seatsBooked }} / {{ stats.seatsCapacity }}</div><div class="admin-stat-label">Dolu yerlər</div></div>
+  <div class="admin-stat"><div class="admin-stat-num">{{ stats.newBookings7d }}</div><div class="admin-stat-label">Son 7 gündə yeni bron</div></div>
+  <div class="admin-stat"><div class="admin-stat-num">{{ stats.newInquiries }}</div><div class="admin-stat-label">Yeni sorğu</div></div>
+</div>
+
+<div class="admin-card">
+  <h2 class="admin-h2">Yaxın seanslar</h2>
+  <table class="admin-table">
+    <thead><tr><th>Masterklass</th><th>Ev</th><th>Tarix</th><th>Yer</th><th></th></tr></thead>
+    <tbody>
+      {% for s in upcoming %}
+      <tr>
+        <td>{{ s.masterclass_title }}</td>
+        <td>{{ s.house_name or '—' }}</td>
+        <td>{{ s.starts_at | formatDateAz }}</td>
+        <td>{{ s.booked }} / {{ s.capacity }}</td>
+        <td><a href="/admin/masterclasses/{{ s.masterclass_id }}">bax →</a></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5">Gələcək seans yoxdur.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

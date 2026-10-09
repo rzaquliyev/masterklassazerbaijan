@@ -1,0 +1,33 @@
+{% extends "admin/layout.njk" %}
+{% block title %}Müştərilər{% endblock %}
+{% block content %}
+<h1 class="admin-h1">Müştərilər</h1>
+
+<form class="admin-filters" method="get" action="/admin/customers">
+  <div class="admin-field" style="margin:0;">
+    <label for="q">Axtar (ad, telefon)</label>
+    <input type="text" id="q" name="q" value="{{ search }}">
+  </div>
+  <button type="submit" class="admin-btn secondary">Axtar</button>
+</form>
+
+<div class="admin-card">
+  <table class="admin-table">
+    <thead><tr><th>Ad</th><th>Telefon</th><th>Bron sayı</th><th>Marketinq razılığı</th><th>Qeydiyyat</th><th></th></tr></thead>
+    <tbody>
+      {% for c in list %}
+      <tr>
+        <td><a href="/admin/customers/{{ c.id }}">{{ c.full_name }}</a>{% if c.anonymized_at %} <span class="admin-badge cancelled">anonimləşdirilib</span>{% endif %}</td>
+        <td>{{ c.phone_e164 }}</td>
+        <td>{{ c.booking_count }}</td>
+        <td>{{ 'bəli' if c.marketing_consent else 'yox' }}</td>
+        <td>{{ c.created_at | formatDateAz }}</td>
+        <td><a href="/admin/customers/{{ c.id }}">bax →</a></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6">Nəticə yoxdur.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

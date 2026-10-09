@@ -1,0 +1,22 @@
+{% extends "admin/layout.njk" %}
+{% block title %}Audit jurnalı{% endblock %}
+{% block content %}
+<h1 class="admin-h1">Audit jurnalı</h1>
+<div class="admin-card">
+  <table class="admin-table">
+    <thead><tr><th>Tarix</th><th>İstifadəçi</th><th>Əməliyyat</th><th>Hədəf</th></tr></thead>
+    <tbody>
+      {% for a in list %}
+      <tr>
+        <td>{{ a.created_at | formatDateAz }}</td>
+        <td>{{ a.admin_email or '—' }}</td>
+        <td>{{ a.action }}</td>
+        <td>{% if a.target_table %}{{ a.target_table }}: {{ a.target_id }}{% endif %}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4">Qeyd yoxdur.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
