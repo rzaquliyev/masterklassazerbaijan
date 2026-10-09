@@ -55,7 +55,7 @@
     <form method="post" action="/{{ lang }}/kampaniyalar/passport" style="margin-top:14px;">
       <div class="field" style="margin-bottom:10px;">
         <label for="passport-phone" style="color:var(--cream);">{{ t.kassa.phone }}</label>
-        <input type="tel" id="passport-phone" name="phone" required placeholder="{{ t.kassa.phonePlaceholder }}">
+        <input type="tel" id="passport-phone" name="phone" autocomplete="tel" inputmode="tel" required placeholder="{{ t.kassa.phonePlaceholder }}">
       </div>
       <div class="field" style="margin-bottom:6px;">
         <label for="passport-ref" style="color:var(--cream);">{{ t.kampaniyalar.bookingRefLabel }}</label>

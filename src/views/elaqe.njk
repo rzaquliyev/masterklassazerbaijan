@@ -18,8 +18,8 @@
   {% if error %}<div class="form-alert error" style="margin-top:16px;">{{ t.elaqe.error }}</div>{% endif %}
   <form method="post" action="/{{ lang }}/elaqe" style="margin-top:20px; max-width:480px;">
     <input type="text" name="website" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <div class="field"><label for="elaqe-name">{{ t.elaqe.formName }}</label><input type="text" id="elaqe-name" name="name" required value="{{ formValues.name or '' }}"></div>
-    <div class="field"><label for="elaqe-phone">{{ t.elaqe.formPhone }}</label><input type="tel" id="elaqe-phone" name="phone" required value="{{ formValues.phone or '' }}"></div>
+    <div class="field"><label for="elaqe-name">{{ t.elaqe.formName }}</label><input type="text" id="elaqe-name" name="name" autocomplete="name" required value="{{ formValues.name or '' }}"></div>
+    <div class="field"><label for="elaqe-phone">{{ t.elaqe.formPhone }}</label><input type="tel" id="elaqe-phone" name="phone" autocomplete="tel" inputmode="tel" required value="{{ formValues.phone or '' }}"></div>
     <div class="field"><label for="elaqe-message">{{ t.elaqe.formMessage }}</label><textarea id="elaqe-message" name="message" required rows="4">{{ formValues.message or '' }}</textarea></div>
     <button type="submit" class="btn-primary" style="width:100%;">{{ t.elaqe.send }}</button>
   </form>

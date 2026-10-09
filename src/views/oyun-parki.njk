@@ -51,7 +51,7 @@
       data-result-template="{{ t.gizlenqach.codeResult }}" data-already-text="{{ t.gizlenqach.already }}">
       <div class="field" style="margin-bottom:0;">
         <label for="hunt-phone">{{ t.gizlenqach.phoneLabel }}</label>
-        <input type="tel" id="hunt-phone" name="phone" inputmode="tel" required placeholder="{{ t.kassa.phonePlaceholder }}">
+        <input type="tel" id="hunt-phone" name="phone" autocomplete="tel" inputmode="tel" required placeholder="{{ t.kassa.phonePlaceholder }}">
       </div>
       <button type="submit" class="btn-primary">{{ t.gizlenqach.getCode }}</button>
     </form>

@@ -9,6 +9,10 @@
 {% for l in supportedLangs %}
 <link rel="alternate" hreflang="{{ l }}" href="/{{ l }}{{ currentPath or '' }}">
 {% endfor %}
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#FFF4E2">
 <link rel="stylesheet" href="/css/fonts.css?v={{ assetV }}">
 <link rel="stylesheet" href="/css/tokens.css?v={{ assetV }}">
 <link rel="stylesheet" href="/css/site.css?v={{ assetV }}">
