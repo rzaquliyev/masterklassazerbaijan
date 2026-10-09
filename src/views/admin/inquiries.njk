@@ -25,21 +25,22 @@
 </form>
 
 <div class="admin-card">
+  <div class="admin-table-wrap">
   <table class="admin-table">
-    <thead><tr><th>Növ</th><th>Ad</th><th>Telefon</th><th>Mesaj</th><th>Status</th><th>Tarix</th><th></th></tr></thead>
+    <thead><tr><th>Növ</th><th>Ad</th><th>Telefon</th><th>Mesaj</th><th>Status</th><th>Tarix</th><th>Dəyiş</th></tr></thead>
     <tbody>
       {% for i in list %}
       <tr>
-        <td>{{ i.type }}</td>
+        <td class="admin-td-tight">{{ i.type }}</td>
         <td>{{ i.name }}</td>
-        <td>{% if i.phone %}<a href="tel:{{ i.phone }}">{{ i.phone }}</a>{% endif %}</td>
+        <td class="admin-td-tight">{% if i.phone %}<a href="tel:{{ i.phone }}">{{ i.phone }}</a>{% endif %}</td>
         <td style="max-width:260px;">{{ i.message or (i.birthday_package + ' · ' + (i.birthday_guest_count|string) + ' qonaq' if i.birthday_package else '') }}</td>
-        <td><span class="admin-badge {{ i.status }}">{{ i.status }}</span></td>
-        <td>{{ i.created_at | formatDateAz }}</td>
-        <td>
-          <form method="post" action="/admin/inquiries/{{ i.id }}/status" style="display:flex; gap:4px;">
+        <td class="admin-td-tight"><span class="admin-badge {{ i.status }}">{{ i.status }}</span></td>
+        <td class="admin-td-tight">{{ i.created_at | formatDateAz }}</td>
+        <td class="admin-td-tight">
+          <form method="post" action="/admin/inquiries/{{ i.id }}/status">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-            <select name="status" onchange="this.form.submit()">
+            <select name="status" onchange="this.form.submit()" style="min-width:110px;">
               {% for s in ['new','read','replied','closed'] %}
               <option value="{{ s }}" {{ 'selected' if i.status == s }}>{{ s }}</option>
               {% endfor %}
@@ -52,5 +53,6 @@
       {% endfor %}
     </tbody>
   </table>
+  </div>
 </div>
 {% endblock %}

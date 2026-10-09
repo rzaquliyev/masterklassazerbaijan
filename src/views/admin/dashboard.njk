@@ -12,21 +12,23 @@
 
 <div class="admin-card">
   <h2 class="admin-h2">Yaxın seanslar</h2>
+  <div class="admin-table-wrap">
   <table class="admin-table">
     <thead><tr><th>Masterklass</th><th>Ev</th><th>Tarix</th><th>Yer</th><th></th></tr></thead>
     <tbody>
       {% for s in upcoming %}
       <tr>
         <td>{{ s.masterclass_title }}</td>
-        <td>{{ s.house_name or '—' }}</td>
-        <td>{{ s.starts_at | formatDateAz }}</td>
-        <td>{{ s.booked }} / {{ s.capacity }}</td>
-        <td><a href="/admin/masterclasses/{{ s.masterclass_id }}">bax →</a></td>
+        <td class="admin-td-tight">{{ s.house_name or '—' }}</td>
+        <td class="admin-td-tight">{{ s.starts_at | formatDateAz }}</td>
+        <td class="admin-td-tight">{{ s.booked }} / {{ s.capacity }}</td>
+        <td class="admin-td-tight"><a href="/admin/masterclasses/{{ s.masterclass_id }}">bax →</a></td>
       </tr>
       {% else %}
       <tr><td colspan="5">Gələcək seans yoxdur.</td></tr>
       {% endfor %}
     </tbody>
   </table>
+  </div>
 </div>
 {% endblock %}

@@ -4,14 +4,16 @@
 <h1 class="admin-h1">Admin istifadəçiləri</h1>
 
 <div class="admin-card">
+  <div class="admin-table-wrap">
   <table class="admin-table">
     <thead><tr><th>E-poçt</th><th>Rol</th><th>Yaradılıb</th></tr></thead>
     <tbody>
       {% for u in list %}
-      <tr><td>{{ u.email }}</td><td><span class="admin-badge {{ u.role }}">{{ u.role }}</span></td><td>{{ u.created_at | formatDateAz }}</td></tr>
+      <tr><td>{{ u.email }}</td><td class="admin-td-tight"><span class="admin-badge {{ u.role }}">{{ u.role }}</span></td><td class="admin-td-tight">{{ u.created_at | formatDateAz }}</td></tr>
       {% endfor %}
     </tbody>
   </table>
+  </div>
 </div>
 
 <div class="admin-card" style="max-width:440px;">

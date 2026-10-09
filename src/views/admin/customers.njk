@@ -12,22 +12,24 @@
 </form>
 
 <div class="admin-card">
+  <div class="admin-table-wrap">
   <table class="admin-table">
     <thead><tr><th>Ad</th><th>Telefon</th><th>Bron sayı</th><th>Marketinq razılığı</th><th>Qeydiyyat</th><th></th></tr></thead>
     <tbody>
       {% for c in list %}
       <tr>
-        <td><a href="/admin/customers/{{ c.id }}">{{ c.full_name }}</a>{% if c.anonymized_at %} <span class="admin-badge cancelled">anonimləşdirilib</span>{% endif %}</td>
-        <td>{{ c.phone_e164 }}</td>
-        <td>{{ c.booking_count }}</td>
-        <td>{{ 'bəli' if c.marketing_consent else 'yox' }}</td>
-        <td>{{ c.created_at | formatDateAz }}</td>
-        <td><a href="/admin/customers/{{ c.id }}">bax →</a></td>
+        <td><a href="/admin/customers/{{ c.id }}">{{ c.full_name }}</a>{% if c.anonymized_at %} <span class="admin-badge cancelled">anonim</span>{% endif %}</td>
+        <td class="admin-td-tight">{% if c.anonymized_at %}<span class="admin-muted">—</span>{% else %}{{ c.phone_e164 }}{% endif %}</td>
+        <td class="admin-td-tight">{{ c.booking_count }}</td>
+        <td class="admin-td-tight">{{ 'bəli' if c.marketing_consent else 'yox' }}</td>
+        <td class="admin-td-tight">{{ c.created_at | formatDateAz }}</td>
+        <td class="admin-td-tight"><a href="/admin/customers/{{ c.id }}">bax →</a></td>
       </tr>
       {% else %}
       <tr><td colspan="6">Nəticə yoxdur.</td></tr>
       {% endfor %}
     </tbody>
   </table>
+  </div>
 </div>
 {% endblock %}

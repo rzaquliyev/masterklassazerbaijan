@@ -7,17 +7,18 @@
 </div>
 
 <div class="admin-card">
+  <div class="admin-table-wrap">
   <table class="admin-table">
-    <thead><tr><th>Başlıq</th><th>Ev</th><th>Yaş</th><th>Gələcək seans</th><th>Status</th><th></th></tr></thead>
+    <thead><tr><th>Başlıq</th><th>Ev</th><th>Yaş</th><th>Gələcək seans</th><th>Status</th><th>Əməliyyat</th></tr></thead>
     <tbody>
       {% for m in list %}
       <tr>
         <td><a href="/admin/masterclasses/{{ m.id }}">{{ m.title }}</a></td>
-        <td>{{ m.house_name or '—' }}</td>
-        <td>{{ m.age_min }}–{{ m.age_max }}</td>
-        <td>{{ m.upcoming_session_count }}</td>
-        <td><span class="admin-badge {{ 'confirmed' if m.is_published else 'cancelled' }}">{{ 'Dərc olunub' if m.is_published else 'Gizli' }}</span></td>
-        <td>
+        <td class="admin-td-tight">{{ m.house_name or '—' }}</td>
+        <td class="admin-td-tight">{{ m.age_min }}–{{ m.age_max }}</td>
+        <td class="admin-td-tight">{{ m.upcoming_session_count }}</td>
+        <td class="admin-td-tight"><span class="admin-badge {{ 'confirmed' if m.is_published else 'cancelled' }}">{{ 'Dərc olunub' if m.is_published else 'Gizli' }}</span></td>
+        <td class="admin-td-tight">
           <form method="post" action="/admin/masterclasses/{{ m.id }}/publish" class="admin-row-form">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
             <input type="hidden" name="published" value="{{ '0' if m.is_published else '1' }}">
@@ -30,5 +31,6 @@
       {% endfor %}
     </tbody>
   </table>
+  </div>
 </div>
 {% endblock %}

@@ -14,15 +14,15 @@
   {% if admin %}
   <nav class="admin-nav">
     <div class="admin-nav-brand">Admin</div>
-    <a href="/admin">İdarə paneli</a>
-    <a href="/admin/masterclasses">Masterklasslar</a>
-    <a href="/admin/bookings">Bronlar</a>
-    <a href="/admin/customers">Müştərilər</a>
-    <a href="/admin/inquiries">Sorğular</a>
-    <a href="/admin/qalereya">Qalereya</a>
+    <a href="/admin" class="{{ 'is-current' if currentPath == '/admin' }}">İdarə paneli</a>
+    <a href="/admin/masterclasses" class="{{ 'is-current' if currentPath.startsWith('/admin/masterclasses') }}">Masterklasslar</a>
+    <a href="/admin/bookings" class="{{ 'is-current' if currentPath.startsWith('/admin/bookings') }}">Bronlar</a>
+    <a href="/admin/customers" class="{{ 'is-current' if currentPath.startsWith('/admin/customers') }}">Müştərilər</a>
+    <a href="/admin/inquiries" class="{{ 'is-current' if currentPath.startsWith('/admin/inquiries') }}">Sorğular</a>
+    <a href="/admin/qalereya" class="{{ 'is-current' if currentPath.startsWith('/admin/qalereya') }}">Qalereya</a>
     {% if admin.role == 'owner' %}
-    <a href="/admin/users">İstifadəçilər</a>
-    <a href="/admin/audit">Jurnal</a>
+    <a href="/admin/users" class="{{ 'is-current' if currentPath.startsWith('/admin/users') }}">İstifadəçilər</a>
+    <a href="/admin/audit" class="{{ 'is-current' if currentPath.startsWith('/admin/audit') }}">Jurnal</a>
     <a href="/admin/export/bookings.csv">CSV ixrac</a>
     {% endif %}
     <div class="admin-nav-spacer"></div>

@@ -21,27 +21,29 @@
 </form>
 
 <div class="admin-card">
+  <div class="admin-table-wrap">
   <table class="admin-table">
-    <thead><tr><th>Bilet №</th><th>Masterklass</th><th>Tarix</th><th>Uşaq</th><th>Valideyn</th><th>Telefon</th><th>Qiymət</th><th>Status</th><th>Qeyd</th><th></th></tr></thead>
+    <thead><tr><th>Bilet №</th><th>Masterklass</th><th>Tarix</th><th>Uşaq</th><th>Valideyn</th><th>Telefon</th><th>Qiymət</th><th>Status</th><th>Qeyd</th><th>Əməliyyat</th></tr></thead>
     <tbody>
       {% for b in list %}
       <tr>
-        <td>{{ b.reference }}</td>
+        <td class="admin-td-tight"><strong>{{ b.reference }}</strong></td>
         <td>{{ b.masterclass_title }}</td>
-        <td>{{ b.starts_at | formatDateAz }}</td>
+        <td class="admin-td-tight">{{ b.starts_at | formatDateAz }}</td>
         <td>{{ b.child_first_name }}</td>
         <td>{{ b.parent_name }}</td>
-        <td><a href="tel:{{ b.phone_e164 }}">{{ b.phone_e164 }}</a></td>
-        <td>{{ b.price_azn | formatMoney }}</td>
-        <td><span class="admin-badge {{ b.status }}">{{ b.status }}</span></td>
-        <td style="max-width:160px;">
-          <form method="post" action="/admin/bookings/{{ b.id }}/notes" style="display:flex; gap:4px;">
+        <td class="admin-td-tight">{% if b.phone_e164.startsWith('anon-') %}<span class="admin-muted">anonimləşdirilib</span>{% else %}<a href="tel:{{ b.phone_e164 }}">{{ b.phone_e164 }}</a>{% endif %}</td>
+        <td class="admin-td-tight">{{ b.price_azn | formatMoney }}</td>
+        <td class="admin-td-tight"><span class="admin-badge {{ b.status }}">{{ b.status }}</span></td>
+        <td style="min-width:150px;">
+          <form method="post" action="/admin/bookings/{{ b.id }}/notes" style="display:flex; gap:6px;">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-            <input type="text" name="notes" value="{{ b.admin_notes or '' }}" placeholder="qeyd..." style="min-height:30px; font-size:.78rem;">
-            <button type="submit" class="admin-btn secondary small">✓</button>
+            <input type="text" name="notes" value="{{ b.admin_notes or '' }}" placeholder="qeyd…" style="min-height:34px; font-size:.82rem;">
+            <button type="submit" class="admin-btn secondary small" aria-label="Qeydi saxla">✓</button>
           </form>
         </td>
-        <td>
+        <td class="admin-td-tight">
+          <div style="display:flex; gap:6px;">
           {% if b.status in ['pending','confirmed','waitlist'] %}
           <form method="post" action="/admin/bookings/{{ b.id }}/status" class="admin-row-form" onsubmit="return confirm('Bu bronu ləğv etmək istədiyinizə əminsiniz?');">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
@@ -56,6 +58,7 @@
             <button type="submit" class="admin-btn secondary small">Gəldi ✓</button>
           </form>
           {% endif %}
+          </div>
         </td>
       </tr>
       {% else %}
@@ -63,5 +66,6 @@
       {% endfor %}
     </tbody>
   </table>
+  </div>
 </div>
 {% endblock %}

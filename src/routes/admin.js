@@ -55,6 +55,7 @@ export function createAdminRouter(db) {
     return {
       admin: req.adminSession?.adminUser ?? null,
       csrfToken: req.adminSession?.csrfToken ?? '',
+      currentPath: req.baseUrl + req.path,
       ...extra,
     };
   }

@@ -4,7 +4,7 @@
 <h1 class="admin-h1">{{ item.full_name }}</h1>
 
 <div class="admin-card" style="max-width:560px;">
-  <p><strong>Telefon:</strong> {{ item.phone_e164 }}</p>
+  <p><strong>Telefon:</strong> {% if item.anonymized_at %}<span class="admin-muted">— (anonimləşdirilib)</span>{% else %}{{ item.phone_e164 }}{% endif %}</p>
   <p><strong>Marketinq razılığı:</strong> {{ 'bəli' if item.marketing_consent else 'yox' }}</p>
   <p><strong>Qeydiyyat:</strong> {{ item.created_at | formatDateAz }}</p>
   {% if item.anonymized_at %}<p><span class="admin-badge cancelled">Anonimləşdirilib: {{ item.anonymized_at | formatDateAz }}</span></p>{% endif %}
@@ -29,12 +29,13 @@
 
 <div class="admin-card">
   <h2 class="admin-h2">Bronları</h2>
+  <div class="admin-table-wrap">
   <table class="admin-table">
     <thead><tr><th>Bilet №</th><th>Status</th><th>Qiymət</th><th>Tarix</th></tr></thead>
     <tbody>
       {% for b in bookings %}
       <tr>
-        <td>{{ b.reference }}</td>
+        <td><strong>{{ b.reference }}</strong></td>
         <td><span class="admin-badge {{ b.status }}">{{ b.status }}</span></td>
         <td>{{ b.price_azn | formatMoney }}</td>
         <td>{{ b.created_at | formatDateAz }}</td>
@@ -44,6 +45,7 @@
       {% endfor %}
     </tbody>
   </table>
+  </div>
 </div>
 <a href="/admin/customers">← Müştərilərə qayıt</a>
 {% endblock %}

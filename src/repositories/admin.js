@@ -194,8 +194,10 @@ export async function updateCustomerNotes(db, id, notes) {
 
 // Hard silmək əvəzinə anonimləşdirmə: bron/statistika tamlığı qalır, şəxsi məlumat itir (BRIEF məxfilik qaydası).
 export async function anonymizeCustomer(db, id) {
+  // phone_e164 UNIQUE olduğu üçün hələ də unikal dəyər lazımdır, amma cədvəldə oxunaqlı qalsın deyə
+  // tam UUID yox, onun qısa (8 simvol) hissəsi kifayətdir.
   const { rows } = await db.query(
-    `UPDATE customers SET full_name = 'Silinmiş istifadəçi', phone_e164 = concat('anon-', id::text),
+    `UPDATE customers SET full_name = 'Silinmiş istifadəçi', phone_e164 = concat('anon-', substring(id::text, 1, 8)),
             marketing_consent = false, admin_notes = NULL, anonymized_at = now()
      WHERE id = $1 RETURNING *`,
     [id],

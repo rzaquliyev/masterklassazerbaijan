@@ -38,6 +38,7 @@
 {% if sessionError %}<div class="admin-alert error">{{ sessionError }}</div>{% endif %}
 <div class="admin-card">
   <h2 class="admin-h2">Seanslar</h2>
+  <div class="admin-table-wrap">
   <table class="admin-table">
     <thead><tr><th>Tarix (Bakı)</th><th>Yer tutumu</th><th>Qiymət ₼</th><th>Erkən quş</th><th>Ünvan</th><th>Status</th><th></th></tr></thead>
     <tbody>
@@ -74,6 +75,7 @@
       {% endfor %}
     </tbody>
   </table>
+  </div>
 </div>
 
 <div class="admin-card" style="max-width:640px;">

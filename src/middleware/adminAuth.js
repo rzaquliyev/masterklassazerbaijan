@@ -19,7 +19,7 @@ export function requireAdmin({ role } = {}) {
       return res.redirect(302, `/admin/login?next=${encodeURIComponent(req.originalUrl)}`);
     }
     if (role && req.adminSession.adminUser.role !== role) {
-      return res.status(403).render('admin/403.njk', { admin: req.adminSession.adminUser, csrfToken: req.adminSession.csrfToken });
+      return res.status(403).render('admin/403.njk', { admin: req.adminSession.adminUser, csrfToken: req.adminSession.csrfToken, currentPath: req.originalUrl.split('?')[0] });
     }
     next();
   };
