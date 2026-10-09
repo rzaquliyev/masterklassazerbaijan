@@ -28,11 +28,11 @@
   <div class="card-grid cols-2" style="margin-top:30px;">
     <div class="trust-card" style="grid-column:1/-1;"><div style="font-size:.8rem; font-weight:800; color:var(--night-2);">{{ t.elaqe.addressLabel }}</div><div style="font-weight:800; margin-top:2px;">{{ t.elaqe.address }}</div></div>
     <div class="trust-card"><div style="font-size:.8rem; font-weight:800; color:var(--night-2);">{{ t.elaqe.hoursLabel }}</div><div style="font-weight:800; margin-top:2px;">{{ t.elaqe.hours }}</div></div>
-    <div class="trust-card"><div style="font-size:.8rem; font-weight:800; color:var(--night-2);">{{ t.elaqe.phoneLabel }}</div><a href="tel:+994000000000" style="font-weight:800; margin-top:2px; display:block;">+994 00 000 00 00</a></div>
-    <a class="btn-primary" style="background:var(--green); box-shadow:inset -4px -5px 0 rgba(0,0,0,.12), 0 5px 0 var(--green-deep);" href="https://wa.me/994000000000" target="_blank" rel="noopener">WhatsApp</a>
+    <div class="trust-card"><div style="font-size:.8rem; font-weight:800; color:var(--night-2);">{{ t.elaqe.phoneLabel }}</div><a href="tel:+994558199901" style="font-weight:800; margin-top:2px; display:block;">+994 55 819 99 01</a></div>
+    <a class="btn-primary" style="background:var(--green); box-shadow:inset -4px -5px 0 rgba(0,0,0,.12), 0 5px 0 var(--green-deep);" href="https://wa.me/994558199901" target="_blank" rel="noopener">WhatsApp</a>
     <a class="btn-primary" style="background:var(--pink); box-shadow:inset -4px -5px 0 rgba(0,0,0,.12), 0 5px 0 var(--pink-deep);" href="https://instagram.com/masterklassazerbaijan" target="_blank" rel="noopener">Instagram</a>
   </div>
 
-  <a class="btn-secondary" style="margin-top:16px; display:inline-flex;" href="https://www.google.com/maps" target="_blank" rel="noopener">{{ t.elaqe.mapOpen }}</a>
+  <a class="btn-secondary" style="margin-top:16px; display:inline-flex;" href="https://www.google.com/maps/search/?api=1&query={{ t.elaqe.address | urlencode }}" target="_blank" rel="noopener">{{ t.elaqe.mapOpen }}</a>
 </section>
 {% endblock %}

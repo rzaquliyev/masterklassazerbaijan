@@ -10,15 +10,13 @@
 
 ## 2. Əlaqə məlumatları
 
-| Sahə | Harada (fayl : sətir / açar) | Hazırkı dəyər |
-|---|---|---|
-| Ünvan | `az.json` → `elaqe.address` | `"[Küçə, bina], Bakı"` |
-| İş saatları | `az.json` → `elaqe.hours` | `"[Şən–Baz 10:00–19:00]"` |
-| Telefon | `src/views/elaqe.njk:31` (hardcode) | `+994 00 000 00 00` / `tel:+994000000000` |
-| WhatsApp nömrəsi | 5 yerdə hardcode: `layouts/base.njk:48`, `elaqe.njk:32`, `suallar.njk:41`, `kampaniyalar.njk:17`, `kassa-tesdiq.njk:35` | `994000000000` (hamısı eyni, bir dəfə dəyişdirilməlidir) |
-| Google Xəritə linki | `src/views/elaqe.njk:36` | `https://www.google.com/maps` (generic, pin deyil) |
+| Sahə | Vəziyyət |
+|---|---|
+| Ünvan | ✅ **TƏSDİQLƏNDİ** (2026-10-09): "Nərimanov rayonu, Təbriz küç., Metropark ƏTM, 7-ci mərtəbə, Bakı" — 3 dildə `elaqe.address` açarına yazıldı, Google Xəritə düyməsi (`elaqe.njk`) indi bu ünvanla axtarış linkinə gedir (`maps/search/?query=...`) |
+| Telefon / WhatsApp | ✅ **TƏSDİQLƏNDİ** (2026-10-09): `+994 55 819 99 01` — görünən telefon (`elaqe.njk`) və bütün 5 WhatsApp linki (`layouts/base.njk`, `elaqe.njk`, `suallar.njk`, `kampaniyalar.njk`, `kassa-tesdiq.njk`) bu nömrəyə yeniləndi. **Qeyd:** WhatsApp üçün ayrı nömrə verilməyib, görünən telefon nömrəsi WhatsApp üçün də istifadə olundu — fərqlidirsə, xəbər verin. |
+| İş saatları | ❌ Hələ gözlənilir — `az.json`/`ru.json`/`en.json` → `elaqe.hours`, hazırkı: `"[Şən–Baz 10:00–19:00]"` |
 
-> Tövsiyə: WhatsApp nömrəsi bir dəfə ağlabatan yerdən (`.env` və ya `site_settings` cədvəli) oxunsa, 5 fayldakı hardcode təkrarından qurtulardıq — hələlik həqiqi nömrə gələndə eyni `994000000000` qiymətini bütün 5 yerdə əvəz etmək kifayətdir.
+> Qalan təkmilləşdirmə (opsional): WhatsApp nömrəsi bir dəfə ağlabatan yerdən (`.env` və ya `site_settings` cədvəli) oxunsa, 5 fayldakı hardcode təkrarından qurtulardıq.
 
 ## 3. Qiymətlər
 
