@@ -65,6 +65,12 @@ table.admin-table{ width:100%; border-collapse:collapse; font-size:.88rem; }
 .admin-btn.small{ min-height:32px; padding:0 10px; font-size:.8rem; }
 .admin-btn:disabled{ opacity:.5; cursor:not-allowed; }
 
+.admin-gallery-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:14px; }
+.admin-gallery-item{ background:var(--white); border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(16,24,48,.06); }
+.admin-gallery-thumb{ width:100%; aspect-ratio:1/1; object-fit:cover; display:block; background:#E7EAF2; }
+.admin-gallery-meta{ padding:8px 10px; font-size:.76rem; }
+.admin-gallery-actions{ display:flex; gap:6px; padding:0 10px 10px; flex-wrap:wrap; }
+
 .admin-filters{ display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; align-items:flex-end; }
 .admin-row-form{ display:inline; }
 .admin-alert{ padding:10px 14px; border-radius:8px; font-size:.86rem; font-weight:700; margin-bottom:14px; }

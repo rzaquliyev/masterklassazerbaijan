@@ -60,10 +60,11 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 - Bronlar: axtarış+status filtri, status dəyişikliyi (ləğv etmə mövcud `cancelBooking` servisini çağırır — yer azad olur, gözləmə siyahısı avtomatik köçürülür), daxili qeyd
 - Müştərilər: siyahı/axtarış, detal, daxili qeyd, **anonimləşdirmə** (owner-yalnız, ad/telefonu silir, bron tarixçəsini saxlayır — BRIEF məxfilik tələbi)
 - Sorğular (Əlaqə/Ad günü): filtrlə, status dəyişdir
+- **Qalereya**: foto yüklə (`multer`, yaddaşda emal) → `sharp` ilə avtomatik WebP-ə çevrilir, maks. 1600px enə kiçildilir, EXIF/GPS **tam atılır** (BRIEF tələbi), fayl adı həmişə təsadüfi UUID. İstənilən adi giriş formatı qəbul olunur (JPEG/PNG/WebP/GIF/HEIC-iPhone/AVIF — sharp bunların hamısını oxuya bilir). Yükləndikdən sonra gizli qalır, `consent` bayrağı **məcburidir** (yoxdursa heç saxlanmır) — nəzərdən keçirib ayrıca "Dərc et". Silinəndə həm DB sətri, həm fayl diskdən silinir. `src/lib/imageUpload.js`, `src/views/admin/gallery.njk`. İctimai tərəfdə (`home.njk`, `qalereya.njk`, lightbox) əvvəlcə həmişə `[FOTO]` yer tutucusu göstərilirdi hətta real foto olanda belə — bu, düzəldildi, real `<img>` göstərilir.
 - CSV ixrac (bronlar, UTF-8 BOM, owner-yalnız)
-- İstifadəçi/rol idarəsi (owner yaradır, owner/staff), Audit jurnalı (owner-yalnız) — hər həssas əməliyyat (giriş/çıxış, dərc/gizlət, status dəyişikliyi, ixrac, anonimləşdirmə, istifadəçi yaratma) qeyd olunur
+- İstifadəçi/rol idarəsi (owner yaradır, owner/staff), Audit jurnalı (owner-yalnız) — hər həssas əməliyyat (giriş/çıxış, dərc/gizlət, status dəyişikliyi, ixrac, anonimləşdirmə, istifadəçi yaratma, foto yükləmə/silmə) qeyd olunur
 
-**Hələ tətbiq olunmayıb** (gələcək iş, bloklamır): qalereya foto yükləmə (EXIF/GPS təmizləmə daxil), ev (`houses`) CRUD, FAQ CRUD, endirim/referral kod idarəsi admin UI-dan — bunlar hələlik yalnız birbaşa DB/seed vasitəsilə dəyişdirilə bilər. Təlimçilər (instructors) funksiyası istifadəçi tələbi ilə ictimai saytdan tamamilə silindi (bax commit tarixçəsi), uyğun admin bölməsi də planlaşdırılmır.
+**Hələ tətbiq olunmayıb** (gələcək iş, bloklamır): ev (`houses`) CRUD, FAQ CRUD, endirim/referral kod idarəsi admin UI-dan — bunlar hələlik yalnız birbaşa DB/seed vasitəsilə dəyişdirilə bilər. Təlimçilər (instructors) funksiyası istifadəçi tələbi ilə ictimai saytdan tamamilə silindi (bax commit tarixçəsi), uyğun admin bölməsi də planlaşdırılmır.
 
 ## 5. Data modeli
 
@@ -103,7 +104,9 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 
 **Admin panel üçün tətbiq olundu (Mərhələ 5):** argon2id parol hash, server-side sessiya (DB-də, 12 saat TTL), HttpOnly + SameSite=Lax + (production-da) Secure cookie, hər state-dəyişdirən formda CSRF tokeni, giriş üçün IP+email əsaslı rate-limit, rol-əsaslı icazə (`owner`/`staff`, server-side yoxlanılır, UI-da gizlətmə kifayət deyil), `X-Robots-Tag: noindex`, bütün həssas əməliyyatlar `audit_log`-a yazılır. Test: `tests/admin.test.js` (sessiyasız/səhv-parol/CSRF/rol yoxlamaları, CSV BOM).
 
-**Hələ tətbiq olunmayıb:** qalereya foto upload (və onunla birgə EXIF/GPS təmizlənməsi) — upload funksiyası özü hələ yoxdur. Honeypot (`website` gizli sahə, server-side yoxlanılır `src/routes/public.js`-də), parametrli SQL, auto-escape, CSP, Helmet layihənin əvvəlindən mövcuddur.
+Qalereya upload (EXIF/GPS təmizlənməsi daxil) Mərhələ 5-də tətbiq olundu (bax §4). Honeypot (`website` gizli sahə, server-side yoxlanılır `src/routes/public.js`-də), parametrli SQL, auto-escape, CSP, Helmet layihənin əvvəlindən mövcuddur.
+
+**Qeyd (hosting seçərkən diqqət):** yüklənən fotolar `src/public/uploads/gallery/` qovluğunda yerli diskdə saxlanılır. Əgər hosting provayderi **ephemeral disk** istifadə edirsə (məs. Render-in pulsuz planı), server yenidən başlayanda bu qovluq **silinə bilər** — yüklənmiş fotolar itər (DB sətirləri qalar, amma fayl tapılmaz). Production-a keçməzdən əvvəl ya daimi disk (persistent volume) seçilməli, ya da S3-uyğun obyekt saxlama inteqrasiyası əlavə olunmalıdır. Hələlik development/kiçik miqyas üçün kifayətdir.
 
 ## 9. Hosting
 

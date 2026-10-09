@@ -22,8 +22,8 @@
   {% else %}
   <div class="gallery-wall">
     {% for p in photos %}
-    <button type="button" class="gallery-frame clay-sm" style="background:{{ p.house_color or 'var(--butter)' }};" data-lightbox-open="{{ loop.index0 }}" aria-label="{{ p.house_name }}">
-      <span class="foto-placeholder" style="height:100%;">[FOTO]</span>
+    <button type="button" class="gallery-frame clay-sm" style="background:{{ p.house_color or 'var(--butter)' }};" data-lightbox-open="{{ loop.index0 }}" data-lightbox-url="{{ p.url }}" aria-label="{{ p.child_label or p.house_name or t.qalereya.title }}">
+      <img src="{{ p.url }}" alt="" loading="lazy" style="width:100%; height:130px; object-fit:cover; border-radius:14px; display:block;">
     </button>
     {% endfor %}
   </div>
@@ -37,7 +37,7 @@
 
 <div id="lightbox" class="lightbox" hidden role="dialog" aria-modal="true" aria-label="{{ t.qalereya.title }}">
   <div class="lightbox-card">
-    <div class="lightbox-photo">[BÖYÜK FOTO]</div>
+    <img class="lightbox-photo" id="lightbox-img" src="" alt="">
     <div class="lightbox-actions">
       <button type="button" class="btn-secondary" id="lightbox-prev">← {{ t.qalereya.lightboxPrev }}</button>
       <button type="button" class="btn-dark" id="lightbox-close">{{ t.qalereya.lightboxClose }}</button>

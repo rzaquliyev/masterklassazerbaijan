@@ -1,0 +1,63 @@
+{% extends "admin/layout.njk" %}
+{% block title %}Qalereya{% endblock %}
+{% block content %}
+<h1 class="admin-h1">Qalereya</h1>
+
+{% if error == 'format' %}<div class="admin-alert error">Şəkil formatı tanınmadı və ya fayl zədələnib. JPEG, PNG, WebP və ya HEIC (iPhone) sınayın.</div>{% endif %}
+{% if error == 'form' %}<div class="admin-alert error">Valideyn razılığı qeyd olunmadan foto yüklənə bilməz, ya da fayl seçilməyib.</div>{% endif %}
+{% if error == 'upload' %}<div class="admin-alert error">Fayl çox böyükdür (maks. 15MB) və ya yükləmə xətası baş verdi.</div>{% endif %}
+
+<div class="admin-card" style="max-width:480px;">
+  <h2 class="admin-h2">Yeni foto yüklə</h2>
+  <p style="font-size:.82rem; color:var(--night-2); margin-top:-6px;">İstənilən adi format qəbul olunur (JPEG, PNG, WebP, HEIC/iPhone, GIF) — avtomatik veb üçün optimallaşdırılır, EXIF/GPS məlumatı silinir. Yükləndikdən sonra gizli qalır, nəzərdən keçirib "Dərc et" düyməsi ilə ictimai saytda göstərin.</p>
+  <form method="post" action="/admin/qalereya" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <div class="admin-field">
+      <label for="photo">Şəkil</label>
+      <input type="file" id="photo" name="photo" accept="image/*" required>
+    </div>
+    <div class="admin-field">
+      <label for="houseId">Ev</label>
+      <select id="houseId" name="houseId">
+        <option value="">— seçilməyib —</option>
+        {% for h in houses %}<option value="{{ h.id }}">{{ h.name }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="admin-field">
+      <label for="childLabel">Etiket (ixtiyari, uşağın tam adı YOX — məs. "6 yaşlı rəssam")</label>
+      <input type="text" id="childLabel" name="childLabel" maxlength="80">
+    </div>
+    <div class="admin-field" style="display:flex; align-items:center; gap:8px;">
+      <input type="checkbox" id="consent" name="consent" required style="width:auto; min-height:auto;">
+      <label for="consent" style="margin:0;">Valideyndən bu şəklin saytda dərc olunmasına razılıq alınıb *</label>
+    </div>
+    <button type="submit" class="admin-btn">Yüklə</button>
+  </form>
+</div>
+
+<div class="admin-gallery-grid" style="margin-top:20px;">
+  {% for p in list %}
+  <div class="admin-gallery-item">
+    <img class="admin-gallery-thumb" src="{{ p.url }}" alt="{{ p.child_label or p.house_name or 'Qalereya fotosu' }}" loading="lazy">
+    <div class="admin-gallery-meta">
+      <div>{{ p.house_name or '—' }}</div>
+      <div>{{ p.child_label or '' }}</div>
+      <span class="admin-badge {{ 'confirmed' if p.is_published else 'cancelled' }}">{{ 'Dərc olunub' if p.is_published else 'Gizli' }}</span>
+    </div>
+    <div class="admin-gallery-actions">
+      <form method="post" action="/admin/qalereya/{{ p.id }}/publish" class="admin-row-form">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <input type="hidden" name="published" value="{{ '0' if p.is_published else '1' }}">
+        <button type="submit" class="admin-btn secondary small">{{ 'Gizlət' if p.is_published else 'Dərc et' }}</button>
+      </form>
+      <form method="post" action="/admin/qalereya/{{ p.id }}/delete" class="admin-row-form" onsubmit="return confirm('Bu foto həmişəlik silinsin?');">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+        <button type="submit" class="admin-btn danger small">Sil</button>
+      </form>
+    </div>
+  </div>
+  {% else %}
+  <p>Hələ foto yüklənməyib.</p>
+  {% endfor %}
+</div>
+{% endblock %}

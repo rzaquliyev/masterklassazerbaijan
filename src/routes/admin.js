@@ -1,9 +1,11 @@
 import { Router } from 'express';
+import multer from 'multer';
 import argon2 from 'argon2';
 import { attachAdminSession, requireAdmin, requireCsrf } from '../middleware/adminAuth.js';
 import { SESSION_COOKIE, createAdminSession, destroyAdminSession } from '../lib/adminSession.js';
 import { serializeCookie } from '../lib/cookies.js';
 import { checkRateLimit } from '../lib/rateLimit.js';
+import { saveGalleryImage, deleteGalleryImage, UnsupportedImageError } from '../lib/imageUpload.js';
 import { listHouses } from '../repositories/masterclasses.js';
 import { cancelBooking, BookingNotCancellableError, BookingNotFoundError } from '../services/booking.js';
 import { listBookingsByCustomer } from '../repositories/bookings.js';
@@ -14,10 +16,13 @@ import {
   listBookingsAdmin, updateBookingNotes, listAllBookingsForExport,
   listCustomersAdmin, getCustomerAdmin, updateCustomerNotes, anonymizeCustomer,
   listInquiriesAdmin, updateInquiryStatus,
+  listGalleryPhotosAdmin, getGalleryPhotoAdmin, insertGalleryPhoto, setGalleryPhotoPublished, deleteGalleryPhotoRow,
   listAdminUsers, createAdminUserRecord, findAdminUserByEmail,
   insertAuditLog, listAuditLog,
 } from '../repositories/admin.js';
-import { loginSchema, masterclassSchema, sessionSchema, notesSchema, createAdminUserSchema } from '../schemas/admin.js';
+import { loginSchema, masterclassSchema, sessionSchema, notesSchema, createAdminUserSchema, galleryUploadSchema } from '../schemas/admin.js';
+
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 15 * 1024 * 1024 } });
 
 const bakuDtFormatter = new Intl.DateTimeFormat('sv-SE', {
   timeZone: 'Asia/Baku', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
@@ -277,6 +282,56 @@ export function createAdminRouter(db) {
     const updated = await updateInquiryStatus(db, req.params.id, req.body.status);
     if (!updated) return res.status(404).send('Tapılmadı');
     res.redirect(302, req.get('Referer') || '/admin/inquiries');
+  });
+
+  // ---------- Qalereya ----------
+  router.get('/qalereya', requireAdmin(), async (req, res) => {
+    const [list, houses] = await Promise.all([listGalleryPhotosAdmin(db), listHouses(db)]);
+    res.render('admin/gallery.njk', renderLocals(req, { list, houses, error: req.query.error || null }));
+  });
+
+  router.post('/qalereya', requireAdmin(), (req, res, next) => {
+    upload.single('photo')(req, res, (err) => {
+      if (err) return res.redirect(302, '/admin/qalereya?error=upload');
+      next();
+    });
+  }, requireCsrf, async (req, res) => {
+    const parsed = galleryUploadSchema.safeParse(req.body);
+    if (!parsed.success || !req.file) {
+      return res.redirect(302, '/admin/qalereya?error=form');
+    }
+    try {
+      const { url } = await saveGalleryImage(req.file.buffer);
+      const created = await insertGalleryPhoto(db, {
+        url, houseId: parsed.data.houseId || null, childLabel: parsed.data.childLabel || null, consent: true,
+      });
+      await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'gallery.upload', targetTable: 'gallery_photos', targetId: created.id });
+      res.redirect(302, '/admin/qalereya');
+    } catch (err) {
+      if (err instanceof UnsupportedImageError) return res.redirect(302, '/admin/qalereya?error=format');
+      throw err;
+    }
+  });
+
+  router.post('/qalereya/:id/publish', requireAdmin(), requireCsrf, async (req, res) => {
+    const published = req.body.published === '1';
+    const updated = await setGalleryPhotoPublished(db, req.params.id, published);
+    if (!updated) return res.status(404).send('Tapılmadı');
+    await insertAuditLog(db, {
+      adminUserId: req.adminSession.adminUser.id,
+      action: published ? 'gallery.publish' : 'gallery.unpublish',
+      targetTable: 'gallery_photos', targetId: updated.id,
+    });
+    res.redirect(302, '/admin/qalereya');
+  });
+
+  router.post('/qalereya/:id/delete', requireAdmin(), requireCsrf, async (req, res) => {
+    const photo = await getGalleryPhotoAdmin(db, req.params.id);
+    if (!photo) return res.status(404).send('Tapılmadı');
+    await deleteGalleryPhotoRow(db, req.params.id);
+    await deleteGalleryImage(photo.url);
+    await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'gallery.delete', targetTable: 'gallery_photos', targetId: req.params.id });
+    res.redirect(302, '/admin/qalereya');
   });
 
   // ---------- Export (yalnız owner) ----------

@@ -191,8 +191,8 @@ p { margin: 0 0 var(--space-4); }
 .lightbox[hidden]{ display:none; }
 .lightbox-card{ width:100%; max-width:420px; background:var(--white); border-radius:var(--radius-lg); padding:16px; box-shadow:0 12px 0 var(--night-deep); }
 .lightbox-photo{
-  height:280px; border-radius:20px; background:repeating-linear-gradient(45deg,#F4EEE2 0 10px,#E9E1D0 10px 20px);
-  display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:#6B5B45;
+  width:100%; height:280px; border-radius:20px; background:repeating-linear-gradient(45deg,#F4EEE2 0 10px,#E9E1D0 10px 20px);
+  display:block; object-fit:cover;
 }
 .lightbox-actions{ display:flex; gap:8px; margin-top:14px; }
 .lightbox-actions .btn-secondary, .lightbox-actions .btn-dark{ flex:1; }

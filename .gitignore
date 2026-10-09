@@ -2,3 +2,8 @@ node_modules/
 .env
 .pglite-data/
 *.log
+
+# İstifadəçi tərəfindən yüklənən qalereya fotoları — real şəkillər repo-ya düşmür,
+# yalnız qovluq strukturu .gitkeep ilə saxlanılır.
+src/public/uploads/gallery/*
+!src/public/uploads/gallery/.gitkeep

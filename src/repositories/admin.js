@@ -240,6 +240,44 @@ export async function findAdminUserByEmail(db, email) {
   return rows[0] ?? null;
 }
 
+// ---------- Qalereya ----------
+export async function listGalleryPhotosAdmin(db) {
+  const { rows } = await db.query(`
+    SELECT g.*, h.name AS house_name, h.color_hex AS house_color
+    FROM gallery_photos g LEFT JOIN houses h ON h.id = g.house_id
+    ORDER BY g.created_at DESC
+  `);
+  return rows;
+}
+
+export async function getGalleryPhotoAdmin(db, id) {
+  const { rows } = await db.query('SELECT * FROM gallery_photos WHERE id = $1', [id]);
+  return rows[0] ?? null;
+}
+
+export async function insertGalleryPhoto(db, { url, houseId, childLabel, consent }) {
+  const id = randomUUID();
+  const { rows } = await db.query(
+    `INSERT INTO gallery_photos (id, url, house_id, child_label, consent, is_published)
+     VALUES ($1,$2,$3,$4,$5,false) RETURNING *`,
+    [id, url, houseId || null, childLabel || null, consent],
+  );
+  return rows[0];
+}
+
+export async function setGalleryPhotoPublished(db, id, isPublished) {
+  const { rows } = await db.query(
+    'UPDATE gallery_photos SET is_published = $2 WHERE id = $1 RETURNING *',
+    [id, isPublished],
+  );
+  return rows[0] ?? null;
+}
+
+export async function deleteGalleryPhotoRow(db, id) {
+  const { rows } = await db.query('DELETE FROM gallery_photos WHERE id = $1 RETURNING *', [id]);
+  return rows[0] ?? null;
+}
+
 // ---------- Audit log ----------
 export async function insertAuditLog(db, { adminUserId, action, targetTable, targetId }) {
   const id = randomUUID();

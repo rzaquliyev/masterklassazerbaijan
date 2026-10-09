@@ -3,16 +3,23 @@
   'use strict';
   var frames = document.querySelectorAll('[data-lightbox-open]');
   var lightbox = document.getElementById('lightbox');
-  if (!frames.length || !lightbox) return;
+  var lightboxImg = document.getElementById('lightbox-img');
+  if (!frames.length || !lightbox || !lightboxImg) return;
   var closeBtn = document.getElementById('lightbox-close');
   var prevBtn = document.getElementById('lightbox-prev');
   var nextBtn = document.getElementById('lightbox-next');
   var current = -1;
   var lastFocused = null;
 
+  function render() {
+    var frame = frames[current];
+    lightboxImg.src = frame.getAttribute('data-lightbox-url') || '';
+    lightboxImg.alt = frame.getAttribute('aria-label') || '';
+  }
   function open(i) {
     current = i;
     lastFocused = document.activeElement;
+    render();
     lightbox.hidden = false;
     closeBtn.focus();
   }
@@ -22,6 +29,7 @@
   }
   function move(delta) {
     current = (current + delta + frames.length) % frames.length;
+    render();
   }
 
   frames.forEach(function (btn, i) {

@@ -38,7 +38,7 @@ ADMIN_EMAIL=siz@nümunə.az ADMIN_PASSWORD="ən azı 10 simvoldan ibarət gücl�
 
 Bundan sonra `/admin/login` ünvanından daxil olun. `owner` rolu hər şeyə (o cümlədən CSV ixrac, istifadəçi yaratma, audit jurnalı, müştəri anonimləşdirmə) çatır; `owner` paneldən əlavə `staff` istifadəçilər yarada bilər (bronlar/masterklasslar üzərində işləyir, amma ixrac/istifadəçi/jurnal/anonimləşdirmə yoxdur).
 
-Admin panelin nə etdiyi/etmədiyi: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) §4.
+Admin panelin nə etdiyi/etmədiyi: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) §4. Qalereya fotoları `/admin/qalereya`-dan yüklənir — istənilən adi format (JPEG/PNG/WebP/HEIC/GIF) qəbul olunur, avtomatik WebP-ə çevrilir, EXIF/GPS silinir; yükləndikdən sonra "Dərc et" ilə ictimai saytda göstərilir. **Diqqət:** fotolar yerli diskdə saxlanılır — ephemeral-disk hostingdə server yenidən başlayanda itə bilər (bax `docs/ARCHITECTURE.md` §8).
 
 ## Testlər
 
@@ -67,6 +67,6 @@ docs/             → ARCHITECTURE.md, PAGES.md, ASSETS.md, CONTENT-TODO.md
 
 ## Hələ görülməli işlər
 
-- [`docs/CONTENT-TODO.md`](docs/CONTENT-TODO.md): real məzmun boşluqları (iş saatları, qiymətlər, say həddləri, fotolar)
+- [`docs/CONTENT-TODO.md`](docs/CONTENT-TODO.md): real məzmun boşluqları (iş saatları, qiymətlər, say həddləri, real fotolar)
 - Deploy sənədi (`docs/DEPLOY.md`) hələ yazılmayıb — hosting seçimi gözlənilir
-- Qalereya foto yükləmə admin UI-dan hələ yoxdur (bax `docs/ARCHITECTURE.md` §4 "hələ tətbiq olunmayıb")
+- Ev (`houses`)/FAQ CRUD və endirim kodu idarəsi admin UI-dan hələ yoxdur (bax `docs/ARCHITECTURE.md` §4 "hələ tətbiq olunmayıb")

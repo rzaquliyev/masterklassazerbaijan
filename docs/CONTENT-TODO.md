@@ -42,10 +42,13 @@
 | Ləğv qaydası | `az.json` → `home.trust[2].text` | `"[Ləğv qaydası]"` |
 | Məlumatların saxlanma müddəti | `az.json` → `mexfilik.sections[3].p` | `"[Saxlama müddəti]"` — məxfilik siyasəti artıq "SAMPLE, hüquqşünasla yoxlanmalı" qeydi ilə işarələnib |
 
-## 6. Fotolar
+## 6. Fotolar — ✅ YÜKLƏMƏ HAZIRDIR (2026-10-09), özü hələ əlavə edilməyib
 
-- Ana səhifə "Şəhər muzeyi" bölməsi (`home.njk`) və tam Qalereya səhifəsi (`qalereya.njk`) hazırda `[FOTO]` / `[BÖYÜK FOTO]` yer tutucuları ilə göstərilir (real şəkil yoxdur, DB-də `gallery_photos` cədvəli boşdur).
-- BRIEF.md-ə görə: **stok uşaq fotoları və ya tanınan uşaqların şəkilləri qadağandır** — yalnız studiyanın öz, valideyn razılığı olan fotoları, EXIF/GPS metadatası təmizlənmiş şəkildə yüklənməlidir (admin panel hazır olduqda).
+- **Yükləmə indi mümkündür:** `/admin/qalereya` → "Yeni foto yüklə". İstənilən adi format (JPEG, PNG, WebP, HEIC/iPhone, GIF) qəbul olunur, avtomatik WebP-ə çevrilir, 1600px-ə qədər kiçildilir, EXIF/GPS **tam silinir**. Yükləndikdən sonra GİZLİ qalır — nəzərdən keçirib "Dərc et" düyməsinə basmaq lazımdır ki, ictimai saytda (ana səhifə "Şəhər muzeyi" + Qalereya) görünsün.
+- **Məcburi:** hər yükləmədə "valideyn razılığı" qutusu işarələnməlidir — işarələnməyibsə, server heç nə saxlamır (BRIEF-in "razılıq bayrağı məcburi sahə" tələbi).
+- **Qadağan (BRIEF):** stok uşaq fotoları və ya tanınan uşaqların (tam adı ilə) şəkilləri. Yalnız studiyanın öz, valideyn razılığı olan fotoları — "etiket" sahəsinə tam ad YOX, məs. "6 yaşlı rəssam" kimi ümumi təsvir yazılmalıdır.
+- **Diqqət (hosting):** fotolar hazırda yerli diskdə saxlanılır (`src/public/uploads/gallery/`) — ephemeral-disk hostingdə (məs. Render pulsuz planı) server yenidən başlayanda itə bilər. Bax `docs/ARCHITECTURE.md` §8.
+- Hələ real foto yüklənməyib (test zamanı yüklənən nümunə foto silindi) — studiya sahibi öz fotolarını yükləməlidir.
 
 ## 7. Hələ tətbiq olunmayan (əlaqəli, amma ayrı mövzu)
 

@@ -106,7 +106,7 @@
     <div class="museum-grid">
       {% for photo in gallery %}
       <div class="museum-frame clay-sm" style="background:{{ photo.house_color or '#FFE08A' }};">
-        <div class="foto-placeholder" style="height:100%;">[FOTO]</div>
+        <img src="{{ photo.url }}" alt="{{ photo.child_label or photo.house_name or '' }}" loading="lazy" style="width:100%; height:100%; object-fit:cover; border-radius:16px; display:block;">
       </div>
       {% else %}
       {% for i in range(0, 4) %}

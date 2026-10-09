@@ -32,3 +32,10 @@ export const createAdminUserSchema = z.object({
   password: z.string().min(10).max(200),
   role: z.enum(['owner', 'staff']),
 });
+
+export const galleryUploadSchema = z.object({
+  houseId: z.string().uuid().optional().or(z.literal('')),
+  childLabel: z.string().trim().max(80).optional().or(z.literal('')),
+  // BRIEF: razılıq bayrağı məcburi sahədir — işarələnməyibsə, foto heç saxlanmır.
+  consent: z.literal('on', { errorMap: () => ({ message: 'Valideyn razılığı qeyd olunmadan foto yüklənə bilməz' }) }),
+});
