@@ -65,8 +65,12 @@ tests/            → node:test testləri
 docs/             → ARCHITECTURE.md, PAGES.md, ASSETS.md, CONTENT-TODO.md
 ```
 
+## Təhvil qeydi
+
+Layihəni ilk dəfə əlinə alan üçün qısa bələdçi (müştəri məlumatı haradadır, kim görə bilər, bilinən məhdudiyyətlər, növbəti addımlar): [`docs/HANDOVER.md`](docs/HANDOVER.md).
+
 ## Hələ görülməli işlər
 
 - [`docs/CONTENT-TODO.md`](docs/CONTENT-TODO.md): real məzmun boşluqları (iş saatları, qiymətlər, say həddləri, real fotolar)
-- Deploy sənədi (`docs/DEPLOY.md`) hələ yazılmayıb — hosting seçimi gözlənilir
+- Deploy sənədi (`docs/DEPLOY.md`) hələ yazılmayıb — hosting seçimi hazırda **qəsdən saxlanılıb**, istifadəçinin qərarı gözlənilir
 - Ev (`houses`)/FAQ CRUD və endirim kodu idarəsi admin UI-dan hələ yoxdur (bax `docs/ARCHITECTURE.md` §4 "hələ tətbiq olunmayıb")
