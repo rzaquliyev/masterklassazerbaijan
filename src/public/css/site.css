@@ -274,12 +274,12 @@ p { margin: 0 0 var(--space-4); }
 
 /* ---------- Gizlənqaç ulduzu (5 səhifədə gizli, oyun mexanikası) ---------- */
 .hidden-star{
-  display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border:0;
+  display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border:0;
   background:none; cursor:pointer; color:var(--card-shadow); opacity:.55; transition:transform .15s ease, color .15s ease, opacity .15s ease;
 }
 .hidden-star:hover, .hidden-star:focus-visible{ opacity:1; transform:scale(1.15); }
 .hidden-star[data-found="true"]{ color:var(--sun); opacity:1; }
-.hidden-star svg{ width:100%; height:100%; }
+.hidden-star svg{ width:20px; height:20px; }
 
 /* ---------- Utility ---------- */
 .visually-hidden{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }

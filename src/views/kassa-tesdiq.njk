@@ -6,7 +6,7 @@
 
 {% block content %}
 <section class="container kassa-page">
-  <div class="ticket-card clay-card" style="margin-top:16px; position:relative;">
+  <div class="ticket-card clay-card {{ 'has-stamp' if booking.status == 'confirmed' }}" style="margin-top:16px; position:relative;">
     {% if booking.status == 'confirmed' %}
     <div class="ticket-stamp" aria-hidden="true">{{ t.kassa.confirmed }}</div>
     {% endif %}
