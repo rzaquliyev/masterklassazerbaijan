@@ -42,6 +42,7 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 | 4 | `/teqvim` | Təqvim | Avtobus dayanacağı |
 | 5 | `/oyun-parki` | Oyun parkı (hub) | Oyun parkı |
 | 6 | `/oyun-parki/yogur` | Plastilin yoğur | Oyun parkının içi |
+| 6b | `/oyun-parki/pizza` | Pizza bəzə (yeni, 2026-10-10 — Mətbəx evi üçün) | — |
 | 7 | `/oyun-parki/rengleme` | Rəngləmə (yeni) | — |
 | 8 | (bütün səhifələrdə) | Gizlənqaç (yeni) | — |
 | 9 | `/kampaniyalar` | Kampaniyalar | Bazar meydanı |

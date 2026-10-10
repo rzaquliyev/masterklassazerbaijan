@@ -205,6 +205,7 @@ export function createPublicRouter(db) {
 
   router.get('/oyun-parki', (req, res) => res.render('oyun-parki.njk', {}));
   router.get('/oyun-parki/yogur', (req, res) => res.render('yogur.njk', {}));
+  router.get('/oyun-parki/pizza', (req, res) => res.render('pizza.njk', {}));
   router.get('/oyun-parki/rengleme', (req, res) => res.render('rengleme.njk', {}));
 
   router.get('/mexfilik', (req, res) => res.render('mexfilik.njk', {}));

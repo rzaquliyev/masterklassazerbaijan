@@ -145,6 +145,8 @@
     "moreTitle": "Daha nə oynayaq?",
     "yogurTitle": "Plastilin yoğur",
     "yogurLead": "Barmağınla sıx, formasını dəyiş",
+    "pizzaTitle": "Pizza bəzə",
+    "pizzaLead": "Malzemə seç, pizzanı bəzə",
     "rengTitle": "Rəngləmə",
     "rengLead": "Şəhəri boya, şəkli yüklə",
     "huntTitle": "Gizlənqaç",
@@ -165,6 +167,16 @@
     "footerNote": "Real plastilinlə daha maraqlıdır! Gil evində şənbə masterklassına bax →",
     "shapes": ["Top", "Damla", "Kub", "Yumurta"],
     "colors": [["Narıncı", "#E8682A"], ["Mavi", "#6FA8DC"], ["Yaşıl", "#7BC67E"], ["Sarı", "#FFC23D"], ["Çəhrayı", "#F28AA6"], ["Bənövşəyi", "#9B7BD4"]]
+  },
+  "pizza": {
+    "title": "Pizza bəzə",
+    "lead": "Malzemə seç, pizzaya toxunub əlavə et.",
+    "placedLabel": "malzemə qoyuldu",
+    "toppingsPick": "Malzemə seç",
+    "undo": "Geri al",
+    "clearBtn": "Təmizlə",
+    "footerNote": "Real pizzanı masterklassda özün bişirirsən! Mətbəxdə şənbə masterklassına bax →",
+    "toppings": ["Pomidor", "Göbələk", "Zeytun", "Bibər", "Pendir"]
   },
   "rengleme": {
     "title": "Rəngləmə guşəsi",

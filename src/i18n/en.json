@@ -145,6 +145,8 @@
     "moreTitle": "What else can we play?",
     "yogurTitle": "Squish the playdough",
     "yogurLead": "Squeeze with your finger, change its shape",
+    "pizzaTitle": "Decorate the pizza",
+    "pizzaLead": "Pick toppings, decorate the pizza",
     "rengTitle": "Coloring",
     "rengLead": "Color the city, download the picture",
     "huntTitle": "Hide & Seek",
@@ -165,6 +167,16 @@
     "footerNote": "It's more fun with real playdough! Check out Saturday's masterclass at the clay house →",
     "shapes": ["Ball", "Drop", "Cube", "Egg"],
     "colors": [["Orange", "#E8682A"], ["Blue", "#6FA8DC"], ["Green", "#7BC67E"], ["Yellow", "#FFC23D"], ["Pink", "#F28AA6"], ["Purple", "#9B7BD4"]]
+  },
+  "pizza": {
+    "title": "Decorate the pizza",
+    "lead": "Pick a topping, tap the pizza to add it.",
+    "placedLabel": "toppings added",
+    "toppingsPick": "Pick a topping",
+    "undo": "Undo",
+    "clearBtn": "Clear",
+    "footerNote": "You make a real pizza yourself at the masterclass! Check out Saturday's masterclass at the kitchen →",
+    "toppings": ["Tomato", "Mushroom", "Olive", "Pepper", "Cheese"]
   },
   "rengleme": {
     "title": "Coloring corner",

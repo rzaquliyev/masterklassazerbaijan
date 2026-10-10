@@ -1,0 +1,46 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}{{ t.pizza.title }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.pizza.lead }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/pizza.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<section class="container page-head">
+  <a class="back-link" href="/{{ lang }}/oyun-parki">← {{ t.oyunParki.title }}</a>
+  <span class="chip-solid" style="background:var(--butter); float:right;" id="pizza-counter">0 {{ t.pizza.placedLabel }}</span>
+  <h1 style="margin-top:14px;">{{ t.pizza.title }}</h1>
+  <p class="page-lead">{{ t.pizza.lead }}</p>
+</section>
+
+<section class="container" style="margin-top:18px;">
+  <div class="pizza-area" id="pizza-area">
+    <svg class="pizza-svg" id="pizza-svg" viewBox="0 0 320 320" role="application" aria-label="{{ t.pizza.title }}">
+      <circle cx="160" cy="160" r="150" fill="#E3A857" stroke="#C98B3D" stroke-width="4"></circle>
+      <circle cx="160" cy="160" r="132" fill="#FFD966"></circle>
+      <g id="pizza-toppings"></g>
+    </svg>
+  </div>
+</section>
+
+<section class="container" style="margin-top:20px;">
+  <h2 style="font-size:1.1rem;">{{ t.pizza.toppingsPick }}</h2>
+  <div class="pizza-palette" id="pizza-palette"></div>
+</section>
+
+<section class="container" style="margin-top:20px; display:flex; gap:10px;">
+  <button type="button" class="btn-secondary" style="flex:1;" id="pizza-undo">↶ {{ t.pizza.undo }}</button>
+  <button type="button" class="btn-dark" id="pizza-clear">{{ t.pizza.clearBtn }}</button>
+</section>
+
+<section class="container" style="padding-top:26px;">
+  <div class="sample-notice" style="background:var(--white); border-radius:var(--radius-md); padding:14px 16px; box-shadow:0 4px 0 var(--card-shadow);">{{ t.pizza.footerNote }}</div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script type="application/json" id="pizza-i18n">{{ {
+  "toppings": t.pizza.toppings,
+  "placedLabel": t.pizza.placedLabel
+} | dump | safe }}</script>
+<script src="/js/pizza.js?v={{ assetV }}" defer></script>
+{% endblock %}
