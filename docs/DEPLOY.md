@@ -20,16 +20,22 @@ git push -u origin master
 ## 3. Postgres əlavə edin
 
 1. Layihənin Railway lövhəsində **+ New** → **Database** → **PostgreSQL**.
-2. Railway avtomatik `DATABASE_URL` dəyişənini Postgres servisinə yaradır. Sayt servisinin **Variables** bölməsində:
-   - `DATABASE_URL` = `${{Postgres.DATABASE_URL}}` (Railway-in "reference variable" funksiyası — Postgres servisini seçəndə dropdown-dan avtomatik gəlir, əl ilə yazmayın).
-3. Server hər başlayanda miqrasiyaları (`migrations/*.sql`) özü tətbiq edir (`scripts/migrate.js`, `src/server.js`-dən çağırılır) — əl ilə miqrasiya addımı **lazım deyil**.
+2. Sayt servisinin **Variables** bölməsinə keçin. Railway adətən "Suggested Variables" altında `DATABASE_URL`-i özü aşkarlayıb boş sətir kimi göstərir — "VALUE or ${{REF}}" sahəsinə klikləyib Postgres-i seçin (nəticədə `${{Postgres.DATABASE_URL}}` kimi bir istinad yaranır, əl ilə yazmayın).
+3. **Vacib:** bu dəyişəni əlavə etdikdən sonra ekranın yuxarısındakı **"Apply changes" / "Deploy"** düyməsinə mütləq basın — Railway-in interfeysi dəyişiklikləri dərhal tətbiq etmir, "gözləmə" vəziyyətində saxlayır.
+4. Server hər başlayanda miqrasiyaları (`migrations/*.sql`) özü tətbiq edir (`scripts/migrate.js`, `src/server.js`-dən çağırılır) — əl ilə miqrasiya addımı **lazım deyil**.
+
+**Gotcha (canlı təcrübədən):** `DATABASE_URL` əlavə olunmadan/tətbiq olunmadan server işə düşərsə, kod avtomatik **PGlite**-ə (WASM-əsaslı, yaddaş tələb edən ehtiyat Postgres) keçir — bu, Railway-in konteyner yaddaş limitini dərhal aşıb prosesi "Killed" statusu ilə öldürür, sonsuz crash-loop yaranır (loglarda stack trace YOXDUR, sadəcə "Killed" sözü görünür — bu, OOM kill əlamətidir). Server "Killed" ilə dönə-dönə crash edirsə, ilk yoxlanacaq şey budur.
 
 ## 4. Persistent volume (qalereya fotoları üçün)
 
-1. Sayt servisinin **Settings** → **Volumes** → **+ New Volume**.
-2. **Mount path:** `/app/src/public/uploads/gallery`
+**Qeyd:** "Settings → Volumes" bəzi Railway hesablarında/UI versiyalarında görünmür. İşləyən üsul — əsas kanvas görünüşü:
+
+1. Əsas kanvas görünüşünə qayıdın (layihənin bütün servislərini bir yerdə gördüyünüz yer)
+2. Boş yerə sağ-klikləyin və ya sol kənardakı **"+"** düyməsinə basın → **"Volume"** seçin
+3. Yaranan volume node-unu sürükləyib `masterklassazerbaijan` servisinin üzərinə buraxın (bağlamaq üçün) — eynən Postgres-in öz volume-unun bağlandığı kimi
+4. Onun ayarlarında **Mount Path:** `/app/src/public/uploads/gallery`
    (Railway-in Nixpacks build-i repo-nu `/app`-a qoyur; `src/lib/imageUpload.js`-dəki `GALLERY_DIR` məhz bu yola yazır/oxuyur.)
-3. Bundan sonra server yenidən başlasa (deploy, restart) belə, yüklənmiş fotolar **silinmir**.
+5. Bundan sonra server yenidən başlasa (deploy, restart) belə, yüklənmiş fotolar **silinmir**.
 
 ## 5. Mühit dəyişənləri (Variables)
 
@@ -39,36 +45,49 @@ Sayt servisinin **Variables** bölməsinə:
 |---|---|
 | `DATABASE_URL` | `${{Postgres.DATABASE_URL}}` (§3) |
 | `NODE_ENV` | `production` |
-| `PORT` | Railway avtomatik təyin edir — **əl ilə yazmayın**, `src/server.js` `process.env.PORT`-u özü oxuyur. |
+| `PORT` | `3000` — **əl ilə əlavə edin.** (Nəzəri cəhətdən Railway bunu avtomatik vermir/uyğunlaşdırmır; "Generate Domain" dialoqu hansı porta yönləndirəcəyini soruşanda, bura yazdığınız **eyni rəqəmi** (`3000`) orada da yazın — uyğunsuzluq health-check-in uğursuz olub servisin dönə-dönə restart edilməsinə (crash-loop effekti) səbəb olur.) |
 
-`PGLITE_DATA_DIR` production-da lazım deyil (yalnız `DATABASE_URL` boş olanda, yəni yerli development-də işə düşür).
+`PGLITE_DATA_DIR` production-da lazım deyil (yalnız `DATABASE_URL` boş olanda, yəni yerli development-də işə düşür) — istəsəniz silə bilərsiniz, zərəri yoxdur (reach olunmur).
+
+Hər dəyişiklikdən sonra **"Apply changes" / "Deploy"** düyməsinə basmağı unutmayın (§3-dəki qeydə bax).
 
 ## 6. İlk admin hesabını yaradın
 
-Server işə düşdükdən sonra, **bir dəfəlik**, Railway-in öz mühitində (yerli maşınınızda yox — `DATABASE_URL` yalnız Railway daxilində əlçatandır):
+**Vacib (canlı təcrübədən):** `railway run` əmri komandanı **yerli kompüterinizdə** işə salır, Railway-in dəyişənlərini ora "ötürür" — amma `DATABASE_URL` Railway-in **daxili** şəbəkə ünvanını (`postgres.railway.internal`) istifadə edir, bu da yalnız Railway-in öz şəbəkəsinin İÇİNDƏN əlçatandır. Ona görə `railway run node scripts/create-admin.js` yerli kompüterdən **işləməyəcək** (`ENOTFOUND postgres.railway.internal` xətası verəcək). Əvəzinə `railway ssh` ilə birbaşa Railway-in öz konteynerinin içinə girib, əmri **orada** işə salmaq lazımdır:
 
 ```bash
-# Railway CLI quraşdırın: npm i -g @railway/cli, sonra:
-railway login
-railway link   # layihəni seçin
-railway run node scripts/create-admin.js
+npm i -g @railway/cli
+railway login              # brauzer açılır, təsdiqləyin
+railway link                # layihəni seçin
+railway ssh                 # ilk dəfədirsə SSH açarı istəyə bilər: ssh-keygen -t ed25519, sonra yenidən railway ssh
 ```
 
-`ADMIN_EMAIL` və `ADMIN_PASSWORD`-u əvvəlcədən Railway Variables-a əlavə etməyin (bir dəfəlik istifadə üçündür, daimi saxlanmasın) — əvəzinə birbaşa `railway run` əmrinin qarşısına yazın:
+`railway ssh` sizi Railway-in konteynerinin içinə (`/app` qovluğuna) salacaq — **bu, Windows PowerShell deyil, Linux shell-dir**, ona görə orada bu əmri birbaşa (bash sintaksisi ilə, `bash -c` SARMAĞA EHTİYAC YOXDUR) yazın:
 
 ```bash
-railway run bash -c 'ADMIN_EMAIL=siz@numune.az ADMIN_PASSWORD="ən azı 10 simvoldan ibarət güclü parol" node scripts/create-admin.js'
+ADMIN_EMAIL=siz@numune.az ADMIN_PASSWORD="ən azı 10 simvoldan ibarət güclü parol" node scripts/create-admin.js
 ```
 
 Uğurlu olarsa, `https://<railway-domeniniz>/admin/login`-dən daxil ola bilərsiniz.
 
 ## 7. Domen
 
-Railway avtomatik `*.up.railway.app` domeni verir (pulsuz, dərhal işləyir). Öz domeninizi (`masterklassazerbaijan.az` və ya oxşar — bax `docs/CONTENT-TODO.md` §1, **"masterclass.az" YOX**, başqasına məxsusdur) bağlamaq üçün: Railway → Settings → Networking → **Custom Domain**, sonra domen provayderinizdə göstərilən CNAME qeydini əlavə edin.
+Railway avtomatik `*.up.railway.app` domeni verir, amma ilk dəfə **manual aktivləşdirmə tələb edir**: servis → **Settings** → **Networking** → **"Generate Domain"** (layihənin ümumi/project-level Settings-i YOX, servisin ÖZ Settings-i — bunlar fərqli yerlərdir, qarışdırmayın). Generate edəndə port soruşsa, §5-dəki `PORT` dəyəri ilə (`3000`) eyni rəqəmi yazın.
 
-## 8. Backup (hələ qurulmayıb — tövsiyə)
+Öz domeninizi (`masterklassazerbaijan.az` və ya oxşar — bax `docs/CONTENT-TODO.md` §1, **"masterclass.az" YOX**, başqasına məxsusdur) bağlamaq üçün: eyni Networking bölməsində **Custom Domain**, sonra domen provayderinizdə göstərilən CNAME qeydini əlavə edin.
 
-`docs/HANDOVER.md` §2-də qeyd olunduğu kimi, avtomatik backup hələ qurulmayıb. Railway-in Postgres servisi daxilində **Backups** bölməsi var (planınıza görə avtomatik gündəlik backup təklif edə bilər) — Railway lövhəsində Postgres servisi → **Backups** sekmesini yoxlayın və aktivləşdirin. Əlavə təhlükəsizlik üçün, həftəlik `pg_dump`-ı xarici yerə (məs. özəl bulud saxlama) köçürən sadə bir cron tapşırığı da əlavə edilə bilər — hazırda **qurulmayıb**, tələb olunarsa ayrıca addım kimi edilə bilər.
+## 8. Backup — QURULDU (2026-10-10), qismən
+
+Railway CLI ilə **PITR (Point-in-Time Recovery)** aktivləşdirildi:
+
+```bash
+railway postgres pitr enable --service postgres
+railway postgres pitr status --service postgres   # yoxlamaq üçün
+```
+
+Bu, bazanın davamlı arxivləndiyi və istənilən keçmiş ana (saniyə dəqiqliyi ilə) geri qaytarıla biləcəyi mənasına gəlir — əsas qoruma artıq **işləkdir**.
+
+**Qismən məhdudiyyət:** ayrıca, adlı/cədvəlli snapshot-lar yaradan "backup schedule" funksiyası (`railway postgres pitr schedule set --daily --weekly`) sınanıb, amma **yalnız Railway Pro planında mövcuddur** ("Manual backups and backup schedules are only available for Pro workspaces" xətası) — hazırkı planda bağlıdır. Pro-ya keçilərsə, yuxarıdakı əmri yenidən sınayın.
 
 ## 9. Yoxlama siyahısı (hər deploy-dan sonra)
 
