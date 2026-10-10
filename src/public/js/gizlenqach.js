@@ -65,13 +65,13 @@
             resultBox.textContent = form.dataset.alreadyText + ' ' + (res.data.code || '');
           } else {
             resultBox.className = 'form-alert error';
-            resultBox.textContent = res.data.error || 'Xəta baş verdi.';
+            resultBox.textContent = res.data.error || form.dataset.genericError;
           }
         })
         .catch(function () {
           resultBox.hidden = false;
           resultBox.className = 'form-alert error';
-          resultBox.textContent = 'Xəta baş verdi, yenidən cəhd edin.';
+          resultBox.textContent = form.dataset.networkError;
         });
     });
   }

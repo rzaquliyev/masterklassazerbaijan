@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div class="rg-palette" id="rg-palette" role="group" aria-label="Rəng palitrası"></div>
+  <div class="rg-palette" id="rg-palette" role="group" aria-label="{{ t.rengleme.paletteLabel }}"></div>
 
   <div class="rg-tools">
     <button type="button" class="btn-secondary" id="rg-undo">↶ {{ t.rengleme.undo }}</button>
@@ -42,7 +42,9 @@
   "pictureNames": t.rengleme.pictureNames,
   "levels": t.rengleme.levels,
   "eraserLabel": t.rengleme.eraserLabel,
-  "progressLabel": t.rengleme.progressLabel
+  "progressLabel": t.rengleme.progressLabel,
+  "colorNames": t.rengleme.colors,
+  "regionLabelTemplate": t.rengleme.regionLabelTemplate
 } | dump | safe }}</script>
 <script src="/js/rengleme-data.js?v={{ assetV }}" defer></script>
 <script src="/js/rengleme.js?v={{ assetV }}" defer></script>

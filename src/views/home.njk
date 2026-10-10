@@ -11,7 +11,7 @@
   <p class="page-lead">{{ t.home.lead }}</p>
 </section>
 
-<section class="town-scene" id="town-scene" aria-label="Plastilin şəhəri — ev seçimi">
+<section class="town-scene" id="town-scene" aria-label="{{ t.home.townSceneLabel }}">
   <div class="town-sky" aria-hidden="true">
     <span class="town-sun float"></span>
     <span class="town-cloud float"></span>
@@ -136,7 +136,7 @@
 <section class="container" style="padding-top:44px;">
   <div style="display:flex; justify-content:space-between; align-items:flex-start;">
     <h2 style="white-space:pre-line;">{{ t.home.trustTitle }}</h2>
-    {{ m.hiddenStar('home') }}
+    {{ m.hiddenStar('home', t) }}
   </div>
   <div class="stack" style="margin-top:14px;">
     {% for item in t.home.trust %}

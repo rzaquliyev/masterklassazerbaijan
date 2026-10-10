@@ -8,7 +8,7 @@
   var PICS = window.RENGLEME_PICS || [];
   var PAL = window.RENGLEME_PAL || [];
   var i18nEl = document.getElementById('rg-i18n');
-  var i18n = { pictureNames: {}, levels: {}, eraserLabel: 'Pozan', progressLabel: '' };
+  var i18n = { pictureNames: {}, levels: {}, eraserLabel: 'Eraser', progressLabel: '', colorNames: [], regionLabelTemplate: 'Part {n}' };
   if (i18nEl) { try { i18n = JSON.parse(i18nEl.textContent); } catch (e) {} }
 
   var thumbsWrap = document.getElementById('rg-thumbs');
@@ -42,7 +42,7 @@
       // Klaviatura dəstəyi: SVG <path> defolt fokuslanmır/aktivləşmir, əl ilə əlavə edirik.
       path.setAttribute('tabindex', '0');
       path.setAttribute('role', 'button');
-      path.setAttribute('aria-label', 'Hissə ' + (i + 1));
+      path.setAttribute('aria-label', i18n.regionLabelTemplate.replace('{n}', String(i + 1)));
       path.addEventListener('click', function () { paint(region.id); });
       path.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); paint(region.id); }
@@ -118,7 +118,7 @@
   function renderPalette() {
     paletteWrap.innerHTML = '';
     PAL.forEach(function (entry, i) {
-      var name = entry[0], color = entry[1];
+      var name = i18n.colorNames[i] || entry[0], color = entry[1];
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'rg-swatch' + (i === state.colorIndex ? ' is-active' : '');

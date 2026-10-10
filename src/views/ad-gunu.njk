@@ -36,7 +36,7 @@
       <label class="package-option trust-card">
         <input type="radio" name="package" value="{{ pack.name }}" {{ 'checked' if loop.first }} required style="width:20px; height:20px; accent-color:var(--orange);">
         <span style="flex:1;">
-          <span style="display:flex; justify-content:space-between; font-family:var(--font-display); font-weight:700; font-size:1.1rem;">{{ pack.name }}<span>[QİYMƏT] ₼</span></span>
+          <span style="display:flex; justify-content:space-between; font-family:var(--font-display); font-weight:700; font-size:1.1rem;">{{ pack.name }}<span>{{ t.adGunu.pricePlaceholder }} ₼</span></span>
           <span style="display:block; font-size:.88rem; font-weight:700; color:var(--night-2); margin-top:4px;">{{ pack.desc }}</span>
         </span>
       </label>

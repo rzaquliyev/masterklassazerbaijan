@@ -23,7 +23,7 @@
     <div style="display:flex; justify-content:space-between; align-items:flex-start;">
       <div>
         {# font-mono (Space Mono) YOX: mətn Azərbaycan hərfləri (ə, İ) daşıyır, latin-ext yüklənməyib #}
-        <div style="font-family:var(--font-display); font-weight:700; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--sun);">Plastilin şəhəri</div>
+        <div style="font-family:var(--font-display); font-weight:700; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--sun);">{{ t.kampaniyalar.passportCountry }}</div>
         <div style="font-family:var(--font-display); font-weight:700; font-size:1.4rem; margin-top:4px;">{{ t.kampaniyalar.passportTitle }}</div>
       </div>
       {% if lookup %}
@@ -39,7 +39,7 @@
       {% endfor %}
     </div>
     {% if lookup.free_sessions_available > 0 %}
-    <div class="form-alert success" style="margin-top:14px; margin-bottom:0;">{{ lookup.free_sessions_available }} × pulsuz masterklass!</div>
+    <div class="form-alert success" style="margin-top:14px; margin-bottom:0;">{{ t.kampaniyalar.freeSessionsBadge | replace('{n}', lookup.free_sessions_available) }}</div>
     {% endif %}
 
     <div style="margin-top:18px; background:var(--cream); border-radius:18px; padding:16px;">

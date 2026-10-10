@@ -32,7 +32,7 @@
   <div class="kassa-actions" style="margin-top:20px;">
     <a class="btn-secondary" style="flex:1;" href="/api/ics/{{ booking.id }}">{{ t.kassa.addToCalendar }}</a>
     <a class="btn-dark" style="flex:1;" target="_blank" rel="noopener"
-      href="https://wa.me/994558199901?text={{ ('Bron nömrəm: ' + booking.reference) | urlencode }}">{{ t.kassa.whatsappConfirm }}</a>
+      href="https://wa.me/994558199901?text={{ t.kassa.whatsappShareTemplate | replace('{reference}', booking.reference) | urlencode }}">{{ t.kassa.whatsappConfirm }}</a>
   </div>
   {% else %}
   <div class="page-head">

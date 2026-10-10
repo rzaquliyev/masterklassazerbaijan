@@ -9,7 +9,9 @@
     "register": "Qeydiyyat",
     "menuTitle": "Şəhər xəritəsi",
     "menuClose": "Bağla",
-    "skip": "Əsas məzmuna keç"
+    "skip": "Əsas məzmuna keç",
+    "mainNav": "Əsas naviqasiya",
+    "langSwitch": "Dil seçimi"
   },
   "places": [
     { "href": "/{lang}/teqvim", "place": "Avtobus dayanacağı", "what": "Təqvim", "color": "#6FA8DC" },
@@ -42,6 +44,7 @@
     "title": "Plastilin şəhərinə\nxoş gəldin!",
     "lead": "Bir evə toxun, içində nə düzəltdiyimizi gör. 4–12 yaş.",
     "noUpcoming": "Hazırda açıq seans yoxdur — tezliklə yeni tarixlər əlavə olunacaq.",
+    "townSceneLabel": "Plastilin şəhəri — ev seçimi",
     "roadmapTitle": "Yol xəritəsi",
     "roadmapLead": "Evdən emalatxanaya 4 dayanacaq",
     "steps": [
@@ -110,6 +113,7 @@
     "stampText": "5 möhür = 1 pulsuz masterklass",
     "addToCalendar": "Təqvimə əlavə et",
     "whatsappConfirm": "WhatsApp-da təsdiqi göndər",
+    "whatsappShareTemplate": "Bron nömrəm: {reference}",
     "waitlistTitle": "Gözləmə siyahısındasınız",
     "waitlistLead": "Bu seans doludur. Yer açılan kimi WhatsApp-dan xəbər verəcəyik.",
     "errorConsent": "Qaydalarla razılıq məcburidir",
@@ -120,6 +124,8 @@
   "teqvim": {
     "title": "Növbəti\nreyslər",
     "lead": "Evi seç, tarixi seç.",
+    "boardLabel": "REYSLƏR",
+    "boardLive": "CANLI",
     "allHouses": "Hamısı",
     "empty": "Bu marşrutda reys yoxdur. Başqa gün/ev seç.",
     "legendMany": "yer çoxdur",
@@ -157,7 +163,8 @@
     "hintPress": "Bas və dart",
     "hintDrag": "Dart, dart!",
     "footerNote": "Real plastilinlə daha maraqlıdır! Gil evində şənbə masterklassına bax →",
-    "shapes": ["Top", "Damla", "Kub", "Yumurta"]
+    "shapes": ["Top", "Damla", "Kub", "Yumurta"],
+    "colors": [["Narıncı", "#E8682A"], ["Mavi", "#6FA8DC"], ["Yaşıl", "#7BC67E"], ["Sarı", "#FFC23D"], ["Çəhrayı", "#F28AA6"], ["Bənövşəyi", "#9B7BD4"]]
   },
   "rengleme": {
     "title": "Rəngləmə guşəsi",
@@ -171,7 +178,10 @@
     "eraserLabel": "Pozan",
     "privacyNote": "Şəkillər saxlanmır və heç yerə göndərilmir. Bəyəndiyinizi yükləyib çap edin.",
     "pictureNames": { "city": "Plastilin şəhəri", "space": "Kosmos səyahəti", "ocean": "Dəniz altı", "buta": "Buta naxışı", "baku": "Bakı gecəsi", "dino": "Dost dinozavr" },
-    "levels": { "easy": "Asan", "medium": "Orta", "hard": "Çətin" }
+    "levels": { "easy": "Asan", "medium": "Orta", "hard": "Çətin" },
+    "paletteLabel": "Rəng palitrası",
+    "regionLabelTemplate": "Hissə {n}",
+    "colors": ["Narıncı", "Qırmızı", "Çəhrayı", "Bənövşəyi", "Göy", "Açıq göy", "Gecə", "Yaşıl", "Tünd yaşıl", "Sarı", "Krem", "Qəhvəyi", "Boz", "Pozan"]
   },
   "gizlenqach": {
     "counterLabel": "ulduz",
@@ -180,7 +190,10 @@
     "phoneLabel": "Valideynin telefonu",
     "getCode": "Kodu al",
     "codeResult": "Kodunuz: {code} ({percent}% endirim)",
-    "already": "Siz artıq bu mükafatı alıbsınız."
+    "already": "Siz artıq bu mükafatı alıbsınız.",
+    "starAriaLabel": "Gizlənqaç ulduzu",
+    "genericError": "Xəta baş verdi.",
+    "networkError": "Xəta baş verdi, yenidən cəhd edin."
   },
   "qalereya": {
     "title": "Kiçik ustaların\nsərgisi",
@@ -237,13 +250,16 @@
     "sentTitle": "Sorğunuz göndərildi!",
     "sentLead": "İş saatlarında sizə zəng edəcəyik ki, detalları dəqiqləşdirək.",
     "error": "Paket seçimi və telefon mütləqdir.",
-    "priceNote": "Qiymət təsdiqdə"
+    "priceNote": "Qiymət təsdiqdə",
+    "pricePlaceholder": "[QİYMƏT]"
   },
   "kampaniyalar": {
     "title": "Bazar\nmeydanı",
     "lead": "Hər çadırda bir sürpriz",
+    "passportCountry": "Plastilin şəhəri",
     "passportTitle": "Usta pasportu",
     "passportLead": "Hər masterklass = 1 möhür. 5 möhür = 1 pulsuz masterklass.",
+    "freeSessionsBadge": "{n} × pulsuz masterklass!",
     "passportNote": "Niyə ikisi birlikdə? Möhürləriniz telefon nömrənizə bağlıdır — başqasının sizin pasportunuza baxa bilməməsi üçün bron kodunuzu da təsdiq kimi istəyirik.",
     "passportCheckBtn": "Pasportuma bax",
     "bookingRefLabel": "Bron kodu",

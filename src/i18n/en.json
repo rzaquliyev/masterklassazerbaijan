@@ -9,7 +9,9 @@
     "register": "Register",
     "menuTitle": "City map",
     "menuClose": "Close",
-    "skip": "Skip to content"
+    "skip": "Skip to content",
+    "mainNav": "Main navigation",
+    "langSwitch": "Language switch"
   },
   "places": [
     { "href": "/{lang}/teqvim", "place": "Bus stop", "what": "Schedule", "color": "#6FA8DC" },
@@ -42,6 +44,7 @@
     "title": "Welcome to\nPlaydough City!",
     "lead": "Touch a house, see what's inside. Ages 4–12.",
     "noUpcoming": "No open sessions right now — new dates coming soon.",
+    "townSceneLabel": "Playdough City — choose a house",
     "roadmapTitle": "The route",
     "roadmapLead": "4 stops from home to the workshop",
     "steps": [
@@ -110,6 +113,7 @@
     "stampText": "5 stamps = 1 free masterclass",
     "addToCalendar": "Add to calendar",
     "whatsappConfirm": "Send confirmation via WhatsApp",
+    "whatsappShareTemplate": "My booking reference: {reference}",
     "waitlistTitle": "You're on the waitlist",
     "waitlistLead": "This session is full. We'll message you on WhatsApp when a spot opens up.",
     "errorConsent": "Agreeing to the terms is required",
@@ -120,6 +124,8 @@
   "teqvim": {
     "title": "Upcoming\ndepartures",
     "lead": "Pick a house, pick a date.",
+    "boardLabel": "DEPARTURES",
+    "boardLive": "LIVE",
     "allHouses": "All",
     "empty": "No departures on this route. Try another day/house.",
     "legendMany": "plenty of seats",
@@ -157,7 +163,8 @@
     "hintPress": "Press and pull",
     "hintDrag": "Pull, pull!",
     "footerNote": "It's more fun with real playdough! Check out Saturday's masterclass at the clay house →",
-    "shapes": ["Ball", "Drop", "Cube", "Egg"]
+    "shapes": ["Ball", "Drop", "Cube", "Egg"],
+    "colors": [["Orange", "#E8682A"], ["Blue", "#6FA8DC"], ["Green", "#7BC67E"], ["Yellow", "#FFC23D"], ["Pink", "#F28AA6"], ["Purple", "#9B7BD4"]]
   },
   "rengleme": {
     "title": "Coloring corner",
@@ -171,7 +178,10 @@
     "eraserLabel": "Eraser",
     "privacyNote": "Pictures aren't saved or sent anywhere. Download the one you like and print it.",
     "pictureNames": { "city": "Playdough City", "space": "Space Journey", "ocean": "Under the Sea", "buta": "Buta Pattern", "baku": "Baku at Night", "dino": "Dino Friend" },
-    "levels": { "easy": "Easy", "medium": "Medium", "hard": "Hard" }
+    "levels": { "easy": "Easy", "medium": "Medium", "hard": "Hard" },
+    "paletteLabel": "Color palette",
+    "regionLabelTemplate": "Part {n}",
+    "colors": ["Orange", "Red", "Pink", "Purple", "Blue", "Light blue", "Night", "Green", "Dark green", "Yellow", "Cream", "Brown", "Gray", "Eraser"]
   },
   "gizlenqach": {
     "counterLabel": "stars",
@@ -180,7 +190,10 @@
     "phoneLabel": "Parent's phone",
     "getCode": "Get the code",
     "codeResult": "Your code: {code} ({percent}% off)",
-    "already": "You've already claimed this reward."
+    "already": "You've already claimed this reward.",
+    "starAriaLabel": "Hide & Seek star",
+    "genericError": "Something went wrong.",
+    "networkError": "Something went wrong, please try again."
   },
   "qalereya": {
     "title": "Little masters'\nexhibit",
@@ -237,13 +250,16 @@
     "sentTitle": "Your inquiry was sent!",
     "sentLead": "We'll call you during business hours to confirm the details.",
     "error": "A package choice and phone number are required.",
-    "priceNote": "Price confirmed on contact"
+    "priceNote": "Price confirmed on contact",
+    "pricePlaceholder": "[PRICE]"
   },
   "kampaniyalar": {
     "title": "Market\nsquare",
     "lead": "A surprise in every tent",
+    "passportCountry": "Playdough City",
     "passportTitle": "Master passport",
     "passportLead": "Every masterclass = 1 stamp. 5 stamps = 1 free masterclass.",
+    "freeSessionsBadge": "{n} × free masterclass!",
     "passportNote": "Why both? Your stamps are tied to your phone number — so no one else can open your passport, we also ask for a booking reference to confirm it's you.",
     "passportCheckBtn": "Check my passport",
     "bookingRefLabel": "Booking reference",
