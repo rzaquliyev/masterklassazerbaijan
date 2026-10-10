@@ -27,4 +27,3 @@ Hər mərhələdən sonra dayan, nəticəni fayla yaz, `git commit` et — bax `
 - Dəqiq brend adı və domen (`[Studio adı]` placeholder)
 - Ünvan/rayon, WhatsApp nömrəsi, Instagram hesabı
 - Loqo/brend rəngləri (maketin rəngləri ilə davam edilir)
-- Hosting büdcəsi/seçimi

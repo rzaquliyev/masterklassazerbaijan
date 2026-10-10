@@ -110,7 +110,7 @@ Qalereya upload (EXIF/GPS təmizlənməsi daxil) Mərhələ 5-də tətbiq olundu
 
 ## 9. Hosting
 
-Açıq sual (istifadəçi: Mərhələ 7-yə qədər gözlənilə bilər). Namizədlər: Render/Railway (Postgres, ephemeral-disk riski olmadan).
+**Qərar (2026-10-10): Railway** — Postgres + persistent volume (qalereya fotoları üçün, ephemeral-disk riski olmadan). Addım-addım quraşdırma: [`docs/DEPLOY.md`](DEPLOY.md).
 
 ## 10. Açıq suallar (bloklamır)
 

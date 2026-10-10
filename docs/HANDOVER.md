@@ -33,8 +33,8 @@ Tam, yenilənən siyahı: [`docs/CONTENT-TODO.md`](CONTENT-TODO.md). Qısaca:
 
 Açıq və dürüst siyahı (BRIEF-in öz tələbinə görə):
 
-- **Hosting/production Postgres seçilməyib** — layihə kodu hazırdır (`DATABASE_URL` dəstəyi var), amma heç bir real serverdə sınanmayıb, yalnız PGlite (yerli) ilə.
-- **Backup mexanizmi qurulmayıb** (bax §2) — hosting seçimi ilə birlikdə edilməli.
+- **Hosting seçildi (Railway), amma hələ real deploy edilməyib** — layihə kodu hazırdır (`DATABASE_URL` dəstəyi var), addım-addım təlimat [`docs/DEPLOY.md`](DEPLOY.md)-dədir, lakin kod hələ yalnız PGlite (yerli) ilə sınanıb, real Postgres-də hələ yoxlanılmayıb.
+- **Backup mexanizmi qurulmayıb** (bax §2 və `docs/DEPLOY.md` §8) — Railway-ə keçəndə aktivləşdirilməlidir.
 - **E-poçt/SMS bildirişi yoxdur** — Phase 0 qərarına görə yalnız WhatsApp (`wa.me` linki) istifadə olunur, real SMS/OTP provayderi yoxdur.
 - **Onlayn ödəniş yoxdur** — yalnız məkanda ödəniş (pay-at-venue), Phase 0 qərarı.
 - **Admin UI-da hələ yoxdur:** ev (`houses`) idarəsi, FAQ (Suallar) idarəsi, endirim/referral kodu idarəsi — bunlar hələlik yalnız birbaşa DB/seed vasitəsilə dəyişdirilə bilər.
@@ -45,6 +45,6 @@ Açıq və dürüst siyahı (BRIEF-in öz tələbinə görə):
 ## 5. Növbəti addımlar (tövsiyə sırası ilə)
 
 1. **`docs/CONTENT-TODO.md`-dəki qalan məlumatları verin** (iş saatları, real qiymətlər) — bunlar ən sürətli, ən vacib addımdır.
-2. **Hosting seçin** (Render/Railway kimi, BRIEF-in təklifi) — seçiləndə mən `docs/DEPLOY.md` yazıb addım-addım köçürmədə kömək edərəm, backup mexanizmini də quraram.
-3. **Real admin hesabınızı yaradın** (`scripts/create-admin.js`, öz e-poçt/parolunuzla) və real qalereya fotolarınızı yükləyin.
+2. ~~Hosting seçin~~ ✅ **TƏSDİQLƏNDİ (2026-10-10): Railway.** Addım-addım quraşdırma, Postgres, persistent volume, ilk admin yaradılması, backup: [`docs/DEPLOY.md`](DEPLOY.md).
+3. **Real admin hesabınızı yaradın** (`docs/DEPLOY.md` §6, Railway üzərində) və real qalereya fotolarınızı yükləyin.
 4. (İxtiyari, daha sonra) Ev/FAQ/endirim kodu admin UI-ları — hazırda DB-seed ilə idarə olunur, UI-ya ehtiyac yarandıqda əlavə edilə bilər.

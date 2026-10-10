@@ -72,5 +72,9 @@ Layihəni ilk dəfə əlinə alan üçün qısa bələdçi (müştəri məlumat�
 ## Hələ görülməli işlər
 
 - [`docs/CONTENT-TODO.md`](docs/CONTENT-TODO.md): real məzmun boşluqları (iş saatları, qiymətlər, say həddləri, real fotolar)
-- Deploy sənədi (`docs/DEPLOY.md`) hələ yazılmayıb — hosting seçimi hazırda **qəsdən saxlanılıb**, istifadəçinin qərarı gözlənilir
 - Ev (`houses`)/FAQ CRUD və endirim kodu idarəsi admin UI-dan hələ yoxdur (bax `docs/ARCHITECTURE.md` §4 "hələ tətbiq olunmayıb")
+- Avtomatik backup (bax [`docs/DEPLOY.md`](docs/DEPLOY.md) §8) hələ aktivləşdirilməyib
+
+## Deploy
+
+Hosting seçildi: **Railway** (bax [`docs/DEPLOY.md`](docs/DEPLOY.md) — addım-addım quraşdırma, Postgres, persistent volume, ilk admin yaradılması, backup).
