@@ -10,14 +10,15 @@ import sharp from 'sharp';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const GALLERY_DIR = path.join(__dirname, '..', 'public', 'uploads', 'gallery');
+const TASKS_DIR = path.join(__dirname, '..', 'public', 'uploads', 'tasks');
 const MAX_WIDTH = 1600;
 
 export class UnsupportedImageError extends Error {
   constructor() { super('Şəkil formatı tanınmadı və ya fayl zədələnib. JPEG, PNG, WebP və ya HEIC sınayın.'); this.name = 'UnsupportedImageError'; }
 }
 
-export async function saveGalleryImage(buffer) {
-  await mkdir(GALLERY_DIR, { recursive: true });
+async function saveImageTo(dir, urlPrefix, buffer) {
+  await mkdir(dir, { recursive: true });
 
   let output;
   try {
@@ -31,12 +32,26 @@ export async function saveGalleryImage(buffer) {
   }
 
   const filename = `${randomUUID()}.webp`;
-  await writeFile(path.join(GALLERY_DIR, filename), output);
-  return { url: `/uploads/gallery/${filename}`, filename };
+  await writeFile(path.join(dir, filename), output);
+  return { url: `${urlPrefix}/${filename}`, filename };
+}
+
+export async function saveGalleryImage(buffer) {
+  return saveImageTo(GALLERY_DIR, '/uploads/gallery', buffer);
 }
 
 export async function deleteGalleryImage(url) {
   if (!url || !url.startsWith('/uploads/gallery/')) return;
   const filename = path.basename(url);
   await unlink(path.join(GALLERY_DIR, filename)).catch(() => {});
+}
+
+export async function saveTaskPhoto(buffer) {
+  return saveImageTo(TASKS_DIR, '/uploads/tasks', buffer);
+}
+
+export async function deleteTaskPhoto(url) {
+  if (!url || !url.startsWith('/uploads/tasks/')) return;
+  const filename = path.basename(url);
+  await unlink(path.join(TASKS_DIR, filename)).catch(() => {});
 }

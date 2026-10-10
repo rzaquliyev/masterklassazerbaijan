@@ -1,0 +1,40 @@
+{% extends "admin/layout.njk" %}
+{% block title %}Yeni tapşırıq{% endblock %}
+{% block content %}
+<h1 class="admin-h1">Yeni tapşırıq</h1>
+<div class="admin-card" style="max-width:560px;">
+  {% if errors %}<div class="admin-alert error">Formu yoxlayın — sahələrdən biri səhvdir.</div>{% endif %}
+  <form method="post" action="/admin/tapsiriqlar">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <div class="admin-field">
+      <label for="weekNumber">Həftə nömrəsi</label>
+      <input type="number" id="weekNumber" name="weekNumber" min="1" required value="{{ item.weekNumber or '' }}">
+    </div>
+    <div class="admin-field">
+      <label for="title">Tapşırıq</label>
+      <input type="text" id="title" name="title" required value="{{ item.title or '' }}" placeholder="məs. Evdəki əşyalardan robot düzəlt">
+    </div>
+    <div class="admin-field">
+      <label for="instructions">Təlimat (ixtiyari)</label>
+      <textarea id="instructions" name="instructions">{{ item.instructions or '' }}</textarea>
+    </div>
+    <div class="admin-field">
+      <label for="materials">Lazım ola bilər (vergüllə ayırın)</label>
+      <input type="text" id="materials" name="materials" value="{{ item.materials or '' }}" placeholder="karton qutu, yapışqan, rəngli kağız">
+    </div>
+    <div class="admin-field">
+      <label for="unlockDate">Açılış tarixi</label>
+      <input type="date" id="unlockDate" name="unlockDate" required value="{{ item.unlockDate or '' }}">
+    </div>
+    <div class="admin-field">
+      <label for="relatedMasterclassId">Əlaqəli masterklass (ixtiyari)</label>
+      <select id="relatedMasterclassId" name="relatedMasterclassId">
+        <option value="">— seçilməyib —</option>
+        {% for m in masterclasses %}<option value="{{ m.id }}" {{ 'selected' if item.relatedMasterclassId == m.id }}>{{ m.title }}</option>{% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="admin-btn">Yarat</button>
+    <a href="/admin/tapsiriqlar" class="admin-btn secondary">Ləğv et</a>
+  </form>
+</div>
+{% endblock %}

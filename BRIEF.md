@@ -47,6 +47,7 @@ Vizual istiqamət artıq seçilib və 11 səhifənin hamısı maket kimi hazırd
 | Oyun: Plastilin yoğur | `Yogur.dc.html` | Oyun parkının içi |
 | Oyun: Rəngləmə guşəsi | `Rengleme.dc.html` | Oyun parkının içi (6 şəkil) |
 | Kampaniyalar | `Kampaniyalar.dc.html` | Bazar meydanı |
+| Həftənin tapşırığı | `Tapsiriq.dc.html` | Elanlar lövhəsi |
 | Ad günü | `AdGunu.dc.html` | Bayram meydanı |
 | Qalereya | `Qalereya.dc.html` | Şəhər muzeyi |
 | Təlimçilər | `Telimciler.dc.html` | Şəhər sakinləri |
@@ -114,13 +115,14 @@ Maketlərdə bəzi elementlər yalnız görünüşdür: düymə heç yerə aparm
 | Təqvim | Reyslər DB-dən; yaş və gün filtrləri real data üzərində; boş gün mesajı; **gözləmə siyahısı forması işləyir** (yer açılanda bildiriş) |
 | Oyun parkı | Yaddaş oyunu (maketdə işləyir, port et); **Plastilin yoğur** (`Yogur.dc.html`, işləyir, port et: pointer events, `touch-action: none`); **Rəngləmə** (`Rengleme.dc.html`, işləyir, port et: 6 orijinal şəkil — Plastilin şəhəri, Kosmos, Dəniz altı, Buta naxışı, Bakı gecəsi, Dost dinozavr; hər hissə ayrıca `<path>`, 14 rəngli palitra + pozan, geri al, nümunə, təmizlə, irəliləyiş sayğacı; real saytda "Şəkli yüklə" PNG versiyası ver; yeni şəkilləri admin-dən əlavə etmək imkanı arzuolunandır); **Gizlənqaç** (maketdə YOXDUR — qur: saytın 5 səhifəsində gizli ulduz, tapılanlar `localStorage`-da, başlıqdakı "★ N / 5" sayğacı real, 5/5-də valideyn telefonu ilə kod alma) |
 | Kampaniyalar | Usta pasportu real bronlardan hesablanır (valideyn telefonu ilə giriş/OTP); "Dostunu gətir" kodu hər valideyn üçün unikal yaradılır, "Kopyala" düyməsi həqiqətən `navigator.clipboard` ilə kopyalayır; erkən quş qiyməti avtomatik tətbiq olunur; bütün kod qaydaları serverdə yoxlanır (bir telefon = bir kod, müddət) |
+| Həftənin tapşırığı | Tapşırıq, şəkil, material siyahısı və bitmə tarixi admin-dən (həftəlik avtomatik dəyişir; geri sayım real); "Kopyala" heşteqi `navigator.clipboard` ilə kopyalayır; admin paneldə iştirakçılar siyahısı (valideyn telefonu, Instagram linki və ya Direct/WhatsApp ilə gələn şəkil, yaş qrupu), **hər yaş qrupu üçün ayrıca qalib** seçimi, qalibin pasportuna bonus möhür; hər iştirakçıya rəqəmsal sertifikat; keçmiş qaliblər yalnız valideyn razılığı bayrağı ilə göstərilir; növbəti həftələrin kartları açılma tarixinə qədər bağlıdır; qaydalar səhifəsində "Instagram tərəfindən dəstəklənmir" bəndi |
 | Ad günü | Şam üfürmə (işləyir, port et); paket seçimi, qonaq sayğacı, tarix, telefon → **admin-ə sorğu** + təsdiq mesajı |
 | Qalereya | Fotolar admin paneldən yüklənir, **hər fotoda valideyn razılığı bayrağı**; filtrlər və lightbox (klaviatura: Esc, ← →) |
 | Təlimçilər | Admin-dən idarə; kart çevrilməsi; "Müraciət et" forması işləyir |
 | Valideyn sualları | Suallar admin-dən idarə olunur; akkordeon `aria-expanded` ilə |
 | Əlaqə | Forma backend-ə göndərilir (rate limit, spam qoruması); "Xəritədə aç" real Google Maps linki; ünvan və saatlar admin-dən |
 
-**Admin paneldə idarə olunmalı:** masterklasslar və seanslar, qiymətlər (erkən quş daxil), bronlar və gözləmə siyahısı, pasport möhürləri, endirim/dost kodları, ad günü sorğuları, qalereya (razılıq bayrağı ilə), təlimçilər, suallar, əlaqə mesajları.
+**Admin paneldə idarə olunmalı:** masterklasslar və seanslar, qiymətlər (erkən quş daxil), bronlar və gözləmə siyahısı, pasport möhürləri, endirim/dost kodları, ad günü sorğuları, həftənin tapşırıqları və qaliblər, qalereya (razılıq bayrağı ilə), təlimçilər, suallar, əlaqə mesajları.
 
 **Məzmun boşluqları:** maketlərdəki bütün `[...]` yerlərini (`[QİYMƏT]`, `[Ünvan]`, ləğv qaydası, qrup ölçüsü və s.) `docs/CONTENT-TODO.md` siyahısına yaz və məndən soruş. Uydurma.
 
@@ -165,7 +167,7 @@ Bunlardan heç biri olmamalıdır. Sonda `redesign-existing-projects` skillinin 
 | 1 | `design/` maketlərini öyrən, hər səhifənin komponent və davranış siyahısını çıxar | `docs/PAGES.md` | təsdiqləyirəm |
 | 2 | `DESIGN.md` (tokenlər, şriftlər, komponentlər, hərəkət qaydaları, qadağalar) + `docs/ARCHITECTURE.md` | 2 fayl | təsdiqləyirəm |
 | 3 | Data modeli, miqrasiyalar, bron servisi + testlər | işləyən backend nüvəsi | — |
-| 4 | Dizayn sistemi + 13 səhifə maketlərə uyğun + §5 cədvəlindəki hər element işlək | sayt | baxıram, rəy verirəm |
+| 4 | Dizayn sistemi + 14 səhifə maketlərə uyğun + §5 cədvəlindəki hər element işlək | sayt | baxıram, rəy verirəm |
 | 5 | Qeydiyyat axını + admin panel | tam funksionallıq | test edirəm |
 | 6 | Keyfiyyət: Playwright ilə 375px və 1440px ekran şəkilləri, `web-design-guidelines` auditi, `design-motion-principles` Audit rejimi, `redesign-existing-projects` ilə AI-naxış yoxlaması | `docs/QA.md` | — |
 | 7 | Düzəlişlər, sənədlər, təhvil qeydi | README, DEPLOY | — |
@@ -180,7 +182,7 @@ Sayt yalnız bunların hamısı ödənəndə hazır sayılır:
 
 - [ ] Qeydiyyat telefonda 60 saniyədən az çəkir, son yer üçün iki eyni anda bron testindən yalnız biri keçir
 - [ ] §6-dakı qadağalardan heç biri yoxdur (`docs/QA.md`-də bir-bir qeyd olunub)
-- [ ] 13 səhifənin hamısı maketlərə uyğundur, `docs/QA.md`-də hər səhifə ≥ 8/10 bal alıb
+- [ ] 14 səhifənin hamısı maketlərə uyğundur, `docs/QA.md`-də hər səhifə ≥ 8/10 bal alıb
 - [ ] §5 cədvəlindəki hər element işləyir: saytda `href="#"`, boş düymə, göndərilməyən forma, hardcode nümunə rəqəm yoxdur (grep ilə yoxla)
 - [ ] Rəngləmə portu və Gizlənqaç oyunu qurulub və test edilib, hamısı reduced-motion və klaviatura ilə yoxlanılıb
 - [ ] Bütün xarici resurslar `docs/ASSETS.md`-də lisenziyası ilə qeyd olunub, başqa saytdan kopyalanmış heç nə yoxdur

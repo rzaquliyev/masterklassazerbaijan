@@ -50,7 +50,7 @@
         <input type="hidden" name="published" value="{{ '0' if p.is_published else '1' }}">
         <button type="submit" class="admin-btn secondary small">{{ 'Gizlət' if p.is_published else 'Dərc et' }}</button>
       </form>
-      <form method="post" action="/admin/qalereya/{{ p.id }}/delete" class="admin-row-form" onsubmit="return confirm('Bu foto həmişəlik silinsin?');">
+      <form method="post" action="/admin/qalereya/{{ p.id }}/delete" class="admin-row-form" data-confirm="Bu foto həmişəlik silinsin?">
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
         <button type="submit" class="admin-btn danger small">Sil</button>
       </form>

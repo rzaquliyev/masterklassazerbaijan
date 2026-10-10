@@ -20,7 +20,7 @@
 
   {% if admin.role == 'owner' and not item.anonymized_at %}
   <form method="post" action="/admin/customers/{{ item.id }}/anonymize" style="margin-top:14px;"
-    onsubmit="return confirm('Bu müştərinin bütün şəxsi məlumatları (ad, telefon) silinəcək. Bu geri qaytarıla bilməz. Davam edilsin?');">
+    data-confirm="Bu müştərinin bütün şəxsi məlumatları (ad, telefon) silinəcək. Bu geri qaytarıla bilməz. Davam edilsin?">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     <button type="submit" class="admin-btn danger">Müştərini anonimləşdir (sil)</button>
   </form>

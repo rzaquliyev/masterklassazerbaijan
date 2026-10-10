@@ -50,6 +50,12 @@
 - **Diqqət (hosting):** fotolar hazırda yerli diskdə saxlanılır (`src/public/uploads/gallery/`) — ephemeral-disk hostingdə (məs. Render pulsuz planı) server yenidən başlayanda itə bilər. Bax `docs/ARCHITECTURE.md` §8.
 - Hələ real foto yüklənməyib (test zamanı yüklənən nümunə foto silindi) — studiya sahibi öz fotolarını yükləməlidir.
 
+## 6a. Həftənin tapşırığı — SAMPLE data (2026-10-10)
+
+- `/admin/tapsiriqlar`-da hazırda 3 SAMPLE tapşırıq var (robot, yarpaq şəkli, qapaq mozaikası) — başlıq, material siyahısı, qaliblər hamısı uydurma, "SAMPLE:" prefiksi ilə işarələnib.
+- Cari (aktiv) tapşırığın **nümunə şəkli yoxdur** — ictimai səhifədə `[FOTO] (SAMPLE)` yer tutucusu görünür. Admin paneldən real şəkil yüklənməlidir.
+- Real tapşırıqlar (həftəlik) və qaliblər admin tərəfindən əlavə olunmalıdır — bax `docs/ARCHITECTURE.md` §4.
+
 ## 7. Hələ tətbiq olunmayan (əlaqəli, amma ayrı mövzu)
 
 - Admin panel (foto yükləmə, masterklass/seans idarəsi, bron idarəsi) hələ qurulmayıb — yuxarıdakı bir çox boşluq (qiymətlər, fotolar) yalnız admin panel və ya birbaşa DB-seed vasitəsilə doldurula bilər.

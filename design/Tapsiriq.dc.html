@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<title>Həftənin tapşırığı — Elanlar lövhəsi</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&amp;family=Nunito:wght@500;700;800&amp;family=Space+Mono:wght@700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFF4E2}
+a{color:#1B2A4A}a:hover{color:#E8682A}
+@keyframes antenna{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+@keyframes blinkL{0%,100%{background:#FFC23D}50%{background:#E8682A}}
+@keyframes armWave{0%,100%{transform:rotate(10deg)}50%{transform:rotate(-30deg)}}
+@keyframes open{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.on .antenna{animation:antenna 1.6s ease-in-out infinite;transform-origin:50% 100%}
+.on .blinkL{animation:blinkL 1s steps(2) infinite}
+.on .armWave{animation:armWave 1.4s ease-in-out infinite;transform-origin:0 50%}
+.on .open{animation:open .25s ease-out both}
+button:focus-visible,a:focus-visible{outline:3px solid #E8682A;outline-offset:3px}
+</style>
+</helmet>
+<div class="{{motionClass}}" style="width: 390px; height: 2620px; box-sizing: border-box; background: #FFF4E2; color: #1B2A4A; font-family: Nunito, system-ui, sans-serif; overflow: hidden; position: relative; display: flex; flex-direction: column">
+
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px">
+    <a href="Plastilin.dc.html" style="min-height: 44px; padding: 0 14px; display: flex; align-items: center; border-radius: 16px; background: #FFFFFF; box-shadow: 0 4px 0 #EAD9BE; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; text-decoration: none">← Şəhərə</a>
+    <span style="font-family: 'Space Mono', monospace; font-weight: 700; font-size: 13px; background: #1B2A4A; color: #FFE08A; padding: 8px 12px; border-radius: 12px">HƏFTƏ #[N]</span>
+  </div>
+
+  <div style="padding: 4px 20px 0">
+    <h1 style="margin: 0; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 34px; line-height: 1">Həftənin<br>tapşırığı</h1>
+    <div style="font-size: 15px; font-weight: 700; color: #3C4B6B; margin-top: 6px">Evdə düzəlt, şəklini paylaş, pasporta möhür qazan.</div>
+  </div>
+
+  <!-- CORK BOARD -->
+  <div style="margin: 18px 12px 0; padding: 18px 14px 22px; border-radius: 30px; background: #C9925E; background-image: radial-gradient(circle at 6px 6px, rgba(0,0,0,.08) 2px, transparent 3px), radial-gradient(circle at 18px 14px, rgba(255,255,255,.08) 2px, transparent 3px); background-size: 22px 22px; box-shadow: inset 0 0 0 10px #8A5A3B, 0 8px 0 #6E4630">
+    <div style="position: relative; background: #FFFFFF; border-radius: 18px; padding: 18px 16px 18px; transform: rotate(-1.2deg); box-shadow: 0 8px 14px rgba(60,30,10,.25)">
+      <span style="position: absolute; left: 50%; top: -10px; margin-left: -11px; width: 22px; height: 22px; border-radius: 50%; background: #E8682A; box-shadow: inset -3px -4px 0 rgba(0,0,0,.2), inset 3px 3px 0 rgba(255,255,255,.35)"></span>
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <span style="font-size: 12px; font-weight: 800; letter-spacing: .06em; color: #3C4B6B">BU HƏFTƏ</span>
+        <span style="font-size: 13px; font-weight: 800; background: #FFE08A; padding: 5px 10px; border-radius: 99px">{{daysLeft}}</span>
+      </div>
+      <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 26px; line-height: 1.05; margin-top: 8px">Evdəki əşyalardan<br>robot düzəlt</div>
+
+      <!-- robot made of household items -->
+      <div style="position: relative; height: 210px; margin-top: 10px">
+        <div class="antenna" style="position: absolute; left: 50%; top: 4px; margin-left: -3px; width: 6px; height: 30px; background: #8C96A8; border-radius: 3px">
+          <span class="blinkL" style="position: absolute; left: -7px; top: -14px; width: 20px; height: 20px; border-radius: 50%; background: #FFC23D; box-shadow: inset -3px -3px 0 rgba(0,0,0,.18)"></span>
+        </div>
+        <div style="position: absolute; left: 50%; top: 32px; margin-left: -50px; width: 100px; height: 70px; border-radius: 12px; background: #BFC7D5; box-shadow: inset -6px -7px 0 rgba(0,0,0,.14), inset 6px 6px 0 rgba(255,255,255,.4)">
+          <span style="position: absolute; left: 16px; top: 18px; width: 24px; height: 24px; border-radius: 50%; background: #E8682A; box-shadow: inset 0 0 0 6px #FFFFFF"></span>
+          <span style="position: absolute; right: 16px; top: 18px; width: 24px; height: 24px; border-radius: 50%; background: #6FA8DC; box-shadow: inset 0 0 0 6px #FFFFFF"></span>
+          <span style="position: absolute; left: 30px; bottom: 10px; width: 40px; height: 8px; border-radius: 4px; background: repeating-linear-gradient(90deg,#1B2A4A 0 6px,#FFFFFF 6px 9px)"></span>
+        </div>
+        <div style="position: absolute; left: 50%; top: 108px; margin-left: -58px; width: 116px; height: 86px; border-radius: 10px; background: #E8B04A; box-shadow: inset -7px -8px 0 rgba(0,0,0,.14), inset 7px 7px 0 rgba(255,255,255,.3)">
+          <span style="position: absolute; left: 14px; top: 14px; width: 38px; height: 24px; border-radius: 6px; background: #FFFFFF; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 9px; display: flex; align-items: center; justify-content: center">QUTU</span>
+          <span style="position: absolute; right: 16px; top: 16px; width: 14px; height: 14px; border-radius: 50%; background: #E8682A"></span>
+          <span style="position: absolute; right: 36px; top: 16px; width: 14px; height: 14px; border-radius: 50%; background: #7BC67E"></span>
+          <span style="position: absolute; right: 16px; top: 40px; width: 34px; height: 14px; border-radius: 7px; background: #1B2A4A"></span>
+        </div>
+        <div class="armWave" style="position: absolute; left: calc(50% + 56px); top: 120px; width: 54px; height: 20px; border-radius: 10px; background: #FFFFFF; box-shadow: inset -3px -4px 0 rgba(0,0,0,.1), 0 0 0 2px #EAD9BE"></div>
+        <div style="position: absolute; left: calc(50% - 108px); top: 132px; width: 54px; height: 20px; border-radius: 10px; background: #FFFFFF; box-shadow: inset -3px -4px 0 rgba(0,0,0,.1), 0 0 0 2px #EAD9BE; transform: rotate(-20deg)"></div>
+        <span style="position: absolute; left: calc(50% - 40px); top: 192px; width: 24px; height: 18px; border-radius: 4px; background: #6FA8DC"></span>
+        <span style="position: absolute; left: calc(50% + 16px); top: 192px; width: 24px; height: 18px; border-radius: 4px; background: #6FA8DC"></span>
+      </div>
+
+      <div style="font-size: 14px; font-weight: 800; margin-top: 8px">Lazım ola bilər:</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px">
+        <span style="padding: 6px 10px; border-radius: 12px; background: #FFF4E2; font-size: 13px; font-weight: 800">karton qutu</span>
+        <span style="padding: 6px 10px; border-radius: 12px; background: #FFF4E2; font-size: 13px; font-weight: 800">butulka qapağı</span>
+        <span style="padding: 6px 10px; border-radius: 12px; background: #FFF4E2; font-size: 13px; font-weight: 800">kağız rulon</span>
+        <span style="padding: 6px 10px; border-radius: 12px; background: #FFF4E2; font-size: 13px; font-weight: 800">yapışqan</span>
+        <span style="padding: 6px 10px; border-radius: 12px; background: #FFF4E2; font-size: 13px; font-weight: 800">rəngli kağız</span>
+      </div>
+      <div style="font-size: 13px; font-weight: 700; color: #3C4B6B; margin-top: 10px">Qayçı və yapışqanla böyük kömək etsin.</div>
+    </div>
+  </div>
+
+  <!-- 3 STEPS -->
+  <div style="padding: 28px 16px 0">
+    <h2 style="margin: 0 0 12px 4px; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px">Necə iştirak etmək olar?</h2>
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; gap: 12px; align-items: center; background: #FFFFFF; border-radius: 20px; padding: 14px; box-shadow: 0 5px 0 #EAD9BE"><span style="min-width: 44px; height: 44px; border-radius: 50%; background: #E8682A; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px">1</span><div style="font-weight: 800; font-size: 15px">Uşaqla birlikdə düzəldin</div></div>
+      <div style="display: flex; gap: 12px; align-items: center; background: #FFFFFF; border-radius: 20px; padding: 14px; box-shadow: 0 5px 0 #EAD9BE"><span style="min-width: 44px; height: 44px; border-radius: 50%; background: #6FA8DC; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px">2</span><div style="font-weight: 800; font-size: 15px">Əsərin şəklini çəkin <span style="font-weight: 700; color: #3C4B6B">(uşağın üzü olmadan da olar)</span></div></div>
+      <div style="display: flex; gap: 12px; align-items: center; background: #FFFFFF; border-radius: 20px; padding: 14px; box-shadow: 0 5px 0 #EAD9BE"><span style="min-width: 44px; height: 44px; border-radius: 50%; background: #7BC67E; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px">3</span><div style="font-weight: 800; font-size: 15px">Instagram-da @masterklassazerbaijan-ı etiketləyin və heşteqi yazın</div></div>
+    </div>
+
+    <!-- hashtag copy -->
+    <div style="margin-top: 14px; display: flex; gap: 8px">
+      <div style="flex: 1; min-height: 54px; border-radius: 16px; background: #1B2A4A; color: #FFE08A; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 15px">#HəftəninTapşırığı</div>
+      <button onClick="{{copy}}" style="min-width: 108px; border: 0; border-radius: 16px; background: #E8682A; color: #FFFFFF; font-family: Fredoka, sans-serif; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.3)">{{copyLabel}}</button>
+    </div>
+
+    <!-- private profile help -->
+    <div style="margin-top: 12px; background: #FFFFFF; border-radius: 20px; box-shadow: 0 5px 0 #EAD9BE; overflow: hidden">
+      <button onClick="{{toggleHelp}}" aria-expanded="{{helpExp}}" style="width: 100%; min-height: 56px; border: 0; background: transparent; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px; cursor: pointer; text-align: left; font-family: Nunito, sans-serif; color: #1B2A4A">
+        <span style="font-weight: 800; font-size: 15px">Profilim bağlıdır, nə edim?</span>
+        <span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px">{{helpSign}}</span>
+      </button>
+      <sc-if value="{{helpOpen}}" hint-placeholder-val="{{ false }}">
+        <div class="open" style="padding: 0 14px 14px; font-size: 14px; font-weight: 700; line-height: 1.5; color: #3C4B6B">Bağlı profildəki postları görə bilmirik. Şəkli Instagram Direct və ya WhatsApp ilə göndərin, biz əlavə edək. Qalibin şəklini yalnız sizin razılığınızla paylaşırıq.</div>
+      </sc-if>
+    </div>
+  </div>
+
+  <!-- PRIZES -->
+  <div style="padding: 28px 16px 0">
+    <div style="background: #1B2A4A; color: #FFF4E2; border-radius: 28px; padding: 20px; box-shadow: 0 8px 0 #0F1A30">
+      <div style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 22px">Mükafatlar</div>
+      <div style="display: flex; gap: 12px; align-items: center; margin-top: 14px">
+        <span style="min-width: 48px; height: 48px; border-radius: 50%; border: 3px solid #FFC23D; color: #FFC23D; display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 11px; transform: rotate(-8deg)">BONUS</span>
+        <div><div style="font-weight: 800; font-size: 15px">Hər yaş qrupunun qalibi</div><div style="font-size: 13px; font-weight: 700; color: #C9D3E8">Usta pasportuna bonus möhür (4–6, 7–9, 10–12 ayrıca)</div></div>
+      </div>
+      <div style="display: flex; gap: 12px; align-items: center; margin-top: 12px">
+        <span style="min-width: 48px; height: 48px; border-radius: 12px; background: #FFE08A; color: #1B2A4A; display: flex; align-items: center; justify-content: center; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 20px">★</span>
+        <div><div style="font-weight: 800; font-size: 15px">Hər iştirakçı</div><div style="font-size: 13px; font-weight: 700; color: #C9D3E8">"Həftənin ustası" rəqəmsal sertifikatı</div></div>
+      </div>
+      <div style="font-size: 12px; font-weight: 700; color: #8FA0C2; margin-top: 14px; line-height: 1.5">Qaliblər bazar ertəsi elan olunur. Meyarlar: yaradıcılıq, səy, yaşa uyğunluq. Bu kampaniya Instagram tərəfindən dəstəklənmir və onunla əlaqəli deyil. [Tam qaydalar]</div>
+    </div>
+  </div>
+
+  <!-- PAST WINNERS -->
+  <div style="padding: 28px 16px 0">
+    <h2 style="margin: 0 0 12px 4px; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px">Keçən həftələrin qalibləri</h2>
+    <div style="display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px">
+      <sc-for list="{{winners}}" as="w" hint-placeholder-count="3">
+        <div style="flex: 0 0 150px; background: #FFFFFF; border-radius: 22px; padding: 10px; box-shadow: 0 5px 0 #EAD9BE">
+          <div style="height: 120px; border-radius: 16px; background: repeating-linear-gradient(45deg,#F4EEE2 0 8px,#E9E1D0 8px 16px); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #6B5B45">[FOTO]</div>
+          <div style="font-family: Fredoka, sans-serif; font-weight: 600; font-size: 14px; margin-top: 8px">{{w.task}}</div>
+          <div style="font-size: 12px; font-weight: 800; color: #3C4B6B">[Ad], {{w.age}} · Həftə {{w.week}}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- NEXT TASKS (locked) -->
+  <div style="padding: 22px 16px 0">
+    <h2 style="margin: 0 0 12px 4px; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 24px">Növbəti həftələr</h2>
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+      <div style="aspect-ratio: 1 / 1; border-radius: 20px; background: #6FA8DC; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; box-shadow: inset -5px -6px 0 rgba(0,0,0,.14), inset 5px 5px 0 rgba(255,255,255,.3)"><span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 26px; color: #FFFFFF">?</span><span style="font-size: 11px; font-weight: 800">[gün] açılır</span></div>
+      <div style="aspect-ratio: 1 / 1; border-radius: 20px; background: #7BC67E; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; box-shadow: inset -5px -6px 0 rgba(0,0,0,.14), inset 5px 5px 0 rgba(255,255,255,.3)"><span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 26px; color: #FFFFFF">?</span><span style="font-size: 11px; font-weight: 800">[gün] açılır</span></div>
+      <div style="aspect-ratio: 1 / 1; border-radius: 20px; background: #F28AA6; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; box-shadow: inset -5px -6px 0 rgba(0,0,0,.14), inset 5px 5px 0 rgba(255,255,255,.3)"><span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 26px; color: #FFFFFF">?</span><span style="font-size: 11px; font-weight: 800">[gün] açılır</span></div>
+    </div>
+  </div>
+
+  <div style="flex: 1"></div>
+  <a href="Teqvim.dc.html" style="margin: 26px 16px 18px; text-decoration: none; background: #E8682A; color: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; justify-content: space-between; align-items: center; box-shadow: inset -5px -6px 0 rgba(0,0,0,.16), inset 5px 5px 0 rgba(255,255,255,.3), 0 6px 0 #B44E1D">
+    <span><span style="display: block; font-family: Fredoka, sans-serif; font-weight: 700; font-size: 18px">Robotdan xoşu gəldi?</span><span style="display: block; font-size: 13px; font-weight: 800">Elm evində real konstruktor masterklassı</span></span>
+    <span style="font-family: Fredoka, sans-serif; font-weight: 700; font-size: 22px">→</span>
+  </a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":2620}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { copied: false, help: false }; }
+  componentWillUnmount() { clearTimeout(this.t); }
+  renderVals() {
+    const motion = this.props.motion ?? true;
+    const st = this.state;
+    const now = new Date();
+    const dow = now.getDay();
+    const left = dow === 0 ? 0 : 7 - dow;
+    const daysLeft = left === 0 ? 'Bu gün son gündür' : left + ' gün qalıb';
+    const copy = () => {
+      try { navigator.clipboard && navigator.clipboard.writeText('#HəftəninTapşırığı @masterklassazerbaijan'); } catch (_) {}
+      this.setState({ copied: true }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ copied: false }), 1600);
+    };
+    const winners = [
+      { task: 'Kağız qayıq', age: '6 yaş', week: '[N-1]' },
+      { task: 'Yarpaqdan şəkil', age: '8 yaş', week: '[N-1]' },
+      { task: 'Qapaqdan mozaika', age: '11 yaş', week: '[N-2]' }
+    ];
+    return {
+      motionClass: motion ? 'on' : '', daysLeft, copy, winners,
+      copyLabel: st.copied ? 'Kopyalandı ✓' : 'Kopyala',
+      toggleHelp: () => this.setState({ help: !st.help }),
+      helpOpen: st.help, helpExp: st.help ? 'true' : 'false', helpSign: st.help ? '−' : '+'
+    };
+  }
+}
+</script>
+</body>
+</html>

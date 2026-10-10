@@ -1,0 +1,21 @@
+{% extends "layouts/base.njk" %}
+
+{% block title %}{{ t.sertifikat.title }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.sertifikat.congratsText }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/sertifikat.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<section class="container" style="padding-top:28px; padding-bottom:30px;">
+  <div class="cert-card">
+    {% if participant.is_winner %}<span class="cert-ribbon">{{ t.sertifikat.winnerBadge }}</span>{% endif %}
+    <div class="cert-badge">★</div>
+    <div class="cert-eyebrow">{{ t.sertifikat.badge }}</div>
+    <div class="cert-name">{{ participant.child_label or '—' }}</div>
+    <div class="cert-congrats">{{ t.sertifikat.congratsText }}</div>
+    <div class="cert-row"><span>{{ t.sertifikat.taskLabel }}</span><span>{{ participant.task_title }}</span></div>
+    <div class="cert-row"><span>{{ t.sertifikat.weekLabel }}</span><span>#{{ participant.week_number }}</span></div>
+    <div class="cert-row"><span>{{ t.sertifikat.dateLabel }}</span><span>{{ participant.created_at | formatDateOnlyAz }}</span></div>
+  </div>
+  <a class="back-link" style="margin-top:18px; display:inline-flex;" href="/{{ lang }}/tapsiriq">{{ t.sertifikat.backCta }}</a>
+</section>
+{% endblock %}

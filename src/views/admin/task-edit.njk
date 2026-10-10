@@ -1,0 +1,138 @@
+{% extends "admin/layout.njk" %}
+{% block title %}{{ item.title }}{% endblock %}
+{% block content %}
+<h1 class="admin-h1">#{{ item.week_number }} — {{ item.title }}</h1>
+
+<div class="admin-card" style="max-width:560px;">
+  <h2 class="admin-h2">Məlumatlar</h2>
+  {% if errors %}<div class="admin-alert error">Formu yoxlayın — sahələrdən biri səhvdir.</div>{% endif %}
+  <form method="post" action="/admin/tapsiriqlar/{{ item.id }}">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <div class="admin-field">
+      <label for="weekNumber">Həftə nömrəsi</label>
+      <input type="number" id="weekNumber" name="weekNumber" min="1" required value="{{ item.week_number }}">
+    </div>
+    <div class="admin-field">
+      <label for="title">Tapşırıq</label>
+      <input type="text" id="title" name="title" required value="{{ item.title }}">
+    </div>
+    <div class="admin-field">
+      <label for="instructions">Təlimat (ixtiyari)</label>
+      <textarea id="instructions" name="instructions">{{ item.instructions or '' }}</textarea>
+    </div>
+    <div class="admin-field">
+      <label for="materials">Lazım ola bilər (vergüllə ayırın)</label>
+      <input type="text" id="materials" name="materials" value="{{ item.materials if item.materials is string else (item.materials | join(', ') if item.materials else '') }}">
+    </div>
+    <div class="admin-field">
+      <label for="unlockDate">Açılış tarixi</label>
+      <input type="date" id="unlockDate" name="unlockDate" required value="{{ item.unlock_date | isoDate if item.unlock_date else item.unlockDate }}">
+    </div>
+    <div class="admin-field">
+      <label for="relatedMasterclassId">Əlaqəli masterklass (ixtiyari)</label>
+      <select id="relatedMasterclassId" name="relatedMasterclassId">
+        <option value="">— seçilməyib —</option>
+        {% for m in masterclasses %}<option value="{{ m.id }}" {{ 'selected' if item.related_masterclass_id == m.id }}>{{ m.title }}</option>{% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="admin-btn">Yadda saxla</button>
+  </form>
+</div>
+
+<div class="admin-card" style="max-width:480px;">
+  <h2 class="admin-h2">Nümunə şəkil</h2>
+  {% if uploadError == 'format' %}<div class="admin-alert error">Şəkil formatı tanınmadı. JPEG, PNG, WebP və ya HEIC sınayın.</div>{% endif %}
+  {% if uploadError == 'upload' %}<div class="admin-alert error">Fayl çox böyükdür (maks. 15MB).</div>{% endif %}
+  {% if item.reference_image_url %}<img src="{{ item.reference_image_url }}" alt="" style="width:100%; max-width:220px; border-radius:16px; display:block; margin-bottom:10px;">{% endif %}
+  <form method="post" action="/admin/tapsiriqlar/{{ item.id }}/reference-image" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <div class="admin-field">
+      <label for="photo">Şəkil (nümunə/örnək, ictimai səhifədə göstərilir)</label>
+      <input type="file" id="photo" name="photo" accept="image/*" required>
+    </div>
+    <button type="submit" class="admin-btn">Yüklə</button>
+  </form>
+</div>
+
+<div class="admin-card">
+  <h2 class="admin-h2">İştirakçılar</h2>
+  <div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead><tr><th>Uşaq</th><th>Yaş qrupu</th><th>Valideyn</th><th>Instagram</th><th>Şəkil</th><th>Qalib</th><th>İctimai razılıq</th><th></th></tr></thead>
+    <tbody>
+      {% for p in participants %}
+      <tr>
+        <td>{{ p.child_label or '—' }}</td>
+        <td class="admin-td-tight">{{ p.age_group }}</td>
+        <td class="admin-td-tight">{{ p.parent_name or '—' }}<br><span style="color:var(--night-2); font-size:.78rem;">{{ p.phone_e164 or '' }}</span></td>
+        <td class="admin-td-tight">{{ p.instagram_handle or '—' }}</td>
+        <td class="admin-td-tight">{% if p.photo_url %}<img src="{{ p.photo_url }}" alt="" style="width:48px; height:48px; border-radius:10px; object-fit:cover; display:block;">{% else %}—{% endif %}</td>
+        <td class="admin-td-tight">
+          <form method="post" action="/admin/tapsiriqlar/{{ item.id }}/participants/{{ p.id }}/winner" class="admin-row-form">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <input type="hidden" name="winner" value="{{ '0' if p.is_winner else '1' }}">
+            <button type="submit" class="admin-btn {{ 'secondary' if p.is_winner else '' }} small">{{ '★ Qalib' if p.is_winner else 'Qalib et' }}</button>
+          </form>
+        </td>
+        <td class="admin-td-tight">
+          <form method="post" action="/admin/tapsiriqlar/{{ item.id }}/participants/{{ p.id }}/consent" class="admin-row-form">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <input type="hidden" name="consent" value="{{ '0' if p.consent_public else '1' }}">
+            <button type="submit" class="admin-btn secondary small">{{ 'Razılıq var' if p.consent_public else 'Razılıq yoxdur' }}</button>
+          </form>
+        </td>
+        <td class="admin-td-tight">
+          <a href="/az/tapsiriq/sertifikat/{{ p.id }}" class="admin-btn secondary small" target="_blank" rel="noopener">Sertifikat</a>
+          <form method="post" action="/admin/tapsiriqlar/{{ item.id }}/participants/{{ p.id }}/delete" class="admin-row-form" data-confirm="Bu iştirakçı silinsin?">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <button type="submit" class="admin-btn danger small">Sil</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="8">Hələ iştirakçı yoxdur.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div class="admin-card" style="max-width:480px;">
+  <h2 class="admin-h2">İştirakçı əlavə et</h2>
+  {% if uploadError == 'phone' %}<div class="admin-alert error">Telefon nömrəsi düzgün formatda deyil.</div>{% endif %}
+  {% if uploadError == 'form' %}<div class="admin-alert error">Formu yoxlayın.</div>{% endif %}
+  <p style="font-size:.82rem; color:var(--night-2); margin-top:-6px;">Instagram Direct/WhatsApp ilə gələn iştirakçını burada əl ilə qeyd edin.</p>
+  <form method="post" action="/admin/tapsiriqlar/{{ item.id }}/participants" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <div class="admin-field">
+      <label for="phone">Valideynin telefonu</label>
+      <input type="tel" id="phone" name="phone" required placeholder="+994 __ ___ __ __">
+    </div>
+    <div class="admin-field">
+      <label for="ageGroup">Yaş qrupu</label>
+      <select id="ageGroup" name="ageGroup" required>
+        <option value="4-6">4–6</option>
+        <option value="7-9">7–9</option>
+        <option value="10-12">10–12</option>
+      </select>
+    </div>
+    <div class="admin-field">
+      <label for="childLabel">Etiket (tam ad YOX — məs. "6 yaşlı Aysu")</label>
+      <input type="text" id="childLabel" name="childLabel" maxlength="80">
+    </div>
+    <div class="admin-field">
+      <label for="instagramHandle">Instagram (ixtiyari)</label>
+      <input type="text" id="instagramHandle" name="instagramHandle" maxlength="80" placeholder="@...">
+    </div>
+    <div class="admin-field">
+      <label for="participantPhoto">Şəkil (ixtiyari)</label>
+      <input type="file" id="participantPhoto" name="photo" accept="image/*">
+    </div>
+    <div class="admin-field" style="display:flex; align-items:center; gap:8px;">
+      <input type="checkbox" id="consentPublic" name="consentPublic" style="width:auto; min-height:auto;">
+      <label for="consentPublic" style="margin:0;">Valideyn şəklin/addan ictimai göstərilməsinə razıdır</label>
+    </div>
+    <button type="submit" class="admin-btn">Əlavə et</button>
+  </form>
+</div>
+{% endblock %}

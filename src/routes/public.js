@@ -7,6 +7,9 @@ import {
 import {
   listPublishedGalleryPhotos, listFaqByTab, insertInquiry, getLoyaltyByPhoneAndBookingCode,
 } from '../repositories/content.js';
+import {
+  getCurrentWeeklyTask, listUpcomingWeeklyTasks, listPastTaskWinners, getTaskParticipantPublic,
+} from '../repositories/tasks.js';
 import { getBookingWithDetails } from '../repositories/bookings.js';
 import { reserveSeat, SessionNotFoundError } from '../services/booking.js';
 import { getOrCreateReferralCode } from '../services/codes.js';
@@ -207,6 +210,29 @@ export function createPublicRouter(db) {
   router.get('/oyun-parki/yogur', (req, res) => res.render('yogur.njk', {}));
   router.get('/oyun-parki/pizza', (req, res) => res.render('pizza.njk', {}));
   router.get('/oyun-parki/rengleme', (req, res) => res.render('rengleme.njk', {}));
+
+  router.get('/tapsiriq', async (req, res) => {
+    const current = await getCurrentWeeklyTask(db);
+    const DAY_MS = 86_400_000;
+    let daysLeft = null;
+    if (current) {
+      const diffDays = Math.floor((Date.now() - new Date(current.unlock_date).getTime()) / DAY_MS);
+      daysLeft = Math.max(0, 7 - diffDays);
+    }
+    const upcomingRaw = await listUpcomingWeeklyTasks(db);
+    const upcoming = upcomingRaw.map((t) => ({
+      ...t,
+      daysUntil: Math.max(1, Math.ceil((new Date(t.unlock_date).getTime() - Date.now()) / DAY_MS)),
+    }));
+    const winners = await listPastTaskWinners(db, 6);
+    res.render('tapsiriq.njk', { current, daysLeft, upcoming, winners });
+  });
+
+  router.get('/tapsiriq/sertifikat/:id', async (req, res) => {
+    const participant = await getTaskParticipantPublic(db, req.params.id);
+    if (!participant) return render404(req, res);
+    res.render('sertifikat.njk', { participant });
+  });
 
   router.get('/mexfilik', (req, res) => res.render('mexfilik.njk', {}));
 

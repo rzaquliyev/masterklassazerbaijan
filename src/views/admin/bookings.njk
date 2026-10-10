@@ -45,7 +45,7 @@
         <td class="admin-td-tight">
           <div style="display:flex; gap:6px;">
           {% if b.status in ['pending','confirmed','waitlist'] %}
-          <form method="post" action="/admin/bookings/{{ b.id }}/status" class="admin-row-form" onsubmit="return confirm('Bu bronu ləğv etmək istədiyinizə əminsiniz?');">
+          <form method="post" action="/admin/bookings/{{ b.id }}/status" class="admin-row-form" data-confirm="Bu bronu ləğv etmək istədiyinizə əminsiniz?">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
             <input type="hidden" name="status" value="cancelled">
             <button type="submit" class="admin-btn danger small">Ləğv et</button>

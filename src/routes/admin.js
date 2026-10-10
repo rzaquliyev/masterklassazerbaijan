@@ -5,10 +5,13 @@ import { attachAdminSession, requireAdmin, requireCsrf } from '../middleware/adm
 import { SESSION_COOKIE, createAdminSession, destroyAdminSession } from '../lib/adminSession.js';
 import { serializeCookie } from '../lib/cookies.js';
 import { checkRateLimit } from '../lib/rateLimit.js';
-import { saveGalleryImage, deleteGalleryImage, UnsupportedImageError } from '../lib/imageUpload.js';
+import { saveGalleryImage, deleteGalleryImage, saveTaskPhoto, deleteTaskPhoto, UnsupportedImageError } from '../lib/imageUpload.js';
 import { listHouses } from '../repositories/masterclasses.js';
 import { cancelBooking, BookingNotCancellableError, BookingNotFoundError } from '../services/booking.js';
 import { listBookingsByCustomer } from '../repositories/bookings.js';
+import { findOrCreateCustomer } from '../repositories/customers.js';
+import { addStamp } from '../repositories/loyalty.js';
+import { normalizePhoneAz, InvalidPhoneError } from '../lib/phone.js';
 import {
   dashboardStats, listUpcomingSessionsAdmin,
   listMasterclassesAdmin, getMasterclassAdmin, createMasterclass, updateMasterclass, setMasterclassPublished,
@@ -17,10 +20,15 @@ import {
   listCustomersAdmin, getCustomerAdmin, updateCustomerNotes, anonymizeCustomer,
   listInquiriesAdmin, updateInquiryStatus,
   listGalleryPhotosAdmin, getGalleryPhotoAdmin, insertGalleryPhoto, setGalleryPhotoPublished, deleteGalleryPhotoRow,
+  listWeeklyTasksAdmin, getWeeklyTaskAdmin, createWeeklyTask, updateWeeklyTask, setWeeklyTaskReferenceImage, setWeeklyTaskPublished,
+  listTaskParticipantsAdmin, insertTaskParticipant, getTaskParticipantAdmin, setTaskParticipantWinner, setTaskParticipantConsent, deleteTaskParticipantRow,
   listAdminUsers, createAdminUserRecord, findAdminUserByEmail,
   insertAuditLog, listAuditLog,
 } from '../repositories/admin.js';
-import { loginSchema, masterclassSchema, sessionSchema, notesSchema, createAdminUserSchema, galleryUploadSchema } from '../schemas/admin.js';
+import {
+  loginSchema, masterclassSchema, sessionSchema, notesSchema, createAdminUserSchema, galleryUploadSchema,
+  weeklyTaskSchema, taskParticipantSchema,
+} from '../schemas/admin.js';
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 15 * 1024 * 1024 } });
 
@@ -333,6 +341,144 @@ export function createAdminRouter(db) {
     await deleteGalleryImage(photo.url);
     await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'gallery.delete', targetTable: 'gallery_photos', targetId: req.params.id });
     res.redirect(302, '/admin/qalereya');
+  });
+
+  // ---------- Həftənin tapşırığı ----------
+  router.get('/tapsiriqlar', requireAdmin(), async (req, res) => {
+    const list = await listWeeklyTasksAdmin(db);
+    res.render('admin/tasks.njk', renderLocals(req, { list }));
+  });
+
+  router.get('/tapsiriqlar/new', requireAdmin(), async (req, res) => {
+    const masterclasses = await listMasterclassesAdmin(db);
+    res.render('admin/task-form.njk', renderLocals(req, { item: null, masterclasses, errors: null }));
+  });
+
+  router.post('/tapsiriqlar', requireAdmin(), requireCsrf, async (req, res) => {
+    const parsed = weeklyTaskSchema.safeParse(req.body);
+    if (!parsed.success) {
+      const masterclasses = await listMasterclassesAdmin(db);
+      return res.status(400).render('admin/task-form.njk', renderLocals(req, { item: req.body, masterclasses, errors: parsed.error.flatten() }));
+    }
+    const materials = parsed.data.materials ? parsed.data.materials.split(',').map((s) => s.trim()).filter(Boolean) : [];
+    const created = await createWeeklyTask(db, { ...parsed.data, materials });
+    await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'task.create', targetTable: 'weekly_tasks', targetId: created.id });
+    res.redirect(302, `/admin/tapsiriqlar/${created.id}`);
+  });
+
+  router.get('/tapsiriqlar/:id', requireAdmin(), async (req, res) => {
+    const item = await getWeeklyTaskAdmin(db, req.params.id);
+    if (!item) return res.status(404).send('Tapılmadı');
+    const [masterclasses, participants] = await Promise.all([
+      listMasterclassesAdmin(db), listTaskParticipantsAdmin(db, item.id),
+    ]);
+    res.render('admin/task-edit.njk', renderLocals(req, {
+      item, masterclasses, participants, errors: null, uploadError: req.query.error || null,
+    }));
+  });
+
+  router.post('/tapsiriqlar/:id', requireAdmin(), requireCsrf, async (req, res) => {
+    const parsed = weeklyTaskSchema.safeParse(req.body);
+    const masterclasses = await listMasterclassesAdmin(db);
+    if (!parsed.success) {
+      const participants = await listTaskParticipantsAdmin(db, req.params.id);
+      return res.status(400).render('admin/task-edit.njk', renderLocals(req, {
+        item: { id: req.params.id, ...req.body }, masterclasses, participants, errors: parsed.error.flatten(), uploadError: null,
+      }));
+    }
+    const materials = parsed.data.materials ? parsed.data.materials.split(',').map((s) => s.trim()).filter(Boolean) : [];
+    const updated = await updateWeeklyTask(db, req.params.id, { ...parsed.data, materials });
+    if (!updated) return res.status(404).send('Tapılmadı');
+    await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'task.update', targetTable: 'weekly_tasks', targetId: updated.id });
+    res.redirect(302, `/admin/tapsiriqlar/${updated.id}`);
+  });
+
+  router.post('/tapsiriqlar/:id/reference-image', requireAdmin(), (req, res, next) => {
+    upload.single('photo')(req, res, (err) => {
+      if (err) return res.redirect(302, `/admin/tapsiriqlar/${req.params.id}?error=upload`);
+      next();
+    });
+  }, requireCsrf, async (req, res) => {
+    if (!req.file) return res.redirect(302, `/admin/tapsiriqlar/${req.params.id}?error=form`);
+    try {
+      const { url } = await saveTaskPhoto(req.file.buffer);
+      await setWeeklyTaskReferenceImage(db, req.params.id, url);
+      await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'task.reference_image', targetTable: 'weekly_tasks', targetId: req.params.id });
+      res.redirect(302, `/admin/tapsiriqlar/${req.params.id}`);
+    } catch (err) {
+      if (err instanceof UnsupportedImageError) return res.redirect(302, `/admin/tapsiriqlar/${req.params.id}?error=format`);
+      throw err;
+    }
+  });
+
+  router.post('/tapsiriqlar/:id/publish', requireAdmin(), requireCsrf, async (req, res) => {
+    const published = req.body.published === '1';
+    const updated = await setWeeklyTaskPublished(db, req.params.id, published);
+    if (!updated) return res.status(404).send('Tapılmadı');
+    await insertAuditLog(db, {
+      adminUserId: req.adminSession.adminUser.id,
+      action: published ? 'task.publish' : 'task.unpublish',
+      targetTable: 'weekly_tasks', targetId: updated.id,
+    });
+    res.redirect(302, req.get('Referer') || '/admin/tapsiriqlar');
+  });
+
+  router.post('/tapsiriqlar/:id/participants', requireAdmin(), (req, res, next) => {
+    upload.single('photo')(req, res, (err) => {
+      if (err) return res.redirect(302, `/admin/tapsiriqlar/${req.params.id}?error=upload`);
+      next();
+    });
+  }, requireCsrf, async (req, res) => {
+    const parsed = taskParticipantSchema.safeParse(req.body);
+    if (!parsed.success) return res.redirect(302, `/admin/tapsiriqlar/${req.params.id}?error=form`);
+    try {
+      const phoneE164 = normalizePhoneAz(parsed.data.phone);
+      const customer = await findOrCreateCustomer(db, { phoneE164, fullName: parsed.data.childLabel || 'Valideyn', marketingConsent: false });
+      let photoUrl = null;
+      if (req.file) {
+        try { photoUrl = (await saveTaskPhoto(req.file.buffer)).url; }
+        catch (err) { if (!(err instanceof UnsupportedImageError)) throw err; return res.redirect(302, `/admin/tapsiriqlar/${req.params.id}?error=format`); }
+      }
+      const created = await insertTaskParticipant(db, {
+        taskId: req.params.id, customerId: customer.id, ageGroup: parsed.data.ageGroup,
+        childLabel: parsed.data.childLabel, instagramHandle: parsed.data.instagramHandle,
+        photoUrl, consentPublic: parsed.data.consentPublic === 'on',
+      });
+      await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'task.participant.add', targetTable: 'task_participants', targetId: created.id });
+      res.redirect(302, `/admin/tapsiriqlar/${req.params.id}`);
+    } catch (err) {
+      if (err instanceof InvalidPhoneError) return res.redirect(302, `/admin/tapsiriqlar/${req.params.id}?error=phone`);
+      throw err;
+    }
+  });
+
+  router.post('/tapsiriqlar/:taskId/participants/:id/winner', requireAdmin(), requireCsrf, async (req, res) => {
+    const makeWinner = req.body.winner === '1';
+    const updated = await setTaskParticipantWinner(db, req.params.id, makeWinner);
+    if (!updated) return res.status(404).send('Tapılmadı');
+    if (makeWinner && updated.customer_id) await addStamp(db, updated.customer_id);
+    await insertAuditLog(db, {
+      adminUserId: req.adminSession.adminUser.id,
+      action: makeWinner ? 'task.participant.winner' : 'task.participant.unwinner',
+      targetTable: 'task_participants', targetId: updated.id,
+    });
+    res.redirect(302, `/admin/tapsiriqlar/${req.params.taskId}`);
+  });
+
+  router.post('/tapsiriqlar/:taskId/participants/:id/consent', requireAdmin(), requireCsrf, async (req, res) => {
+    const consent = req.body.consent === '1';
+    const updated = await setTaskParticipantConsent(db, req.params.id, consent);
+    if (!updated) return res.status(404).send('Tapılmadı');
+    res.redirect(302, `/admin/tapsiriqlar/${req.params.taskId}`);
+  });
+
+  router.post('/tapsiriqlar/:taskId/participants/:id/delete', requireAdmin(), requireCsrf, async (req, res) => {
+    const participant = await getTaskParticipantAdmin(db, req.params.id);
+    if (!participant) return res.status(404).send('Tapılmadı');
+    await deleteTaskParticipantRow(db, req.params.id);
+    if (participant.photo_url) await deleteTaskPhoto(participant.photo_url);
+    await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'task.participant.delete', targetTable: 'task_participants', targetId: req.params.id });
+    res.redirect(302, `/admin/tapsiriqlar/${req.params.taskId}`);
   });
 
   // ---------- Export (yalnız owner) ----------

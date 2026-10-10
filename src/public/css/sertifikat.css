@@ -1,0 +1,18 @@
+.cert-card{
+  position:relative; max-width:420px; margin:0 auto; background:var(--white); border-radius:28px; padding:32px 24px;
+  text-align:center; box-shadow:0 10px 0 var(--card-shadow);
+  border:3px solid var(--sun);
+}
+.cert-ribbon{
+  position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:var(--orange); color:var(--white);
+  font-family:var(--font-display); font-weight:700; font-size:.8rem; padding:6px 16px; border-radius:999px;
+  box-shadow:0 4px 0 var(--orange-deep);
+}
+.cert-badge{
+  width:64px; height:64px; margin:8px auto 0; border-radius:50%; background:var(--butter); color:var(--night);
+  display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:1.8rem;
+}
+.cert-eyebrow{ margin-top:14px; font-size:.78rem; font-weight:800; letter-spacing:.08em; color:var(--night-2); }
+.cert-name{ margin-top:6px; font-family:var(--font-display); font-weight:700; font-size:1.6rem; }
+.cert-congrats{ margin-top:8px; font-size:.9rem; font-weight:700; color:var(--night-2); }
+.cert-row{ display:flex; justify-content:space-between; font-size:.85rem; font-weight:800; border-top:1px dashed var(--card-shadow); padding-top:10px; margin-top:14px; }

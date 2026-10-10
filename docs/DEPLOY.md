@@ -26,15 +26,16 @@ git push -u origin master
 
 **Gotcha (canlı təcrübədən):** `DATABASE_URL` əlavə olunmadan/tətbiq olunmadan server işə düşərsə, kod avtomatik **PGlite**-ə (WASM-əsaslı, yaddaş tələb edən ehtiyat Postgres) keçir — bu, Railway-in konteyner yaddaş limitini dərhal aşıb prosesi "Killed" statusu ilə öldürür, sonsuz crash-loop yaranır (loglarda stack trace YOXDUR, sadəcə "Killed" sözü görünür — bu, OOM kill əlamətidir). Server "Killed" ilə dönə-dönə crash edirsə, ilk yoxlanacaq şey budur.
 
-## 4. Persistent volume (qalereya fotoları üçün)
+## 4. Persistent volume (yüklənmiş fotolar üçün)
 
 **Qeyd:** "Settings → Volumes" bəzi Railway hesablarında/UI versiyalarında görünmür. İşləyən üsul — əsas kanvas görünüşü:
 
 1. Əsas kanvas görünüşünə qayıdın (layihənin bütün servislərini bir yerdə gördüyünüz yer)
 2. Boş yerə sağ-klikləyin və ya sol kənardakı **"+"** düyməsinə basın → **"Volume"** seçin
 3. Yaranan volume node-unu sürükləyib `masterklassazerbaijan` servisinin üzərinə buraxın (bağlamaq üçün) — eynən Postgres-in öz volume-unun bağlandığı kimi
-4. Onun ayarlarında **Mount Path:** `/app/src/public/uploads/gallery`
-   (Railway-in Nixpacks build-i repo-nu `/app`-a qoyur; `src/lib/imageUpload.js`-dəki `GALLERY_DIR` məhz bu yola yazır/oxuyur.)
+4. Onun ayarlarında **Mount Path:** `/app/src/public/uploads`
+   (Railway-in Nixpacks build-i repo-nu `/app`-a qoyur; bu yol `uploads/gallery` — `src/lib/imageUpload.js`-dəki `GALLERY_DIR` — VƏ `uploads/tasks` — Həftənin tapşırığı nümunə/iştirakçı şəkilləri — hər ikisini əhatə edir, ayrı-ayrı volume lazım deyil.
+   **Diqqət:** ilk quraşdırmada (2026-10-10) volume səhvən yalnız `uploads/gallery`-ə bağlanmışdı — `uploads/tasks` indi əlavə olunan funksiya olduğu üçün, Railway-də mövcud volume-un Mount Path-ını `/app/src/public/uploads`-a yeniləmək (və ya `uploads/tasks` üçün ikinci volume əlavə etmək) lazımdır, əks halda tapşırıq şəkilləri hər deploy-da itəcək.)
 5. Bundan sonra server yenidən başlasa (deploy, restart) belə, yüklənmiş fotolar **silinmir**.
 
 ## 5. Mühit dəyişənləri (Variables)

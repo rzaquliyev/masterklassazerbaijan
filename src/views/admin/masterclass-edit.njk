@@ -62,7 +62,7 @@
       {% if s.status == 'scheduled' %}
       <tr>
         <td colspan="7" style="padding:0 10px 10px;">
-          <form method="post" action="/admin/sessions/{{ s.id }}/cancel" onsubmit="return confirm('Bu seansı ləğv etmək istədiyinizə əminsiniz?');">
+          <form method="post" action="/admin/sessions/{{ s.id }}/cancel" data-confirm="Bu seansı ləğv etmək istədiyinizə əminsiniz?">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
             <input type="hidden" name="masterclassId" value="{{ item.id }}">
             <button type="submit" class="admin-btn danger small">Seansı ləğv et</button>

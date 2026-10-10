@@ -39,3 +39,21 @@ export const galleryUploadSchema = z.object({
   // BRIEF: razılıq bayrağı məcburi sahədir — işarələnməyibsə, foto heç saxlanmır.
   consent: z.literal('on', { errorMap: () => ({ message: 'Valideyn razılığı qeyd olunmadan foto yüklənə bilməz' }) }),
 });
+
+export const weeklyTaskSchema = z.object({
+  weekNumber: z.coerce.number().int().min(1).max(999),
+  title: z.string().trim().min(2).max(160),
+  instructions: z.string().trim().max(2000).optional().or(z.literal('')),
+  // Admin formunda vergüllə ayrılmış sahə kimi doldurulur, routda array-ə çevrilir.
+  materials: z.string().trim().max(500).optional().or(z.literal('')),
+  unlockDate: z.string().min(1),
+  relatedMasterclassId: z.string().uuid().optional().or(z.literal('')),
+});
+
+export const taskParticipantSchema = z.object({
+  phone: z.string().trim().min(5).max(30),
+  ageGroup: z.enum(['4-6', '7-9', '10-12']),
+  childLabel: z.string().trim().max(80).optional().or(z.literal('')),
+  instagramHandle: z.string().trim().max(80).optional().or(z.literal('')),
+  consentPublic: z.literal('on').optional(),
+});

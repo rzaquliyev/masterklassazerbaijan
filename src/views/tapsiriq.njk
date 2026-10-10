@@ -1,0 +1,144 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block title %}{{ t.tapsiriq.title | replace('\n',' ') }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.tapsiriq.lead }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/tapsiriq.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<section class="container page-head">
+  {% if current %}<span class="chip-solid" style="background:var(--night); color:var(--butter); float:right;">{{ t.tapsiriq.weekBadgeTemplate | replace('{n}', current.week_number) }}</span>{% endif %}
+  <h1 style="white-space:pre-line;">{{ t.tapsiriq.title }}</h1>
+  <p class="page-lead">{{ t.tapsiriq.lead }}</p>
+</section>
+
+{% if current %}
+<section class="container" style="margin-top:18px;">
+  <div class="cork-board">
+    <div class="cork-card">
+      <span class="cork-pin" aria-hidden="true"></span>
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:.76rem; font-weight:800; letter-spacing:.06em; color:var(--night-2);">{{ t.tapsiriq.boardLabel }}</span>
+        <span class="chip-solid" style="background:var(--butter);">{{ (t.tapsiriq.daysLeftTemplate | replace('{n}', daysLeft)) if daysLeft > 0 else t.tapsiriq.daysLeftToday }}</span>
+      </div>
+      <div style="font-family:var(--font-display); font-weight:700; font-size:1.5rem; line-height:1.1; margin-top:8px;">{{ current.title }}</div>
+
+      {% if current.reference_image_url %}
+      <img src="{{ current.reference_image_url }}" alt="{{ current.title }}" style="width:100%; border-radius:16px; margin-top:12px; display:block;">
+      {% else %}
+      <div class="foto-placeholder" style="height:160px; margin-top:12px; border-radius:16px;">[FOTO] ({{ t.card.sample }})</div>
+      {% endif %}
+
+      {% if current.materials.length %}
+      <div style="font-size:.9rem; font-weight:800; margin-top:10px;">{{ t.tapsiriq.materialsLabel }}</div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;">
+        {% for mat in current.materials %}<span class="chip-solid" style="background:var(--cream);">{{ mat }}</span>{% endfor %}
+      </div>
+      {% endif %}
+      <div style="font-size:.85rem; font-weight:700; color:var(--night-2); margin-top:10px;">{{ t.tapsiriq.helperNote }}</div>
+    </div>
+  </div>
+</section>
+
+<section class="container" style="margin-top:28px;">
+  <h2>{{ t.tapsiriq.howTitle }}</h2>
+  <div class="stack" style="margin-top:12px;">
+    <div style="display:flex; gap:12px; align-items:center; background:var(--white); border-radius:var(--radius-lg); padding:14px; box-shadow:0 5px 0 var(--card-shadow);">
+      <span class="step-num" style="background:var(--orange);">1</span><div style="font-weight:800; font-size:.95rem;">{{ t.tapsiriq.step1 }}</div>
+    </div>
+    <div style="display:flex; gap:12px; align-items:center; background:var(--white); border-radius:var(--radius-lg); padding:14px; box-shadow:0 5px 0 var(--card-shadow);">
+      <span class="step-num" style="background:var(--blue);">2</span><div style="font-weight:800; font-size:.95rem;">{{ t.tapsiriq.step2 }}</div>
+    </div>
+    <div style="display:flex; gap:12px; align-items:center; background:var(--white); border-radius:var(--radius-lg); padding:14px; box-shadow:0 5px 0 var(--card-shadow);">
+      <span class="step-num" style="background:var(--green);">3</span><div style="font-weight:800; font-size:.95rem;">{{ t.tapsiriq.step3 }}</div>
+    </div>
+  </div>
+
+  <div style="margin-top:14px; display:flex; gap:8px;">
+    <div class="hashtag-box">{{ t.tapsiriq.hashtag }}</div>
+    <button type="button" class="btn-dark" style="min-width:108px;" data-copy="{{ t.tapsiriq.hashtag }} @masterklassazerbaijan" data-copy-label="{{ t.tapsiriq.copiedLabel }}">{{ t.tapsiriq.copyLabel }}</button>
+  </div>
+
+  <div class="accordion-item" style="margin-top:12px;">
+    <button type="button" class="accordion-trigger" data-accordion-trigger aria-expanded="false" aria-controls="private-help">
+      <span>{{ t.tapsiriq.privateHelpQ }}</span>
+      <span class="accordion-icon" aria-hidden="true">+</span>
+    </button>
+    <div class="accordion-panel" id="private-help" hidden>{{ t.tapsiriq.privateHelpA }}</div>
+  </div>
+</section>
+
+<section class="container" style="margin-top:28px;">
+  <div class="prizes-card">
+    <div style="font-family:var(--font-display); font-weight:700; font-size:1.3rem;">{{ t.tapsiriq.prizesTitle }}</div>
+    <div style="display:flex; gap:12px; align-items:center; margin-top:14px;">
+      <span class="prize-badge">BONUS</span>
+      <div><div style="font-weight:800; font-size:.92rem;">{{ t.tapsiriq.prizeWinnerTitle }}</div><div style="font-size:.8rem; font-weight:700; color:#C9D3E8;">{{ t.tapsiriq.prizeWinnerText }}</div></div>
+    </div>
+    <div style="display:flex; gap:12px; align-items:center; margin-top:12px;">
+      <span class="prize-star" aria-hidden="true">★</span>
+      <div><div style="font-weight:800; font-size:.92rem;">{{ t.tapsiriq.prizeAllTitle }}</div><div style="font-size:.8rem; font-weight:700; color:#C9D3E8;">{{ t.tapsiriq.prizeAllText }}</div></div>
+    </div>
+    <div style="font-size:.76rem; font-weight:700; color:#8FA0C2; margin-top:14px; line-height:1.5;">{{ t.tapsiriq.rulesNote }}</div>
+  </div>
+
+  <div class="accordion-item" style="margin-top:10px;">
+    <button type="button" class="accordion-trigger" data-accordion-trigger aria-expanded="false" aria-controls="full-rules">
+      <span>{{ t.tapsiriq.rulesLinkLabel }}</span>
+      <span class="accordion-icon" aria-hidden="true">+</span>
+    </button>
+    <div class="accordion-panel" id="full-rules" hidden>{{ t.tapsiriq.rulesFull }}</div>
+  </div>
+</section>
+{% else %}
+<section class="container" style="margin-top:18px;">
+  <div class="callout">
+    <div style="font-family:var(--font-display); font-weight:700; font-size:1.2rem;">{{ t.tapsiriq.emptyTitle }}</div>
+    <div style="margin-top:6px; font-weight:700;">{{ t.tapsiriq.emptyLead }}</div>
+  </div>
+</section>
+{% endif %}
+
+<section class="container" style="margin-top:28px;">
+  <h2>{{ t.tapsiriq.pastWinnersTitle }}</h2>
+  {% if winners.length %}
+  <div class="winners-row">
+    {% for w in winners %}
+    <div class="winner-card">
+      {% if w.photo_url %}<img src="{{ w.photo_url }}" alt="{{ w.child_label or '' }}" style="height:120px; width:100%; object-fit:cover; border-radius:16px; display:block;">
+      {% else %}<div class="foto-placeholder" style="height:120px; border-radius:16px;">[FOTO]</div>{% endif %}
+      <div style="font-family:var(--font-display); font-weight:600; font-size:.9rem; margin-top:8px;">{{ w.task_title }}</div>
+      <div style="font-size:.78rem; font-weight:800; color:var(--night-2);">{{ w.child_label or '—' }}, {{ t.tapsiriq.winnerCardMetaTemplate | replace('{age}', w.age_group) | replace('{week}', w.week_number) }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="page-lead">{{ t.tapsiriq.pastWinnersEmpty }}</p>
+  {% endif %}
+</section>
+
+<section class="container" style="margin-top:22px; padding-bottom:10px;">
+  <h2>{{ t.tapsiriq.nextTitle }}</h2>
+  {% if upcoming.length %}
+  <div class="next-grid">
+    {% for u in upcoming %}
+    <div class="next-tile" style="background:{{ ['#6FA8DC', '#7BC67E', '#F28AA6'][loop.index0 % 3] }};">
+      <span style="font-family:var(--font-display); font-weight:700; font-size:1.5rem; color:var(--white);">?</span>
+      <span style="font-size:.7rem; font-weight:800;">{{ t.tapsiriq.nextOpensTemplate | replace('{n}', u.daysUntil) }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="page-lead">{{ t.tapsiriq.nextEmpty }}</p>
+  {% endif %}
+</section>
+
+{% if current and current.masterclass_slug %}
+<section class="container" style="padding-bottom:30px;">
+  <a href="/{{ lang }}/m/{{ current.masterclass_slug }}" class="related-cta">
+    <span><span style="display:block; font-family:var(--font-display); font-weight:700; font-size:1.1rem;">{{ t.tapsiriq.relatedCtaTitle }}</span><span style="display:block; font-size:.82rem; font-weight:800;">{{ t.tapsiriq.relatedCtaSubTemplate | replace('{house}', current.house_name) }}</span></span>
+    <span style="font-family:var(--font-display); font-weight:700; font-size:1.3rem;">→</span>
+  </a>
+</section>
+{% endif %}
+{% endblock %}

@@ -48,6 +48,7 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 | 9 | `/kampaniyalar` | Kampaniyalar | Bazar meydanı |
 | 10 | `/ad-gunu` | Ad günü | Bayram meydanı |
 | 11 | `/qalereya` | Qalereya | Şəhər muzeyi |
+| 12 | `/tapsiriq`, `/tapsiriq/sertifikat/<id>` | Həftənin tapşırığı (yeni, 2026-10-10) | Elanlar lövhəsi |
 | 13 | `/suallar` | Valideyn sualları | Məlumat bürosu |
 | 14 | `/elaqe` | Əlaqə | Şəhər poçtu |
 | — | `/mexfilik`, `/sertler` | Statik | — |
@@ -62,6 +63,7 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 - Müştərilər: siyahı/axtarış, detal, daxili qeyd, **anonimləşdirmə** (owner-yalnız, ad/telefonu silir, bron tarixçəsini saxlayır — BRIEF məxfilik tələbi)
 - Sorğular (Əlaqə/Ad günü): filtrlə, status dəyişdir
 - **Qalereya**: foto yüklə (`multer`, yaddaşda emal) → `sharp` ilə avtomatik WebP-ə çevrilir, maks. 1600px enə kiçildilir, EXIF/GPS **tam atılır** (BRIEF tələbi), fayl adı həmişə təsadüfi UUID. İstənilən adi giriş formatı qəbul olunur (JPEG/PNG/WebP/GIF/HEIC-iPhone/AVIF — sharp bunların hamısını oxuya bilir). Yükləndikdən sonra gizli qalır, `consent` bayrağı **məcburidir** (yoxdursa heç saxlanmır) — nəzərdən keçirib ayrıca "Dərc et". Silinəndə həm DB sətri, həm fayl diskdən silinir. `src/lib/imageUpload.js`, `src/views/admin/gallery.njk`. İctimai tərəfdə (`home.njk`, `qalereya.njk`, lightbox) əvvəlcə həmişə `[FOTO]` yer tutucusu göstərilirdi hətta real foto olanda belə — bu, düzəldildi, real `<img>` göstərilir.
+- **Həftənin tapşırığı** (yeni, 2026-10-10): tapşırıq CRUD (həftə №, başlıq, təlimat, material siyahısı, açılış tarixi, əlaqəli masterklass, nümunə şəkil yükləmə — `uploads/tasks/`) + iştirakçı idarəsi (Instagram Direct/WhatsApp ilə gələnlər əl ilə qeyd olunur, telefon → `findOrCreateCustomer`, foto ixtiyari). "Qalib et" düyməsi `addStamp()` çağırıb pasporta bonus möhür verir. İctimai tərəfdə görünmə `consent_public` bayrağı ilə ayrıca idarə olunur (qalib olmaq avtomatik ictimai göstərmir). `src/routes/admin.js` (`/admin/tapsiriqlar/*`), `src/repositories/admin.js`, `src/repositories/tasks.js` (ictimai oxu).
 - CSV ixrac (bronlar, UTF-8 BOM, owner-yalnız)
 - İstifadəçi/rol idarəsi (owner yaradır, owner/staff), Audit jurnalı (owner-yalnız) — hər həssas əməliyyat (giriş/çıxış, dərc/gizlət, status dəyişikliyi, ixrac, anonimləşdirmə, istifadəçi yaratma, foto yükləmə/silmə) qeyd olunur
 
@@ -83,6 +85,8 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 | `instructors` | `name`, `photo`, `house_id`, `bio`, `experience`, `this_month_programs` |
 | `instructor_applications` | Müraciət forması (ad, telefon, CV-link/mesaj) |
 | `faq_items` | `tab`, `question`, `answer`, `order` |
+| `weekly_tasks` | Həftənin tapşırığı: `week_number`, `title`, `instructions`, `materials` (TEXT[]), `reference_image_url`, `unlock_date`, `related_masterclass_id`, `is_published`, `is_sample` |
+| `task_participants` | `task_id`, `customer_id`, `age_group` (4-6/7-9/10-12), `child_label`, `instagram_handle`, `photo_url`, `consent_public`, `is_winner` |
 
 **Qaydalar (baza skill-dən miras):**
 - Telefon → E.164, server-side
@@ -107,7 +111,9 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 
 Qalereya upload (EXIF/GPS təmizlənməsi daxil) Mərhələ 5-də tətbiq olundu (bax §4). Honeypot (`website` gizli sahə, server-side yoxlanılır `src/routes/public.js`-də), parametrli SQL, auto-escape, CSP, Helmet layihənin əvvəlindən mövcuddur.
 
-**Qeyd (hosting seçərkən diqqət):** yüklənən fotolar `src/public/uploads/gallery/` qovluğunda yerli diskdə saxlanılır. Əgər hosting provayderi **ephemeral disk** istifadə edirsə (məs. Render-in pulsuz planı), server yenidən başlayanda bu qovluq **silinə bilər** — yüklənmiş fotolar itər (DB sətirləri qalar, amma fayl tapılmaz). Production-a keçməzdən əvvəl ya daimi disk (persistent volume) seçilməli, ya da S3-uyğun obyekt saxlama inteqrasiyası əlavə olunmalıdır. Hələlik development/kiçik miqyas üçün kifayətdir.
+**Düzəldilmiş bug (2026-10-10):** admin paneldəki təhlükəli/geri qaytarıla bilməyən əməliyyatların (bron ləğvi, seans ləğvi, foto/iştirakçı silmə, müştəri anonimləşdirmə) hamısı `onsubmit="return confirm(...)"` inline handler-dən istifadə edirdi — bu, CSP-nin `script-src-attr 'none'` qaydası tərəfindən səssizcə bloklanırdı (xəbərdarlıq heç görünmürdü, forma dərhal, təsdiqsiz göndərilirdi). `src/public/js/admin.js` (CSP-uyğun, xarici fayl) + `data-confirm` atributu ilə düzəldildi, 5 forma yeniləndi.
+
+**Qeyd (hosting seçərkən diqqət):** yüklənən fotolar `src/public/uploads/gallery/` və `src/public/uploads/tasks/` (Həftənin tapşırığı nümunə/iştirakçı şəkilləri) qovluqlarında yerli diskdə saxlanılır. Əgər hosting provayderi **ephemeral disk** istifadə edirsə (məs. Render-in pulsuz planı), server yenidən başlayanda bu qovluqlar **silinə bilər** — yüklənmiş fotolar itər (DB sətirləri qalar, amma fayl tapılmaz). Production-a keçməzdən əvvəl ya daimi disk (persistent volume) seçilməli, ya da S3-uyğun obyekt saxlama inteqrasiyası əlavə olunmalıdır. Railway-ə keçərkən (bax §9) volume yalnız `uploads/gallery`-ə bağlanıb — `uploads/tasks` da əlavə edilməlidir (bax `docs/DEPLOY.md`).
 
 ## 9. Hosting
 

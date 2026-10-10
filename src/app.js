@@ -49,6 +49,10 @@ export async function createApp(db) {
   });
   env.addFilter('formatDateAz', formatDateAz);
   env.addFilter('formatDayMonthAz', (v) => formatDateParts(v).dayMonth);
+  env.addFilter('formatDateOnlyAz', (v) => { const p = formatDateParts(v); return `${p.day}.${p.month}.${p.year}`; });
+  // DATE sütunları (saat qurşağı olmadan) üçün <input type="date"> dəyəri: UTC hissələri istifadə olunur,
+  // yerli saat qurşağı çevrilməsi gün sürüşməsinə səbəb ola bilər.
+  env.addFilter('isoDate', (v) => new Date(v).toISOString().slice(0, 10));
   env.addFilter('formatTimeAz', (v) => formatDateParts(v).time);
   env.addFilter('formatMoney', (v) => Number(v).toFixed(2).replace('.', ',') + ' ₼');
   env.addGlobal('currentYear', new Date().getFullYear());

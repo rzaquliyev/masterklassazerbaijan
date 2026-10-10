@@ -1,0 +1,36 @@
+{% extends "admin/layout.njk" %}
+{% block title %}Həftənin tapşırığı{% endblock %}
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+  <h1 class="admin-h1" style="margin:0;">Həftənin tapşırığı</h1>
+  <a class="admin-btn" href="/admin/tapsiriqlar/new">+ Yeni tapşırıq</a>
+</div>
+
+<div class="admin-card">
+  <div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead><tr><th>Həftə</th><th>Başlıq</th><th>Açılır</th><th>İştirakçı</th><th>Status</th><th>Əməliyyat</th></tr></thead>
+    <tbody>
+      {% for t in list %}
+      <tr>
+        <td class="admin-td-tight">#{{ t.week_number }}</td>
+        <td><a href="/admin/tapsiriqlar/{{ t.id }}">{{ t.title }}</a>{{ ' (SAMPLE)' if t.is_sample }}</td>
+        <td class="admin-td-tight">{{ t.unlock_date | formatDateOnlyAz }}</td>
+        <td class="admin-td-tight">{{ t.participant_count }}</td>
+        <td class="admin-td-tight"><span class="admin-badge {{ 'confirmed' if t.is_published else 'cancelled' }}">{{ 'Dərc olunub' if t.is_published else 'Gizli' }}</span></td>
+        <td class="admin-td-tight">
+          <form method="post" action="/admin/tapsiriqlar/{{ t.id }}/publish" class="admin-row-form">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <input type="hidden" name="published" value="{{ '0' if t.is_published else '1' }}">
+            <button type="submit" class="admin-btn secondary small">{{ 'Gizlət' if t.is_published else 'Dərc et' }}</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6">Hələ tapşırıq yoxdur.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}

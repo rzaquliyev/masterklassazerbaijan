@@ -280,6 +280,89 @@ export async function deleteGalleryPhotoRow(db, id) {
   return rows[0] ?? null;
 }
 
+// ---------- Həftənin tapşırığı ----------
+export async function listWeeklyTasksAdmin(db) {
+  const { rows } = await db.query(`
+    SELECT t.*, (SELECT count(*)::int FROM task_participants p WHERE p.task_id = t.id) AS participant_count
+    FROM weekly_tasks t ORDER BY t.week_number DESC
+  `);
+  return rows;
+}
+
+export async function getWeeklyTaskAdmin(db, id) {
+  const { rows } = await db.query('SELECT * FROM weekly_tasks WHERE id = $1', [id]);
+  return rows[0] ?? null;
+}
+
+export async function createWeeklyTask(db, { weekNumber, title, instructions, materials, referenceImageUrl, unlockDate, relatedMasterclassId }) {
+  const id = randomUUID();
+  const { rows } = await db.query(
+    `INSERT INTO weekly_tasks (id, week_number, title, instructions, materials, reference_image_url, unlock_date, related_masterclass_id, is_published, is_sample)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,false,false) RETURNING *`,
+    [id, weekNumber, title, instructions || null, materials, referenceImageUrl || null, unlockDate, relatedMasterclassId || null],
+  );
+  return rows[0];
+}
+
+export async function updateWeeklyTask(db, id, { weekNumber, title, instructions, materials, unlockDate, relatedMasterclassId }) {
+  const { rows } = await db.query(
+    `UPDATE weekly_tasks SET week_number=$2, title=$3, instructions=$4, materials=$5, unlock_date=$6, related_masterclass_id=$7
+     WHERE id = $1 RETURNING *`,
+    [id, weekNumber, title, instructions || null, materials, unlockDate, relatedMasterclassId || null],
+  );
+  return rows[0] ?? null;
+}
+
+export async function setWeeklyTaskReferenceImage(db, id, url) {
+  const { rows } = await db.query('UPDATE weekly_tasks SET reference_image_url = $2 WHERE id = $1 RETURNING *', [id, url]);
+  return rows[0] ?? null;
+}
+
+export async function setWeeklyTaskPublished(db, id, isPublished) {
+  const { rows } = await db.query('UPDATE weekly_tasks SET is_published = $2 WHERE id = $1 RETURNING *', [id, isPublished]);
+  return rows[0] ?? null;
+}
+
+export async function listTaskParticipantsAdmin(db, taskId) {
+  const { rows } = await db.query(
+    `SELECT p.*, c.full_name AS parent_name, c.phone_e164
+     FROM task_participants p LEFT JOIN customers c ON c.id = p.customer_id
+     WHERE p.task_id = $1 ORDER BY p.created_at ASC`,
+    [taskId],
+  );
+  return rows;
+}
+
+export async function insertTaskParticipant(db, { taskId, customerId, ageGroup, childLabel, instagramHandle, photoUrl, consentPublic }) {
+  const id = randomUUID();
+  const { rows } = await db.query(
+    `INSERT INTO task_participants (id, task_id, customer_id, age_group, child_label, instagram_handle, photo_url, consent_public, is_winner)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,false) RETURNING *`,
+    [id, taskId, customerId || null, ageGroup, childLabel || null, instagramHandle || null, photoUrl || null, Boolean(consentPublic)],
+  );
+  return rows[0];
+}
+
+export async function getTaskParticipantAdmin(db, id) {
+  const { rows } = await db.query('SELECT * FROM task_participants WHERE id = $1', [id]);
+  return rows[0] ?? null;
+}
+
+export async function setTaskParticipantWinner(db, id, isWinner) {
+  const { rows } = await db.query('UPDATE task_participants SET is_winner = $2 WHERE id = $1 RETURNING *', [id, isWinner]);
+  return rows[0] ?? null;
+}
+
+export async function setTaskParticipantConsent(db, id, consentPublic) {
+  const { rows } = await db.query('UPDATE task_participants SET consent_public = $2 WHERE id = $1 RETURNING *', [id, consentPublic]);
+  return rows[0] ?? null;
+}
+
+export async function deleteTaskParticipantRow(db, id) {
+  const { rows } = await db.query('DELETE FROM task_participants WHERE id = $1 RETURNING *', [id]);
+  return rows[0] ?? null;
+}
+
 // ---------- Audit log ----------
 export async function insertAuditLog(db, { adminUserId, action, targetTable, targetId }) {
   const id = randomUUID();

@@ -27,6 +27,7 @@ export default async function seedSampleData(db) {
     );
   }
 
+  const masterclassIds = {};
   for (const m of masterclasses) {
     const { rows: existing } = await db.query('SELECT id FROM masterclasses WHERE slug = $1', [m.slug]);
     let masterclassId = existing[0]?.id;
@@ -38,6 +39,7 @@ export default async function seedSampleData(db) {
         [masterclassId, houseIds[m.house], m.slug, m.title, 'SAMPLE təsvir — real mətnlə əvəz olunacaq.', m.ageMin, m.ageMax],
       );
     }
+    masterclassIds[m.slug] = masterclassId;
 
     const sessionId = randomUUID();
     await db.query(
@@ -63,6 +65,35 @@ export default async function seedSampleData(db) {
         'INSERT INTO faq_items (id, tab, question, answer, sort_order) VALUES ($1,$2,$3,$4,$5)',
         [randomUUID(), tab, q, a, i],
       );
+    }
+  }
+
+  // Həftənin tapşırığı — SAMPLE: cari (yoğur maketindəki robot tapşırığı) + 2 keçmiş qalib.
+  const weeklyTasks = [
+    { week: 10, title: 'SAMPLE: Evdəki əşyalardan robot düzəlt', daysAgo: 1, materials: ['karton qutu', 'butulka qapağı', 'kağız rulon', 'yapışqan', 'rəngli kağız'], relatedSlug: 'vulkan-tecrubesi', winnerLabel: null },
+    { week: 9, title: 'SAMPLE: Yarpaqdan şəkil', daysAgo: 9, materials: ['payız yarpağı', 'karton', 'yapışqan'], relatedSlug: null, winnerLabel: 'SAMPLE: 8 yaşlı rəssam' },
+    { week: 8, title: 'SAMPLE: Qapaqdan mozaika', daysAgo: 16, materials: ['butulka qapağı', 'karton', 'yapışqan'], relatedSlug: null, winnerLabel: 'SAMPLE: 11 yaşlı usta' },
+  ];
+  for (const wt of weeklyTasks) {
+    const { rows: existingTask } = await db.query('SELECT id FROM weekly_tasks WHERE week_number = $1', [wt.week]);
+    let taskId = existingTask[0]?.id;
+    if (!taskId) {
+      taskId = randomUUID();
+      await db.query(
+        `INSERT INTO weekly_tasks (id, week_number, title, instructions, materials, unlock_date, related_masterclass_id, is_published, is_sample)
+         VALUES ($1,$2,$3,$4,$5, (now() - ($6::numeric * interval '1 day'))::date, $7, true, true)`,
+        [taskId, wt.week, wt.title, 'SAMPLE təlimat — real mətnlə əvəz olunacaq.', wt.materials, wt.daysAgo, wt.relatedSlug ? masterclassIds[wt.relatedSlug] : null],
+      );
+    }
+    if (wt.winnerLabel) {
+      const { rows: existingP } = await db.query('SELECT id FROM task_participants WHERE task_id = $1', [taskId]);
+      if (!existingP.length) {
+        await db.query(
+          `INSERT INTO task_participants (id, task_id, age_group, child_label, consent_public, is_winner)
+           VALUES ($1,$2,$3,$4,true,true)`,
+          [randomUUID(), taskId, '7-9', wt.winnerLabel],
+        );
+      }
     }
   }
 
