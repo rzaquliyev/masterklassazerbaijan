@@ -312,6 +312,16 @@ export async function listFaqItemsAdmin(db) {
   return rows;
 }
 
+export async function listFaqItemsByTabAdmin(db) {
+  const rows = await listFaqItemsAdmin(db);
+  const byTab = {};
+  for (const row of rows) {
+    if (!byTab[row.tab]) byTab[row.tab] = [];
+    byTab[row.tab].push(row);
+  }
+  return byTab;
+}
+
 export async function createFaqItem(db, { tab, question, answer, sortOrder }) {
   const id = randomUUID();
   const { rows } = await db.query(

@@ -24,7 +24,7 @@ import {
   listWeeklyTasksAdmin, getWeeklyTaskAdmin, createWeeklyTask, updateWeeklyTask, setWeeklyTaskReferenceImage, setWeeklyTaskPublished,
   listTaskParticipantsAdmin, insertTaskParticipant, getTaskParticipantAdmin, setTaskParticipantWinner, setTaskParticipantConsent, deleteTaskParticipantRow,
   listHousesAdmin, createHouse, updateHouse,
-  listFaqItemsAdmin, createFaqItem, updateFaqItem, deleteFaqItemRow,
+  listFaqItemsByTabAdmin, createFaqItem, updateFaqItem, deleteFaqItemRow,
   listDiscountCodesAdmin, createManualDiscountCode, revokeDiscountCode,
   listAdminUsers, createAdminUserRecord, findAdminUserByEmail,
   insertAuditLog, listAuditLog,
@@ -516,15 +516,15 @@ export function createAdminRouter(db) {
 
   // ---------- FAQ (suallar) ----------
   router.get('/suallar-idare', requireAdmin(), async (req, res) => {
-    const list = await listFaqItemsAdmin(db);
-    res.render('admin/faq.njk', renderLocals(req, { list, errors: null }));
+    const groups = await listFaqItemsByTabAdmin(db);
+    res.render('admin/faq.njk', renderLocals(req, { groups, errors: null }));
   });
 
   router.post('/suallar-idare', requireAdmin(), requireCsrf, async (req, res) => {
     const parsed = faqItemSchema.safeParse(req.body);
     if (!parsed.success) {
-      const list = await listFaqItemsAdmin(db);
-      return res.status(400).render('admin/faq.njk', renderLocals(req, { list, errors: parsed.error.flatten() }));
+      const groups = await listFaqItemsByTabAdmin(db);
+      return res.status(400).render('admin/faq.njk', renderLocals(req, { groups, errors: parsed.error.flatten() }));
     }
     const created = await createFaqItem(db, parsed.data);
     await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'faq.create', targetTable: 'faq_items', targetId: created.id });
@@ -534,8 +534,8 @@ export function createAdminRouter(db) {
   router.post('/suallar-idare/:id', requireAdmin(), requireCsrf, async (req, res) => {
     const parsed = faqItemSchema.safeParse(req.body);
     if (!parsed.success) {
-      const list = await listFaqItemsAdmin(db);
-      return res.status(400).render('admin/faq.njk', renderLocals(req, { list, errors: parsed.error.flatten() }));
+      const groups = await listFaqItemsByTabAdmin(db);
+      return res.status(400).render('admin/faq.njk', renderLocals(req, { groups, errors: parsed.error.flatten() }));
     }
     const updated = await updateFaqItem(db, req.params.id, parsed.data);
     if (!updated) return res.status(404).send('Tapılmadı');

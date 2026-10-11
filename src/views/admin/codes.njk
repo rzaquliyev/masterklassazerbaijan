@@ -4,14 +4,14 @@
 <h1 class="admin-h1">Endirim kodları</h1>
 {% if errors %}<div class="admin-alert error">{{ errors.formErrors[0] if errors.formErrors and errors.formErrors.length else 'Formu yoxlayın — sahələrdən biri səhvdir.' }}</div>{% endif %}
 
-<div class="admin-card" style="max-width:480px;">
+<div class="admin-card">
   <h2 class="admin-h2">Əl ilə kod yarat</h2>
-  <p style="font-size:.82rem; color:var(--night-2); margin-top:-6px;">Referral/gizlənqaç kodları avtomatik yaradılır — bu, xüsusi hal üçün əl ilə kod yaratmaq üçündür.</p>
-  <form method="post" action="/admin/kodlar">
+  <p style="font-size:.82rem; color:var(--night-2); margin-top:-8px; margin-bottom:14px;">Referral/gizlənqaç kodları avtomatik yaradılır — bu, xüsusi hal üçün əl ilə kod yaratmaq üçündür.</p>
+  <form method="post" action="/admin/kodlar" class="admin-filters" style="margin-bottom:0;">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-    <div class="admin-field"><label for="percent">Endirim faizi</label><input type="number" id="percent" name="percent" min="1" max="100" required value="10"></div>
-    <div class="admin-field"><label for="ownerPhone">Sahibin telefonu (ixtiyari — mövcud müştəri olmalıdır)</label><input type="tel" id="ownerPhone" name="ownerPhone" placeholder="+994 __ ___ __ __"></div>
-    <div class="admin-field"><label for="expiresInDays">Neçə gün etibarlıdır (ixtiyari, boş = müddətsiz)</label><input type="number" id="expiresInDays" name="expiresInDays" min="1" max="3650" placeholder="90"></div>
+    <div class="admin-field"><label for="percent">Endirim faizi</label><input type="number" id="percent" name="percent" min="1" max="100" required value="10" style="width:100px;"></div>
+    <div class="admin-field"><label for="ownerPhone">Sahibin telefonu (ixtiyari)</label><input type="tel" id="ownerPhone" name="ownerPhone" placeholder="+994 __ ___ __ __" style="width:180px;"></div>
+    <div class="admin-field"><label for="expiresInDays">Neçə gün etibarlıdır (boş = müddətsiz)</label><input type="number" id="expiresInDays" name="expiresInDays" min="1" max="3650" placeholder="90" style="width:120px;"></div>
     <button type="submit" class="admin-btn">Yarat</button>
   </form>
 </div>
@@ -23,11 +23,13 @@
     <tbody>
       {% for c in list %}
       <tr>
-        <td class="admin-td-tight"><code>{{ c.code }}</code></td>
+        <td class="admin-td-tight"><span class="admin-code-chip">{{ c.code }}</span></td>
         <td class="admin-td-tight">{{ c.type }}</td>
         <td class="admin-td-tight">{{ c.owner_name or '—' }}{% if c.owner_phone %}<br><span style="color:var(--night-2); font-size:.78rem;">{{ c.owner_phone }}</span>{% endif %}</td>
         <td class="admin-td-tight">{{ c.percent }}%</td>
-        <td class="admin-td-tight"><span class="admin-badge {{ 'confirmed' if c.status == 'active' else 'cancelled' }}">{{ c.status }}</span></td>
+        <td class="admin-td-tight">
+          <span class="admin-badge {{ 'confirmed' if c.status == 'active' else ('attended' if c.status == 'redeemed' else 'cancelled') }}">{{ c.status }}</span>
+        </td>
         <td class="admin-td-tight">{{ c.expires_at | formatDateOnlyAz if c.expires_at else '—' }}</td>
         <td class="admin-td-tight">{{ c.redeemed_by_name or '—' }}</td>
         <td class="admin-td-tight">

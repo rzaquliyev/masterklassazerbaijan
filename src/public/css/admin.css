@@ -120,6 +120,48 @@ table.admin-table{ width:100%; border-collapse:collapse; font-size:.86rem; table
 .admin-alert{ padding:11px 14px; border-radius:9px; font-size:.86rem; font-weight:700; margin-bottom:14px; }
 .admin-alert.error{ background:#FADADA; color:#B23030; }
 .admin-grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+
+/* ---------- Evlər: rəngli kart grid ---------- */
+.admin-house-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px; margin-bottom:20px; }
+.admin-house-card{
+  background:var(--white); border-radius:14px; padding:16px; border:1px solid #ECEFF5; border-top:5px solid var(--house-color, var(--orange));
+  box-shadow:0 1px 2px rgba(16,24,48,.04), 0 8px 20px -10px rgba(16,24,48,.12);
+  display:flex; flex-direction:column; gap:10px;
+}
+.admin-house-top{ display:flex; align-items:center; gap:10px; }
+.admin-house-swatch{
+  width:40px; height:40px; border-radius:11px; flex:none; border:0; padding:0; cursor:pointer;
+  background:var(--house-color, var(--orange));
+}
+.admin-house-name{ min-height:38px !important; font-weight:800 !important; font-size:1rem !important; flex:1; }
+.admin-house-row{ display:grid; grid-template-columns:1fr 70px; gap:8px; }
+.admin-house-row input{ min-height:36px !important; font-size:.82rem !important; }
+.admin-house-footer{ display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:2px; }
+.admin-house-card--new{ border-top-color:#DCE1EC; border-style:dashed; justify-content:center; }
+.admin-house-card--new .admin-h2{ margin-bottom:10px; font-size:.95rem; color:var(--night-2); }
+
+/* ---------- FAQ: bölmə başlıqları ilə qruplaşdırma ---------- */
+.admin-faq-group{ margin-bottom:22px; }
+.admin-faq-group-title{
+  font-size:.74rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:#8891A6;
+  margin:0 0 8px 2px;
+}
+.admin-faq-item{
+  background:var(--white); border-radius:12px; padding:12px 14px; border:1px solid #ECEFF5; margin-bottom:8px;
+  box-shadow:0 1px 2px rgba(16,24,48,.04);
+}
+.admin-faq-item form{ display:flex; gap:8px; flex-wrap:wrap; align-items:flex-start; }
+.admin-faq-item .admin-faq-q{ min-height:38px !important; font-weight:700 !important; flex:1 1 220px; }
+.admin-faq-item .admin-faq-a{ flex:2 1 260px; min-height:38px !important; }
+.admin-faq-item .admin-faq-tab{ flex:0 0 130px; }
+.admin-faq-item .admin-faq-sort{ flex:0 0 60px; }
+.admin-faq-item-actions{ display:flex; gap:6px; margin-top:8px; padding-top:8px; border-top:1px dashed #EEF0F6; }
+
+/* ---------- Endirim kodları ---------- */
+.admin-code-chip{
+  font-family:var(--font-mono, ui-monospace, monospace); font-weight:700; font-size:.82rem;
+  background:#F4F6FA; border-radius:7px; padding:3px 8px; letter-spacing:.02em;
+}
 @media (max-width:720px){
   .admin-shell{ flex-direction:column; }
   .admin-nav{ width:100%; height:auto; position:static; flex-direction:row; flex-wrap:wrap; }
