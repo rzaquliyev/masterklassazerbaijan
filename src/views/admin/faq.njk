@@ -7,30 +7,35 @@
 {% set tabLabels = { q: "Qeydiyyat", o: "Ödəniş", t: "Təhlükəsizlik", g: "Gün özü" } %}
 
 {% for key, label in tabLabels %}
-<div class="admin-faq-group">
-  <div class="admin-faq-group-title">{{ label }}</div>
-  {% for item in groups[key] %}
-  <div class="admin-faq-item">
-    <form method="post" action="/admin/suallar-idare/{{ item.id }}">
-      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-      <select name="tab" class="admin-faq-tab" title="Bölmə">
-        {% for k, l in tabLabels %}<option value="{{ k }}" {{ 'selected' if item.tab == k }}>{{ l }}</option>{% endfor %}
-      </select>
-      <input type="text" name="question" value="{{ item.question }}" class="admin-faq-q" required placeholder="Sual">
-      <textarea name="answer" class="admin-faq-a" required placeholder="Cavab">{{ item.answer }}</textarea>
-      <input type="number" name="sortOrder" value="{{ item.sort_order }}" min="0" max="999" class="admin-faq-sort" title="Sıra">
-      <div class="admin-faq-item-actions" style="width:100%;">
-        <button type="submit" class="admin-btn small">Yadda saxla</button>
-      </div>
-    </form>
-    <form method="post" action="/admin/suallar-idare/{{ item.id }}/delete" data-confirm="Bu sual silinsin?" class="admin-faq-item-actions">
-      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-      <button type="submit" class="admin-btn danger small">Sil</button>
-    </form>
+<div class="admin-card">
+  <h2 class="admin-h2">{{ label }}</h2>
+  <div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead><tr><th style="width:140px;">Sual</th><th>Cavab</th><th style="width:60px;">Sıra</th><th></th></tr></thead>
+    <tbody>
+      {% for item in groups[key] %}
+      <tr>
+        <td colspan="4" style="padding:0;">
+          <form method="post" action="/admin/suallar-idare/{{ item.id }}" class="admin-faq-row">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <input type="hidden" name="tab" value="{{ item.tab }}">
+            <input type="text" name="question" value="{{ item.question }}" required placeholder="Sual" class="admin-faq-q">
+            <textarea name="answer" required placeholder="Cavab" class="admin-faq-a">{{ item.answer }}</textarea>
+            <input type="number" name="sortOrder" value="{{ item.sort_order }}" min="0" max="999" title="Sıra" class="admin-sort-input">
+            <button type="submit" class="admin-btn secondary small">Saxla</button>
+          </form>
+          <form method="post" action="/admin/suallar-idare/{{ item.id }}/delete" data-confirm="Bu sual silinsin?" class="admin-row-form" style="padding:0 10px 9px;">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <button type="submit" class="admin-btn danger small">Sil</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" class="admin-muted">Bu bölmədə hələ sual yoxdur.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
   </div>
-  {% else %}
-  <p class="admin-muted">Bu bölmədə hələ sual yoxdur.</p>
-  {% endfor %}
 </div>
 {% endfor %}
 
