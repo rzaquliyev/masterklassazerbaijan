@@ -61,6 +61,8 @@ export default async function seedSampleData(db) {
   };
   for (const [tab, items] of Object.entries(faqTabs)) {
     for (const [i, [q, a]] of items.entries()) {
+      const { rows: existingFaq } = await db.query('SELECT id FROM faq_items WHERE tab = $1 AND question = $2', [tab, q]);
+      if (existingFaq.length) continue;
       await db.query(
         'INSERT INTO faq_items (id, tab, question, answer, sort_order) VALUES ($1,$2,$3,$4,$5)',
         [randomUUID(), tab, q, a, i],
