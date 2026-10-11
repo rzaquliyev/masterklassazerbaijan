@@ -14,6 +14,11 @@ import { InvalidPhoneError } from './lib/phone.js';
 import { checkRateLimit } from './lib/rateLimit.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// Statik fayl keş-pozma (cache-busting) açarı: proses başlayanda bir dəfə təyin olunur, hər
+// yeni deploy/restart ilə dəyişir. `package.json`-dakı `version` sahəsi (əvvəlki üsul) demək olar
+// heç vaxt artırılmır, ona görə brauzer köhnə CSS/JS-i yeni deploy-dan sonra da (maxAge: 1 saat
+// ərzində) keşdən göstərməyə davam edirdi.
+const BUILD_ID = String(Date.now());
 
 export async function createApp(db) {
   const app = express();
@@ -56,7 +61,7 @@ export async function createApp(db) {
   env.addFilter('formatTimeAz', (v) => formatDateParts(v).time);
   env.addFilter('formatMoney', (v) => Number(v).toFixed(2).replace('.', ',') + ' ₼');
   env.addGlobal('currentYear', new Date().getFullYear());
-  env.addGlobal('assetV', process.env.NODE_ENV === 'production' ? (process.env.npm_package_version || '1') : Date.now());
+  env.addGlobal('assetV', BUILD_ID);
 
   app.set('view engine', 'njk');
   app.use(
