@@ -48,5 +48,5 @@ Açıq və dürüst siyahı (BRIEF-in öz tələbinə görə):
 2. ~~Hosting seçin~~ ✅ **TƏSDİQLƏNDİ (2026-10-10): Railway.** Canlıdır: [`docs/DEPLOY.md`](DEPLOY.md).
 3. ~~Real admin hesabınızı yaradın~~ ✅ **EDİLDİ (2026-10-10)** — `/admin/login`-dən daxil ola bilərsiniz. Real qalereya fotolarınızı yükləmək qalır.
 4. ~~Backup~~ ✅ **QİSMƏN EDİLDİ (2026-10-10)** — PITR aktivdir (`docs/DEPLOY.md` §8).
-5. (İxtiyari, daha sonra) Ev/FAQ/endirim kodu admin UI-ları — hazırda DB-seed ilə idarə olunur, UI-ya ehtiyac yarandıqda əlavə edilə bilər.
+5. ~~Ev/FAQ/endirim kodu admin UI-ları~~ ✅ **EDİLDİ (2026-10-11)** — `/admin/evler`, `/admin/suallar-idare`, `/admin/kodlar`.
 6. (İxtiyari) Öz domen (`masterklassazerbaijan.az` və ya `.com`) alıb Railway-ə bağlamaq — bax `docs/DEPLOY.md` §7.

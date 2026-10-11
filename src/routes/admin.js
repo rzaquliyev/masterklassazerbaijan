@@ -9,9 +9,10 @@ import { saveGalleryImage, deleteGalleryImage, saveTaskPhoto, deleteTaskPhoto, U
 import { listHouses } from '../repositories/masterclasses.js';
 import { cancelBooking, BookingNotCancellableError, BookingNotFoundError } from '../services/booking.js';
 import { listBookingsByCustomer } from '../repositories/bookings.js';
-import { findOrCreateCustomer } from '../repositories/customers.js';
+import { findOrCreateCustomer, findCustomerByPhone } from '../repositories/customers.js';
 import { addStamp } from '../repositories/loyalty.js';
 import { normalizePhoneAz, InvalidPhoneError } from '../lib/phone.js';
+import { randomCodeSuffix } from '../services/codes.js';
 import {
   dashboardStats, listUpcomingSessionsAdmin,
   listMasterclassesAdmin, getMasterclassAdmin, createMasterclass, updateMasterclass, setMasterclassPublished,
@@ -22,12 +23,15 @@ import {
   listGalleryPhotosAdmin, getGalleryPhotoAdmin, insertGalleryPhoto, setGalleryPhotoPublished, deleteGalleryPhotoRow,
   listWeeklyTasksAdmin, getWeeklyTaskAdmin, createWeeklyTask, updateWeeklyTask, setWeeklyTaskReferenceImage, setWeeklyTaskPublished,
   listTaskParticipantsAdmin, insertTaskParticipant, getTaskParticipantAdmin, setTaskParticipantWinner, setTaskParticipantConsent, deleteTaskParticipantRow,
+  listHousesAdmin, createHouse, updateHouse,
+  listFaqItemsAdmin, createFaqItem, updateFaqItem, deleteFaqItemRow,
+  listDiscountCodesAdmin, createManualDiscountCode, revokeDiscountCode,
   listAdminUsers, createAdminUserRecord, findAdminUserByEmail,
   insertAuditLog, listAuditLog,
 } from '../repositories/admin.js';
 import {
   loginSchema, masterclassSchema, sessionSchema, notesSchema, createAdminUserSchema, galleryUploadSchema,
-  weeklyTaskSchema, taskParticipantSchema,
+  weeklyTaskSchema, taskParticipantSchema, houseSchema, faqItemSchema, manualDiscountCodeSchema,
 } from '../schemas/admin.js';
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 15 * 1024 * 1024 } });
@@ -479,6 +483,108 @@ export function createAdminRouter(db) {
     if (participant.photo_url) await deleteTaskPhoto(participant.photo_url);
     await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'task.participant.delete', targetTable: 'task_participants', targetId: req.params.id });
     res.redirect(302, `/admin/tapsiriqlar/${req.params.taskId}`);
+  });
+
+  // ---------- Evlər ----------
+  router.get('/evler', requireAdmin(), async (req, res) => {
+    const list = await listHousesAdmin(db);
+    res.render('admin/houses.njk', renderLocals(req, { list, errors: null }));
+  });
+
+  router.post('/evler', requireAdmin(), requireCsrf, async (req, res) => {
+    const parsed = houseSchema.safeParse(req.body);
+    if (!parsed.success) {
+      const list = await listHousesAdmin(db);
+      return res.status(400).render('admin/houses.njk', renderLocals(req, { list, errors: parsed.error.flatten() }));
+    }
+    const created = await createHouse(db, parsed.data);
+    await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'house.create', targetTable: 'houses', targetId: created.id });
+    res.redirect(302, '/admin/evler');
+  });
+
+  router.post('/evler/:id', requireAdmin(), requireCsrf, async (req, res) => {
+    const parsed = houseSchema.safeParse(req.body);
+    if (!parsed.success) {
+      const list = await listHousesAdmin(db);
+      return res.status(400).render('admin/houses.njk', renderLocals(req, { list, errors: parsed.error.flatten() }));
+    }
+    const updated = await updateHouse(db, req.params.id, parsed.data);
+    if (!updated) return res.status(404).send('Tapılmadı');
+    await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'house.update', targetTable: 'houses', targetId: updated.id });
+    res.redirect(302, '/admin/evler');
+  });
+
+  // ---------- FAQ (suallar) ----------
+  router.get('/suallar-idare', requireAdmin(), async (req, res) => {
+    const list = await listFaqItemsAdmin(db);
+    res.render('admin/faq.njk', renderLocals(req, { list, errors: null }));
+  });
+
+  router.post('/suallar-idare', requireAdmin(), requireCsrf, async (req, res) => {
+    const parsed = faqItemSchema.safeParse(req.body);
+    if (!parsed.success) {
+      const list = await listFaqItemsAdmin(db);
+      return res.status(400).render('admin/faq.njk', renderLocals(req, { list, errors: parsed.error.flatten() }));
+    }
+    const created = await createFaqItem(db, parsed.data);
+    await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'faq.create', targetTable: 'faq_items', targetId: created.id });
+    res.redirect(302, '/admin/suallar-idare');
+  });
+
+  router.post('/suallar-idare/:id', requireAdmin(), requireCsrf, async (req, res) => {
+    const parsed = faqItemSchema.safeParse(req.body);
+    if (!parsed.success) {
+      const list = await listFaqItemsAdmin(db);
+      return res.status(400).render('admin/faq.njk', renderLocals(req, { list, errors: parsed.error.flatten() }));
+    }
+    const updated = await updateFaqItem(db, req.params.id, parsed.data);
+    if (!updated) return res.status(404).send('Tapılmadı');
+    await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'faq.update', targetTable: 'faq_items', targetId: updated.id });
+    res.redirect(302, '/admin/suallar-idare');
+  });
+
+  router.post('/suallar-idare/:id/delete', requireAdmin(), requireCsrf, async (req, res) => {
+    const deleted = await deleteFaqItemRow(db, req.params.id);
+    if (!deleted) return res.status(404).send('Tapılmadı');
+    await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'faq.delete', targetTable: 'faq_items', targetId: req.params.id });
+    res.redirect(302, '/admin/suallar-idare');
+  });
+
+  // ---------- Endirim kodları ----------
+  router.get('/kodlar', requireAdmin(), async (req, res) => {
+    const list = await listDiscountCodesAdmin(db);
+    res.render('admin/codes.njk', renderLocals(req, { list, errors: null }));
+  });
+
+  router.post('/kodlar', requireAdmin(), requireCsrf, async (req, res) => {
+    const parsed = manualDiscountCodeSchema.safeParse(req.body);
+    if (!parsed.success) {
+      const list = await listDiscountCodesAdmin(db);
+      return res.status(400).render('admin/codes.njk', renderLocals(req, { list, errors: parsed.error.flatten() }));
+    }
+    let ownerCustomerId = null;
+    if (parsed.data.ownerPhone) {
+      try {
+        const customer = await findCustomerByPhone(db, normalizePhoneAz(parsed.data.ownerPhone));
+        ownerCustomerId = customer?.id ?? null;
+      } catch (err) {
+        if (!(err instanceof InvalidPhoneError)) throw err;
+        const list = await listDiscountCodesAdmin(db);
+        return res.status(400).render('admin/codes.njk', renderLocals(req, { list, errors: { formErrors: ['Telefon nömrəsi düzgün formatda deyil.'] } }));
+      }
+    }
+    const code = `KOD-${randomCodeSuffix()}`;
+    const expiresAt = parsed.data.expiresInDays ? new Date(Date.now() + Number(parsed.data.expiresInDays) * 86_400_000) : null;
+    const created = await createManualDiscountCode(db, { code, ownerCustomerId, percent: parsed.data.percent, expiresAt });
+    await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'code.create', targetTable: 'discount_codes', targetId: created.id });
+    res.redirect(302, '/admin/kodlar');
+  });
+
+  router.post('/kodlar/:id/revoke', requireAdmin(), requireCsrf, async (req, res) => {
+    const updated = await revokeDiscountCode(db, req.params.id);
+    if (!updated) return res.status(404).send('Tapılmadı (və ya artıq aktiv deyil)');
+    await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'code.revoke', targetTable: 'discount_codes', targetId: updated.id });
+    res.redirect(302, '/admin/kodlar');
   });
 
   // ---------- Export (yalnız owner) ----------

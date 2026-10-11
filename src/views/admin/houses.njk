@@ -1,0 +1,46 @@
+{% extends "admin/layout.njk" %}
+{% block title %}Evlər{% endblock %}
+{% block content %}
+<h1 class="admin-h1">Evlər</h1>
+{% if errors %}<div class="admin-alert error">Formu yoxlayın — sahələrdən biri səhvdir.</div>{% endif %}
+
+<div class="admin-card">
+  <div class="admin-table-wrap">
+  <table class="admin-table">
+    <thead><tr><th>Rəng</th><th>Ad</th><th>Slug</th><th>Sıra</th><th>Masterklass</th><th></th></tr></thead>
+    <tbody>
+      {% for h in list %}
+      <tr>
+        <td colspan="6" style="padding:0;">
+          <form method="post" action="/admin/evler/{{ h.id }}" style="display:flex; gap:8px; align-items:center; padding:9px 10px; flex-wrap:wrap;">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+            <span style="width:28px; height:28px; border-radius:50%; background:{{ h.color_hex }}; flex:none; box-shadow:inset 0 0 0 2px rgba(0,0,0,.1);" aria-hidden="true"></span>
+            <input type="text" name="colorHex" value="{{ h.color_hex }}" style="width:90px;" title="Rəng (#RRGGBB)" required>
+            <input type="text" name="name" value="{{ h.name }}" style="width:140px;" title="Ad" required>
+            <input type="text" name="slug" value="{{ h.slug }}" pattern="[a-z0-9-]+" style="width:100px;" title="Slug" required>
+            <input type="number" name="sortOrder" value="{{ h.sort_order }}" min="0" max="999" style="width:70px;" title="Sıra" required>
+            <span class="admin-badge read">{{ h.masterclass_count }} masterklass</span>
+            <button type="submit" class="admin-btn small">Yadda saxla</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6">Hələ ev yoxdur.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div class="admin-card" style="max-width:480px;">
+  <h2 class="admin-h2">Yeni ev əlavə et</h2>
+  <form method="post" action="/admin/evler">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <div class="admin-field"><label for="newName">Ad</label><input type="text" id="newName" name="name" required maxlength="80"></div>
+    <div class="admin-field"><label for="newSlug">Slug (URL, yalnız kiçik hərf/rəqəm/tire)</label><input type="text" id="newSlug" name="slug" required pattern="[a-z0-9-]+" maxlength="60"></div>
+    <div class="admin-field"><label for="newColor">Rəng (#RRGGBB)</label><input type="text" id="newColor" name="colorHex" required pattern="#[0-9A-Fa-f]{6}" placeholder="#E8682A"></div>
+    <div class="admin-field"><label for="newSort">Sıra</label><input type="number" id="newSort" name="sortOrder" min="0" max="999" value="{{ list.length }}" required></div>
+    <button type="submit" class="admin-btn">Yarat</button>
+  </form>
+</div>
+{% endblock %}

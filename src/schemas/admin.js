@@ -50,6 +50,26 @@ export const weeklyTaskSchema = z.object({
   relatedMasterclassId: z.string().uuid().optional().or(z.literal('')),
 });
 
+export const houseSchema = z.object({
+  slug: z.string().trim().min(2).max(60).regex(/^[a-z0-9-]+$/, 'yalnız kiçik hərf, rəqəm, tire'),
+  name: z.string().trim().min(2).max(80),
+  colorHex: z.string().trim().regex(/^#[0-9A-Fa-f]{6}$/, 'formatı #RRGGBB olmalıdır'),
+  sortOrder: z.coerce.number().int().min(0).max(999),
+});
+
+export const faqItemSchema = z.object({
+  tab: z.enum(['q', 'o', 't', 'g']),
+  question: z.string().trim().min(2).max(300),
+  answer: z.string().trim().min(2).max(2000),
+  sortOrder: z.coerce.number().int().min(0).max(999),
+});
+
+export const manualDiscountCodeSchema = z.object({
+  percent: z.coerce.number().int().min(1).max(100),
+  ownerPhone: z.string().trim().max(30).optional().or(z.literal('')),
+  expiresInDays: z.coerce.number().int().min(0).max(3650).optional().or(z.literal('')),
+});
+
 export const taskParticipantSchema = z.object({
   phone: z.string().trim().min(5).max(30),
   ageGroup: z.enum(['4-6', '7-9', '10-12']),

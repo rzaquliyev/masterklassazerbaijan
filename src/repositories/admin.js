@@ -280,6 +280,90 @@ export async function deleteGalleryPhotoRow(db, id) {
   return rows[0] ?? null;
 }
 
+// ---------- Evlər (houses) ----------
+export async function listHousesAdmin(db) {
+  const { rows } = await db.query(`
+    SELECT h.*, (SELECT count(*)::int FROM masterclasses m WHERE m.house_id = h.id) AS masterclass_count
+    FROM houses h ORDER BY h.sort_order ASC
+  `);
+  return rows;
+}
+
+export async function createHouse(db, { slug, name, colorHex, sortOrder }) {
+  const id = randomUUID();
+  const { rows } = await db.query(
+    'INSERT INTO houses (id, slug, name, color_hex, sort_order) VALUES ($1,$2,$3,$4,$5) RETURNING *',
+    [id, slug, name, colorHex, sortOrder],
+  );
+  return rows[0];
+}
+
+export async function updateHouse(db, id, { slug, name, colorHex, sortOrder }) {
+  const { rows } = await db.query(
+    'UPDATE houses SET slug=$2, name=$3, color_hex=$4, sort_order=$5 WHERE id=$1 RETURNING *',
+    [id, slug, name, colorHex, sortOrder],
+  );
+  return rows[0] ?? null;
+}
+
+// ---------- FAQ (suallar) ----------
+export async function listFaqItemsAdmin(db) {
+  const { rows } = await db.query('SELECT * FROM faq_items ORDER BY tab ASC, sort_order ASC');
+  return rows;
+}
+
+export async function createFaqItem(db, { tab, question, answer, sortOrder }) {
+  const id = randomUUID();
+  const { rows } = await db.query(
+    'INSERT INTO faq_items (id, tab, question, answer, sort_order) VALUES ($1,$2,$3,$4,$5) RETURNING *',
+    [id, tab, question, answer, sortOrder],
+  );
+  return rows[0];
+}
+
+export async function updateFaqItem(db, id, { tab, question, answer, sortOrder }) {
+  const { rows } = await db.query(
+    'UPDATE faq_items SET tab=$2, question=$3, answer=$4, sort_order=$5 WHERE id=$1 RETURNING *',
+    [id, tab, question, answer, sortOrder],
+  );
+  return rows[0] ?? null;
+}
+
+export async function deleteFaqItemRow(db, id) {
+  const { rows } = await db.query('DELETE FROM faq_items WHERE id = $1 RETURNING *', [id]);
+  return rows[0] ?? null;
+}
+
+// ---------- Endirim kodları ----------
+export async function listDiscountCodesAdmin(db) {
+  const { rows } = await db.query(`
+    SELECT d.*, co.full_name AS owner_name, co.phone_e164 AS owner_phone,
+           cr.full_name AS redeemed_by_name, cr.phone_e164 AS redeemed_by_phone
+    FROM discount_codes d
+    LEFT JOIN customers co ON co.id = d.owner_customer_id
+    LEFT JOIN customers cr ON cr.id = d.redeemed_by_customer_id
+    ORDER BY d.created_at DESC LIMIT 300
+  `);
+  return rows;
+}
+
+export async function createManualDiscountCode(db, { code, ownerCustomerId, percent, expiresAt }) {
+  const id = randomUUID();
+  const { rows } = await db.query(
+    `INSERT INTO discount_codes (id, code, type, owner_customer_id, percent, expires_at) VALUES ($1,$2,'manual',$3,$4,$5) RETURNING *`,
+    [id, code, ownerCustomerId || null, percent, expiresAt],
+  );
+  return rows[0];
+}
+
+export async function revokeDiscountCode(db, id) {
+  const { rows } = await db.query(
+    `UPDATE discount_codes SET status = 'expired' WHERE id = $1 AND status = 'active' RETURNING *`,
+    [id],
+  );
+  return rows[0] ?? null;
+}
+
 // ---------- Həftənin tapşırığı ----------
 export async function listWeeklyTasksAdmin(db) {
   const { rows } = await db.query(`

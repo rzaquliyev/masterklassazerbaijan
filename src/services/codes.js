@@ -4,7 +4,7 @@ import { findOrCreateCustomer } from '../repositories/customers.js';
 import { findDiscountCodeByOwner, createDiscountCode } from '../repositories/content.js';
 
 const CODE_LETTERS = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
-function randomCodeSuffix() {
+export function randomCodeSuffix() {
   var s = '';
   for (var i = 0; i < 4; i++) s += CODE_LETTERS[randomInt(CODE_LETTERS.length)];
   return s;
