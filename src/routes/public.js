@@ -14,6 +14,7 @@ import { getBookingWithDetails } from '../repositories/bookings.js';
 import { reserveSeat, SessionNotFoundError } from '../services/booking.js';
 import { getOrCreateReferralCode } from '../services/codes.js';
 import { bookingInputSchema } from '../schemas/booking.js';
+import { contactInquirySchema, birthdayInquirySchema } from '../schemas/inquiry.js';
 import { InvalidPhoneError, normalizePhoneAz } from '../lib/phone.js';
 import { checkRateLimit } from '../lib/rateLimit.js';
 
@@ -155,11 +156,20 @@ export function createPublicRouter(db) {
     if (!checkRateLimit(`contact:${req.ip}`, 5, 60_000) || req.body.website) {
       return res.render('elaqe.njk', { sent: true }); // honeypot/rate-limit: bota "uğur" göstər, yazma
     }
-    if (!req.body.name || !req.body.phone || !req.body.message) {
+    const parsed = contactInquirySchema.safeParse(req.body);
+    if (!parsed.success) {
       return res.status(400).render('elaqe.njk', { sent: false, error: true, formValues: req.body });
     }
-    await insertInquiry(db, { type: 'contact', name: req.body.name, phone: req.body.phone, message: req.body.message });
-    res.render('elaqe.njk', { sent: true });
+    try {
+      const phoneE164 = normalizePhoneAz(parsed.data.phone);
+      await insertInquiry(db, { type: 'contact', name: parsed.data.name, phone: phoneE164, message: parsed.data.message });
+      res.render('elaqe.njk', { sent: true });
+    } catch (err) {
+      if (err instanceof InvalidPhoneError) {
+        return res.status(400).render('elaqe.njk', { sent: false, error: true, formValues: req.body });
+      }
+      throw err;
+    }
   });
 
   router.get('/ad-gunu', async (req, res) => {
@@ -170,16 +180,25 @@ export function createPublicRouter(db) {
     if (!checkRateLimit(`birthday:${req.ip}`, 5, 60_000) || req.body.website) {
       return res.render('ad-gunu.njk', { sent: true });
     }
-    if (!req.body.phone || !req.body.package) {
+    const parsed = birthdayInquirySchema.safeParse(req.body);
+    if (!parsed.success) {
       return res.status(400).render('ad-gunu.njk', { sent: false, error: true, formValues: req.body });
     }
-    await insertInquiry(db, {
-      type: 'birthday', name: req.body.phone, phone: req.body.phone,
-      birthdayPackage: req.body.package,
-      birthdayGuestCount: req.body.kids ? Number(req.body.kids) : null,
-      birthdayDate: req.body.date || null,
-    });
-    res.render('ad-gunu.njk', { sent: true });
+    try {
+      const phoneE164 = normalizePhoneAz(parsed.data.phone);
+      await insertInquiry(db, {
+        type: 'birthday', name: phoneE164, phone: phoneE164,
+        birthdayPackage: parsed.data.package,
+        birthdayGuestCount: parsed.data.kids ?? null,
+        birthdayDate: parsed.data.date || null,
+      });
+      res.render('ad-gunu.njk', { sent: true });
+    } catch (err) {
+      if (err instanceof InvalidPhoneError) {
+        return res.status(400).render('ad-gunu.njk', { sent: false, error: true, formValues: req.body });
+      }
+      throw err;
+    }
   });
 
   router.get('/kampaniyalar', async (req, res) => {
@@ -192,6 +211,9 @@ export function createPublicRouter(db) {
     }
     try {
       const phoneE164 = normalizePhoneAz(req.body.phone || '');
+      if (!checkRateLimit(`passport:phone:${phoneE164}`, 10, 60_000)) {
+        return res.status(429).render('kampaniyalar.njk', { lookup: null, lookupError: true });
+      }
       const loyalty = await getLoyaltyByPhoneAndBookingCode(db, phoneE164, (req.body.reference || '').trim().toUpperCase());
       if (!loyalty) {
         return res.render('kampaniyalar.njk', { lookup: null, lookupError: true });
