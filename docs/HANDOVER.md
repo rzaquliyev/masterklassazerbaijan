@@ -4,7 +4,7 @@ Bu sənəd layihəni ilk dəfə əlinə alan hər kəs üçün (studiya sahibi, 
 
 ## 0. İndi harada dayanmışıq (2026-11-24) — ƏN VACİB
 
-1. **✅ (Yeniləmə 2026-11-24 axşam) Sayt yenidən ONLINE-dır, `masterklas.az` bağlanıb** (`railway status`). Aşağıdakı offline qeydi tarixçə üçün saxlanılıb. Əvvəl: **Production sayt OFFLINE idi.** Railway-in Free/Trial planı ("30 gün, $5 kredit, kartsız") bitib (~2026-10-11-dən bəri), həm `masterklassazerbaijan` servisi, həm də Postgres bazası dayanıb (`railway status` → "○ Offline" hər ikisi üçün). **Bu kodun problemi deyil** — sadəcə kart əlavə edilməyib.
+1. **✅ (Yeniləmə 2026-11-24 axşam) Sayt yenidən ONLINE-dır** — `https://masterklassazerbaijan-production-8722.up.railway.app` işləyir, son deploy (audit düzəlişləri) uğurlu. **⚠️ `masterklas.az` Railway-də Custom Domain kimi əlavə olunub, amma DNS-də hələ yoxdur** (`Resolve-DnsName masterklas.az -Server 8.8.8.8` heç nə qaytarmır, NS qeydi də yoxdur) — domen qeydiyyatçısında NS/CNAME qeydləri qurulmalıdır, bax `docs/DEPLOY.md` §7. Aşağıdakı offline qeydi tarixçə üçün saxlanılıb. Əvvəl: **Production sayt OFFLINE idi.** Railway-in Free/Trial planı ("30 gün, $5 kredit, kartsız") bitib (~2026-10-11-dən bəri), həm `masterklassazerbaijan` servisi, həm də Postgres bazası dayanıb (`railway status` → "○ Offline" hər ikisi üçün). **Bu kodun problemi deyil** — sadəcə kart əlavə edilməyib.
 2. **Domen alındı: `masterklas.az`** — hələ heç bir hostinqə bağlanmayıb.
 3. **Hostinq qərarı gözlənilir (sahibdən):** iki seçim müzakirə edildi:
    - **(Tövsiyə) Railway-də qal, kart əlavə et** → Hobby plan ($5/ay minimum), mövcud layihə/DB/volume/PITR backup saxlanılır, sıfır köçürmə işi.
