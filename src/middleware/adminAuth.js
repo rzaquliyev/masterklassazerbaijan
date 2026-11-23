@@ -1,5 +1,13 @@
+import { timingSafeEqual } from 'node:crypto';
 import { parseCookies } from '../lib/cookies.js';
 import { SESSION_COOKIE, loadAdminSession } from '../lib/adminSession.js';
+
+function safeEqual(a, b) {
+  const bufA = Buffer.from(String(a));
+  const bufB = Buffer.from(String(b));
+  if (bufA.length !== bufB.length) return false;
+  return timingSafeEqual(bufA, bufB);
+}
 
 // Hər /admin sorğusuna sessiyanı (varsa) bağlayır — login səhifəsi də daxil, ona görə "artıq
 // daxil olub" halını özü yoxlaya bilsin.
@@ -28,7 +36,7 @@ export function requireAdmin({ role } = {}) {
 // CSRF: form-dakı gizli `_csrf` sahəsi sessiyanın öz tokeni ilə üst-üstə düşməlidir.
 export function requireCsrf(req, res, next) {
   const token = req.body?._csrf;
-  if (!req.adminSession || !token || token !== req.adminSession.csrfToken) {
+  if (!req.adminSession || typeof token !== 'string' || !safeEqual(token, req.adminSession.csrfToken)) {
     return res.status(403).send('CSRF token səhvdir və ya sessiya bitib. Səhifəni yeniləyib yenidən cəhd edin.');
   }
   next();

@@ -24,6 +24,11 @@ export async function createApp(db) {
   const app = express();
   db = db || (await getDb());
 
+  // Railway (və hər hostinq arxasında olan reverse-proxy) tək bir "hop" arxasındadır —
+  // bu olmadan req.ip HƏR SORĞUDA proksinin öz ünvanını qaytarır, nəticədə bütün istifadəçilər
+  // eyni rate-limit "bucket"-ini paylaşır (bir nəfərin həddi aşması hamını bloklayır).
+  app.set('trust proxy', 1);
+
   app.use(
     helmet({
       contentSecurityPolicy: {

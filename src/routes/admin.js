@@ -36,6 +36,10 @@ import {
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 15 * 1024 * 1024 } });
 
+// İstifadəçi mövcud olmayanda belə argon2.verify çağırılır ki, cavab vaxtı "e-poçt tapılmadı"
+// ilə "parol səhvdir" arasında fərqlənməsin (vaxt-əsaslı istifadəçi mövcudluğu sızması qarşısı).
+const DUMMY_PASSWORD_HASH = await argon2.hash('dummy-constant-time-padding', { type: argon2.argon2id });
+
 const bakuDtFormatter = new Intl.DateTimeFormat('sv-SE', {
   timeZone: 'Asia/Baku', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
 });
@@ -49,7 +53,10 @@ function fromBakuDatetimeLocal(value) {
 }
 
 function csvEscape(value) {
-  const s = value == null ? '' : String(value);
+  let s = value == null ? '' : String(value);
+  // CSV/formula-injection qarşısı: müştəri məlumatı (ad, telefon və s.) Excel-də düstur kimi
+  // açılmasın deyə "=", "+", "-", "@" ilə başlayan dəyərlərin əvvəlinə apostrof əlavə olunur.
+  if (/^[=+\-@]/.test(s)) s = `'${s}`;
   if (/[",\n]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
   return s;
 }
@@ -90,7 +97,8 @@ export function createAdminRouter(db) {
     }
 
     const user = await findAdminUserByEmail(db, email);
-    const ok = user && (await argon2.verify(user.password_hash, password).catch(() => false));
+    const verified = await argon2.verify(user ? user.password_hash : DUMMY_PASSWORD_HASH, password).catch(() => false);
+    const ok = Boolean(user) && verified;
     if (!ok) {
       return res.status(401).render('admin/login.njk', renderLocals(req, { error: 'E-poçt və ya parol səhvdir.', next: '/admin' }));
     }
