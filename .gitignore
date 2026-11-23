@@ -7,3 +7,5 @@ node_modules/
 # yalnız qovluq strukturu .gitkeep ilə saxlanılır.
 src/public/uploads/gallery/*
 !src/public/uploads/gallery/.gitkeep
+# Həftənin tapşırığı nümunə/iştirakçı şəkilləri (uşaq işləri) — eyni səbəbdən repo-ya düşmür.
+src/public/uploads/tasks/

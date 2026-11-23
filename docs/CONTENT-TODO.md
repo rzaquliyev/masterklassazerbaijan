@@ -6,7 +6,7 @@
 
 - **Qərar:** rəsmi ad **"Masterklass Azerbaijan"** (yazılışda "k" ilə — "masterklass", "masterclass" yox) — Instagram hesabı `@masterklassazerbaijan` ilə eyni, BRIEF.md §0/§2-dəki ad/domen qarışıqlığı riski bununla aradan qalxır, çünki mövcud əlaqəsiz biznes "masterclass" (ingilis yazılışı, "c" ilə) adını və domenini istifadə edir.
 - **Tətbiq olundu:** `siteName` açarı `src/i18n/az.json`, `ru.json`, `en.json`-da `"Masterklass Azerbaijan"` olaraq dəyişdirildi (bütün səhifə başlıqlarında, naviqasiyada, footer-də avtomatik görünür).
-- Domen adı hələ ayrıca təsdiqlənməlidir (məs. `masterklassazerbaijan.az` və ya oxşar — "masterclass.az" YOX, çünki o, başqa birinə məxsusdur).
+- ✅ Domen alınıb: **`masterklas.az`** (2026-11) — hələ hostinqə bağlanmayıb, bax `docs/DEPLOY.md` §7.
 
 ## 2. Əlaqə məlumatları
 
@@ -23,7 +23,7 @@
 | Sahə | Harada | Hazırkı dəyər |
 |---|---|---|
 | Ad günü paketləri (Mini/Usta/Super) | `src/views/ad-gunu.njk:39` | `[QİYMƏT] ₼` (hər paket üçün ayrı, dinamik yer tutucu) |
-| Masterklass seansları | `scripts/seed-sample-data.*` (DB seed) | Artıq ədəd dəyərlərlə doldurulub, lakin `SAMPLE` bayrağı ilə işarələnib — **real istehsal qiymətləri** studiya sahibindən alınmalı, seed sıfırlanmalıdır |
+| Masterklass seansları | `scripts/seed-data.js` (DB seed) | Artıq ədəd dəyərlərlə doldurulub, lakin `SAMPLE` bayrağı ilə işarələnib — **real istehsal qiymətləri** studiya sahibindən alınmalı, seed sıfırlanmalıdır |
 
 ## 4. Qrup ölçüsü / say həddi
 
@@ -58,7 +58,7 @@
 
 ## 7. Hələ tətbiq olunmayan (əlaqəli, amma ayrı mövzu)
 
-- Admin panel (foto yükləmə, masterklass/seans idarəsi, bron idarəsi) hələ qurulmayıb — yuxarıdakı bir çox boşluq (qiymətlər, fotolar) yalnız admin panel və ya birbaşa DB-seed vasitəsilə doldurula bilər.
+- ~~Admin panel hələ qurulmayıb~~ ✅ Admin panel hazırdır (Mərhələ 5 + 8): qiymətlər `/admin/masterclasses`, fotolar `/admin/qalereya`, sabit mətnlər `/admin/sayt`-dan doldurulur. İş saatları və ad günü paket mətnləri hələ `src/i18n/*.json`-dadır.
 
 ---
 

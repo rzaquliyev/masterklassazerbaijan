@@ -1,7 +1,9 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import { createTestDb, seedHouseAndMasterclass, makeBookingInput } from './helpers/testDb.js';
-import { reserveSeat, cancelBooking, BookingNotCancellableError } from '../src/services/booking.js';
+import {
+  reserveSeat, cancelBooking, setBookingSeatStatus, BookingNotCancellableError, SessionNotFoundError, SessionFullError,
+} from '../src/services/booking.js';
 
 describe('bron və tutum (services/booking.js)', () => {
   test('son yeri bron etmək uğurlu olur və seans "confirmed" statusunda qeyd olunur', async () => {
@@ -137,5 +139,52 @@ describe('bron və tutum (services/booking.js)', () => {
     const { rows } = await db.query('SELECT * FROM loyalty_stamps WHERE customer_id = $1', [customerId]);
     assert.equal(rows[0].stamp_count, 0, '5-də sayğac sıfırlanır');
     assert.equal(rows[0].free_sessions_available, 1);
+  });
+
+  for (const [label, sql] of [
+    ['ləğv edilmiş', `UPDATE sessions SET status = 'cancelled' WHERE id = $1`],
+    ['keçmiş', `UPDATE sessions SET starts_at = now() - interval '1 day' WHERE id = $1`],
+    ['gizli masterklassın', `UPDATE masterclasses SET is_published = false WHERE id = (SELECT masterclass_id FROM sessions WHERE id = $1)`],
+  ]) {
+    test(`${label} seansa bron edilə bilmir (yer tutulmur)`, async () => {
+      const db = await createTestDb();
+      const { sessionId } = await seedHouseAndMasterclass(db, { capacity: 5, booked: 0 });
+      await db.query(sql, [sessionId]);
+
+      await assert.rejects(() => reserveSeat(db, makeBookingInput({ sessionId })), SessionNotFoundError);
+      const { rows } = await db.query('SELECT booked FROM sessions WHERE id = $1', [sessionId]);
+      assert.equal(rows[0].booked, 0);
+      const count = await db.query('SELECT count(*)::int AS n FROM bookings');
+      assert.equal(count.rows[0].n, 0);
+    });
+  }
+
+  test('admin gözləmə siyahısındakı bronu təsdiqləyəndə tutum aşılmır (yer yoxdursa SessionFullError)', async () => {
+    const db = await createTestDb();
+    const { sessionId } = await seedHouseAndMasterclass(db, { capacity: 1, booked: 0 });
+    await reserveSeat(db, makeBookingInput({ sessionId, parent: { fullName: 'A', phone: '0551111111' } }));
+    const { booking: waiting } = await reserveSeat(db, makeBookingInput({ sessionId, parent: { fullName: 'B', phone: '0552222222' } }));
+    assert.equal(waiting.status, 'waitlist');
+
+    await assert.rejects(() => setBookingSeatStatus(db, waiting.id, 'confirmed'), SessionFullError);
+    const { rows } = await db.query(
+      `SELECT booked, (SELECT count(*)::int FROM bookings WHERE session_id = $1 AND status = 'confirmed') AS confirmed
+       FROM sessions WHERE id = $1`, [sessionId],
+    );
+    assert.equal(rows[0].booked, 1);
+    assert.equal(rows[0].confirmed, 1);
+  });
+
+  test('admin təsdiqi boş yer olanda yer tutur, confirmed → attended yeri ikiqat saymır', async () => {
+    const db = await createTestDb();
+    const { sessionId } = await seedHouseAndMasterclass(db, { capacity: 2, booked: 0 });
+    const { booking: a } = await reserveSeat(db, makeBookingInput({ sessionId, parent: { fullName: 'A', phone: '0551111111' } }));
+    await cancelBooking(db, a.id);
+
+    const confirmed = await setBookingSeatStatus(db, a.id, 'confirmed');
+    assert.equal(confirmed.status, 'confirmed');
+    await setBookingSeatStatus(db, a.id, 'attended');
+    const { rows } = await db.query('SELECT booked FROM sessions WHERE id = $1', [sessionId]);
+    assert.equal(rows[0].booked, 1);
   });
 });

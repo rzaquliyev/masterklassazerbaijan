@@ -57,6 +57,17 @@ export async function getSessionById(db, sessionId) {
   return rows[0] ?? null;
 }
 
+// İctimai bron üçün: yalnız planlaşdırılmış, hələ başlamamış və dərc olunmuş masterklassa aid seans.
+// Ləğv edilmiş/keçmiş/gizli seansın köhnə linki (məs. Instagram-dan) ilə bron etmək mümkün olmamalıdır.
+export async function getBookableSessionById(db, sessionId) {
+  const { rows } = await db.query(
+    `SELECT s.* FROM sessions s JOIN masterclasses m ON m.id = s.masterclass_id
+     WHERE s.id = $1 AND s.status = 'scheduled' AND s.starts_at > now() AND m.is_published = true`,
+    [sessionId],
+  );
+  return rows[0] ?? null;
+}
+
 export async function listAllUpcomingSessions(db) {
   const { rows } = await db.query(`
     SELECT s.*, m.title AS masterclass_title, m.slug AS masterclass_slug, m.age_min, m.age_max,

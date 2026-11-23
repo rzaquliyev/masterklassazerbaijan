@@ -24,6 +24,6 @@ Hər mərhələdən sonra dayan, nəticəni fayla yaz, `git commit` et — bax `
 
 ## Açıq suallar (hələ cavablanmayıb, bloklamır)
 
-- Dəqiq brend adı və domen (`[Studio adı]` placeholder)
-- Ünvan/rayon, WhatsApp nömrəsi, Instagram hesabı
+- ~~Brend adı, domen, ünvan, WhatsApp~~ ✅ həll olunub: "Masterklass Azerbaijan", domen `masterklas.az` (alınıb, hələ bağlanmayıb), ünvan/telefon `docs/CONTENT-TODO.md` §1–2
+- İş saatları, real qiymətlər, qrup ölçüsü — bax `docs/CONTENT-TODO.md`
 - Loqo/brend rəngləri (maketin rəngləri ilə davam edilir)

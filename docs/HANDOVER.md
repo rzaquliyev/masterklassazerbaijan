@@ -59,12 +59,21 @@ Tam statik kod auditi aparıldı (auth/sessiya, SQL-injection, input validasiyas
 2. `/kampaniyalar/passport` axtarışı yalnız IP-yə görə rate-limitlənirdi → telefon üzrə də əlavə edildi.
 3. `.ics` bilet endirmə marşrutunda (PII ehtiva edir) rate-limit yox idi → əlavə edildi.
 
+**İkinci audit (2026-11-24, eyni gün) — düzəldildi:**
+
+4. İctimai bron ləğv edilmiş/keçmiş/gizli masterklassın seansına da keçirdi (köhnə link ilə) → indi yalnız planlaşdırılmış, gələcək, dərc olunmuş seansa bron olur, digərləri 404.
+5. Admin gözləmə siyahısındakı bronu "Təsdiqlə" edəndə `sessions.booked` artmırdı → tutum aşılırdı. İndi yer atomik tutulur, yer yoxdursa 409 xəbərdarlığı.
+6. Kiçik: səhv formatlı ID-li URL-lər 500 əvəzinə 404; "Qalib et" təkrar basılanda ikinci möhür verilmir; rate-limit yaddaşı vaxtaşırı təmizlənir; `uploads/tasks/` `.gitignore`-a əlavə olundu. Testlər: 27/27.
+
+Qəbul edilmiş (dəyişdirilməyən) risklər: OTP olmadığından bir nəfər saxta bronlarla yer tuta bilər (rate-limit 5/dəq/IP ilə məhdud, Phase 0 qərarı); Gizlənqaç endpoint-i telefonu bilənə həmin telefonun kodunu yenidən göstərir (kod hələ heç yerdə tətbiq olunmur).
+
 Commit-lər: `Təhlükəsizlik auditi: ...` (2 commit) + `Mərhələ 8: Admin panelinə "Sayt" bölməsi ...` (1 commit). Hamısı lokal `master`-də, GitHub-a push edilməyib.
 
 ## 7. Növbəti addımlar (tövsiyə sırası ilə)
 
 1. **Railway-ə kart əlavə et, Hobby plana keç** (bax §0.3) — sayt yenidən canlanır.
 2. **`masterklas.az` domenini Railway-ə bağla** (bax `docs/DEPLOY.md` §7).
-3. **Commit edilmiş dəyişiklikləri GitHub-a push et** (`git push`) ki, Railway avtomatik deploy etsin.
-4. **`docs/CONTENT-TODO.md`-dəki qalan real məlumatları ver** (iş saatları, real qiymətlər və s.).
-5. (İxtiyari) `/admin/sayt`-dan sabit mətinləri real/son variantları ilə yenilə.
+3. **Railway volume-un Mount Path-ının `/app/src/public/uploads` olduğunu yoxla** (köhnə quraşdırmada yalnız `uploads/gallery` idi — bax `docs/DEPLOY.md` §4; düzəldilməyibsə tapşırıq şəkilləri hər deploy-da itir).
+4. **Commit edilmiş dəyişiklikləri GitHub-a push et** (`git push`) ki, Railway avtomatik deploy etsin.
+5. **`docs/CONTENT-TODO.md`-dəki qalan real məlumatları ver** (iş saatları, real qiymətlər və s.).
+6. (İxtiyari) `/admin/sayt`-dan sabit mətinləri real/son variantları ilə yenilə.

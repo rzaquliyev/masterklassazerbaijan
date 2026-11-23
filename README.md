@@ -46,7 +46,7 @@ Admin panelin nə etdiyi/etmədiyi: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.m
 npm test
 ```
 
-Node-un daxili test runner-i ilə işləyir (`node --test`), hər test faylı öz təcrid olunmuş PGlite nümunəsini yaradır (paylaşılan vəziyyət yoxdur). Bron/tutum məntiqi və admin autentifikasiyası/icazələri üçün test var (`tests/booking.test.js`, `tests/admin.test.js`).
+Node-un daxili test runner-i ilə işləyir (`node --test`), hər test faylı öz təcrid olunmuş PGlite nümunəsini yaradır (paylaşılan vəziyyət yoxdur). Bron/tutum məntiqi (o cümlədən ləğv/keçmiş seansa bron qadağası, admin təsdiqində tutum yoxlaması) və admin autentifikasiyası/icazələri üçün test var (`tests/booking.test.js`, `tests/admin.test.js`).
 
 ## Layihə strukturu
 
@@ -60,7 +60,7 @@ src/
   views/          → Nunjucks şablonları (admin/ ayrı alt-qovluqda)
   public/         → statik CSS/JS/şrift
 migrations/       → versiyalı SQL miqrasiyalar
-scripts/          → create-admin.js, migrate.js, seed-data.js
+scripts/          → create-admin.js, migrate.js, seed.js, seed-data.js
 tests/            → node:test testləri
 docs/             → ARCHITECTURE.md, PAGES.md, ASSETS.md, CONTENT-TODO.md
 ```
@@ -72,8 +72,8 @@ Layihəni ilk dəfə əlinə alan üçün qısa bələdçi (müştəri məlumat�
 ## Hələ görülməli işlər
 
 - [`docs/CONTENT-TODO.md`](docs/CONTENT-TODO.md): real məzmun boşluqları (iş saatları, qiymətlər, say həddləri, real fotolar)
-- Ev (`houses`)/FAQ CRUD və endirim kodu idarəsi admin UI-dan hələ yoxdur (bax `docs/ARCHITECTURE.md` §4 "hələ tətbiq olunmayıb")
-- Avtomatik backup (bax [`docs/DEPLOY.md`](docs/DEPLOY.md) §8) hələ aktivləşdirilməyib
+- Cədvəlli backup snapshot-ları Railway Pro planı tələb edir — PITR artıq aktivdir (bax [`docs/DEPLOY.md`](docs/DEPLOY.md) §8)
+- Hosting hazırda offline-dır (Railway trial bitib) — bax [`docs/HANDOVER.md`](docs/HANDOVER.md) §0
 
 ## Deploy
 

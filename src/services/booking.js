@@ -14,7 +14,7 @@ import {
   findBookingByIdempotencyKey, tryReserveSeat, releaseSeat, insertBooking, linkBookingChild,
   updateBookingStatus, earliestWaitlistBooking, generateBookingReference, findBookingById,
 } from '../repositories/bookings.js';
-import { getSessionById } from '../repositories/masterclasses.js';
+import { getBookableSessionById } from '../repositories/masterclasses.js';
 import { addStamp } from '../repositories/loyalty.js';
 
 export class SessionNotFoundError extends Error {
@@ -25,6 +25,10 @@ export class BookingNotFoundError extends Error {
 }
 export class BookingNotCancellableError extends Error {
   constructor(id, status) { super(`Bron "${id}" (status: ${status}) ləğv edilə bilməz`); this.name = 'BookingNotCancellableError'; }
+}
+
+export class SessionFullError extends Error {
+  constructor(sessionId) { super(`Seansda boş yer yoxdur: ${sessionId}`); this.name = 'SessionFullError'; }
 }
 
 const SEATS_PER_BOOKING = 1; // hazırkı axında hər bron 1 uşaq üçündür (BRIEF Kassa axını)
@@ -40,7 +44,8 @@ async function attemptReservation(tx, input, phoneE164) {
   const existing = await findBookingByIdempotencyKey(tx, input.sessionId, input.idempotencyKey);
   if (existing) return { booking: existing, alreadyExisted: true };
 
-  const session = await getSessionById(tx, input.sessionId);
+  // Ləğv edilmiş, keçmiş və ya gizli masterklassın seansı "tapılmadı" sayılır (bron olunmur).
+  const session = await getBookableSessionById(tx, input.sessionId);
   if (!session) throw new SessionNotFoundError(input.sessionId);
 
   const customer = await findOrCreateCustomer(tx, {
@@ -110,6 +115,24 @@ export async function reserveSeat(db, input) {
     }
     throw err;
   }
+}
+
+// Yer tutan statuslar: bu statusdakı bron `sessions.booked`-a artıq daxildir.
+const SEAT_HOLDING_STATUSES = ['confirmed', 'attended'];
+
+// Admin bronu "confirmed"/"attended" edir. Bron hələ yer tutmursa (waitlist/pending/cancelled),
+// yer eyni atomik UPDATE ilə tutulur — yer yoxdursa SessionFullError, tutum heç vaxt aşılmır.
+export async function setBookingSeatStatus(db, bookingId, status) {
+  if (!SEAT_HOLDING_STATUSES.includes(status)) throw new Error(`Dəstəklənməyən status: ${status}`);
+  return db.withTransaction(async (tx) => {
+    const booking = await findBookingById(tx, bookingId);
+    if (!booking) throw new BookingNotFoundError(bookingId);
+    if (!SEAT_HOLDING_STATUSES.includes(booking.status)) {
+      const reserved = await tryReserveSeat(tx, booking.session_id, booking.seats);
+      if (!reserved) throw new SessionFullError(booking.session_id);
+    }
+    return updateBookingStatus(tx, bookingId, status);
+  });
 }
 
 export async function cancelBooking(db, bookingId) {

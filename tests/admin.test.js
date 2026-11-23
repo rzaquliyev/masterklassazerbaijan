@@ -132,4 +132,14 @@ describe('admin panel (routes/admin.js)', () => {
     assert.equal(afterLogout.status, 302);
     assert.match(afterLogout.headers.get('location'), /\/admin\/login/);
   });
+
+  test('səhv formatlı ID-lər 500 yox, 404 qaytarır (ictimai və admin)', async () => {
+    for (const path of ['/az/kassa/abc', '/az/tapsiriq/sertifikat/abc', '/api/ics/abc']) {
+      const res = await fetch(baseUrl + path);
+      assert.equal(res.status, 404, path);
+    }
+    const { client } = await loginAs('owner@test.az', 'owner-password-123');
+    const res = await client.request('/admin/customers/abc');
+    assert.equal(res.status, 404);
+  });
 });

@@ -9,7 +9,7 @@
 - **Template:** Nunjucks (server-rendered HTML, auto-escape)
 - **DB:** PostgreSQL + versiyalı miqrasiyalar, parametrli sorğular (lokal/test üçün PGlite, açıq şəkildə qeyd olunur)
 - **Validasiya:** Zod — hər server sərhədində
-- **Animasiya:** Motion (`motion` npm, vanilla JS API: `animate()`, `scroll()`, `inView()`, `stagger()`) — BRIEF §7
+- **Animasiya:** CSS `@keyframes`/`transition` + `IntersectionObserver` (vanilla JS). BRIEF §7-dəki Motion kitabxanası **qurulmayıb** — lazım olmadı (JS büdcəsi daha kiçik qalır), `package.json`-da yoxdur
 - **Sürükləmə/toxunma oyunları** (Plastilin yoğur, Gizlənqaç): Pointer Events, build aləti yoxdur
 
 SPA/Next.js qurulmur.
@@ -24,7 +24,7 @@ views/          → Nunjucks şablonları + paylaşılan partiallar
 public/         → statik CSS/JS/şrift/SVG
 ```
 
-Bron/tutum qaydaları `services/booking.js`-də yaşayır, HTTP-dən asılı olmadan test edilir (BRIEF-in "son yer üçün yalnız bir bron" tələbi — əvvəlki sessiyada bu artıq tətbiq olunmuşdu, Mərhələ 3-də testlərlə **yenidən qurulacaq**, köhnə kod `git log`-da yoxdur, sıfırdan yazılacaq).
+Bron/tutum qaydaları `services/booking.js`-də yaşayır, HTTP-dən asılı olmadan test edilir (BRIEF-in "son yer üçün yalnız bir bron" tələbi — Mərhələ 3-də sıfırdan yazılıb, `tests/booking.test.js` ilə yoxlanılır). İctimai bron yalnız `status='scheduled'`, gələcək tarixli və dərc olunmuş masterklassın seansına mümkündür (`getBookableSessionById`); admin gözləmə siyahısından/ləğvdən təsdiq edəndə yer `setBookingSeatStatus` ilə atomik tutulur, tutum dolubsa 409.
 
 ## 3. Dillər
 
@@ -51,7 +51,7 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 | 12 | `/tapsiriq`, `/tapsiriq/sertifikat/<id>` | Həftənin tapşırığı (yeni, 2026-10-10) | Elanlar lövhəsi |
 | 13 | `/suallar` | Valideyn sualları | Məlumat bürosu |
 | 14 | `/elaqe` | Əlaqə | Şəhər poçtu |
-| — | `/mexfilik`, `/sertler` | Statik | — |
+| — | `/mexfilik` | Statik (`/sertler` planlaşdırılıb, hələ yoxdur) | — |
 | — | `/404`, `/500` | Xəta səhifələri | — |
 
 `sitemap.xml`, `robots.txt`, `Event`/`LocalBusiness` JSON-LD (masterklass/seans səhifələrində).
@@ -85,8 +85,8 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 | `discount_codes` | Referral + erkən-quş + Gizlənqaç mükafatı ortaq infrastruktur: `code`, `type` (`referral`/`hide-seek`/`manual`), `owner_customer_id`, `percent`, `status`, `expires_at`, `redeemed_by` |
 | `birthday_inquiries` | `inquiries`-in genişlənməsi: `package`, `guest_count`, `date`, `phone`, `status` |
 | `gallery_photos` | `url`, `house_id`, `child_label` (ixtiyari, tam ad yox), `consent` (məcburi `true` olmalı ictimai görünmə üçün) |
-| `instructors` | `name`, `photo`, `house_id`, `bio`, `experience`, `this_month_programs` |
-| `instructor_applications` | Müraciət forması (ad, telefon, CV-link/mesaj) |
+| `instructors` | *(sxemdə qalıb, istifadə olunmur — təlimçilər funksiyası silinib, bax §4)* |
+| `instructor_applications` | *(sxemdə qalıb, istifadə olunmur)* |
 | `faq_items` | `tab`, `question`, `answer`, `order` |
 | `weekly_tasks` | Həftənin tapşırığı: `week_number`, `title`, `instructions`, `materials` (TEXT[]), `reference_image_url`, `unlock_date`, `related_masterclass_id`, `is_published`, `is_sample` |
 | `task_participants` | `task_id`, `customer_id`, `age_group` (4-6/7-9/10-12), `child_label`, `instagram_handle`, `photo_url`, `consent_public`, `is_winner` |
@@ -129,4 +129,4 @@ Tam, yenilənən siyahı: `docs/CONTENT-TODO.md`. Qısa xülasə:
 - ❌ İş saatları hələ gözlənilir
 - ❌ Qiymətlər, say həddləri, bəzi qayda mətnləri (ləğv qaydası, saxlama müddəti) hələ `SAMPLE`/placeholder
 - Loqo/brend rəngləri (maketin rəngləri ilə davam edilir)
-- Hosting büdcəsi/seçimi
+- ~~Hosting seçimi~~ Railway seçildi (§9); hazırda trial bitdiyi üçün offline — bax `docs/HANDOVER.md` §0

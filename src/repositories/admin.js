@@ -443,7 +443,14 @@ export async function getTaskParticipantAdmin(db, id) {
 }
 
 export async function setTaskParticipantWinner(db, id, isWinner) {
-  const { rows } = await db.query('UPDATE task_participants SET is_winner = $2 WHERE id = $1 RETURNING *', [id, isWinner]);
+  // `was_winner` — yeniləmədən əvvəlki dəyər (route bonus möhürü yalnız ilk dəfə verir).
+  const { rows } = await db.query(
+    `UPDATE task_participants p SET is_winner = $2
+     FROM (SELECT id, is_winner AS was_winner FROM task_participants WHERE id = $1 FOR UPDATE) old
+     WHERE p.id = old.id
+     RETURNING p.*, old.was_winner`,
+    [id, isWinner],
+  );
   return rows[0] ?? null;
 }
 

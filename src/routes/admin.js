@@ -7,7 +7,10 @@ import { serializeCookie } from '../lib/cookies.js';
 import { checkRateLimit } from '../lib/rateLimit.js';
 import { saveGalleryImage, deleteGalleryImage, saveTaskPhoto, deleteTaskPhoto, UnsupportedImageError } from '../lib/imageUpload.js';
 import { listHouses } from '../repositories/masterclasses.js';
-import { cancelBooking, BookingNotCancellableError, BookingNotFoundError } from '../services/booking.js';
+import {
+  cancelBooking, setBookingSeatStatus, BookingNotCancellableError, BookingNotFoundError, SessionFullError,
+} from '../services/booking.js';
+import { isUuid } from '../lib/ids.js';
 import { listBookingsByCustomer } from '../repositories/bookings.js';
 import { findOrCreateCustomer, findCustomerByPhone } from '../repositories/customers.js';
 import { addStamp } from '../repositories/loyalty.js';
@@ -89,6 +92,10 @@ function toCsv(rows, columns) {
 export function createAdminRouter(db) {
   const router = Router();
   router.use(attachAdminSession(db));
+  // Bütün :id/:taskId parametrləri UUID sütunlarıdır — səhv format 500 yox, 404 qaytarır.
+  for (const name of ['id', 'taskId']) {
+    router.param(name, (req, res, next, value) => (isUuid(value) ? next() : res.status(404).send('Tapılmadı')));
+  }
 
   function renderLocals(req, extra = {}) {
     return {
@@ -266,7 +273,8 @@ export function createAdminRouter(db) {
       if (status === 'cancelled') {
         await cancelBooking(db, req.params.id);
       } else if (['confirmed', 'attended'].includes(status)) {
-        await db.query('UPDATE bookings SET status = $2 WHERE id = $1', [req.params.id, status]);
+        // Gözləmə siyahısından/ləğvdən təsdiq yer tutur — tutum doludursa 409 (artıq satış yoxdur).
+        await setBookingSeatStatus(db, req.params.id, status);
       } else {
         return res.status(400).send('Naməlum status');
       }
@@ -274,6 +282,7 @@ export function createAdminRouter(db) {
     } catch (err) {
       if (err instanceof BookingNotFoundError) return res.status(404).send('Tapılmadı');
       if (err instanceof BookingNotCancellableError) return res.status(409).send('Bu bron ləğv edilə bilməz.');
+      if (err instanceof SessionFullError) return res.status(409).send('Bu seansda boş yer yoxdur — əvvəlcə tutumu artırın və ya başqa bronu ləğv edin.');
       throw err;
     }
     res.redirect(302, req.get('Referer') || '/admin/bookings');
@@ -488,7 +497,8 @@ export function createAdminRouter(db) {
     const makeWinner = req.body.winner === '1';
     const updated = await setTaskParticipantWinner(db, req.params.id, makeWinner);
     if (!updated) return res.status(404).send('Tapılmadı');
-    if (makeWinner && updated.customer_id) await addStamp(db, updated.customer_id);
+    // Bonus möhür yalnız "qalib deyil → qalib" keçidində verilir (təkrar basmaq möhür artırmır).
+    if (makeWinner && !updated.was_winner && updated.customer_id) await addStamp(db, updated.customer_id);
     await insertAuditLog(db, {
       adminUserId: req.adminSession.adminUser.id,
       action: makeWinner ? 'task.participant.winner' : 'task.participant.unwinner',

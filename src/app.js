@@ -12,6 +12,7 @@ import { buildIcsEvent } from './lib/ics.js';
 import { claimHideSeekReward } from './services/codes.js';
 import { InvalidPhoneError } from './lib/phone.js';
 import { checkRateLimit } from './lib/rateLimit.js';
+import { isUuid } from './lib/ids.js';
 import { getSiteTexts, getSiteTheme } from './repositories/siteContent.js';
 import { EDITABLE_TEXT_KEYS, setPath } from './lib/siteTextFields.js';
 
@@ -85,7 +86,7 @@ export async function createApp(db) {
     if (!checkRateLimit(`ics:${req.ip}`, 20, 60_000)) {
       return res.status(429).send('Çox cəhd edildi, bir az sonra yenidən cəhd edin.');
     }
-    const booking = await getBookingWithDetails(db, req.params.bookingId);
+    const booking = isUuid(req.params.bookingId) ? await getBookingWithDetails(db, req.params.bookingId) : null;
     if (!booking) return res.status(404).send('Tapılmadı');
     const ics = buildIcsEvent({
       uid: booking.id,

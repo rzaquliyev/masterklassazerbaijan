@@ -2,8 +2,9 @@ import { Router } from 'express';
 import { randomUUID } from 'node:crypto';
 import {
   listPublishedMasterclassesWithNextSession, findMasterclassBySlug,
-  listUpcomingSessionsForMasterclass, listHouses, getSessionById, listAllUpcomingSessions,
+  listUpcomingSessionsForMasterclass, listHouses, getBookableSessionById, listAllUpcomingSessions,
 } from '../repositories/masterclasses.js';
+import { isUuid } from '../lib/ids.js';
 import {
   listPublishedGalleryPhotos, listFaqByTab, insertInquiry, getLoyaltyByPhoneAndBookingCode,
 } from '../repositories/content.js';
@@ -20,6 +21,11 @@ import { checkRateLimit } from '../lib/rateLimit.js';
 
 export function createPublicRouter(db) {
   const router = Router();
+
+  // UUID olmayan ID-li URL-lər birbaşa 404 (DB-yə çatmadan).
+  for (const name of ['sessionId', 'bookingId', 'id']) {
+    router.param(name, (req, res, next, value) => (isUuid(value) ? next() : render404(req, res)));
+  }
 
   router.get('/', async (req, res) => {
     const list = await listPublishedMasterclassesWithNextSession(db);
@@ -55,7 +61,7 @@ export function createPublicRouter(db) {
   });
 
   router.get('/kassa/:sessionId', async (req, res) => {
-    const session = await getSessionById(db, req.params.sessionId);
+    const session = await getBookableSessionById(db, req.params.sessionId);
     if (!session) return render404(req, res);
     const masterclass = await findMasterclassBySlugOrId(db, session.masterclass_id);
     res.render('kassa.njk', {
@@ -64,7 +70,7 @@ export function createPublicRouter(db) {
   });
 
   router.post('/kassa/:sessionId', async (req, res) => {
-    const session = await getSessionById(db, req.params.sessionId);
+    const session = await getBookableSessionById(db, req.params.sessionId);
     if (!session) return render404(req, res);
     const masterclass = await findMasterclassBySlugOrId(db, session.masterclass_id);
 

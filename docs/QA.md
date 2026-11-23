@@ -126,4 +126,4 @@ Bu layihə əvvəlcədən `design-taste-frontend` skili ilə Greenfield rejimind
 | `web-design-guidelines` auditində kritik problem qalmayıb | ✅ (bax §2 — 4 kiçik düzəliş edildi, kritik tapıntı yox idi) |
 | Nəyin yoxlanıldığı/yoxlanılmadığı açıq yazılıb | ✅ (bu sənəd) |
 
-**Qalan, bloklamayan maddələr:** `docs/CONTENT-TODO.md`-dəki real məzmun boşluqları (iş saatları, qiymətlər, say həddləri), admin panelin bəzi hissələri (ev/FAQ CRUD, endirim kodu UI) — bax `docs/ARCHITECTURE.md` §4.
+**Qalan, bloklamayan maddələr:** `docs/CONTENT-TODO.md`-dəki real məzmun boşluqları (iş saatları, qiymətlər, say həddləri). (Ev/FAQ CRUD və endirim kodu UI 2026-10-11-də tətbiq olunub — bax `docs/ARCHITECTURE.md` §4.)

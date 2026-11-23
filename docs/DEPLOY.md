@@ -4,7 +4,7 @@
 
 ## 1. Ön şərt: GitHub-a push
 
-Layihənin hazırda uzaq (remote) repository-si yoxdur. Railway GitHub-dan avtomatik deploy üçün buna ehtiyac duyur:
+**Edilib:** `origin` artıq `github.com/rzaquliyev/masterklassazerbaijan`-a bağlıdır — yeni dəyişikliklər üçün sadəcə `git push` kifayətdir. Sıfırdan quraşdırma üçün (tarixçə):
 
 ```bash
 # GitHub-da boş repo yaradın (adı: masterklassazerbaijan və ya seçdiyiniz ad), sonra:
@@ -75,7 +75,7 @@ Uğurlu olarsa, `https://<railway-domeniniz>/admin/login`-dən daxil ola bilərs
 
 Railway avtomatik `*.up.railway.app` domeni verir, amma ilk dəfə **manual aktivləşdirmə tələb edir**: servis → **Settings** → **Networking** → **"Generate Domain"** (layihənin ümumi/project-level Settings-i YOX, servisin ÖZ Settings-i — bunlar fərqli yerlərdir, qarışdırmayın). Generate edəndə port soruşsa, §5-dəki `PORT` dəyəri ilə (`3000`) eyni rəqəmi yazın.
 
-Öz domeninizi (`masterklassazerbaijan.az` və ya oxşar — bax `docs/CONTENT-TODO.md` §1, **"masterclass.az" YOX**, başqasına məxsusdur) bağlamaq üçün: eyni Networking bölməsində **Custom Domain**, sonra domen provayderinizdə göstərilən CNAME qeydini əlavə edin.
+Öz domeninizi (**`masterklas.az`** — alınıb, bax `docs/HANDOVER.md` §0; **"masterclass.az" YOX**, başqasına məxsusdur) bağlamaq üçün: eyni Networking bölməsində **Custom Domain**, sonra domen provayderinizdə göstərilən CNAME qeydini əlavə edin.
 
 ## 8. Backup — QURULDU (2026-10-10), qismən
 
