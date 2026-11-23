@@ -80,6 +80,9 @@ export async function createApp(db) {
   app.get('/', (req, res) => res.redirect(302, `/${DEFAULT_LANG}/`));
 
   app.get('/api/ics/:bookingId', async (req, res) => {
+    if (!checkRateLimit(`ics:${req.ip}`, 20, 60_000)) {
+      return res.status(429).send('Çox cəhd edildi, bir az sonra yenidən cəhd edin.');
+    }
     const booking = await getBookingWithDetails(db, req.params.bookingId);
     if (!booking) return res.status(404).send('Tapılmadı');
     const ics = buildIcsEvent({
