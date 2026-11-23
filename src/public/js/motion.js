@@ -84,7 +84,7 @@
   }
 
   // ---- Konfeti: host elementin üstünə ~28 parça, 2 saniyədən sonra silinir ----
-  var COLORS = ['#E8682A', '#FFC23D', '#7BC67E', '#6FA8DC', '#F28AA6', '#FFE08A'];
+  var COLORS = ['#CC4B1A', '#FFB830', '#52B788', '#5BA4E8', '#F27A9E', '#FFE39B'];
   api.confetti = function (host, count) {
     if (!host) return;
     if (getComputedStyle(host).position === 'static') host.style.position = 'relative';

@@ -1,0 +1,49 @@
+{% extends "layouts/base.njk" %}
+{% block body_class %}ground-sky{% endblock %}
+{% block title %}{{ t.games.qarisdir.title }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.games.qarisdir.lead }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/games.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<section class="container page-head">
+  <a class="back-link" href="/{{ lang }}/oyun-parki">← {{ t.oyunParki.title }}</a>
+  <h1 style="margin-top:14px;">{{ t.games.qarisdir.title }}</h1>
+  <p class="page-lead">{{ t.games.qarisdir.lead }}</p>
+</section>
+
+<section class="container" style="margin-top:8px;">
+  <div class="mix-game" id="mix-game"
+    data-colors="{{ t.games.qarisdir.colors | dump }}" data-correct="{{ t.games.qarisdir.correct }}"
+    data-wrong="{{ t.games.qarisdir.wrong }}" data-round="{{ t.games.qarisdir.round }}" data-done="{{ t.games.qarisdir.done }}" data-pick="{{ t.games.qarisdir.pick }}">
+    <div class="mix-top">
+      <div class="mix-target-card">
+        <div class="mix-label">{{ t.games.qarisdir.target }}</div>
+        <div class="mix-target"><span class="mix-target-ball" id="mix-target-ball" aria-hidden="true"></span><strong id="mix-target-name"></strong></div>
+      </div>
+      <div class="mix-progress"><span id="mix-round"></span><span class="mix-stars" id="mix-stars" aria-hidden="true"></span></div>
+    </div>
+
+    <div class="mix-bowl-wrap">
+      <div class="mix-bowl" id="mix-bowl" aria-label="{{ t.games.qarisdir.bowl }}">
+        <span class="mix-slot" id="mix-slot-0"></span><span class="mix-slot" id="mix-slot-1"></span>
+        <span class="mix-result" id="mix-result" hidden></span>
+      </div>
+      <div class="mix-msg" id="mix-msg" role="status" aria-live="polite"></div>
+    </div>
+
+    <div class="mix-label">{{ t.games.qarisdir.palette }}</div>
+    <div class="mix-palette" id="mix-palette" role="group" aria-label="{{ t.games.qarisdir.palette }}"></div>
+    <div class="btn-row" style="margin-top:16px;">
+      <button type="button" class="btn-primary" id="mix-go">{{ t.games.qarisdir.mix }}</button>
+      <button type="button" class="btn-secondary" id="mix-clear">{{ t.games.qarisdir.clear }}</button>
+      <button type="button" class="btn-dark" id="mix-again" hidden>{{ t.games.qarisdir.again }}</button>
+    </div>
+  </div>
+</section>
+
+<section class="container" style="padding-top:22px;">
+  <div class="sample-notice game-privacy">{{ t.games.privacy }}</div>
+</section>
+{% endblock %}
+
+{% block extra_js %}<script src="/js/qarisdir.js?v={{ assetV }}" defer></script>{% endblock %}

@@ -13,7 +13,7 @@
   <form method="get" action="/{{ lang }}/qalereya" class="pill-group" style="margin-top:16px;">
     <button type="submit" name="ev" value="" class="pill {{ 'is-active' if not houseFilter }}">{{ t.qalereya.allHouses }}</button>
     {% for h in houses %}
-    <button type="submit" name="ev" value="{{ h.slug }}" class="pill {{ 'is-active' if houseFilter == h.slug }}" style="{{ 'background:' + h.color_hex + '; color:var(--white);' if houseFilter == h.slug }}">{{ h.name }}</button>
+    <button type="submit" name="ev" value="{{ h.slug }}" class="pill {{ 'is-active' if houseFilter == h.slug }}" style="{{ ('background:' + h.color_hex + '; color:' + (h.color_hex | textOn) + ';') if houseFilter == h.slug }}">{{ h.name }}</button>
     {% endfor %}
   </form>
 

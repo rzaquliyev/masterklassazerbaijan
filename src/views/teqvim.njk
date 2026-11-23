@@ -1,4 +1,5 @@
 {% extends "layouts/base.njk" %}
+{% block body_class %}ground-sky{% endblock %}
 {% import "partials/macros.njk" as m %}
 
 {% block title %}{{ t.nav.teqvim }} — {{ t.siteName }}{% endblock %}
@@ -14,7 +15,7 @@
     <input type="hidden" name="gun" value="{{ dayFilter }}">
     <button type="submit" name="ev" value="" class="pill {{ 'is-active' if not houseFilter }}">{{ t.teqvim.allHouses }}</button>
     {% for h in houses %}
-    <button type="submit" name="ev" value="{{ h.slug }}" class="pill {{ 'is-active' if houseFilter == h.slug }}" style="{{ 'background:' + h.color_hex + '; color:var(--white);' if houseFilter == h.slug }}">{{ h.name }}</button>
+    <button type="submit" name="ev" value="{{ h.slug }}" class="pill {{ 'is-active' if houseFilter == h.slug }}" style="{{ ('background:' + h.color_hex + '; color:' + (h.color_hex | textOn) + ';') if houseFilter == h.slug }}">{{ h.name }}</button>
     {% endfor %}
   </form>
 

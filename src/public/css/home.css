@@ -1,7 +1,7 @@
 /* Ana səhifə — "clay town" səhnəsi. Mobile-first, pozisiyalar nisbi (maketin fiksə pikselləri yox). */
 .town-scene{ position:relative; height:260px; margin-top:18px; overflow:hidden; }
 .town-sky{ position:absolute; inset:0; }
-.town-sun{ position:absolute; right:30px; top:6px; width:56px; height:56px; border-radius:50%; background:var(--sun); box-shadow:inset -6px -7px 0 rgba(0,0,0,.14), inset 5px 5px 0 rgba(255,255,255,.4), 0 0 0 10px rgba(255,194,61,.22); }
+.town-sun{ position:absolute; right:30px; top:6px; width:56px; height:56px; border-radius:50%; background:var(--sun); box-shadow:inset -6px -7px 0 rgba(0,0,0,.14), inset 5px 5px 0 rgba(255,255,255,.4), 0 0 0 10px rgba(255,184,48,.22); }
 .town-cloud{ position:absolute; left:26px; top:26px; width:76px; height:30px; border-radius:30px; background:var(--white); box-shadow:inset -4px -5px 0 rgba(0,0,0,.06); }
 .town-cloud--2{ left:auto; right:110px; top:58px; width:54px; height:22px; opacity:.85; }
 /* Ağaclar — kənarlarda, evlərin arxasında; görünəndə 3 dəfə yellənir (motion.css .m-sway) */

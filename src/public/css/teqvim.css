@@ -29,7 +29,7 @@
 .bus-road{ position:absolute; left:0; right:0; bottom:0; height:22px; border-radius:12px; background:var(--night-2); }
 .bus-road::after{ content:""; position:absolute; left:10px; right:10px; top:9px; height:4px; background:repeating-linear-gradient(90deg, var(--sun) 0 18px, transparent 18px 34px); }
 .bus-stop-sign{ position:absolute; right:14px; bottom:22px; width:6px; height:78px; border-radius:3px; background:#8C96A8; }
-.bus-stop-plate{ position:absolute; top:-6px; left:50%; width:34px; height:34px; margin-left:-17px; border-radius:50%; background:var(--blue); color:var(--white); display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; box-shadow:inset -3px -4px 0 rgba(0,0,0,.16); }
+.bus-stop-plate{ position:absolute; top:-6px; left:50%; width:34px; height:34px; margin-left:-17px; border-radius:50%; background:var(--blue); color:var(--night); display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; box-shadow:inset -3px -4px 0 rgba(0,0,0,.16); }
 .bus{ position:absolute; left:calc(50% - 100px); bottom:12px; width:170px; height:78px; }
 .bus-body{ position:absolute; inset:0 0 12px 0; border-radius:20px 26px 12px 12px; background:var(--orange); display:flex; gap:8px; padding:12px 14px; box-shadow:inset -6px -7px 0 rgba(0,0,0,.16), inset 6px 6px 0 rgba(255,255,255,.3); }
 .bus-window{ width:28px; height:24px; border-radius:8px; background:#CFE6F7; box-shadow:inset 0 -4px 0 rgba(0,0,0,.08); }

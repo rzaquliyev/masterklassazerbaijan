@@ -1,0 +1,39 @@
+{% extends "layouts/base.njk" %}
+{% block body_class %}ground-sky{% endblock %}
+{% block title %}{{ t.games.fiqur.title }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.games.fiqur.lead }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/games.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<section class="container page-head">
+  <a class="back-link" href="/{{ lang }}/oyun-parki">← {{ t.oyunParki.title }}</a>
+  <h1 style="margin-top:14px;">{{ t.games.fiqur.title }}</h1>
+  <p class="page-lead">{{ t.games.fiqur.lead }}</p>
+</section>
+
+<section class="container" style="margin-top:8px;">
+  <div class="figure-game" id="figure-game" data-alive="{{ t.games.fiqur.alive }}">
+    <div class="figure-stage" id="figure-stage">
+      <svg id="figure-svg" viewBox="0 0 300 340" role="img" aria-label="{{ t.games.fiqur.figureLabel }}" tabindex="0"></svg>
+      <div class="figure-bubble" id="figure-bubble" hidden aria-live="polite"></div>
+    </div>
+    <div class="figure-tools">
+      <div class="figure-group-title">{{ t.games.fiqur.bodyColor }}</div>
+      <div class="figure-colors" id="figure-colors" role="group" aria-label="{{ t.games.fiqur.bodyColor }}"></div>
+      <div class="figure-group-title">{{ t.games.fiqur.parts }}</div>
+      <p class="figure-hint">{{ t.games.fiqur.hint }}</p>
+      <div class="figure-parts" id="figure-parts" data-groups="{{ t.games.fiqur.groups | dump }}"></div>
+      <div class="btn-row" style="margin-top:14px;">
+        <button type="button" class="btn-secondary" id="figure-download">{{ t.games.fiqur.download }}</button>
+        <button type="button" class="btn-dark" id="figure-clear">{{ t.games.fiqur.clear }}</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container" style="padding-top:22px;">
+  <div class="sample-notice game-privacy">{{ t.games.privacy }}</div>
+</section>
+{% endblock %}
+
+{% block extra_js %}<script src="/js/fiqur.js?v={{ assetV }}" defer></script>{% endblock %}

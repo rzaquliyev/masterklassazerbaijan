@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rəng və footer təklifi</title>
+<style>
+@font-face{ font-family:'Baloo 2',system-ui,sans-serif; font-weight:700; src:url('../src/public/fonts/baloo-2-latin-ext-700-normal.woff2') format('woff2'); unicode-range:U+0100-024F,U+0259,U+1E00-1EFF; }
+@font-face{ font-family:'Baloo 2',system-ui,sans-serif; font-weight:700; src:url('../src/public/fonts/baloo-2-latin-700-normal.woff2') format('woff2'); }
+@font-face{ font-family:'Baloo 2',system-ui,sans-serif; font-weight:600; src:url('../src/public/fonts/baloo-2-latin-ext-600-normal.woff2') format('woff2'); unicode-range:U+0100-024F,U+0259,U+1E00-1EFF; }
+@font-face{ font-family:'Baloo 2',system-ui,sans-serif; font-weight:600; src:url('../src/public/fonts/baloo-2-latin-600-normal.woff2') format('woff2'); }
+@font-face{ font-family:'Nunito'; font-weight:700; src:url('../src/public/fonts/nunito-latin-ext-700-normal.woff2') format('woff2'); unicode-range:U+0100-024F,U+0259,U+1E00-1EFF; }
+@font-face{ font-family:'Nunito'; font-weight:700; src:url('../src/public/fonts/nunito-latin-700-normal.woff2') format('woff2'); }
+@font-face{ font-family:'Nunito'; font-weight:800; src:url('../src/public/fonts/nunito-latin-ext-800-normal.woff2') format('woff2'); unicode-range:U+0100-024F,U+0259,U+1E00-1EFF; }
+@font-face{ font-family:'Nunito'; font-weight:800; src:url('../src/public/fonts/nunito-latin-800-normal.woff2') format('woff2'); }
+
+:root{
+  --cream:#FFF4E2; --night:#1B2A4A; --night-2:#3C4B6B; --night-deep:#0F1A30;
+  --orange:#CC4B1A; --orange-deep:#93330F; --butter:#FFE39B; --sun:#FFB830; --sun-deep:#C98A12;
+  --green:#52B788; --green-deep:#378A63; --blue:#5BA4E8; --blue-deep:#3779C4; --pink:#F27A9E; --pink-deep:#C4527A;
+  --card-shadow:#EAD9BE; --white:#fff;
+  /* TƏKLİF: yeni "məhəllə torpağı" fonları — mövcud rənglərin çox açıq tonları */
+  --ground-sky:#E4F1FB; --ground-mint:#E6F5E3; --ground-butter:#FFF1C7; --ground-rose:#FDE6EC;
+  --night-sky:#16223D;
+}
+*{ box-sizing:border-box; }
+body{ margin:0; background:var(--cream); color:var(--night); font-family:'Nunito',system-ui,sans-serif; font-weight:700; }
+h1,h2,h3{ font-family:'Baloo 2',system-ui,sans-serif; margin:0; line-height:1.1; }
+.wrap{ max-width:1080px; margin:0 auto; padding:0 20px; }
+.intro{ padding:36px 0 10px; }
+.intro p{ color:var(--night-2); max-width:720px; }
+.label{ display:inline-block; font-family:'Baloo 2',system-ui,sans-serif; font-weight:700; font-size:.8rem; letter-spacing:.06em; padding:4px 12px; border-radius:99px; background:var(--night); color:var(--butter); margin-bottom:10px; }
+.label.rec{ background:var(--green-deep); color:#fff; }
+section.block{ margin:34px 0; }
+section.block > h2{ font-size:1.7rem; margin-bottom:6px; }
+section.block > p{ color:var(--night-2); margin:0 0 16px; max-width:760px; }
+
+/* ---------- Palitra ---------- */
+.swatches{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; }
+.sw{ border-radius:20px; overflow:hidden; background:#fff; box-shadow:0 5px 0 var(--card-shadow); }
+.sw-color{ height:74px; box-shadow:inset -5px -6px 0 rgba(0,0,0,.08), inset 5px 5px 0 rgba(255,255,255,.3); }
+.sw-txt{ padding:10px 12px; font-size:.8rem; line-height:1.35; }
+.sw-txt b{ font-family:'Baloo 2',system-ui,sans-serif; font-size:.95rem; display:block; }
+.sw.new{ outline:3px dashed var(--green-deep); outline-offset:-3px; }
+.rules{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; margin-top:16px; }
+.rule{ background:#fff; border-radius:20px; padding:16px; box-shadow:0 5px 0 var(--card-shadow); font-size:.9rem; color:var(--night-2); }
+.rule b{ color:var(--night); font-family:'Baloo 2',system-ui,sans-serif; font-size:1.05rem; display:block; margin-bottom:4px; }
+
+/* ---------- Bölmə ritmi nümunəsi ---------- */
+.rhythm{ border-radius:28px; overflow:hidden; box-shadow:0 8px 0 var(--card-shadow); }
+.rh{ padding:22px 24px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.rh h3{ font-size:1.25rem; }
+.rh span{ font-size:.82rem; color:var(--night-2); }
+.rh .chip{ padding:8px 14px; border-radius:99px; font-family:'Baloo 2',system-ui,sans-serif; font-size:.85rem; color:#fff; }
+
+/* ---------- Mövcud footer (müqayisə) ---------- */
+.foot-now{ background:var(--orange); color:#fff; padding:34px 24px; border-radius:36px 36px 0 0; box-shadow:inset 0 8px 0 rgba(255,255,255,.2); }
+.foot-now .t{ font-family:'Baloo 2',system-ui,sans-serif; font-size:1.7rem; line-height:1.05; white-space:pre-line; }
+.foot-now .b{ display:inline-block; margin:12px 0; background:#fff; color:var(--night); padding:12px 18px; border-radius:18px; font-family:'Baloo 2',system-ui,sans-serif; }
+.foot-now .m{ font-size:.8rem; color:#FFE4D2; margin-top:6px; }
+
+/* ---------- TƏKLİF A: "Gecə şəhəri" footer ---------- */
+.foot-a{ position:relative; background:var(--night-sky); color:var(--cream); border-radius:40px 40px 0 0; overflow:hidden; padding-top:150px; }
+.sky-stars i{ position:absolute; width:6px; height:6px; border-radius:50%; background:var(--butter); opacity:.8; }
+.moon{ position:absolute; right:8%; top:26px; width:58px; height:58px; border-radius:50%; background:var(--butter); box-shadow:inset -8px -6px 0 rgba(0,0,0,.08), 0 0 0 10px rgba(255,227,155,.12); }
+.skyline{ position:absolute; left:0; right:0; top:58px; height:96px; display:flex; align-items:flex-end; justify-content:center; gap:14px; padding:0 4%; }
+.bld{ position:relative; display:flex; flex-direction:column; align-items:center; }
+.bld .roof{ width:0; height:0; border-left:var(--w) solid transparent; border-right:var(--w) solid transparent; border-bottom:calc(var(--w) * .8) solid var(--c); margin-bottom:-2px; filter:brightness(.82); }
+.bld .body{ width:calc(var(--w) * 1.8); height:var(--h); background:var(--c); border-radius:8px 8px 0 0; filter:brightness(.82); display:grid; grid-template-columns:repeat(2,1fr); gap:6px; padding:8px; align-content:start; }
+.bld .win{ height:12px; border-radius:3px; background:#2B3B60; }
+.bld .win.on{ background:var(--butter); box-shadow:0 0 10px rgba(255,227,155,.7); }
+.foot-ground{ position:absolute; left:0; right:0; top:150px; height:14px; background:#22325A; }
+.foot-a .cols{ position:relative; display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:28px; padding:34px 24px 20px; }
+.foot-a h3{ font-size:1.9rem; line-height:1.05; white-space:pre-line; color:var(--cream); }
+.cta-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+.btn{ display:inline-flex; align-items:center; min-height:50px; padding:0 20px; border-radius:18px; font-family:'Baloo 2',system-ui,sans-serif; font-weight:600; text-decoration:none; }
+.btn-or{ background:var(--orange); color:#fff; box-shadow:inset -4px -5px 0 rgba(0,0,0,.16), inset 4px 4px 0 rgba(255,255,255,.3), 0 6px 0 var(--orange-deep); }
+.btn-gr{ background:var(--green); color:var(--night); box-shadow:inset -4px -5px 0 rgba(0,0,0,.12), 0 6px 0 var(--green-deep); }
+.col-t{ font-family:'Baloo 2',system-ui,sans-serif; font-size:1rem; color:var(--sun); margin-bottom:10px; }
+.links{ list-style:none; margin:0; padding:0; display:grid; gap:8px; font-size:.92rem; }
+.links a{ color:var(--cream); text-decoration:none; display:flex; align-items:center; gap:8px; }
+.links .d{ width:12px; height:12px; border-radius:50%; flex:none; }
+.contact{ font-size:.9rem; line-height:1.5; color:#C9D3E8; }
+.contact b{ color:var(--cream); }
+.legal{ position:relative; border-top:2px solid #2A3A60; margin:0 24px; padding:14px 0 22px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; font-size:.78rem; color:#8FA0C2; }
+.legal a{ color:#C9D3E8; }
+
+/* ---------- TƏKLİF B: "Yaşıl təpə" footer ---------- */
+.foot-b{ position:relative; background:var(--green); color:var(--night); border-radius:50% 50% 0 0 / 60px 60px 0 0; padding:56px 24px 0; box-shadow:inset 0 10px 0 rgba(255,255,255,.2); overflow:hidden; }
+.foot-b .road{ position:absolute; left:0; right:0; bottom:58px; height:26px; background:var(--night-2); }
+.foot-b .road::after{ content:""; position:absolute; left:0; right:0; top:11px; height:4px; background:repeating-linear-gradient(90deg,var(--sun) 0 20px,transparent 20px 38px); }
+.foot-b .grid{ display:grid; grid-template-columns:1.3fr 1fr; gap:24px; padding-bottom:110px; }
+.foot-b h3{ font-size:1.9rem; white-space:pre-line; }
+.mini-card{ background:#fff; border-radius:22px; padding:16px; box-shadow:0 6px 0 var(--green-deep); font-size:.9rem; }
+.foot-b .legal-b{ position:absolute; left:24px; right:24px; bottom:14px; display:flex; justify-content:space-between; font-size:.78rem; color:var(--night); flex-wrap:wrap; gap:8px; }
+
+/* Bir dəfəlik hərəkət: pəncərələr ardıcıl yanır, ulduzlar 3 dəfə parıldayır (layihə qaydası) */
+@media (prefers-reduced-motion:no-preference){
+  .bld .win.on{ animation:winOn .4s ease both; animation-delay:calc(var(--k) * 140ms + .3s); }
+  @keyframes winOn{ from{ background:#2B3B60; box-shadow:none; } }
+  .sky-stars i{ animation:tw 1.6s ease-in-out 3; animation-delay:calc(var(--k) * 200ms); }
+  @keyframes tw{ 50%{ opacity:.2; scale:.6; } }
+}
+@media (max-width:760px){
+  .foot-a .cols{ grid-template-columns:1fr; }
+  .foot-b .grid{ grid-template-columns:1fr; }
+  .skyline{ gap:6px; }
+  .bld:nth-child(n+5){ display:none; }
+}
+.note{ background:#fff; border-radius:20px; padding:14px 16px; box-shadow:0 5px 0 var(--card-shadow); font-size:.88rem; color:var(--night-2); margin-top:12px; }
+</style>
+</head>
+<body>
+<div class="wrap intro">
+  <span class="label">TƏKLİF · hələ sayta tətbiq olunmayıb</span>
+  <h1 style="font-size:2.4rem;">Rənglər və footer — nümunə dizayn</h1>
+  <p>"Plastilin şəhəri" istiqaməti saxlanılır, mövcud brend rəngləri dəyişmir. Təklif: rəngləri <b>daha nizamlı paylamaq</b> (hər "məhəllənin" öz açıq fonu, narıncı yalnız düymələr üçün) və footer-i şəhərin davamı kimi qurmaq. Aşağıda mövcud footer və iki variant yan-yanadır.</p>
+</div>
+
+<div class="wrap">
+<section class="block">
+  <h2>1. Rəng palitrası</h2>
+  <p>Brend rəngləri olduğu kimi qalır. Yalnız 4 çox açıq "torpaq" fonu əlavə olunur (yaşıl çərçivəli). Onlar bölmələri bir-birindən ayırır, səhifə tək krem rəngdə qalmır.</p>
+  <div class="swatches">
+    <div class="sw"><div class="sw-color" style="background:var(--cream)"></div><div class="sw-txt"><b>Krem</b>#FFF4E2 · səhifə fonu</div></div>
+    <div class="sw"><div class="sw-color" style="background:var(--night)"></div><div class="sw-txt"><b>Gecə</b>#1B2A4A · mətn, tünd bölmə</div></div>
+    <div class="sw"><div class="sw-color" style="background:var(--orange)"></div><div class="sw-txt"><b>Narıncı</b>#CC4B1A · <u>yalnız əsas düymə</u></div></div>
+    <div class="sw"><div class="sw-color" style="background:var(--sun)"></div><div class="sw-txt"><b>Günəş</b>#FFB830 · Mətbəx evi</div></div>
+    <div class="sw"><div class="sw-color" style="background:var(--green)"></div><div class="sw-txt"><b>Yaşıl</b>#52B788 · Elm evi, uğur</div></div>
+    <div class="sw"><div class="sw-color" style="background:var(--blue)"></div><div class="sw-txt"><b>Mavi</b>#5BA4E8 · Rəsm evi</div></div>
+    <div class="sw"><div class="sw-color" style="background:var(--pink)"></div><div class="sw-txt"><b>Çəhrayı</b>#F27A9E · ad günü</div></div>
+    <div class="sw new"><div class="sw-color" style="background:var(--ground-sky)"></div><div class="sw-txt"><b>Səma fonu</b>#E4F1FB · Təqvim, Oyun parkı</div></div>
+    <div class="sw new"><div class="sw-color" style="background:var(--ground-mint)"></div><div class="sw-txt"><b>Nanə fonu</b>#E6F5E3 · Suallar, təhlükəsizlik</div></div>
+    <div class="sw new"><div class="sw-color" style="background:var(--ground-butter)"></div><div class="sw-txt"><b>Yağ fonu</b>#FFF1C7 · Kampaniyalar</div></div>
+    <div class="sw new"><div class="sw-color" style="background:var(--ground-rose)"></div><div class="sw-txt"><b>Gül fonu</b>#FDE6EC · Ad günü</div></div>
+    <div class="sw new"><div class="sw-color" style="background:var(--night-sky)"></div><div class="sw-txt"><b>Gecə səması</b>#16223D · footer</div></div>
+  </div>
+  <div class="rules">
+    <div class="rule"><b>Narıncını azaltmaq</b>Hazırda narıncı həm düymə, həm Gil evi, həm footer, həm bilet rəngidir, buna görə göz "hara basım?" deyə çaşır. Təklif: narıncı yalnız "Qeydiyyat / Yer tut" kimi əsas hərəkət üçün qalsın.</div>
+    <div class="rule"><b>Hər məhəllənin fonu</b>Səhifənin yuxarı hissəsi (başlıq + səhnə) öz açıq "torpaq" rəngində olsun: Təqvim səma, Ad günü gül, Kampaniyalar yağ rəngində. Krem rəng isə kartların arxasında qalsın.</div>
+    <div class="rule"><b>Tünd bölmə ritmi</b>Ana səhifədə gecə-göy "Yol xəritəsi" yaxşı işləyir. Footer da tünd olsa, səhifə "gündüz → axşam → gecə" kimi açılır və sonu təbii bitir.</div>
+  </div>
+</section>
+
+<section class="block">
+  <h2>2. Bölmə ritmi (nümunə)</h2>
+  <p>Eyni krem fonda üst-üstə düşən bölmələr əvəzinə hər bölmənin öz rəngi olur.</p>
+  <div class="rhythm">
+    <div class="rh" style="background:var(--cream)"><h3>Şəhər meydanı (hero)</h3><span class="chip" style="background:var(--orange)">Qeydiyyat</span></div>
+    <div class="rh" style="background:var(--ground-sky)"><h3>Yaxın reyslər</h3><span>səma fonu</span></div>
+    <div class="rh" style="background:var(--night); color:var(--cream)"><h3>Yol xəritəsi</h3><span style="color:#C9D3E8">gecə</span></div>
+    <div class="rh" style="background:var(--ground-mint)"><h3>Valideynlər üçün etibar</h3><span>nanə fonu</span></div>
+    <div class="rh" style="background:var(--night-sky); color:var(--cream)"><h3>Footer — gecə şəhəri</h3><span style="color:#C9D3E8">gecə səması</span></div>
+  </div>
+</section>
+
+<section class="block">
+  <span class="label">MÖVCUD</span>
+  <h2>3. İndiki footer</h2>
+  <p>Düz narıncı blok, sadə mətn. Saytın qalan hissəsi ilə əlaqəsi zəifdir, menyu linkləri və ünvan yoxdur.</p>
+  <div class="foot-now">
+    <div class="t">Şənbə şəhərdə
+görüşürük?</div>
+    <span class="b">Yer tut</span>
+    <div style="text-decoration:underline">WhatsApp-da yaz</div>
+    <div style="margin-top:8px; text-decoration:underline">Məxfilik siyasəti · Instagram</div>
+    <div class="m">© 2026 Masterklass Azerbaijan — Bütün hüquqlar qorunur.</div>
+  </div>
+</section>
+
+<section class="block">
+  <span class="label rec">TÖVSİYƏ — A</span>
+  <h2>4. Footer A: "Gecə şəhəri"</h2>
+  <p>Səhifənin sonunda şəhər axşama düşür: 4 evin siluetində pəncərələr ardıcıl yanır, ulduzlar 3 dəfə parıldayıb dayanır. Altında 3 sütun var: dəvət + düymələr, şəhərin yerləri (menyu), əlaqə + iş saatları.</p>
+  <footer class="foot-a">
+    <div class="sky-stars" aria-hidden="true">
+      <i style="left:8%; top:24px; --k:0"></i><i style="left:22%; top:52px; --k:1"></i><i style="left:37%; top:18px; --k:2"></i>
+      <i style="left:52%; top:44px; --k:3"></i><i style="left:66%; top:22px; --k:4"></i><i style="left:78%; top:70px; --k:5"></i>
+    </div>
+    <span class="moon" aria-hidden="true"></span>
+    <div class="skyline" aria-hidden="true">
+      <div class="bld" style="--w:30px; --h:58px; --c:var(--orange)"><span class="roof"></span><span class="body"><i class="win on" style="--k:0"></i><i class="win"></i><i class="win"></i><i class="win on" style="--k:4"></i></span></div>
+      <div class="bld" style="--w:38px; --h:76px; --c:var(--blue)"><span class="roof"></span><span class="body"><i class="win"></i><i class="win on" style="--k:1"></i><i class="win on" style="--k:5"></i><i class="win"></i><i class="win on" style="--k:7"></i><i class="win"></i></span></div>
+      <div class="bld" style="--w:28px; --h:50px; --c:var(--sun)"><span class="roof"></span><span class="body"><i class="win on" style="--k:2"></i><i class="win"></i></span></div>
+      <div class="bld" style="--w:36px; --h:68px; --c:var(--green)"><span class="roof"></span><span class="body"><i class="win"></i><i class="win on" style="--k:3"></i><i class="win on" style="--k:6"></i><i class="win"></i></span></div>
+      <div class="bld" style="--w:26px; --h:46px; --c:var(--pink)"><span class="roof"></span><span class="body"><i class="win on" style="--k:8"></i><i class="win"></i></span></div>
+      <div class="bld" style="--w:32px; --h:60px; --c:var(--orange)"><span class="roof"></span><span class="body"><i class="win"></i><i class="win on" style="--k:9"></i><i class="win"></i><i class="win"></i></span></div>
+    </div>
+    <span class="foot-ground" aria-hidden="true"></span>
+    <div class="cols">
+      <div>
+        <h3>Şənbə şəhərdə
+görüşürük?</h3>
+        <div class="cta-row">
+          <a class="btn btn-or" href="#">Yer tut</a>
+          <a class="btn btn-gr" href="#">WhatsApp-da yaz</a>
+        </div>
+      </div>
+      <div>
+        <div class="col-t">Şəhərin yerləri</div>
+        <ul class="links">
+          <li><a href="#"><span class="d" style="background:var(--blue)"></span>Təqvim — Avtobus dayanacağı</a></li>
+          <li><a href="#"><span class="d" style="background:var(--green)"></span>Oyunlar — Oyun parkı</a></li>
+          <li><a href="#"><span class="d" style="background:var(--sun)"></span>Kampaniyalar — Bazar meydanı</a></li>
+          <li><a href="#"><span class="d" style="background:var(--pink)"></span>Ad günü — Bayram meydanı</a></li>
+          <li><a href="#"><span class="d" style="background:var(--orange)"></span>Qalereya — Şəhər muzeyi</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="col-t">Şəhər poçtu</div>
+        <div class="contact">
+          <b>Nərimanov r., Təbriz küç., Metropark ƏTM, 7-ci mərtəbə</b><br>
+          +994 55 819 99 01<br>
+          İş saatları: [Şən–Baz 10:00–19:00] <span style="color:#8FA0C2">(SAMPLE)</span><br>
+          <a href="#" style="color:var(--sun)">Xəritədə aç →</a> · <a href="#" style="color:var(--sun)">Instagram →</a>
+        </div>
+      </div>
+    </div>
+    <div class="legal"><span>© 2026 Masterklass Azerbaijan — Bütün hüquqlar qorunur.</span><span><a href="#">Məxfilik siyasəti</a> · Qiymət və fotolar SAMPLE məlumatdır</span></div>
+  </footer>
+</section>
+
+<section class="block">
+  <span class="label">ALTERNATİV — B</span>
+  <h2>5. Footer B: "Yaşıl təpə"</h2>
+  <p>Gündüz variantı: footer şəhərin yaşıl təpəsi olur, aşağıda yol keçir (ana səhifədəki yol xəritəsinə bənzəyir). Daha açıq və şən görünür, amma ana səhifədəki yaşıl səhnəni təkrarlayır.</p>
+  <footer class="foot-b">
+    <div class="grid">
+      <div>
+        <h3>Şənbə şəhərdə
+görüşürük?</h3>
+        <div class="cta-row"><a class="btn btn-or" href="#">Yer tut</a><a class="btn" style="background:#fff; color:var(--night); box-shadow:0 6px 0 var(--green-deep)" href="#">WhatsApp</a></div>
+      </div>
+      <div class="mini-card"><b style="font-family:'Baloo 2',system-ui,sans-serif; font-size:1.05rem">Şəhər poçtu</b><br>Nərimanov r., Metropark ƏTM, 7-ci mərtəbə<br>+994 55 819 99 01</div>
+    </div>
+    <span class="road" aria-hidden="true"></span>
+    <div class="legal-b"><span>© 2026 Masterklass Azerbaijan</span><span>Məxfilik siyasəti · Instagram</span></div>
+  </footer>
+</section>
+
+<div class="note"><b>Tətbiq qeydi:</b> layihə qaydasına görə əvvəlcə <code>DESIGN.md</code> yenilənir, sonra kod dəyişir. Footer üçün yeni məlumat lazım deyil: menyu linkləri və ünvan artıq saytdadır. Hərəkət qaydası qorunur: pəncərələr bir dəfə yanır, ulduzlar 3 dəfə parıldayıb dayanır, "hərəkəti azalt" rejimində heç biri hərəkət etmir.</div>
+<div style="height:40px"></div>
+</div>
+</body>
+</html>

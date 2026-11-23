@@ -68,6 +68,8 @@ export async function createApp(db) {
   env.addFilter('isoDate', (v) => new Date(v).toISOString().slice(0, 10));
   env.addFilter('formatTimeAz', (v) => formatDateParts(v).time);
   env.addFilter('formatMoney', (v) => Number(v).toFixed(2).replace('.', ',') + ' ₼');
+  // Ev rəngi kimi dinamik fon üzərində oxunaqlı mətn: ağ yalnız kontrast ≥ 4.5 olanda, əks halda tünd göy.
+  env.addFilter('textOn', textOn);
   env.addGlobal('currentYear', new Date().getFullYear());
   env.addGlobal('assetV', BUILD_ID);
 
@@ -194,6 +196,20 @@ async function getHolidayBanner(db, lang) {
   const text = theme[`holiday_text_${lang}`];
   if (!text) return null;
   return { colorToken: theme.holiday_color_token, text };
+}
+
+function relLuminance(hex) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim());
+  if (!m) return null;
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(m[1].slice(i, i + 2), 16) / 255)
+    .map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+export function textOn(hex) {
+  const l = relLuminance(hex);
+  if (l === null) return 'var(--night)';
+  return 1.05 / (l + 0.05) >= 4.5 ? 'var(--white)' : 'var(--night)';
 }
 
 function formatDateAz(value) {

@@ -244,6 +244,9 @@ export function createPublicRouter(db) {
   router.get('/oyun-parki/yogur', (req, res) => res.render('yogur.njk', {}));
   router.get('/oyun-parki/pizza', (req, res) => res.render('pizza.njk', {}));
   router.get('/oyun-parki/rengleme', (req, res) => res.render('rengleme.njk', {}));
+  router.get('/oyun-parki/toplar', (req, res) => res.render('toplar.njk', {}));
+  router.get('/oyun-parki/fiqur', (req, res) => res.render('fiqur.njk', {}));
+  router.get('/oyun-parki/qarisdir', (req, res) => res.render('qarisdir.njk', {}));
 
   router.get('/tapsiriq', async (req, res) => {
     const current = await getCurrentWeeklyTask(db);

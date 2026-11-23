@@ -11,7 +11,7 @@
 {% endmacro %}
 
 {% macro houseChip(houseName, houseColor) %}
-<span class="chip-solid" style="background:{{ houseColor }};">{{ houseName }}</span>
+<span class="chip-solid" style="background:{{ houseColor }}; color:{{ houseColor | textOn }};">{{ houseName }}</span>
 {% endmacro %}
 
 {% macro hiddenStar(pageId, t) %}

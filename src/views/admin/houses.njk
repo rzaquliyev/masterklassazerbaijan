@@ -38,7 +38,7 @@
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     <div class="admin-field"><label for="newName">Ad</label><input type="text" id="newName" name="name" required maxlength="80"></div>
     <div class="admin-field"><label for="newSlug">Slug (URL, yalnız kiçik hərf/rəqəm/tire)</label><input type="text" id="newSlug" name="slug" required pattern="[a-z0-9-]+" maxlength="60"></div>
-    <div class="admin-field"><label for="newColor">Rəng (#RRGGBB)</label><input type="text" id="newColor" name="colorHex" required pattern="#[0-9A-Fa-f]{6}" placeholder="#E8682A"></div>
+    <div class="admin-field"><label for="newColor">Rəng (#RRGGBB)</label><input type="text" id="newColor" name="colorHex" required pattern="#[0-9A-Fa-f]{6}" placeholder="#CC4B1A"></div>
     <div class="admin-field"><label for="newSort">Sıra</label><input type="number" id="newSort" name="sortOrder" min="0" max="999" value="{{ list.length }}" required></div>
     <button type="submit" class="admin-btn">Yarat</button>
   </form>

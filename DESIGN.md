@@ -10,29 +10,36 @@ Uşaq yaradıcılıq studiyası üçün çoxsəhifəli sayt: sayt kiçik bir **p
 
 ## 1. Rəng tokenləri
 
+**Palitra yeniləndi (2026-11-24, istifadəçi istəyi + əlçatanlıq).** Köhnə narıncı (`#E8682A`) üzərində ağ mətn yalnız 3.26:1 idi (norma 4.5:1). Yaşıl/mavi/çəhrayı üzərində ağ mətn isə 2.0–2.5:1 idi. Yeni palitra "plastilin" xarakterini saxlayır, rəngləri bir az dərinləşdirir və harmonizə edir. Köhnə → yeni: narıncı `#E8682A→#CC4B1A`, günəş `#FFC23D→#FFB830`, yaşıl `#7BC67E→#52B788`, mavi `#6FA8DC→#5BA4E8`, çəhrayı `#F28AA6→#F27A9E`, yağ `#FFE08A→#FFE39B`. Bazadakı ev rəngləri `migrations/005_brand_palette.sql` ilə yenilənir (yalnız köhnə defolt dəyərlər).
+
 ```css
 :root{
   --cream:   #FFF4E2; /* səhifə fonu */
-  --night:   #1B2A4A; /* əsas mətn, tünd kartlar/footer fonu */
+  --night:   #1B2A4A; /* əsas mətn, tünd kartlar */
   --night-2: #3C4B6B; /* ikinci dərəcəli mətn */
-  --orange:  #E8682A; /* əsas vurğu — CTA, aktiv vəziyyət */
-  --orange-deep: #B44E1D; /* orange-in "basma" kölgəsi */
-  --butter:  #FFE08A; /* isti dekorativ fon (info kartları) */
-  --sun:     #FFC23D; /* ikinci dekorativ vurğu (xəbərdarlıq/diqqət) */
-  --green:   #7BC67E; /* uğur/müsbət vəziyyət (yer var, təsdiq) */
-  --green-deep: #57A05A;
-  --blue:    #6FA8DC; /* neytral dekorativ (su, səma, kart) */
-  --blue-deep: #4C84B8;
-  --pink:    #F28AA6; /* yalnız ad günü bölməsi vurğusu */
-  --pink-deep: #C9637F;
-  --card-shadow: #EAD9BE; /* ağ kart altı "basma" kölgəsi */
+  --orange:  #CC4B1A; /* əsas vurğu — YALNIZ əsas CTA/aktiv vəziyyət; ağ mətn 4.58:1 */
+  --orange-deep: #93330F;
+  --butter:  #FFE39B; /* isti dekorativ fon (info kartları) */
+  --sun:     #FFB830; --sun-deep: #C98A12;
+  --green:   #52B788; --green-deep: #378A63;
+  --blue:    #5BA4E8; --blue-deep: #3779C4;
+  --pink:    #F27A9E; --pink-deep: #C4527A;
+  --card-shadow: #EAD9BE;
   --white:   #FFFFFF;
+  /* "Məhəllə torpağı" — hər bölgənin açıq fonu (body sinfi ilə) */
+  --ground-sky:    #E4F1FB; /* Təqvim, Oyun parkı və oyunlar */
+  --ground-mint:   #E6F5E3; /* Suallar */
+  --ground-butter: #FFF1C7; /* Kampaniyalar */
+  --ground-rose:   #FDE6EC; /* Ad günü */
+  --night-sky:     #16223D; /* footer — "Gecə şəhəri" */
 }
 ```
 
-**Vurğu qaydası:** `--orange` əsas, tək kilidlənmiş CTA/aktiv-vəziyyət rəngidir (maketlərdə ardıcıl belədir). `--sun`/`--green`/`--blue`/`--pink` yalnız **ev/kateqoriya kodlaşdırması** və bölməyə-məxsus vurğular üçün (hər bölmədə ən çoxu 1-2) — BRIEF §6-nın "hər yerdə eyni vurğu" qadağasına deyil, "rəqabətli vurğuların xaos yaratması"na qarşı qoyulur; maketlərdəki istifadə artıq nizamlıdır (hər ev öz rəngi, hər bölmə öz fon rəngi), bu nizam qorunur.
+**Vurğu qaydası:** `--orange` yalnız əsas hərəkət (Qeydiyyat / Yer tut / aktiv filtr) üçündür. Footer artıq narıncı deyil. `--sun`/`--green`/`--blue`/`--pink` ev/kateqoriya kodlaşdırması və bölmə vurğuları üçündür.
 
-**Kontrast:** `--night` / `--cream` və `--white` üzərində ≥ 12:1. `--white` mətn / `--orange`, `--night` fonları üzərində ≥ 4.6:1 (Mərhələ 6-da ölçülüb təsdiqlənəcək). `--butter`/`--sun`/`--card-shadow` yalnız dekorativ fon/kölgə kimi, üzərlərinə birbaşa kiçik mətn qoyularsa ayrıca yoxlanılır.
+**Kontrast qaydası (məcburi):** ağ mətn yalnız `--orange`, `--night`, `--night-sky` və `*-deep` fonlarda istifadə olunur. `--sun`/`--green`/`--blue`/`--pink`/`--butter` üzərində mətn həmişə `--night` rəngindədir (≥ 4.9:1). Dinamik ev rəngi üzərində mətn rəngini `textOn` Nunjucks filtri seçir (`src/app.js`, WCAG kontrastı ilə).
+
+**Footer — "Gecə şəhəri":** `--night-sky` fonunda ay, ulduzlar (görünəndə 3 dəfə parıldayır), evlərin siluetində pəncərələr bir dəfə ardıcıl yanır. Altında 3 sütun: dəvət + düymələr, şəhərin yerləri (menyu), əlaqə + iş saatları. Nümunə: `design/teklif-reng-footer.html`.
 
 ## 2. Şriftlər
 

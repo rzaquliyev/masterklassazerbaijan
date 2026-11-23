@@ -4,19 +4,25 @@
   --night:   #1B2A4A;
   --night-2: #3C4B6B;
   --night-deep: #0F1A30;
-  --orange:  #E8682A;
-  --orange-deep: #B44E1D;
-  --butter:  #FFE08A;
-  --sun:     #FFC23D;
-  --sun-deep: #D29A1F;
-  --green:   #7BC67E;
-  --green-deep: #57A05A;
-  --blue:    #6FA8DC;
-  --blue-deep: #4C84B8;
-  --pink:    #F28AA6;
-  --pink-deep: #C9637F;
+  --orange:  #CC4B1A;
+  --orange-deep: #93330F;
+  --butter:  #FFE39B;
+  --sun:     #FFB830;
+  --sun-deep: #C98A12;
+  --green:   #52B788;
+  --green-deep: #378A63;
+  --blue:    #5BA4E8;
+  --blue-deep: #3779C4;
+  --pink:    #F27A9E;
+  --pink-deep: #C4527A;
   --card-shadow: #EAD9BE;
   --white:   #FFFFFF;
+  /* "Məhəllə torpağı" fonları + footer gecə səması (DESIGN.md §1) */
+  --ground-sky:    #E4F1FB;
+  --ground-mint:   #E6F5E3;
+  --ground-butter: #FFF1C7;
+  --ground-rose:   #FDE6EC;
+  --night-sky:     #16223D;
 
   --font-display: 'Baloo 2', system-ui, sans-serif;
   --font-body: 'Nunito', system-ui, -apple-system, sans-serif;

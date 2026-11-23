@@ -1,4 +1,5 @@
 {% extends "layouts/base.njk" %}
+{% block body_class %}ground-sky{% endblock %}
 
 {% block title %}{{ t.oyunParki.title }} — {{ t.siteName }}{% endblock %}
 {% block meta_description %}{{ t.oyunParki.memoryLead }}{% endblock %}
@@ -53,6 +54,18 @@
 <section class="container" style="margin-top:40px;">
   <h2>{{ t.oyunParki.moreTitle }}</h2>
   <div class="card-grid cols-2" style="margin-top:14px;" data-stagger>
+    <a href="/{{ lang }}/oyun-parki/toplar" data-tilt class="park-tile wide" style="background:var(--green); color:var(--night);">
+      <span class="park-tile-icon park-icon-balls" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span><span class="park-tile-badge">{{ t.games.newBadge }}</span><span class="park-tile-title">{{ t.games.toplar.title }}</span><span class="park-tile-text">{{ t.games.toplar.tile }}</span></span>
+    </a>
+    <a href="/{{ lang }}/oyun-parki/fiqur" data-tilt class="park-tile" style="background:var(--pink); color:var(--night);">
+      <span class="park-tile-icon park-icon-face clay" aria-hidden="true"><i></i><i></i></span>
+      <span><span class="park-tile-badge">{{ t.games.newBadge }}</span><span class="park-tile-title">{{ t.games.fiqur.title }}</span><span class="park-tile-text">{{ t.games.fiqur.tile }}</span></span>
+    </a>
+    <a href="/{{ lang }}/oyun-parki/qarisdir" data-tilt class="park-tile" style="background:var(--butter); color:var(--night);">
+      <span class="park-tile-icon park-icon-mix" aria-hidden="true"><i></i><i></i></span>
+      <span><span class="park-tile-badge">{{ t.games.newBadge }}</span><span class="park-tile-title">{{ t.games.qarisdir.title }}</span><span class="park-tile-text">{{ t.games.qarisdir.tile }}</span></span>
+    </a>
     <a href="/{{ lang }}/oyun-parki/yogur" data-tilt class="park-tile wide" style="background:var(--orange); color:var(--white);">
       <span class="park-tile-icon clay" style="background:var(--sun);" aria-hidden="true"></span>
       <span><span class="park-tile-title">{{ t.oyunParki.yogurTitle }}</span><span class="park-tile-text">{{ t.oyunParki.yogurLead }}</span></span>
@@ -61,7 +74,7 @@
       <span class="park-tile-icon clay" style="background:var(--white);" aria-hidden="true"></span>
       <span><span class="park-tile-title">{{ t.oyunParki.pizzaTitle }}</span><span class="park-tile-text">{{ t.oyunParki.pizzaLead }}</span></span>
     </a>
-    <a href="/{{ lang }}/oyun-parki/rengleme" data-tilt class="park-tile" style="background:var(--blue); color:var(--white);">
+    <a href="/{{ lang }}/oyun-parki/rengleme" data-tilt class="park-tile" style="background:var(--blue); color:var(--night);">
       <span class="park-tile-icon clay" aria-hidden="true"></span>
       <span><span class="park-tile-title">{{ t.oyunParki.rengTitle }}</span><span class="park-tile-text">{{ t.oyunParki.rengLead }}</span></span>
     </a>

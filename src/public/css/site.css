@@ -14,6 +14,8 @@ body {
   overflow-x: hidden;
 }
 img, svg { max-width: 100%; display: block; }
+/* `hidden` atributu həmişə gizlətsin — .btn-*{display:inline-flex} kimi qaydalar onu üstələməsin */
+[hidden]{ display:none !important; }
 a { color: inherit; -webkit-tap-highlight-color: transparent; }
 button { font-family: inherit; -webkit-tap-highlight-color: transparent; }
 
@@ -231,18 +233,53 @@ p { margin: 0 0 var(--space-4); }
 @media (min-width:640px){ .card-grid.cols-2{ grid-template-columns:repeat(2,1fr); } }
 @media (min-width:860px){ .card-grid.cols-3{ grid-template-columns:repeat(3,1fr); } .card-grid.cols-4{ grid-template-columns:repeat(4,1fr); } }
 
-/* ---------- Footer ---------- */
-.site-footer{
-  margin-top:60px; background:var(--orange); color:var(--white);
-  padding:40px 20px; border-radius:40px 40px 0 0;
-  box-shadow: inset 0 8px 0 rgba(255,255,255,.2);
+/* ---------- Footer — "Gecə şəhəri" (DESIGN.md §1) ---------- */
+.site-footer{ position:relative; margin-top:70px; background:var(--night-sky); color:var(--cream); border-radius:40px 40px 0 0; overflow:hidden; }
+.foot-sky{ position:relative; height:150px; }
+.foot-star{ position:absolute; width:6px; height:6px; border-radius:50%; background:var(--butter); opacity:.8; }
+.foot-moon{ position:absolute; right:8%; top:24px; width:56px; height:56px; border-radius:50%; background:var(--butter); box-shadow:inset -8px -6px 0 rgba(0,0,0,.08), 0 0 0 10px rgba(255,227,155,.12); }
+.foot-skyline{ position:absolute; left:0; right:0; bottom:14px; display:flex; align-items:flex-end; justify-content:center; gap:14px; padding:0 4%; }
+.foot-bld{ display:flex; flex-direction:column; align-items:center; }
+.foot-roof{ width:0; height:0; border-left:var(--w) solid transparent; border-right:var(--w) solid transparent; border-bottom:calc(var(--w) * .8) solid var(--c); margin-bottom:-2px; filter:brightness(.8); }
+.foot-body{ width:calc(var(--w) * 1.8); height:var(--h); background:var(--c); border-radius:8px 8px 0 0; filter:brightness(.8); display:grid; grid-template-columns:repeat(2,1fr); gap:6px; padding:8px; align-content:start; }
+.foot-win{ height:12px; border-radius:3px; background:#2B3B60; }
+.foot-win.on{ background:var(--butter); box-shadow:0 0 10px rgba(255,227,155,.7); }
+.foot-street{ position:absolute; left:0; right:0; bottom:0; height:14px; background:#22325A; }
+@media (max-width:520px){ .foot-skyline{ gap:6px; } .foot-bld:nth-child(n+5){ display:none; } }
+
+.foot-cols{ display:grid; gap:28px; padding-top:30px; padding-bottom:20px; }
+@media (min-width:860px){ .foot-cols{ grid-template-columns:1.2fr 1fr 1fr; gap:36px; } }
+.foot-title{ font-family:var(--font-display); font-weight:700; font-size:clamp(1.6rem,6vw,2.1rem); line-height:1.05; white-space:pre-line; }
+.foot-cta{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+.foot-wa{ background:var(--green); color:var(--night); box-shadow:inset -4px -5px 0 rgba(0,0,0,.12), inset 4px 4px 0 rgba(255,255,255,.3), 0 6px 0 var(--green-deep); }
+.foot-wa:active{ box-shadow:inset -4px -5px 0 rgba(0,0,0,.12), 0 2px 0 var(--green-deep); }
+.foot-col-title{ font-family:var(--font-display); font-weight:700; font-size:1.05rem; color:var(--sun); margin-bottom:10px; }
+.foot-places{ list-style:none; margin:0; padding:0; display:grid; gap:4px; }
+.foot-places a{ display:flex; align-items:center; gap:10px; min-height:36px; color:var(--cream); text-decoration:none; font-weight:800; font-size:.92rem; }
+.foot-places a:hover{ color:var(--sun); }
+.foot-places .dot{ width:12px; height:12px; border-radius:50%; flex:none; box-shadow:0 0 0 2px rgba(255,255,255,.35); }
+.foot-place{ color:#8FA0C2; font-weight:700; }
+.foot-contact{ font-style:normal; display:flex; flex-direction:column; gap:6px; font-size:.92rem; color:#C9D3E8; line-height:1.45; }
+.foot-contact strong{ color:var(--cream); }
+.foot-contact a{ color:var(--cream); }
+.foot-contact-links{ display:flex; gap:16px; flex-wrap:wrap; margin-top:4px; }
+.foot-contact-links a{ color:var(--sun); font-weight:800; text-decoration:none; }
+.foot-legal{ display:flex; justify-content:space-between; gap:8px 16px; flex-wrap:wrap; border-top:2px solid #2A3A60; padding-top:14px; padding-bottom:24px; font-size:.78rem; color:#8FA0C2; }
+.foot-legal a{ color:#C9D3E8; }
+@media (prefers-reduced-motion:no-preference){
+  /* Ulduzlar 3 dəfə parıldayır, pəncərələr bir dəfə ardıcıl yanır (footer görünəndə) */
+  .foot-sky.is-in .foot-star{ animation:footTw 1.6s ease-in-out calc(var(--k) * 200ms) 3; }
+  @keyframes footTw{ 50%{ opacity:.2; scale:.6; } }
+  .js-motion .foot-sky:not(.is-in) .foot-win.on{ background:#2B3B60; box-shadow:none; }
+  .foot-sky.is-in .foot-win.on{ animation:footWin .45s ease calc(var(--k) * 110ms + .2s) both; }
+  @keyframes footWin{ from{ background:#2B3B60; box-shadow:none; } }
 }
-.site-footer .container{ display:flex; flex-direction:column; gap:14px; }
-.site-footer .foot-title{ font-family:var(--font-display); font-weight:700; font-size:clamp(1.6rem,6vw,2.1rem); line-height:1.05; }
-.site-footer a.btn-secondary{ width:fit-content; }
-.site-footer .foot-links{ display:flex; gap:16px; flex-wrap:wrap; font-weight:700; font-size:.92rem; }
-.site-footer .foot-links a{ text-decoration:underline; color:var(--white); }
-.site-footer .foot-meta{ font-size:.8rem; font-weight:700; color:#FFE4D2; }
+
+/* ---------- Məhəllə fonları (body sinfi, DESIGN.md §1) ---------- */
+body.ground-sky{ background:var(--ground-sky); }
+body.ground-mint{ background:var(--ground-mint); }
+body.ground-butter{ background:var(--ground-butter); }
+body.ground-rose{ background:var(--ground-rose); }
 
 /* ---------- Səhifə başlıq bölməsi (ortaq) ---------- */
 /* Yalnız üst boşluq: `.container`-in 20px yan boşluğunu ləğv etməsin (əvvəl `padding:28px 0 0`
@@ -282,7 +319,7 @@ p { margin: 0 0 var(--space-4); }
 /* ---------- Usta pasportu möhürləri + kod qutusu (Kampaniyalar) ---------- */
 .stamp-grid{ display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:8px; margin-top:16px; background:var(--cream); border-radius:18px; padding:14px 10px; }
 .stamp-slot{ aspect-ratio:1/1; border-radius:50%; border:3px dashed #C9B89A; box-sizing:border-box; }
-.stamp-slot.is-filled{ border-style:solid; border-color:var(--orange); background:rgba(232,104,42,.15); }
+.stamp-slot.is-filled{ border-style:solid; border-color:var(--orange); background:rgba(204,75,26,.15); }
 @media (prefers-reduced-motion:no-preference){
   /* Pasport açılanda dolu möhürlər bir-bir "basılır" */
   .stamp-grid.is-in .stamp-slot.is-filled{ animation:mStampSlot .5s cubic-bezier(.2,1.5,.4,1) calc(var(--i, 0) * 140ms + .2s) both; }
@@ -320,7 +357,7 @@ p { margin: 0 0 var(--space-4); }
 .head-with-deco > .mailbox{ right:36px; }
 /* Dekor sağ küncdə — başlıq/alt mətn onun altına girməsin */
 .head-with-deco > h1, .head-with-deco > .page-lead{ max-width:calc(100% - 86px); }
-.info-bubble{ width:58px; height:58px; border-radius:50% 50% 50% 12px; background:var(--blue); color:var(--white); display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:2rem; cursor:pointer; box-shadow:inset -5px -6px 0 rgba(0,0,0,.16), inset 5px 5px 0 rgba(255,255,255,.3); }
+.info-bubble{ width:58px; height:58px; border-radius:50% 50% 50% 12px; background:var(--blue); color:var(--night); display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:2rem; cursor:pointer; box-shadow:inset -5px -6px 0 rgba(0,0,0,.16), inset 5px 5px 0 rgba(255,255,255,.3); }
 .robot{ display:flex; flex-direction:column; align-items:center; width:64px; cursor:pointer; }
 .robot-antenna{ width:4px; height:16px; background:var(--night-2); position:relative; }
 .robot-light{ position:absolute; left:50%; top:-8px; width:12px; height:12px; margin-left:-6px; border-radius:50%; background:var(--orange); }

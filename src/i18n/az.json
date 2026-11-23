@@ -14,16 +14,18 @@
     "langSwitch": "Dil seçimi"
   },
   "places": [
-    { "href": "/{lang}/teqvim", "place": "Avtobus dayanacağı", "what": "Təqvim", "color": "#6FA8DC" },
-    { "href": "/{lang}/oyun-parki", "place": "Oyun parkı", "what": "Oyunlar", "color": "#7BC67E" },
-    { "href": "/{lang}/kampaniyalar", "place": "Bazar meydanı", "what": "Kampaniyalar", "color": "#FFC23D" },
-    { "href": "/{lang}/ad-gunu", "place": "Bayram meydanı", "what": "Ad günü", "color": "#F28AA6" },
-    { "href": "/{lang}/qalereya", "place": "Şəhər muzeyi", "what": "Qalereya", "color": "#E8682A" },
-    { "href": "/{lang}/suallar", "place": "Məlumat bürosu", "what": "Suallar", "color": "#FFE08A" },
+    { "href": "/{lang}/teqvim", "place": "Avtobus dayanacağı", "what": "Təqvim", "color": "#5BA4E8" },
+    { "href": "/{lang}/oyun-parki", "place": "Oyun parkı", "what": "Oyunlar", "color": "#52B788" },
+    { "href": "/{lang}/kampaniyalar", "place": "Bazar meydanı", "what": "Kampaniyalar", "color": "#FFB830" },
+    { "href": "/{lang}/ad-gunu", "place": "Bayram meydanı", "what": "Ad günü", "color": "#F27A9E" },
+    { "href": "/{lang}/qalereya", "place": "Şəhər muzeyi", "what": "Qalereya", "color": "#CC4B1A" },
+    { "href": "/{lang}/suallar", "place": "Məlumat bürosu", "what": "Suallar", "color": "#FFE39B" },
     { "href": "/{lang}/elaqe", "place": "Şəhər poçtu", "what": "Əlaqə", "color": "#1B2A4A" },
     { "href": "/{lang}/tapsiriq", "place": "Elanlar lövhəsi", "what": "Həftənin tapşırığı", "color": "#8A5A3B" }
   ],
   "footer": {
+    "placesTitle": "Şəhərin yerləri",
+    "contactTitle": "Şəhər poçtu",
     "title": "Şənbə şəhərdə\ngörüşürük?",
     "cta": "Yer tut",
     "whatsapp": "WhatsApp-da yaz",
@@ -136,6 +138,82 @@
     "waitlistTitle": "Yer qalmayıb?",
     "waitlistLead": "Dolu seansa da yazıla bilərsiniz — gözləmə siyahısına düşürsünüz, yer açılan kimi WhatsApp-dan xəbər veririk."
   },
+  "games": {
+    "newBadge": "YENİ",
+    "privacy": "Oyun qeydiyyatsız işləyir, heç bir məlumat göndərilmir və toplanmır.",
+    "toplar": {
+      "title": "Rəngli toplar",
+      "lead": "Səbəti sürüşdür, yalnız lazım olan rəngdə topları tut!",
+      "tile": "Düşən topları tut",
+      "start": "Başla",
+      "again": "Yenidən oyna",
+      "catch": "Bunu tut:",
+      "score": "Xal",
+      "lives": "Can",
+      "best": "Rekord",
+      "over": "Oyun bitdi!",
+      "overScore": "Xalın: {n}",
+      "newBest": "Yeni rekord!",
+      "levelUp": "Yeni rəng: {color}!",
+      "hint": "Telefonda barmağınla, kompüterdə ← → oxları və ya siçanla.",
+      "canvasLabel": "Oyun sahəsi: düşən rəngli toplar və səbət",
+      "wrong": "Səhv rəng! Bir can getdi.",
+      "colors": {
+        "orange": "narıncı",
+        "blue": "mavi",
+        "green": "yaşıl",
+        "pink": "çəhrayı",
+        "sun": "sarı"
+      }
+    },
+    "fiqur": {
+      "title": "Fiqur düzəlt",
+      "lead": "Hissələri fiqura əlavə et — göz və ağız olan kimi canlanacaq!",
+      "tile": "Plastilin dostunu yarat",
+      "bodyColor": "Bədənin rəngi",
+      "parts": "Hissələr",
+      "hint": "Hissəyə toxun — fiqura əlavə olunur. Sonra sürükləyib yerini dəyiş.",
+      "alive": "Salam! Mən canlandım!",
+      "download": "Şəkli yüklə",
+      "clear": "Təmizlə",
+      "figureLabel": "Sənin plastilin fiqurun",
+      "groups": {
+        "eyes": "Gözlər",
+        "mouth": "Ağız",
+        "nose": "Burun",
+        "hat": "Papaq",
+        "arms": "Qollar"
+      }
+    },
+    "qarisdir": {
+      "title": "Rəng qarışdır",
+      "lead": "İki plastilin topunu qaba at, yoğur və lazım olan rəngi düzəlt!",
+      "tile": "İki rəngdən yenisini düzəlt",
+      "target": "Bu rəngi düzəlt:",
+      "palette": "Plastilin topları",
+      "bowl": "Qarışdırma qabı",
+      "mix": "Yoğur!",
+      "clear": "Boşalt",
+      "pick": "İki top seç",
+      "correct": "Əla! Düz tapdın!",
+      "wrong": "Bu {color} oldu. Yenidən cəhd et!",
+      "round": "Tur {n}/5",
+      "done": "Hamısını düzəltdin — sən rəng ustasısan!",
+      "again": "Yenidən oyna",
+      "colors": {
+        "red": "qırmızı",
+        "yellow": "sarı",
+        "blue": "mavi",
+        "white": "ağ",
+        "orange": "narıncı",
+        "green": "yaşıl",
+        "purple": "bənövşəyi",
+        "pink": "çəhrayı",
+        "lightblue": "açıq mavi",
+        "cream": "açıq sarı"
+      }
+    }
+  },
   "oyunParki": {
     "title": "Oyun parkı",
     "memoryTitle": "Usta cütləri",
@@ -168,7 +246,7 @@
     "hintDrag": "Dart, dart!",
     "footerNote": "Real plastilinlə daha maraqlıdır! Gil evində şənbə masterklassına bax →",
     "shapes": ["Top", "Damla", "Kub", "Yumurta"],
-    "colors": [["Narıncı", "#E8682A"], ["Mavi", "#6FA8DC"], ["Yaşıl", "#7BC67E"], ["Sarı", "#FFC23D"], ["Çəhrayı", "#F28AA6"], ["Bənövşəyi", "#9B7BD4"]]
+    "colors": [["Narıncı", "#CC4B1A"], ["Mavi", "#5BA4E8"], ["Yaşıl", "#52B788"], ["Sarı", "#FFB830"], ["Çəhrayı", "#F27A9E"], ["Bənövşəyi", "#9B7BD4"]]
   },
   "pizza": {
     "title": "Pizza bəzə",

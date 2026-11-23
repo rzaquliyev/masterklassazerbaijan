@@ -25,7 +25,7 @@
 .memory-won-sub{ font-size:.85rem; font-weight:800; }
 
 /* Oyun parkı səhnəsi (maket): çarx 3 dövr fırlanır, yelləncəklər 3 dəfə yellənir; toxunanda yenidən */
-.park-scene{ position:relative; height:170px; margin-top:16px; border-radius:var(--radius-lg); background:#DCEFFB; overflow:hidden; cursor:pointer; }
+.park-scene{ position:relative; height:170px; margin-top:16px; border-radius:var(--radius-lg); background:#C9E3F8; overflow:hidden; cursor:pointer; }
 .park-grass{ position:absolute; left:0; right:0; bottom:0; height:34px; background:var(--green); box-shadow:inset 0 6px 0 rgba(255,255,255,.2); }
 .ferris{ position:absolute; left:8%; bottom:22px; width:124px; height:140px; }
 .ferris-leg{ position:absolute; left:58px; top:58px; width:8px; height:84px; border-radius:4px; background:var(--night-2); transform-origin:50% 0; rotate:18deg; }
@@ -54,3 +54,17 @@
   .swing-set{ right:16%; bottom:42px; scale:1.45; transform-origin:100% 100%; }
   .memory-grid{ grid-template-columns:repeat(6, 108px); gap:14px; }
 }
+
+/* Oyun parkı plitə ikonları */
+.park-tile-badge{ display:inline-block; font-family:var(--font-display); font-weight:700; font-size:.68rem; letter-spacing:.08em; background:var(--night); color:var(--butter); padding:2px 8px; border-radius:99px; margin-bottom:4px; }
+.park-icon-balls{ position:relative; background:transparent !important; }
+.park-icon-balls i{ position:absolute; width:22px; height:22px; border-radius:50%; box-shadow:inset -3px -3px 0 rgba(0,0,0,.18); }
+.park-icon-balls i:nth-child(1){ left:4px; top:4px; background:var(--orange); }
+.park-icon-balls i:nth-child(2){ left:28px; top:12px; background:var(--blue); }
+.park-icon-balls i:nth-child(3){ left:12px; top:30px; background:var(--sun); }
+.park-icon-face{ position:relative; background:var(--sun); }
+.park-icon-face i{ position:absolute; top:20px; width:9px; height:9px; border-radius:50%; background:var(--night); }
+.park-icon-face i:nth-child(1){ left:16px; } .park-icon-face i:nth-child(2){ right:16px; }
+.park-icon-mix{ position:relative; background:transparent !important; }
+.park-icon-mix i{ position:absolute; top:12px; width:30px; height:30px; border-radius:50%; mix-blend-mode:multiply; }
+.park-icon-mix i:nth-child(1){ left:2px; background:#E2493B; } .park-icon-mix i:nth-child(2){ left:22px; background:var(--sun); }

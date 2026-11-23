@@ -49,7 +49,7 @@
   <h2>{{ t.tapsiriq.howTitle }}</h2>
   <div class="stack" style="margin-top:12px;">
     <div style="display:flex; gap:12px; align-items:center; background:var(--white); border-radius:var(--radius-lg); padding:14px; box-shadow:0 5px 0 var(--card-shadow);">
-      <span class="step-num" style="background:var(--orange);">1</span><div style="font-weight:800; font-size:.95rem;">{{ t.tapsiriq.step1 }}</div>
+      <span class="step-num" style="background:var(--orange); color:var(--white);">1</span><div style="font-weight:800; font-size:.95rem;">{{ t.tapsiriq.step1 }}</div>
     </div>
     <div style="display:flex; gap:12px; align-items:center; background:var(--white); border-radius:var(--radius-lg); padding:14px; box-shadow:0 5px 0 var(--card-shadow);">
       <span class="step-num" style="background:var(--blue);">2</span><div style="font-weight:800; font-size:.95rem;">{{ t.tapsiriq.step2 }}</div>
@@ -127,8 +127,8 @@
   {% if upcoming.length %}
   <div class="next-grid">
     {% for u in upcoming %}
-    <div class="next-tile" style="background:{{ ['#6FA8DC', '#7BC67E', '#F28AA6'][loop.index0 % 3] }};">
-      <span style="font-family:var(--font-display); font-weight:700; font-size:1.5rem; color:var(--white);">?</span>
+    <div class="next-tile" style="background:{{ ['#5BA4E8', '#52B788', '#F27A9E'][loop.index0 % 3] }};">
+      <span style="font-family:var(--font-display); font-weight:700; font-size:1.5rem; color:var(--night);">?</span>
       <span style="font-size:.7rem; font-weight:800;">{{ t.tapsiriq.nextOpensTemplate | replace('{n}', u.daysUntil) }}</span>
     </div>
     {% endfor %}

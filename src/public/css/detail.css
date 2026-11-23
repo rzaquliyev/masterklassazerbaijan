@@ -11,7 +11,7 @@
 .interior-steam{ position:absolute; z-index:3; left:50%; top:22px; width:60px; margin-left:-30px; display:flex; justify-content:space-between; }
 .steam{ width:10px; height:26px; border-radius:10px; background:rgba(255,255,255,.85); opacity:0; }
 @media (prefers-reduced-motion:reduce){ .steam{ display:none; } }
-.step-dot{ min-width:52px; height:52px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:1.2rem; color:var(--white); text-shadow:0 2px 0 rgba(0,0,0,.18); }
+.step-dot{ min-width:52px; height:52px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:1.2rem; }
 .session-row{ text-decoration:none; color:var(--night); display:block; transition:transform .15s ease; }
 .session-row:hover{ transform:translateY(-2px); }
 .session-row.is-full{ opacity:.85; }

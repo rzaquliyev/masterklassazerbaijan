@@ -1,0 +1,44 @@
+{% extends "layouts/base.njk" %}
+{% block body_class %}ground-sky{% endblock %}
+{% block title %}{{ t.games.toplar.title }} — {{ t.siteName }}{% endblock %}
+{% block meta_description %}{{ t.games.toplar.lead }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="/css/games.css?v={{ assetV }}">{% endblock %}
+
+{% block content %}
+<section class="container page-head">
+  <a class="back-link" href="/{{ lang }}/oyun-parki">← {{ t.oyunParki.title }}</a>
+  <h1 style="margin-top:14px;">{{ t.games.toplar.title }}</h1>
+  <p class="page-lead">{{ t.games.toplar.lead }}</p>
+</section>
+
+<section class="container" style="margin-top:8px;">
+  <div class="catch-game" id="catch-game"
+    data-colors="{{ t.games.toplar.colors | dump }}"
+    data-level-up="{{ t.games.toplar.levelUp }}" data-wrong="{{ t.games.toplar.wrong }}"
+    data-over-score="{{ t.games.toplar.overScore }}" data-new-best="{{ t.games.toplar.newBest }}">
+    <div class="catch-hud">
+      <div class="catch-target"><span>{{ t.games.toplar.catch }}</span> <span class="ball-swatch" id="catch-swatch" aria-hidden="true"></span> <strong id="catch-target-name"></strong></div>
+      <div class="catch-stats">
+        <span>{{ t.games.toplar.score }}: <strong id="catch-score">0</strong></span>
+        <span>{{ t.games.toplar.lives }}: <strong id="catch-lives" aria-label="3">♥♥♥</strong></span>
+        <span>{{ t.games.toplar.best }}: <strong id="catch-best">0</strong></span>
+      </div>
+    </div>
+    <div class="catch-stage">
+      <canvas id="catch-canvas" tabindex="0" role="img" aria-label="{{ t.games.toplar.canvasLabel }}"></canvas>
+      <div class="catch-overlay" id="catch-overlay">
+        <div class="catch-overlay-title" id="catch-overlay-title">{{ t.games.toplar.title }}</div>
+        <div class="catch-overlay-sub" id="catch-overlay-sub">{{ t.games.toplar.hint }}</div>
+        <button type="button" class="btn-primary" id="catch-start" data-again="{{ t.games.toplar.again }}">{{ t.games.toplar.start }}</button>
+      </div>
+    </div>
+    <div class="visually-hidden" id="catch-live" role="status" aria-live="polite"></div>
+  </div>
+</section>
+
+<section class="container" style="padding-top:22px;">
+  <div class="sample-notice game-privacy">{{ t.games.privacy }}</div>
+</section>
+{% endblock %}
+
+{% block extra_js %}<script src="/js/toplar.js?v={{ assetV }}" defer></script>{% endblock %}

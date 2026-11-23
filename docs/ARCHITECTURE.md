@@ -44,6 +44,7 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 | 6 | `/oyun-parki/yogur` | Plastilin yoğur | Oyun parkının içi |
 | 6b | `/oyun-parki/pizza` | Pizza bəzə (yeni, 2026-10-10 — Mətbəx evi üçün) | — |
 | 7 | `/oyun-parki/rengleme` | Rəngləmə (yeni) | — |
+| 7b | `/oyun-parki/toplar`, `/oyun-parki/fiqur`, `/oyun-parki/qarisdir` | Yeni oyunlar (2026-11-24): Rəngli toplar (canvas tutma oyunu), Fiqur düzəlt (SVG konstruktor + PNG), Rəng qarışdır (5 tur) — client-only, `src/public/js/{toplar,fiqur,qarisdir}.js`, `css/games.css` | Oyun parkının içi |
 | 8 | (bütün səhifələrdə) | Gizlənqaç (yeni) | — |
 | 9 | `/kampaniyalar` | Kampaniyalar | Bazar meydanı |
 | 10 | `/ad-gunu` | Ad günü | Bayram meydanı |

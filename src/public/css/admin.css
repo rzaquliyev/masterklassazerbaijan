@@ -16,7 +16,7 @@ a{ color:var(--blue-deep); }
 .admin-nav a.is-current{ background:var(--orange); color:var(--white); }
 .admin-nav-spacer{ flex:1; }
 .admin-nav-user{ font-size:.76rem; color:#AEB9D1; padding:0 10px; word-break:break-all; }
-.admin-btn-link{ background:none; border:0; color:#F28AA6; font-weight:700; cursor:pointer; padding:9px 10px; width:100%; text-align:left; font-size:.9rem; border-radius:8px; transition:background-color .15s ease; }
+.admin-btn-link{ background:none; border:0; color:#F27A9E; font-weight:700; cursor:pointer; padding:9px 10px; width:100%; text-align:left; font-size:.9rem; border-radius:8px; transition:background-color .15s ease; }
 .admin-btn-link:hover{ background:rgba(255,255,255,.08); }
 
 .admin-main{ flex:1; padding:28px 32px; max-width:1180px; min-width:0; }
@@ -80,7 +80,7 @@ table.admin-table{ width:100%; border-collapse:collapse; font-size:.86rem; table
   padding-right:36px; cursor:pointer;
 }
 .admin-card input:focus, .admin-card select:focus, .admin-card textarea:focus{
-  outline:none; border-color:var(--orange); box-shadow:0 0 0 3px rgba(232,104,42,.14);
+  outline:none; border-color:var(--orange); box-shadow:0 0 0 3px rgba(204,75,26,.14);
 }
 .admin-field input[type="checkbox"]{ width:auto; min-height:auto; }
 .admin-field textarea{ min-height:80px; padding:9px 12px; resize:vertical; }

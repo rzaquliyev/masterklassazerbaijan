@@ -14,16 +14,18 @@
     "langSwitch": "Language switch"
   },
   "places": [
-    { "href": "/{lang}/teqvim", "place": "Bus stop", "what": "Schedule", "color": "#6FA8DC" },
-    { "href": "/{lang}/oyun-parki", "place": "Playground", "what": "Games", "color": "#7BC67E" },
-    { "href": "/{lang}/kampaniyalar", "place": "Market square", "what": "Promotions", "color": "#FFC23D" },
-    { "href": "/{lang}/ad-gunu", "place": "Festival square", "what": "Birthday", "color": "#F28AA6" },
-    { "href": "/{lang}/qalereya", "place": "City museum", "what": "Gallery", "color": "#E8682A" },
-    { "href": "/{lang}/suallar", "place": "Information desk", "what": "Questions", "color": "#FFE08A" },
+    { "href": "/{lang}/teqvim", "place": "Bus stop", "what": "Schedule", "color": "#5BA4E8" },
+    { "href": "/{lang}/oyun-parki", "place": "Playground", "what": "Games", "color": "#52B788" },
+    { "href": "/{lang}/kampaniyalar", "place": "Market square", "what": "Promotions", "color": "#FFB830" },
+    { "href": "/{lang}/ad-gunu", "place": "Festival square", "what": "Birthday", "color": "#F27A9E" },
+    { "href": "/{lang}/qalereya", "place": "City museum", "what": "Gallery", "color": "#CC4B1A" },
+    { "href": "/{lang}/suallar", "place": "Information desk", "what": "Questions", "color": "#FFE39B" },
     { "href": "/{lang}/elaqe", "place": "Town post office", "what": "Contact", "color": "#1B2A4A" },
     { "href": "/{lang}/tapsiriq", "place": "Notice board", "what": "Task of the week", "color": "#8A5A3B" }
   ],
   "footer": {
+    "placesTitle": "Around town",
+    "contactTitle": "Town post office",
     "title": "See you in the\ncity on Saturday?",
     "cta": "Book a spot",
     "whatsapp": "Message on WhatsApp",
@@ -136,6 +138,82 @@
     "waitlistTitle": "No seats left?",
     "waitlistLead": "You can still register for a full session — you'll join the waitlist, and we'll message you on WhatsApp when a spot opens up."
   },
+  "games": {
+    "newBadge": "NEW",
+    "privacy": "This game works without sign-up — no data is sent or collected.",
+    "toplar": {
+      "title": "Colour catch",
+      "lead": "Slide the basket and catch only the balls of the right colour!",
+      "tile": "Catch the falling balls",
+      "start": "Start",
+      "again": "Play again",
+      "catch": "Catch:",
+      "score": "Score",
+      "lives": "Lives",
+      "best": "Best",
+      "over": "Game over!",
+      "overScore": "Your score: {n}",
+      "newBest": "New best!",
+      "levelUp": "New colour: {color}!",
+      "hint": "On a phone use your finger; on a computer use ← → keys or the mouse.",
+      "canvasLabel": "Game area: falling coloured balls and a basket",
+      "wrong": "Wrong colour! You lost a life.",
+      "colors": {
+        "orange": "orange",
+        "blue": "blue",
+        "green": "green",
+        "pink": "pink",
+        "sun": "yellow"
+      }
+    },
+    "fiqur": {
+      "title": "Make a figure",
+      "lead": "Add parts to your figure — once it has eyes and a mouth, it comes alive!",
+      "tile": "Create a clay friend",
+      "bodyColor": "Body colour",
+      "parts": "Parts",
+      "hint": "Tap a part to add it to the figure, then drag it into place.",
+      "alive": "Hello! I came alive!",
+      "download": "Download picture",
+      "clear": "Clear",
+      "figureLabel": "Your clay figure",
+      "groups": {
+        "eyes": "Eyes",
+        "mouth": "Mouth",
+        "nose": "Nose",
+        "hat": "Hat",
+        "arms": "Arms"
+      }
+    },
+    "qarisdir": {
+      "title": "Mix the colours",
+      "lead": "Drop two clay balls into the bowl, knead them and make the right colour!",
+      "tile": "Make a new colour from two",
+      "target": "Make this colour:",
+      "palette": "Clay balls",
+      "bowl": "Mixing bowl",
+      "mix": "Knead!",
+      "clear": "Empty",
+      "pick": "Pick two balls",
+      "correct": "Great! You got it!",
+      "wrong": "That made {color}. Try again!",
+      "round": "Round {n}/5",
+      "done": "You made them all — you are a colour master!",
+      "again": "Play again",
+      "colors": {
+        "red": "red",
+        "yellow": "yellow",
+        "blue": "blue",
+        "white": "white",
+        "orange": "orange",
+        "green": "green",
+        "purple": "purple",
+        "pink": "pink",
+        "lightblue": "light blue",
+        "cream": "light yellow"
+      }
+    }
+  },
   "oyunParki": {
     "title": "Playground",
     "memoryTitle": "Master pairs",
@@ -168,7 +246,7 @@
     "hintDrag": "Pull, pull!",
     "footerNote": "It's more fun with real playdough! Check out Saturday's masterclass at the clay house →",
     "shapes": ["Ball", "Drop", "Cube", "Egg"],
-    "colors": [["Orange", "#E8682A"], ["Blue", "#6FA8DC"], ["Green", "#7BC67E"], ["Yellow", "#FFC23D"], ["Pink", "#F28AA6"], ["Purple", "#9B7BD4"]]
+    "colors": [["Orange", "#CC4B1A"], ["Blue", "#5BA4E8"], ["Green", "#52B788"], ["Yellow", "#FFB830"], ["Pink", "#F27A9E"], ["Purple", "#9B7BD4"]]
   },
   "pizza": {
     "title": "Decorate the pizza",

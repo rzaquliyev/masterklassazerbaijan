@@ -142,3 +142,17 @@ Bu layihə əvvəlcədən `design-taste-frontend` skili ilə Greenfield rejimind
 
 **Yoxlanılmadı:** reduced-motion rejimi brauzerdə vizual emulyasiya ilə (yalnız kod yoxlaması); real telefonda toxunma; Safari (ayrıca `translate`/`rotate`/`scale` xüsusiyyətləri Safari 14.1+ tələb edir — köhnə Safari-də animasiyalar sadəcə görünmür, məzmun pozulmur).
 
+## 7. Brend palitrası, Footer "Gecə şəhəri", 3 yeni oyun (2026-11-24)
+
+**Palitra:** köhnə narıncı üzərində ağ mətn 3.26:1, yaşıl/mavi/çəhrayı üzərində 2.0–2.5:1 idi (AA normasından aşağı). Yeni palitra və kontrast qaydası `DESIGN.md` §1-dədir; ev rəngləri `migrations/005_brand_palette.sql` ilə yenilənir; dinamik ev rəngi üzərindəki mətni `textOn` filtri seçir. Rəngli fonlarda qalan ağ mətnlər (Kampaniyalar yaşıl kartı, oyun plitələri, Suallar balonu, Tapşırıq nömrələri, avtobus dayanacağı lövhəsi) tünd göyə keçirildi.
+
+**Footer:** "Gecə şəhəri" (`site.css`), 3 sütun — dəvət, şəhərin yerləri, əlaqə + iş saatları. Hər məhəllənin öz açıq fonu (`body.ground-*`).
+
+**Yeni oyunlar:** Rəngli toplar (canvas, barmaq/siçan/oxlar, rəng + forma işarəsi — rəng korluğu üçün, rekord yalnız localStorage-də), Fiqur düzəlt (SVG, sürükləmə + ox düymələri, göz+ağız olanda canlanır, PNG yükləmə), Rəng qarışdır (5 tur, qarışdırma reseptləri). Köhnə oyunlar saxlanılıb (hansının silinəcəyi istifadəçinin qərarıdır).
+
+**Düzəldilən:** `.btn-*{display:inline-flex}` qaydası `hidden` atributunu üstələyirdi (gizli düymələr görünürdü) — `[hidden]{display:none !important}` əlavə olundu.
+
+**Yoxlanıldı:** brauzerdə 3 oyunun tam axını — Toplar (düşmə, səhv rəng → can, oyun bitdi ekranı; brauzer paneli gizli olduğundan kadrlar sınaqda taymerlə ötürüldü), Fiqur (5 hissə, rəng dəyişmə, canlanma + nitq balonu), Qarışdır (səhv qarışıq mesajı + 5/5 düzgün tur + final); RU lokalizasiyası; footer pəncərə/ulduz animasiyası; testlər 29/29; `infinite` 0.
+
+**Yoxlanılmadı:** real telefonda toxunma ilə oynamaq; Toplar oyununun real 60fps axıcılığı (yalnız taymerli simulyasiya); PNG yükləmənin faktiki faylı. **Qeyd (köhnə məsələ):** Baloo 2/Nunito-nun kiril subset-i self-host edilməyib — RU səhifələrində başlıqlar sistem şrifti ilə görünür.
+

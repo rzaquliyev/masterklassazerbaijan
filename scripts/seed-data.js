@@ -2,10 +2,10 @@
 import { randomUUID } from 'node:crypto';
 
 const houses = [
-  { slug: 'gil', name: 'Gil evi', color: '#E8682A', order: 1 },
-  { slug: 'resm', name: 'Rəsm evi', color: '#6FA8DC', order: 2 },
-  { slug: 'metbex', name: 'Mətbəx', color: '#FFC23D', order: 3 },
-  { slug: 'elm', name: 'Elm evi', color: '#7BC67E', order: 4 },
+  { slug: 'gil', name: 'Gil evi', color: '#CC4B1A', order: 1 },
+  { slug: 'resm', name: 'Rəsm evi', color: '#5BA4E8', order: 2 },
+  { slug: 'metbex', name: 'Mətbəx', color: '#FFB830', order: 3 },
+  { slug: 'elm', name: 'Elm evi', color: '#52B788', order: 4 },
 ];
 
 const masterclasses = [

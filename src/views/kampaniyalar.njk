@@ -1,4 +1,5 @@
 {% extends "layouts/base.njk" %}
+{% block body_class %}ground-butter{% endblock %}
 
 {% block title %}{{ t.kampaniyalar.title | replace('\n',' ') }} — {{ t.siteName }}{% endblock %}
 {% block meta_description %}{{ t.kampaniyalar.lead }}{% endblock %}
@@ -14,7 +15,7 @@
 
 <div class="container camp-duo">
 <section style="margin-top:22px;">
-  <div class="trust-card" style="background:var(--green); color:var(--white); box-shadow:0 8px 0 var(--green-deep);">
+  <div class="trust-card" style="background:var(--green); color:var(--night); box-shadow:0 8px 0 var(--green-deep);">
     <span class="chip-solid m-wiggle" data-anim style="background:var(--white); color:var(--green-deep);">{{ t.kampaniyalar.seasonalBadge }}</span>
     <div style="font-family:var(--font-display); font-weight:700; font-size:1.25rem; margin-top:12px;">{{ t.kampaniyalar.seasonalTitle }}</div>
     <div style="margin-top:6px; font-weight:700; font-size:.9rem;">{{ t.kampaniyalar.seasonalLead }}</div>
@@ -82,7 +83,7 @@
 </section>
 
 <section class="container card-grid cols-2" style="margin-top:20px;">
-  <a href="/{{ lang }}/ad-gunu" class="park-tile" style="background:var(--pink); color:var(--white); min-height:150px;">
+  <a href="/{{ lang }}/ad-gunu" class="park-tile" style="background:var(--pink); color:var(--night); min-height:150px;">
     <span><span class="park-tile-title">{{ t.kampaniyalar.birthdayTitle }}</span><span class="park-tile-text">{{ t.kampaniyalar.birthdayLead }}</span></span>
   </a>
   <a href="/{{ lang }}/oyun-parki" class="park-tile" style="background:var(--night); color:var(--cream); min-height:150px;">

@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="/css/motion.css?v={{ assetV }}">
 {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
 {% if holidayBanner %}
 <div class="holiday-banner" style="background:var(--{{ holidayBanner.colorToken }});">{{ holidayBanner.text }}</div>
 {% endif %}
@@ -50,16 +50,53 @@
 </main>
 
 <footer class="site-footer">
-  <div class="container">
-    <div class="foot-title" style="white-space:pre-line;">{{ t.footer.title }}</div>
-    <a class="btn-secondary" href="/{{ lang }}/teqvim">{{ t.footer.cta }}</a>
-    <a class="foot-links" href="https://wa.me/994558199901" target="_blank" rel="noopener">{{ t.footer.whatsapp }}</a>
-    <div class="foot-links">
-      <a href="/{{ lang }}/mexfilik">{{ t.footer.privacy }}</a>
-      <a href="https://instagram.com/masterklassazerbaijan" target="_blank" rel="noopener">Instagram</a>
+  <div class="foot-sky" aria-hidden="true" data-anim>
+    {% for st in [[7,22],[19,58],[31,16],[46,44],[58,14],[71,60],[88,30]] %}<i class="foot-star" style="left:{{ st[0] }}%; top:{{ st[1] }}px; --k:{{ loop.index0 }};"></i>{% endfor %}
+    <span class="foot-moon"></span>
+    <div class="foot-skyline">
+      {% for b in [['orange',30,58,[1,0,0,1]],['blue',38,76,[0,1,0,1,1,0]],['sun',28,50,[1,0]],['green',36,68,[0,1,1,0]],['pink',26,46,[0,1]],['orange',32,60,[0,1,0,0]]] %}
+      <span class="foot-bld" style="--w:{{ b[1] }}px; --h:{{ b[2] }}px; --c:var(--{{ b[0] }});">
+        <span class="foot-roof"></span>
+        <span class="foot-body">{% set bi = loop.index0 %}{% for w in b[3] %}<i class="foot-win {{ 'on' if w == 1 }}" style="--k:{{ bi * 2 + loop.index0 }};"></i>{% endfor %}</span>
+      </span>
+      {% endfor %}
     </div>
-    <div class="foot-meta">© {{ currentYear }} {{ t.siteName }} — {{ t.footer.rights }}</div>
-    <div class="foot-meta">{{ t.footer.sampleNotice }}</div>
+    <span class="foot-street"></span>
+  </div>
+
+  <div class="container foot-cols">
+    <div>
+      <div class="foot-title">{{ t.footer.title }}</div>
+      <div class="foot-cta">
+        <a class="btn-primary" href="/{{ lang }}/teqvim">{{ t.footer.cta }}</a>
+        <a class="btn-primary foot-wa" href="https://wa.me/994558199901" target="_blank" rel="noopener">{{ t.footer.whatsapp }}</a>
+      </div>
+    </div>
+    <nav aria-label="{{ t.footer.placesTitle }}">
+      <div class="foot-col-title">{{ t.footer.placesTitle }}</div>
+      <ul class="foot-places">
+        {% for p in t.places %}
+        <li><a href="{{ p.href | replace('{lang}', lang) }}"><span class="dot" style="background:{{ p.color }};" aria-hidden="true"></span>{{ p.what }} <span class="foot-place">— {{ p.place }}</span></a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+    <div>
+      <div class="foot-col-title">{{ t.footer.contactTitle }}</div>
+      <address class="foot-contact">
+        <strong>{{ t.elaqe.address }}</strong>
+        <a href="tel:+994558199901">+994 55 819 99 01</a>
+        <span>{{ t.elaqe.hoursLabel }}: {{ t.elaqe.hours }}</span>
+        <span class="foot-contact-links">
+          <a href="https://www.google.com/maps/search/?api=1&query={{ t.elaqe.address | urlencode }}" target="_blank" rel="noopener">{{ t.elaqe.mapOpen }} →</a>
+          <a href="https://instagram.com/masterklassazerbaijan" target="_blank" rel="noopener">Instagram →</a>
+        </span>
+      </address>
+    </div>
+  </div>
+
+  <div class="container foot-legal">
+    <span>© {{ currentYear }} {{ t.siteName }} — {{ t.footer.rights }}</span>
+    <span><a href="/{{ lang }}/mexfilik">{{ t.footer.privacy }}</a> · {{ t.footer.sampleNotice }}</span>
   </div>
 </footer>
 
