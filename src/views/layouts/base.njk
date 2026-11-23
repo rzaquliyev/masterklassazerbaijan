@@ -19,6 +19,9 @@
 {% block extra_css %}{% endblock %}
 </head>
 <body>
+{% if holidayBanner %}
+<div class="holiday-banner" style="background:var(--{{ holidayBanner.colorToken }});">{{ holidayBanner.text }}</div>
+{% endif %}
 <a class="skip-link" href="#main">{{ t.nav.skip }}</a>
 
 <header class="container topbar">

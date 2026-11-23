@@ -29,6 +29,11 @@ p { margin: 0 0 var(--space-4); }
 }
 .skip-link:focus{ left:0; }
 
+.holiday-banner{
+  text-align:center; font-weight:800; font-size:.88rem; color:var(--night);
+  padding:9px 16px;
+}
+
 :focus-visible{ outline:3px solid var(--orange); outline-offset:3px; border-radius:6px; }
 
 .container{ max-width:var(--container-max); margin:0 auto; padding:0 20px; }

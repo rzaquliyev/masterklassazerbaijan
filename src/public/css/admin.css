@@ -133,6 +133,21 @@ table.admin-table{ width:100%; border-collapse:collapse; font-size:.86rem; table
 .admin-faq-q{ width:220px; font-weight:700 !important; }
 .admin-faq-a{ flex:1; min-width:220px; min-height:38px !important; resize:vertical; }
 
+/* ---------- Sayt tənzimləmələri ---------- */
+.admin-hint{ font-size:.82rem; color:var(--night-2); margin:-6px 0 14px; max-width:60ch; }
+.admin-field-group{ margin-bottom:20px; padding-bottom:18px; border-bottom:1px solid #ECEFF5; }
+.admin-field-group:last-of-type{ border-bottom:none; padding-bottom:0; margin-bottom:16px; }
+.admin-field-group-label{ display:block; font-weight:800; font-size:.9rem; margin-bottom:10px; }
+.admin-field-group-row{ display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; }
+.admin-field-group-row .admin-field{ margin-bottom:0; }
+.admin-checkbox{ display:flex; align-items:center; gap:8px; font-weight:700; font-size:.88rem; margin-bottom:14px; }
+.admin-checkbox input{ width:auto !important; min-height:auto !important; }
+.admin-swatch-picker{ display:flex; gap:10px; }
+.admin-swatch-option{ cursor:pointer; position:relative; }
+.admin-swatch-option input{ position:absolute; opacity:0; width:22px; height:22px; margin:0; cursor:pointer; }
+.admin-swatch-option input:checked + .admin-swatch{ box-shadow:0 0 0 2px var(--white), 0 0 0 4px var(--night); }
+.admin-swatch-option input:focus-visible + .admin-swatch{ outline:2px solid var(--night); outline-offset:2px; }
+
 /* ---------- Endirim kodları ---------- */
 .admin-code-chip{
   font-family:var(--font-mono, ui-monospace, monospace); font-weight:700; font-size:.82rem;

@@ -13,6 +13,11 @@ import { findOrCreateCustomer, findCustomerByPhone } from '../repositories/custo
 import { addStamp } from '../repositories/loyalty.js';
 import { normalizePhoneAz, InvalidPhoneError } from '../lib/phone.js';
 import { randomCodeSuffix } from '../services/codes.js';
+import { dictionaries } from '../i18n/index.js';
+import { getSiteTexts, upsertSiteText, getSiteTheme, updateSiteTheme } from '../repositories/siteContent.js';
+import {
+  EDITABLE_TEXT_KEYS, TEXT_FIELD_LABELS, TEXT_FIELD_MAX_LEN, LANGS, textFieldName, getPath,
+} from '../lib/siteTextFields.js';
 import {
   dashboardStats, listUpcomingSessionsAdmin,
   listMasterclassesAdmin, getMasterclassAdmin, createMasterclass, updateMasterclass, setMasterclassPublished,
@@ -32,7 +37,22 @@ import {
 import {
   loginSchema, masterclassSchema, sessionSchema, notesSchema, createAdminUserSchema, galleryUploadSchema,
   weeklyTaskSchema, taskParticipantSchema, houseSchema, faqItemSchema, manualDiscountCodeSchema,
+  siteTextsSchema, siteThemeSchema,
 } from '../schemas/admin.js';
+
+function buildTextFields(values) {
+  return EDITABLE_TEXT_KEYS.map((key) => ({
+    key,
+    label: TEXT_FIELD_LABELS[key],
+    maxLen: TEXT_FIELD_MAX_LEN[key],
+    nameAz: textFieldName(key, 'az'),
+    nameRu: textFieldName(key, 'ru'),
+    nameEn: textFieldName(key, 'en'),
+    valueAz: values[textFieldName(key, 'az')] || '',
+    valueRu: values[textFieldName(key, 'ru')] || '',
+    valueEn: values[textFieldName(key, 'en')] || '',
+  }));
+}
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 15 * 1024 * 1024 } });
 
@@ -593,6 +613,64 @@ export function createAdminRouter(db) {
     if (!updated) return res.status(404).send('Tapılmadı (və ya artıq aktiv deyil)');
     await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'code.revoke', targetTable: 'discount_codes', targetId: updated.id });
     res.redirect(302, '/admin/kodlar');
+  });
+
+  // ---------- Sayt mətnləri və bayram zolağı ----------
+  router.get('/sayt', requireAdmin(), async (req, res) => {
+    const overrides = await getSiteTexts(db);
+    const theme = await getSiteTheme(db);
+    const currentValues = {};
+    for (const key of EDITABLE_TEXT_KEYS) {
+      for (const lang of LANGS) {
+        currentValues[textFieldName(key, lang)] = overrides[key]?.[lang] || getPath(dictionaries[lang], key) || '';
+      }
+    }
+    res.render('admin/site-settings.njk', renderLocals(req, {
+      theme,
+      fields: buildTextFields(currentValues),
+      holidayValues: {},
+      errors: null,
+    }));
+  });
+
+  router.post('/sayt/metnler', requireAdmin(), requireCsrf, async (req, res) => {
+    const parsed = siteTextsSchema.safeParse(req.body);
+    if (!parsed.success) {
+      const theme = await getSiteTheme(db);
+      return res.status(400).render('admin/site-settings.njk', renderLocals(req, { theme, fields: buildTextFields(req.body), holidayValues: {}, errors: parsed.error.flatten(), errorScope: 'texts' }));
+    }
+    const v = parsed.data;
+    for (const key of EDITABLE_TEXT_KEYS) {
+      await upsertSiteText(db, key, {
+        az: v[textFieldName(key, 'az')], ru: v[textFieldName(key, 'ru')], en: v[textFieldName(key, 'en')],
+      });
+    }
+    await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'site.texts.update', targetTable: 'site_texts' });
+    res.redirect(302, '/admin/sayt');
+  });
+
+  router.post('/sayt/bayram', requireAdmin(), requireCsrf, async (req, res) => {
+    const parsed = siteThemeSchema.safeParse(req.body);
+    if (!parsed.success) {
+      const overrides = await getSiteTexts(db);
+      const theme = await getSiteTheme(db);
+      const currentValues = {};
+      for (const key of EDITABLE_TEXT_KEYS) {
+        for (const lang of LANGS) {
+          currentValues[textFieldName(key, lang)] = overrides[key]?.[lang] || getPath(dictionaries[lang], key) || '';
+        }
+      }
+      return res.status(400).render('admin/site-settings.njk', renderLocals(req, { theme, fields: buildTextFields(currentValues), holidayValues: req.body, errors: parsed.error.flatten(), errorScope: 'theme' }));
+    }
+    await updateSiteTheme(db, {
+      holidayEnabled: parsed.data.holidayEnabled === 'on',
+      holidayColorToken: parsed.data.holidayColorToken,
+      holidayTextAz: parsed.data.holidayTextAz,
+      holidayTextRu: parsed.data.holidayTextRu,
+      holidayTextEn: parsed.data.holidayTextEn,
+    });
+    await insertAuditLog(db, { adminUserId: req.adminSession.adminUser.id, action: 'site.theme.update', targetTable: 'site_theme' });
+    res.redirect(302, '/admin/sayt');
   });
 
   // ---------- Export (yalnız owner) ----------

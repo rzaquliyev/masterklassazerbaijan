@@ -12,6 +12,8 @@ import { buildIcsEvent } from './lib/ics.js';
 import { claimHideSeekReward } from './services/codes.js';
 import { InvalidPhoneError } from './lib/phone.js';
 import { checkRateLimit } from './lib/rateLimit.js';
+import { getSiteTexts, getSiteTheme } from './repositories/siteContent.js';
+import { EDITABLE_TEXT_KEYS, setPath } from './lib/siteTextFields.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Statik fayl keş-pozma (cache-busting) açarı: proses başlayanda bir dəfə təyin olunur, hər
@@ -117,15 +119,17 @@ export async function createApp(db) {
     next();
   }, createAdminRouter(db));
 
-  app.use('/:lang', (req, res, next) => {
+  app.use('/:lang', async (req, res, next) => {
     const { lang } = req.params;
     if (!SUPPORTED_LANGS.includes(lang)) return next('route');
+    const t = await applyTextOverrides(db, dictionaries[lang], lang);
     req.lang = lang;
-    req.t = dictionaries[lang];
+    req.t = t;
     res.locals.lang = lang;
-    res.locals.t = dictionaries[lang];
+    res.locals.t = t;
     res.locals.supportedLangs = SUPPORTED_LANGS;
     res.locals.currentPath = req.path;
+    res.locals.holidayBanner = await getHolidayBanner(db, lang);
     next();
   }, createPublicRouter(db));
 
@@ -166,6 +170,28 @@ function formatDateParts(value) {
     dayMonth: `${get('day')}.${get('month')}`,
     time: `${get('hour')}:${get('minute')}`,
   };
+}
+
+// Admin "/admin/sayt" bölməsindən gələn override-lar — boşdursa lüğətdəki defolt mətn qalır.
+// Əsas `dictionaries[lang]` obyekti dəyişdirilmir (bütün sorğular eyni obyekti paylaşır),
+// yalnız override olan budaqlar (home, footer) üçün səthi kopya yaradılır.
+async function applyTextOverrides(db, dict, lang) {
+  const overrides = await getSiteTexts(db);
+  if (Object.keys(overrides).length === 0) return dict;
+  const next = { ...dict };
+  for (const key of EDITABLE_TEXT_KEYS) {
+    const value = overrides[key]?.[lang];
+    if (value) setPath(next, key, value);
+  }
+  return next;
+}
+
+async function getHolidayBanner(db, lang) {
+  const theme = await getSiteTheme(db);
+  if (!theme?.holiday_enabled) return null;
+  const text = theme[`holiday_text_${lang}`];
+  if (!text) return null;
+  return { colorToken: theme.holiday_color_token, text };
 }
 
 function formatDateAz(value) {

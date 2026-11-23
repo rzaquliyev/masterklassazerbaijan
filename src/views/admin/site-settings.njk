@@ -1,0 +1,58 @@
+{% extends "admin/layout.njk" %}
+{% block title %}Sayt{% endblock %}
+{% block content %}
+<h1 class="admin-h1">Sayt tənzimləmələri</h1>
+
+<div class="admin-card">
+  <h2 class="admin-h2">Mətnlər</h2>
+  {% if errors and errorScope == 'texts' %}<div class="admin-alert error">Mətnləri yoxlayın — hər sahə doldurulmalıdır.</div>{% endif %}
+  <p class="admin-hint">Boş buraxılan sahə saxlanılmır — dəyişmək istədiyiniz mətni yazıb "Mətnləri yadda saxla" düyməsinə basın. Üç dildə (AZ/RU/EN) ayrı-ayrı doldurulur.</p>
+  <form method="post" action="/admin/sayt/metnler">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {% for f in fields %}
+    <div class="admin-field-group">
+      <label class="admin-field-group-label">{{ f.label }}</label>
+      <div class="admin-field-group-row">
+        <div class="admin-field"><label>AZ</label><textarea name="{{ f.nameAz }}" rows="2" maxlength="{{ f.maxLen }}" required>{{ f.valueAz }}</textarea></div>
+        <div class="admin-field"><label>RU</label><textarea name="{{ f.nameRu }}" rows="2" maxlength="{{ f.maxLen }}" required>{{ f.valueRu }}</textarea></div>
+        <div class="admin-field"><label>EN</label><textarea name="{{ f.nameEn }}" rows="2" maxlength="{{ f.maxLen }}" required>{{ f.valueEn }}</textarea></div>
+      </div>
+    </div>
+    {% endfor %}
+
+    <button type="submit" class="admin-btn">Mətnləri yadda saxla</button>
+  </form>
+</div>
+
+<div class="admin-card" style="max-width:520px;">
+  <h2 class="admin-h2">Bayram zolağı</h2>
+  <p class="admin-hint">Saytın yuxarısında qısa bir bildiriş zolağı göstərir (məs. Yeni il endirimi). Rəng DESIGN.md-dəki mövcud palitradan seçilir — sərbəst rəng yoxdur ki, dizayn istiqaməti pozulmasın.</p>
+  {% if errors and errorScope == 'theme' %}<div class="admin-alert error">Zolaq mətnini yoxlayın (maks. 120 simvol).</div>{% endif %}
+  <form method="post" action="/admin/sayt/bayram">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <label class="admin-checkbox">
+      <input type="checkbox" name="holidayEnabled" {{ 'checked' if theme.holiday_enabled }}> Zolaq aktivdir
+    </label>
+
+    <div class="admin-field">
+      <label>Rəng</label>
+      <div class="admin-swatch-picker">
+        {% for token in ['orange', 'blue', 'sun', 'green', 'pink'] %}
+        <label class="admin-swatch-option">
+          <input type="radio" name="holidayColorToken" value="{{ token }}" {{ 'checked' if (theme.holiday_color_token or 'orange') == token }}>
+          <span class="admin-swatch" style="background:var(--{{ token }});" aria-hidden="true"></span>
+        </label>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="admin-field"><label>Mətn (AZ)</label><input type="text" name="holidayTextAz" maxlength="120" value="{{ holidayValues.holidayTextAz or theme.holiday_text_az or '' }}" placeholder="🎄 Yeni il endirimləri aktivdir!"></div>
+    <div class="admin-field"><label>Mətn (RU)</label><input type="text" name="holidayTextRu" maxlength="120" value="{{ holidayValues.holidayTextRu or theme.holiday_text_ru or '' }}"></div>
+    <div class="admin-field"><label>Mətn (EN)</label><input type="text" name="holidayTextEn" maxlength="120" value="{{ holidayValues.holidayTextEn or theme.holiday_text_en or '' }}"></div>
+
+    <button type="submit" class="admin-btn">Bayram zolağını yadda saxla</button>
+  </form>
+</div>
+{% endblock %}

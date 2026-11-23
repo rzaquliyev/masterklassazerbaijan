@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { EDITABLE_TEXT_KEYS, TEXT_FIELD_MAX_LEN, LANGS, textFieldName } from '../lib/siteTextFields.js';
 
 export const loginSchema = z.object({
   email: z.string().trim().email().max(200),
@@ -68,6 +69,25 @@ export const manualDiscountCodeSchema = z.object({
   percent: z.coerce.number().int().min(1).max(100),
   ownerPhone: z.string().trim().max(30).optional().or(z.literal('')),
   expiresInDays: z.coerce.number().int().min(0).max(3650).optional().or(z.literal('')),
+});
+
+// Sahə adları düz (flat) saxlanılır — express.urlencoded({ extended: false }) iç-içə
+// obyekt sintaksisini (home.title[az]) dəstəkləmir, textFieldName() ilə uyğunlaşdırılır.
+// EDITABLE_TEXT_KEYS-ə yeni açar əlavə edəndə burada heç nə dəyişmək lazım deyil.
+const siteTextsShape = {};
+for (const key of EDITABLE_TEXT_KEYS) {
+  for (const lang of LANGS) {
+    siteTextsShape[textFieldName(key, lang)] = z.string().trim().max(TEXT_FIELD_MAX_LEN[key]);
+  }
+}
+export const siteTextsSchema = z.object(siteTextsShape);
+
+export const siteThemeSchema = z.object({
+  holidayEnabled: z.literal('on').optional(),
+  holidayColorToken: z.enum(['orange', 'blue', 'sun', 'green', 'pink']),
+  holidayTextAz: z.string().trim().max(120).optional().or(z.literal('')),
+  holidayTextRu: z.string().trim().max(120).optional().or(z.literal('')),
+  holidayTextEn: z.string().trim().max(120).optional().or(z.literal('')),
 });
 
 export const taskParticipantSchema = z.object({
