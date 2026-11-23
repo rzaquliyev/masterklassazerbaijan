@@ -241,9 +241,10 @@ export function createPublicRouter(db) {
   });
 
   router.get('/oyun-parki', (req, res) => res.render('oyun-parki.njk', {}));
-  router.get('/oyun-parki/yogur', (req, res) => res.render('yogur.njk', {}));
-  router.get('/oyun-parki/pizza', (req, res) => res.render('pizza.njk', {}));
-  router.get('/oyun-parki/rengleme', (req, res) => res.render('rengleme.njk', {}));
+  // Köhnə oyunlar silindi (2026-11-24) — paylaşılmış köhnə linklər Oyun parkına yönləndirilir
+  for (const old of ['yogur', 'pizza', 'rengleme']) {
+    router.get(`/oyun-parki/${old}`, (req, res) => res.redirect(301, `/${req.lang}/oyun-parki`));
+  }
   router.get('/oyun-parki/toplar', (req, res) => res.render('toplar.njk', {}));
   router.get('/oyun-parki/fiqur', (req, res) => res.render('fiqur.njk', {}));
   router.get('/oyun-parki/qarisdir', (req, res) => res.render('qarisdir.njk', {}));

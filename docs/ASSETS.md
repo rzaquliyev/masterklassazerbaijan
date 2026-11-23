@@ -18,6 +18,6 @@ Hər xarici resurs: ad, mənbə, lisenziya, harada istifadə olunur (BRIEF §4).
 
 ## Maketlər (`design/*.dc.html`)
 
-Vizual/davranış referansı kimi istifadə olunur, birbaşa kod kopyalanmır (BRIEF §2, §4). `Rengleme.dc.html`-dəki 6 şəklin SVG `<path>` məlumatları (hər region-un konturu və nümunə rəngi) bu layihənin öz dizayn alətində hazırlanmış orijinal illüstrasiyadır — `src/public/js/rengleme-data.js`-ə birbaşa köçürülüb (BRIEF-in "maketi port et" təlimatına uyğun, başqa saytdan kopyalama deyil).
+Vizual/davranış referansı kimi istifadə olunur, birbaşa kod kopyalanmır (BRIEF §2, §4). (Rəngləmə oyunu 2026-11-24-də silinib; aşağıdakı qeyd tarixçə üçündür.) `Rengleme.dc.html`-dəki 6 şəklin SVG `<path>` məlumatları (hər region-un konturu və nümunə rəngi) bu layihənin öz dizayn alətində hazırlanmış orijinal illüstrasiyadır — `src/public/js/rengleme-data.js`-ə birbaşa köçürülüb (BRIEF-in "maketi port et" təlimatına uyğun, başqa saytdan kopyalama deyil).
 
 İlham üçün öyrənilən (kopyalanmayan) saytlar: Kidwonder, Goodkids, Agencia Kids, MEplace Childcare (BRIEF §4).

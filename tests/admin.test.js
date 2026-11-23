@@ -143,18 +143,4 @@ describe('admin panel (routes/admin.js)', () => {
     assert.equal(res.status, 404);
   });
 
-  test('Gizlənqaç: eyni telefonla ikinci sorğu kodu yenidən göstərmir (409, kodsuz)', async () => {
-    const post = () => fetch(baseUrl + '/api/gizlenqach/mukafat', {
-      method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Forwarded-For': '10.9.9.9' },
-      body: JSON.stringify({ phone: '0501239876' }),
-    });
-    const first = await post();
-    assert.equal(first.status, 200);
-    assert.match((await first.json()).code, /^ULDUZ-/);
-    const second = await post();
-    assert.equal(second.status, 409);
-    const body = await second.json();
-    assert.equal(body.alreadyClaimed, true);
-    assert.equal(body.code, undefined);
-  });
 });

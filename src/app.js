@@ -9,8 +9,6 @@ import { createAdminRouter } from './routes/admin.js';
 import { dictionaries, SUPPORTED_LANGS, DEFAULT_LANG } from './i18n/index.js';
 import { getBookingWithDetails } from './repositories/bookings.js';
 import { buildIcsEvent } from './lib/ics.js';
-import { claimHideSeekReward } from './services/codes.js';
-import { InvalidPhoneError } from './lib/phone.js';
 import { checkRateLimit } from './lib/rateLimit.js';
 import { isUuid } from './lib/ids.js';
 import { getSiteTexts, getSiteTheme } from './repositories/siteContent.js';
@@ -102,21 +100,6 @@ export async function createApp(db) {
     res.send(ics);
   });
 
-  app.post('/api/gizlenqach/mukafat', async (req, res) => {
-    if (!checkRateLimit(`hunt:${req.ip}`, 5, 60_000)) {
-      return res.status(429).json({ error: 'Çox cəhd edildi, bir az sonra yenidən cəhd edin.' });
-    }
-    try {
-      const result = await claimHideSeekReward(db, req.body.phone);
-      // 409: client-in "alreadyClaimed" qolu işləyir (kodsuz mesaj).
-      res.status(result.alreadyClaimed ? 409 : 200).json(result);
-    } catch (err) {
-      if (err instanceof InvalidPhoneError) {
-        return res.status(400).json({ error: 'Telefon nömrəsi düzgün formatda deyil.' });
-      }
-      throw err;
-    }
-  });
 
   app.use('/admin', (req, res, next) => {
     res.set('X-Robots-Tag', 'noindex, nofollow');

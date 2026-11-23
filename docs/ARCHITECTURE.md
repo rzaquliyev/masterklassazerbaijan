@@ -10,7 +10,7 @@
 - **DB:** PostgreSQL + versiyalı miqrasiyalar, parametrli sorğular (lokal/test üçün PGlite, açıq şəkildə qeyd olunur)
 - **Validasiya:** Zod — hər server sərhədində
 - **Animasiya:** CSS `@keyframes`/`transition` + `IntersectionObserver` (vanilla JS). BRIEF §7-dəki Motion kitabxanası **qurulmayıb** — lazım olmadı (JS büdcəsi daha kiçik qalır), `package.json`-da yoxdur
-- **Sürükləmə/toxunma oyunları** (Plastilin yoğur, Gizlənqaç): Pointer Events, build aləti yoxdur
+- **Oyunlar** (Rəngli toplar — canvas, Fiqur düzəlt — SVG sürükləmə, Rəng qarışdır): Pointer Events, build aləti yoxdur
 
 SPA/Next.js qurulmur.
 
@@ -41,11 +41,9 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 | 3 | `/kassa` (seans ID ilə) | Qeydiyyat | Bilet kassası |
 | 4 | `/teqvim` | Təqvim | Avtobus dayanacağı |
 | 5 | `/oyun-parki` | Oyun parkı (hub) | Oyun parkı |
-| 6 | `/oyun-parki/yogur` | Plastilin yoğur | Oyun parkının içi |
-| 6b | `/oyun-parki/pizza` | Pizza bəzə (yeni, 2026-10-10 — Mətbəx evi üçün) | — |
-| 7 | `/oyun-parki/rengleme` | Rəngləmə (yeni) | — |
+| 6 | `/oyun-parki/yogur`, `/pizza`, `/rengleme` | **Silinib (2026-11-24, istifadəçi qərarı)** — köhnə linklər 301 ilə `/oyun-parki`-yə yönləndirilir | — |
 | 7b | `/oyun-parki/toplar`, `/oyun-parki/fiqur`, `/oyun-parki/qarisdir` | Yeni oyunlar (2026-11-24): Rəngli toplar (canvas tutma oyunu), Fiqur düzəlt (SVG konstruktor + PNG), Rəng qarışdır (5 tur) — client-only, `src/public/js/{toplar,fiqur,qarisdir}.js`, `css/games.css` | Oyun parkının içi |
-| 8 | (bütün səhifələrdə) | Gizlənqaç (yeni) | — |
+| 8 | — | Gizlənqaç — **silinib (2026-11-24)**: gizli ulduzlar, `POST /api/gizlenqach/mukafat` və `claimHideSeekReward` kodu çıxarıldı | — |
 | 9 | `/kampaniyalar` | Kampaniyalar | Bazar meydanı |
 | 10 | `/ad-gunu` | Ad günü | Bayram meydanı |
 | 11 | `/qalereya` | Qalereya | Şəhər muzeyi |
@@ -83,7 +81,7 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 |---|---|
 | `houses` | Ev/kateqoriya (ad, rəng, ikon) — `masterclasses.house_id` ilə əlaqəli |
 | `loyalty_stamps` | Müştəri → möhür sayı (yalnız admin bronu `attended` qeyd edəndə +1, bron anında yox — 2026-11-24), 5-də 1 pulsuz kupon yaradılır |
-| `discount_codes` | Referral + erkən-quş + Gizlənqaç mükafatı ortaq infrastruktur: `code`, `type` (`referral`/`hide-seek`/`manual`), `owner_customer_id`, `percent`, `status`, `expires_at`, `redeemed_by` |
+| `discount_codes` | Referral + erkən-quş + manual kodlar (`hide-seek` tipi əvvəl verilmiş Gizlənqaç kodları üçün sxemdə saxlanılır, yenisi yaradılmır): `code`, `type` (`referral`/`hide-seek`/`manual`), `owner_customer_id`, `percent`, `status`, `expires_at`, `redeemed_by` |
 | `birthday_inquiries` | `inquiries`-in genişlənməsi: `package`, `guest_count`, `date`, `phone`, `status` |
 | `gallery_photos` | `url`, `house_id`, `child_label` (ixtiyari, tam ad yox), `consent` (məcburi `true` olmalı ictimai görünmə üçün) |
 | `instructors` | *(sxemdə qalıb, istifadə olunmur — təlimçilər funksiyası silinib, bax §4)* |
@@ -105,9 +103,7 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 
 ## 7. Oyunlar (texniki qeyd)
 
-- **Yaddaş oyunu, Plastilin yoğur** — maketdə tam işlək, client-only, server state lazım deyil
-- **Rəngləmə** (yeni) — SVG/`<canvas>`, client-only, PNG export (`canvas.toDataURL`), **data saxlanmır**
-- **Gizlənqaç** (yeni) — 5 səhifədə gizli ulduz, `localStorage` progress, 5/5-də server endpoint (`POST /api/gizlenqach/mukafat`) telefon qəbul edib `discount_codes`-a `type=hide-seek` yazır, rate-limitli; eyni telefonla təkrar sorğu 409 qaytarır və kodu yenidən göstərmir
+- **2026-11-24:** köhnə oyunlar (Yaddaş, Plastilin yoğur, Pizza bəzə, Rəngləmə, Gizlənqaç) istifadəçi qərarı ilə silindi. Hazırkı oyunlar: **Rəngli toplar** (canvas tutma oyunu, rekord yalnız localStorage), **Fiqur düzəlt** (SVG konstruktor, PNG yükləmə), **Rəng qarışdır** (5 tur) — hamısı client-only, server state yoxdur, uşaqdan məlumat toplanmır.
 
 ## 8. Təhlükəsizlik bazası
 

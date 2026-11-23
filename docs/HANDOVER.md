@@ -66,7 +66,7 @@ Tam statik kod auditi aparıldı (auth/sessiya, SQL-injection, input validasiyas
 6. Kiçik: səhv formatlı ID-li URL-lər 500 əvəzinə 404; "Qalib et" təkrar basılanda ikinci möhür verilmir; rate-limit yaddaşı vaxtaşırı təmizlənir; `uploads/tasks/` `.gitignore`-a əlavə olundu. Testlər: 27/27.
 
 7. OTP-siz saxta bron riskinə qarşı: bir telefon bir seansa ən çox 3, gələcək seanslarda cəmi ən çox 8 aktiv bron; IP başına dəqiqədə 5, gündə 20 bron cəhdi. **Loyallıq möhürü artıq bron anında yox, admin bronu "Gəldi" (attended) qeyd edəndə verilir** — saxta bronla pulsuz masterklass toplamaq mümkün deyil. (Bu dəyişiklikdən əvvəl verilmiş möhürlər olduğu kimi qalır.)
-8. Gizlənqaç: eyni telefonla təkrar sorğu kodu yenidən göstərmir (409 + "kod artıq verilib, WhatsApp-dan yazın").
+8. Gizlənqaç kod sızması bağlandı (sonradan, 2026-11-24, Gizlənqaç oyunu tamamilə silindi — endpoint artıq yoxdur).
 Testlər: 29/29.
 
 Commit-lər: `Təhlükəsizlik auditi: ...` (2 commit) + `Mərhələ 8: Admin panelinə "Sayt" bölməsi ...` (1 commit). Hamısı lokal `master`-də, GitHub-a push edilməyib.

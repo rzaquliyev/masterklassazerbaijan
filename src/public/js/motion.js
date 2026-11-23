@@ -51,7 +51,7 @@
   });
 
   // ---- Plastilin "squish" ----
-  var SQUISH = '.btn-primary, .btn-secondary, .btn-dark, .btn-nav, .pill, .day-tab, .menu-btn, .town-house, .memory-card, .candle, [data-squish]';
+  var SQUISH = '.btn-primary, .btn-secondary, .btn-dark, .btn-nav, .pill, .day-tab, .menu-btn, .town-house, .candle, [data-squish]';
   document.addEventListener('pointerdown', function (e) {
     var el = e.target.closest && e.target.closest(SQUISH);
     if (!el || el.disabled) return;

@@ -156,3 +156,11 @@ Bu layihə əvvəlcədən `design-taste-frontend` skili ilə Greenfield rejimind
 
 **Yoxlanılmadı:** real telefonda toxunma ilə oynamaq; Toplar oyununun real 60fps axıcılığı (yalnız taymerli simulyasiya); PNG yükləmənin faktiki faylı. **Qeyd (köhnə məsələ):** Baloo 2/Nunito-nun kiril subset-i self-host edilməyib — RU səhifələrində başlıqlar sistem şrifti ilə görünür.
 
+## 8. Köhnə oyunlar silindi (2026-11-24, istifadəçi qərarı)
+
+Silinən: Yaddaş oyunu ("Usta cütləri"), Plastilin yoğur, Pizza bəzə, Rəngləmə, Gizlənqaç (5 səhifədəki gizli ulduzlar, sayğac, mükafat forması, `POST /api/gizlenqach/mukafat`, `claimHideSeekReward`, onun testi). Köhnə URL-lər (`/oyun-parki/yogur|pizza|rengleme`) 301 ilə Oyun parkına yönləndirilir (Instagram-da paylaşılmış linklər qırılmasın). Əvvəl verilmiş `hide-seek` endirim kodları bazada və admin "Endirim kodları" siyahısında qalır. Kampaniyalardakı Gizlənqaç plitəsi Oyun parkı plitəsi ilə əvəzləndi.
+
+**BRIEF fərqi:** BRIEF §5 Rəngləmə və Gizlənqaçı tələb edirdi — istifadəçi bunlardan imtina etdi, yeni 3 oyun onları əvəz edir.
+
+**Yoxlanıldı:** 11 səhifə 200, 3 köhnə URL yönləndirilir, köhnə endpoint 404, şablonlarda/JS-də qalıq istinad yoxdur (grep), bütün CSS fayllarında mötərizə balansı düzgün, Oyun parkı səhifəsi brauzerdə; testlər 28/28.
+
