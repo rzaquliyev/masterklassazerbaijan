@@ -110,7 +110,7 @@
     "ticketParent": "Valideyn",
     "ticketAmount": "Məbləğ",
     "confirmed": "TƏSDİQLƏNDİ",
-    "stampTitle": "Usta pasportuna 1 möhür!",
+    "stampTitle": "Gələndə pasporta 1 möhür!",
     "stampText": "5 möhür = 1 pulsuz masterklass",
     "addToCalendar": "Təqvimə əlavə et",
     "whatsappConfirm": "WhatsApp-da təsdiqi göndər",
@@ -120,6 +120,7 @@
     "errorConsent": "Qaydalarla razılıq məcburidir",
     "errorPhone": "Telefon nömrəsi düzgün formatda deyil (məs. 050 123 45 67)",
     "errorGeneric": "Nəsə səhv getdi, formu yoxlayıb yenidən cəhd edin.",
+    "errorLimit": "Bu telefon nömrəsi ilə aktiv bron həddi dolub (bir seansa ən çox 3 uşaq). Sualınız varsa, WhatsApp-dan yazın.",
     "soldOutNotice": "Bu seans dolub, gözləmə siyahısına yazılırsınız."
   },
   "teqvim": {
@@ -203,7 +204,7 @@
     "phoneLabel": "Valideynin telefonu",
     "getCode": "Kodu al",
     "codeResult": "Kodunuz: {code} ({percent}% endirim)",
-    "already": "Siz artıq bu mükafatı alıbsınız.",
+    "already": "Bu nömrəyə mükafat kodu artıq verilib. Kodu itirmisinizsə, WhatsApp-dan yazın.",
     "starAriaLabel": "Gizlənqaç ulduzu",
     "genericError": "Xəta baş verdi.",
     "networkError": "Xəta baş verdi, yenidən cəhd edin."

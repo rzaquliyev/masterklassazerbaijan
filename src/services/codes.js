@@ -18,7 +18,8 @@ export async function claimHideSeekReward(db, rawPhone) {
   const customer = await findOrCreateCustomer(db, { phoneE164, fullName: 'Gizlənqaç oyunçusu' });
 
   const existing = await findDiscountCodeByOwner(db, customer.id, 'hide-seek');
-  if (existing) return { code: existing.code, percent: existing.percent, alreadyClaimed: true };
+  // Kod yenidən GÖSTƏRİLMİR: telefon nömrəsini bilən başqası onun kodunu görə bilməsin.
+  if (existing) return { alreadyClaimed: true };
 
   const code = `ULDUZ-${randomCodeSuffix()}`;
   const expiresAt = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000);

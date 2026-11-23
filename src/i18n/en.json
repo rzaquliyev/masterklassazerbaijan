@@ -110,7 +110,7 @@
     "ticketParent": "Parent",
     "ticketAmount": "Amount",
     "confirmed": "CONFIRMED",
-    "stampTitle": "One stamp in the Master Passport!",
+    "stampTitle": "One passport stamp when you attend!",
     "stampText": "5 stamps = 1 free masterclass",
     "addToCalendar": "Add to calendar",
     "whatsappConfirm": "Send confirmation via WhatsApp",
@@ -120,6 +120,7 @@
     "errorConsent": "Agreeing to the terms is required",
     "errorPhone": "Phone number isn't in a valid format (e.g. 050 123 45 67)",
     "errorGeneric": "Something went wrong — check the form and try again.",
+    "errorLimit": "This phone number has reached its active booking limit (max 3 children per session). Questions? Message us on WhatsApp.",
     "soldOutNotice": "This session is full, you're being added to the waitlist."
   },
   "teqvim": {
@@ -203,7 +204,7 @@
     "phoneLabel": "Parent's phone",
     "getCode": "Get the code",
     "codeResult": "Your code: {code} ({percent}% off)",
-    "already": "You've already claimed this reward.",
+    "already": "A reward code has already been issued to this number. If you lost it, message us on WhatsApp.",
     "starAriaLabel": "Hide & Seek star",
     "genericError": "Something went wrong.",
     "networkError": "Something went wrong, please try again."

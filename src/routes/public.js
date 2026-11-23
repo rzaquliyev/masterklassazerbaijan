@@ -12,7 +12,7 @@ import {
   getCurrentWeeklyTask, listUpcomingWeeklyTasks, listPastTaskWinners, getTaskParticipantPublic,
 } from '../repositories/tasks.js';
 import { getBookingWithDetails } from '../repositories/bookings.js';
-import { reserveSeat, SessionNotFoundError } from '../services/booking.js';
+import { reserveSeat, SessionNotFoundError, TooManyBookingsError } from '../services/booking.js';
 import { getOrCreateReferralCode } from '../services/codes.js';
 import { bookingInputSchema } from '../schemas/booking.js';
 import { contactInquirySchema, birthdayInquirySchema } from '../schemas/inquiry.js';
@@ -79,7 +79,8 @@ export function createPublicRouter(db) {
     if (req.body.website) {
       return res.redirect(303, `/${req.lang}/m/${masterclass.slug}`);
     }
-    if (!checkRateLimit(`kassa:${req.ip}`, 5, 60_000)) {
+    // Dəqiqəlik + gündəlik IP həddi (OTP olmadan saxta bron axınına qarşı).
+    if (!checkRateLimit(`kassa:${req.ip}`, 5, 60_000) || !checkRateLimit(`kassa-day:${req.ip}`, 20, 86_400_000)) {
       return res.status(429).render('kassa.njk', {
         session, masterclass, idempotencyKey: req.body.idempotencyKey || randomUUID(),
         errors: { generic: true }, formValues: req.body,
@@ -113,6 +114,11 @@ export function createPublicRouter(db) {
         });
       }
       if (err instanceof SessionNotFoundError) return render404(req, res);
+      if (err instanceof TooManyBookingsError) {
+        return res.status(429).render('kassa.njk', {
+          session, masterclass, idempotencyKey: randomUUID(), errors: { limit: true }, formValues: req.body,
+        });
+      }
       throw err;
     }
   });

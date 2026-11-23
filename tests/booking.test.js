@@ -1,8 +1,9 @@
+import { randomUUID } from 'node:crypto';
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import { createTestDb, seedHouseAndMasterclass, makeBookingInput } from './helpers/testDb.js';
 import {
-  reserveSeat, cancelBooking, setBookingSeatStatus, BookingNotCancellableError, SessionNotFoundError, SessionFullError,
+  reserveSeat, cancelBooking, setBookingSeatStatus, BookingNotCancellableError, SessionNotFoundError, SessionFullError, TooManyBookingsError,
 } from '../src/services/booking.js';
 
 describe('bron və tutum (services/booking.js)', () => {
@@ -123,22 +124,46 @@ describe('bron və tutum (services/booking.js)', () => {
     assert.equal(b3.booking.was_early_bird, false);
   });
 
-  test('5-ci təsdiqlənmiş brondan sonra loyallıq pulsuz masterklass qazandırır', async () => {
+  test('möhür bron anında yox, "attended" qeyd ediləndə verilir; 5-ci iştirak pulsuz masterklass qazandırır', async () => {
     const db = await createTestDb();
-    const { sessionId } = await seedHouseAndMasterclass(db, { capacity: 10, booked: 0 });
+    const { sessionId, masterclassId } = await seedHouseAndMasterclass(db, { capacity: 10, booked: 0 });
+    const sessionIds = [sessionId];
+    for (let i = 1; i < 5; i++) {
+      const id = randomUUID();
+      await db.query(
+        `INSERT INTO sessions (id, masterclass_id, starts_at, capacity, booked, price_azn, location, status)
+         VALUES ($1,$2, now() + ($3 || ' days')::interval, 10, 0, 25, 'SAMPLE', 'scheduled')`,
+        [id, masterclassId, String(i + 1)],
+      );
+      sessionIds.push(id);
+    }
     const phone = '0557654321';
 
-    let customerId;
-    for (let i = 0; i < 5; i++) {
-      const { booking } = await reserveSeat(db, makeBookingInput({
-        sessionId, idempotencyKey: `key-${i}`, parent: { fullName: 'Sabit valideyn', phone },
-      }));
-      customerId = booking.customer_id;
+    const bookings = [];
+    for (const sid of sessionIds) {
+      const { booking } = await reserveSeat(db, makeBookingInput({ sessionId: sid, parent: { fullName: 'Sabit valideyn', phone } }));
+      bookings.push(booking);
     }
+    const customerId = bookings[0].customer_id;
+    const before = await db.query('SELECT * FROM loyalty_stamps WHERE customer_id = $1', [customerId]);
+    assert.equal(before.rows.length, 0, 'bron özü möhür vermir');
+
+    for (const b of bookings) await setBookingSeatStatus(db, b.id, 'attended');
+    await setBookingSeatStatus(db, bookings[0].id, 'attended'); // təkrar "attended" ikinci möhür vermir
 
     const { rows } = await db.query('SELECT * FROM loyalty_stamps WHERE customer_id = $1', [customerId]);
     assert.equal(rows[0].stamp_count, 0, '5-də sayğac sıfırlanır');
     assert.equal(rows[0].free_sessions_available, 1);
+  });
+
+  test('bir telefon bir seansa ən çox 3 aktiv bron edə bilər (OTP-siz spam həddi)', async () => {
+    const db = await createTestDb();
+    const { sessionId } = await seedHouseAndMasterclass(db, { capacity: 10, booked: 0 });
+    const parent = { fullName: 'Spam', phone: '0559998877' };
+    for (let i = 0; i < 3; i++) await reserveSeat(db, makeBookingInput({ sessionId, parent }));
+    await assert.rejects(() => reserveSeat(db, makeBookingInput({ sessionId, parent })), TooManyBookingsError);
+    const { rows } = await db.query('SELECT booked FROM sessions WHERE id = $1', [sessionId]);
+    assert.equal(rows[0].booked, 3);
   });
 
   for (const [label, sql] of [

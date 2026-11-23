@@ -24,7 +24,7 @@ views/          → Nunjucks şablonları + paylaşılan partiallar
 public/         → statik CSS/JS/şrift/SVG
 ```
 
-Bron/tutum qaydaları `services/booking.js`-də yaşayır, HTTP-dən asılı olmadan test edilir (BRIEF-in "son yer üçün yalnız bir bron" tələbi — Mərhələ 3-də sıfırdan yazılıb, `tests/booking.test.js` ilə yoxlanılır). İctimai bron yalnız `status='scheduled'`, gələcək tarixli və dərc olunmuş masterklassın seansına mümkündür (`getBookableSessionById`); admin gözləmə siyahısından/ləğvdən təsdiq edəndə yer `setBookingSeatStatus` ilə atomik tutulur, tutum dolubsa 409.
+Bron/tutum qaydaları `services/booking.js`-də yaşayır, HTTP-dən asılı olmadan test edilir (BRIEF-in "son yer üçün yalnız bir bron" tələbi — Mərhələ 3-də sıfırdan yazılıb, `tests/booking.test.js` ilə yoxlanılır). İctimai bron yalnız `status='scheduled'`, gələcək tarixli və dərc olunmuş masterklassın seansına mümkündür (`getBookableSessionById`); admin gözləmə siyahısından/ləğvdən təsdiq edəndə yer `setBookingSeatStatus` ilə atomik tutulur, tutum dolubsa 409. OTP olmadığı üçün spam hədləri: telefon başına seansa 3, cəmi 8 aktiv gələcək bron; IP başına 5/dəq, 20/gün.
 
 ## 3. Dillər
 
@@ -81,7 +81,7 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 | Cədvəl | Təyinat |
 |---|---|
 | `houses` | Ev/kateqoriya (ad, rəng, ikon) — `masterclasses.house_id` ilə əlaqəli |
-| `loyalty_stamps` | Müştəri → möhür sayı (hər `attended`/`confirmed` bron +1), 5-də 1 pulsuz kupon yaradılır |
+| `loyalty_stamps` | Müştəri → möhür sayı (yalnız admin bronu `attended` qeyd edəndə +1, bron anında yox — 2026-11-24), 5-də 1 pulsuz kupon yaradılır |
 | `discount_codes` | Referral + erkən-quş + Gizlənqaç mükafatı ortaq infrastruktur: `code`, `type` (`referral`/`hide-seek`/`manual`), `owner_customer_id`, `percent`, `status`, `expires_at`, `redeemed_by` |
 | `birthday_inquiries` | `inquiries`-in genişlənməsi: `package`, `guest_count`, `date`, `phone`, `status` |
 | `gallery_photos` | `url`, `house_id`, `child_label` (ixtiyari, tam ad yox), `consent` (məcburi `true` olmalı ictimai görünmə üçün) |
@@ -106,7 +106,7 @@ Hər biri `design/*.dc.html`-dən, tam komponent siyahısı `docs/PAGES.md`-də:
 
 - **Yaddaş oyunu, Plastilin yoğur** — maketdə tam işlək, client-only, server state lazım deyil
 - **Rəngləmə** (yeni) — SVG/`<canvas>`, client-only, PNG export (`canvas.toDataURL`), **data saxlanmır**
-- **Gizlənqaç** (yeni) — 5 səhifədə gizli ulduz, `localStorage` progress, 5/5-də server endpoint (`POST /api/gizlenqach/mukafat`) telefon qəbul edib `discount_codes`-a `type=hide-seek` yazır, rate-limitli
+- **Gizlənqaç** (yeni) — 5 səhifədə gizli ulduz, `localStorage` progress, 5/5-də server endpoint (`POST /api/gizlenqach/mukafat`) telefon qəbul edib `discount_codes`-a `type=hide-seek` yazır, rate-limitli; eyni telefonla təkrar sorğu 409 qaytarır və kodu yenidən göstərmir
 
 ## 8. Təhlükəsizlik bazası
 

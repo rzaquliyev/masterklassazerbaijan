@@ -106,7 +106,8 @@ export async function createApp(db) {
     }
     try {
       const result = await claimHideSeekReward(db, req.body.phone);
-      res.json(result);
+      // 409: client-in "alreadyClaimed" qolu işləyir (kodsuz mesaj).
+      res.status(result.alreadyClaimed ? 409 : 200).json(result);
     } catch (err) {
       if (err instanceof InvalidPhoneError) {
         return res.status(400).json({ error: 'Telefon nömrəsi düzgün formatda deyil.' });

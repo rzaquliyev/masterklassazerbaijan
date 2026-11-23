@@ -27,6 +27,14 @@ export class BookingNotCancellableError extends Error {
   constructor(id, status) { super(`Bron "${id}" (status: ${status}) ləğv edilə bilməz`); this.name = 'BookingNotCancellableError'; }
 }
 
+// OTP olmadığı üçün (Phase 0) saxta bronla yerləri doldurmağa qarşı telefon-əsaslı hədlər.
+// Bir valideyn bir seansa ən çoxu 3 uşaq yazdıra bilər, gələcək seanslarda cəmi ən çoxu 8 aktiv bron.
+export const MAX_ACTIVE_PER_SESSION = 3;
+export const MAX_ACTIVE_UPCOMING = 8;
+export class TooManyBookingsError extends Error {
+  constructor() { super('Bu telefon nömrəsi üçün aktiv bron həddi dolub'); this.name = 'TooManyBookingsError'; }
+}
+
 export class SessionFullError extends Error {
   constructor(sessionId) { super(`Seansda boş yer yoxdur: ${sessionId}`); this.name = 'SessionFullError'; }
 }
@@ -53,6 +61,16 @@ async function attemptReservation(tx, input, phoneE164) {
     fullName: input.parent.fullName,
     marketingConsent: Boolean(input.marketingConsent),
   });
+
+  const { rows: [active] } = await tx.query(
+    `SELECT count(*) FILTER (WHERE b.session_id = $2)::int AS in_session, count(*)::int AS upcoming
+     FROM bookings b JOIN sessions s ON s.id = b.session_id
+     WHERE b.customer_id = $1 AND b.status IN ('confirmed','waitlist','pending') AND s.starts_at > now()`,
+    [customer.id, input.sessionId],
+  );
+  if (active.in_session >= MAX_ACTIVE_PER_SESSION || active.upcoming >= MAX_ACTIVE_UPCOMING) {
+    throw new TooManyBookingsError();
+  }
 
   await tx.query(
     `INSERT INTO consents (id, customer_id, policy_version, text_shown, marketing_opt_in)
@@ -95,7 +113,8 @@ async function attemptReservation(tx, input, phoneE164) {
   });
 
   await linkBookingChild(tx, booking.id, child.id);
-  if (status === 'confirmed') await addStamp(tx, customer.id);
+  // Möhür bron anında YOX, admin "attended" (gəldi) qeyd edəndə verilir — saxta bronla
+  // möhür/pulsuz masterklass toplamaq mümkün olmasın (bax setBookingSeatStatus).
 
   return { booking, alreadyExisted: false };
 }
@@ -131,6 +150,8 @@ export async function setBookingSeatStatus(db, bookingId, status) {
       const reserved = await tryReserveSeat(tx, booking.session_id, booking.seats);
       if (!reserved) throw new SessionFullError(booking.session_id);
     }
+    // Loyallıq möhürü real iştiraka bağlıdır: yalnız ilk dəfə "attended" olanda +1.
+    if (status === 'attended' && booking.status !== 'attended') await addStamp(tx, booking.customer_id);
     return updateBookingStatus(tx, bookingId, status);
   });
 }

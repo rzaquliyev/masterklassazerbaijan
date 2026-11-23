@@ -62,7 +62,7 @@
               .replace('{percent}', res.data.percent);
           } else if (res.data.alreadyClaimed) {
             resultBox.className = 'form-alert success';
-            resultBox.textContent = form.dataset.alreadyText + ' ' + (res.data.code || '');
+            resultBox.textContent = form.dataset.alreadyText;
           } else {
             resultBox.className = 'form-alert error';
             resultBox.textContent = res.data.error || form.dataset.genericError;

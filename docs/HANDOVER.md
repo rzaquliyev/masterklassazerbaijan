@@ -65,7 +65,9 @@ Tam statik kod auditi aparıldı (auth/sessiya, SQL-injection, input validasiyas
 5. Admin gözləmə siyahısındakı bronu "Təsdiqlə" edəndə `sessions.booked` artmırdı → tutum aşılırdı. İndi yer atomik tutulur, yer yoxdursa 409 xəbərdarlığı.
 6. Kiçik: səhv formatlı ID-li URL-lər 500 əvəzinə 404; "Qalib et" təkrar basılanda ikinci möhür verilmir; rate-limit yaddaşı vaxtaşırı təmizlənir; `uploads/tasks/` `.gitignore`-a əlavə olundu. Testlər: 27/27.
 
-Qəbul edilmiş (dəyişdirilməyən) risklər: OTP olmadığından bir nəfər saxta bronlarla yer tuta bilər (rate-limit 5/dəq/IP ilə məhdud, Phase 0 qərarı); Gizlənqaç endpoint-i telefonu bilənə həmin telefonun kodunu yenidən göstərir (kod hələ heç yerdə tətbiq olunmur).
+7. OTP-siz saxta bron riskinə qarşı: bir telefon bir seansa ən çox 3, gələcək seanslarda cəmi ən çox 8 aktiv bron; IP başına dəqiqədə 5, gündə 20 bron cəhdi. **Loyallıq möhürü artıq bron anında yox, admin bronu "Gəldi" (attended) qeyd edəndə verilir** — saxta bronla pulsuz masterklass toplamaq mümkün deyil. (Bu dəyişiklikdən əvvəl verilmiş möhürlər olduğu kimi qalır.)
+8. Gizlənqaç: eyni telefonla təkrar sorğu kodu yenidən göstərmir (409 + "kod artıq verilib, WhatsApp-dan yazın").
+Testlər: 29/29.
 
 Commit-lər: `Təhlükəsizlik auditi: ...` (2 commit) + `Mərhələ 8: Admin panelinə "Sayt" bölməsi ...` (1 commit). Hamısı lokal `master`-də, GitHub-a push edilməyib.
 

@@ -23,6 +23,7 @@
   {% if errors.generic %}<div class="form-alert error">{{ t.kassa.errorGeneric }}</div>{% endif %}
   {% if errors.validation %}<div class="form-alert error">{{ t.kassa.errorGeneric }}</div>{% endif %}
   {% if errors.phone %}<div class="form-alert error">{{ t.kassa.errorPhone }}</div>{% endif %}
+  {% if errors.limit %}<div class="form-alert error">{{ t.kassa.errorLimit }}</div>{% endif %}
 
   <form method="post" action="/{{ lang }}/kassa/{{ session.id }}" id="kassa-form" novalidate style="margin-top:18px;">
     <input type="hidden" name="idempotencyKey" value="{{ idempotencyKey }}">
