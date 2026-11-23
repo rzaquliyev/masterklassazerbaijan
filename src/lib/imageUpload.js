@@ -10,7 +10,11 @@ import sharp from 'sharp';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const GALLERY_DIR = path.join(__dirname, '..', 'public', 'uploads', 'gallery');
-const TASKS_DIR = path.join(__dirname, '..', 'public', 'uploads', 'tasks');
+// Tapşırıq şəkilləri qalereya qovluğunun İÇİNDƏ saxlanılır: Railway volume-u yalnız
+// `/app/src/public/uploads/gallery`-ə bağlıdır (mount yolunu dəyişmək mövcud qalereya fayllarının
+// yolunu pozardı). Köhnə `/uploads/tasks/` URL-ləri yalnız silmə üçün tanınır.
+const TASKS_DIR = path.join(GALLERY_DIR, 'tasks');
+const LEGACY_TASKS_DIR = path.join(__dirname, '..', 'public', 'uploads', 'tasks');
 const MAX_WIDTH = 1600;
 
 export class UnsupportedImageError extends Error {
@@ -47,11 +51,12 @@ export async function deleteGalleryImage(url) {
 }
 
 export async function saveTaskPhoto(buffer) {
-  return saveImageTo(TASKS_DIR, '/uploads/tasks', buffer);
+  return saveImageTo(TASKS_DIR, '/uploads/gallery/tasks', buffer);
 }
 
 export async function deleteTaskPhoto(url) {
-  if (!url || !url.startsWith('/uploads/tasks/')) return;
+  if (!url) return;
   const filename = path.basename(url);
-  await unlink(path.join(TASKS_DIR, filename)).catch(() => {});
+  if (url.startsWith('/uploads/gallery/tasks/')) await unlink(path.join(TASKS_DIR, filename)).catch(() => {});
+  else if (url.startsWith('/uploads/tasks/')) await unlink(path.join(LEGACY_TASKS_DIR, filename)).catch(() => {});
 }

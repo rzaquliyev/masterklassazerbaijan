@@ -4,7 +4,7 @@ Bu sənəd layihəni ilk dəfə əlinə alan hər kəs üçün (studiya sahibi, 
 
 ## 0. İndi harada dayanmışıq (2026-11-24) — ƏN VACİB
 
-1. **🔴 Production sayt hazırda OFFLINE-dır.** Railway-in Free/Trial planı ("30 gün, $5 kredit, kartsız") bitib (~2026-10-11-dən bəri), həm `masterklassazerbaijan` servisi, həm də Postgres bazası dayanıb (`railway status` → "○ Offline" hər ikisi üçün). **Bu kodun problemi deyil** — sadəcə kart əlavə edilməyib.
+1. **✅ (Yeniləmə 2026-11-24 axşam) Sayt yenidən ONLINE-dır, `masterklas.az` bağlanıb** (`railway status`). Aşağıdakı offline qeydi tarixçə üçün saxlanılıb. Əvvəl: **Production sayt OFFLINE idi.** Railway-in Free/Trial planı ("30 gün, $5 kredit, kartsız") bitib (~2026-10-11-dən bəri), həm `masterklassazerbaijan` servisi, həm də Postgres bazası dayanıb (`railway status` → "○ Offline" hər ikisi üçün). **Bu kodun problemi deyil** — sadəcə kart əlavə edilməyib.
 2. **Domen alındı: `masterklas.az`** — hələ heç bir hostinqə bağlanmayıb.
 3. **Hostinq qərarı gözlənilir (sahibdən):** iki seçim müzakirə edildi:
    - **(Tövsiyə) Railway-də qal, kart əlavə et** → Hobby plan ($5/ay minimum), mövcud layihə/DB/volume/PITR backup saxlanılır, sıfır köçürmə işi.
@@ -75,7 +75,7 @@ Commit-lər: `Təhlükəsizlik auditi: ...` (2 commit) + `Mərhələ 8: Admin pa
 
 1. **Railway-ə kart əlavə et, Hobby plana keç** (bax §0.3) — sayt yenidən canlanır.
 2. **`masterklas.az` domenini Railway-ə bağla** (bax `docs/DEPLOY.md` §7).
-3. **Railway volume-un Mount Path-ının `/app/src/public/uploads` olduğunu yoxla** (köhnə quraşdırmada yalnız `uploads/gallery` idi — bax `docs/DEPLOY.md` §4; düzəldilməyibsə tapşırıq şəkilləri hər deploy-da itir).
+3. ✅ Railway volume yoxlanıldı (2026-11-24): `/app/src/public/uploads/gallery`-ə bağlıdır. Tapşırıq şəkilləri artıq bu volume-un içində (`gallery/tasks/`) saxlanılır — push-dan sonra qorunur. Köhnə `/uploads/tasks/` şəkilləri (varsa) push-dan əvvəl köçürülməlidir.
 4. **Commit edilmiş dəyişiklikləri GitHub-a push et** (`git push`) ki, Railway avtomatik deploy etsin.
 5. **`docs/CONTENT-TODO.md`-dəki qalan real məlumatları ver** (iş saatları, real qiymətlər və s.).
 6. (İxtiyari) `/admin/sayt`-dan sabit mətinləri real/son variantları ilə yenilə.

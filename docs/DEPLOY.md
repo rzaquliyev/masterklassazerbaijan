@@ -38,13 +38,15 @@ git push -u origin master
    **Diqqət:** ilk quraşdırmada (2026-10-10) volume səhvən yalnız `uploads/gallery`-ə bağlanmışdı — `uploads/tasks` indi əlavə olunan funksiya olduğu üçün, Railway-də mövcud volume-un Mount Path-ını `/app/src/public/uploads`-a yeniləmək (və ya `uploads/tasks` üçün ikinci volume əlavə etmək) lazımdır, əks halda tapşırıq şəkilləri hər deploy-da itəcək.)
 5. Bundan sonra server yenidən başlasa (deploy, restart) belə, yüklənmiş fotolar **silinmir**.
 
+**Hazırkı vəziyyət (2026-11-24, `railway volume list` ilə yoxlanıldı):** volume `/app/src/public/uploads/gallery`-ə bağlıdır və **belə saxlanılır** — mount yolunu `uploads/`-a dəyişmək volume-dakı mövcud qalereya fayllarının URL-lərini pozardı. Bunun əvəzinə kod tapşırıq şəkillərini də volume-un içində, `uploads/gallery/tasks/`-da saxlayır (`src/lib/imageUpload.js`). Ayrı volume lazım deyil.
+
 ### 4a. Volume-un düzgün bağlandığını necə yoxlamaq
 
-**Brauzerdə (ən sadə):** railway.app → layihə → əsas kanvasda `masterklassazerbaijan` servisinə bağlı **volume** kubuna klikləyin → **Settings** → **Mount Path** sahəsi `/app/src/public/uploads` olmalıdır. `/app/src/public/uploads/gallery` görünürsə, onu `/app/src/public/uploads`-a dəyişin və yadda saxlayın (servis offline olsa da bu ayar dəyişdirilə bilir; aktivləşəndə tətbiq olunur). Volume ümumiyyətlə görünmürsə, §4-dəki addımlarla yaradın.
+**Ən etibarlı (CLI):** layihə qovluğunda `railway volume list` (və ya `railway status`) — `Mount path: /app/src/public/uploads/gallery` görünməlidir. (Brauzer UI-da bu sahə hər hesabda görünmür.)
 
 **CLI ilə:** layihə qovluğunda `railway login`, `railway link`, sonra `railway volume list` — çıxışda `Mount path:` sətrinə baxın.
 
-**Konteyner içində (servis online olanda):** `railway ssh` → `df -h /app/src/public/uploads` (ayrıca disk kimi görünməlidir) və `ls /app/src/public/uploads` (`gallery` və `tasks` qovluqları).
+**Konteyner içində (servis online olanda):** `railway ssh` → `df -h /app/src/public/uploads` (ayrıca disk kimi görünməlidir) və `ls /app/src/public/uploads/gallery` (`.webp` faylları və `tasks/` alt-qovluğu).
 
 **Yekun sübut:** §9-dakı kimi qalereyaya və Həftənin tapşırığına bir sınaq şəkil yükləyin → Deployments → **Redeploy** → hər iki şəkil hələ açılırsa, volume düzgündür.
 
