@@ -247,6 +247,11 @@
     "mapOpen": "Open in Maps"
   },
   "adGunu": {
+    "cakeTitle": "Blow out the candles!",
+    "cakeLead": "Tap each candle — make a wish and blow.",
+    "candleLabel": "Blow out the candle",
+    "cakeDone": "Wish received! Happy birthday!",
+    "cakeAgain": "Light them again",
     "title": "Celebrate a birthday\nwith us!",
     "lead": "Pick a package, tell us the guest count, we'll handle the rest.",
     "packagesTitle": "Pick a package",

@@ -5,20 +5,24 @@
 
 {% block content %}
 <section class="container page-head">
+  <div class="bunting" aria-hidden="true">
+    {% for c in ['orange','sun','green','blue','pink','orange','sun','green'] %}<span class="bunting-flag m-flag" data-anim style="background:var(--{{ c }}); --d:{{ loop.index0 * 0.12 }}s;"></span>{% endfor %}
+  </div>
   <h1 style="white-space:pre-line;">{{ t.kampaniyalar.title }}</h1>
   <p class="page-lead">{{ t.kampaniyalar.lead }}</p>
 </section>
 
-<section class="container" style="margin-top:22px;">
+<div class="container camp-duo">
+<section style="margin-top:22px;">
   <div class="trust-card" style="background:var(--green); color:var(--white); box-shadow:0 8px 0 var(--green-deep);">
-    <span class="chip-solid" style="background:var(--white); color:var(--green-deep);">{{ t.kampaniyalar.seasonalBadge }}</span>
+    <span class="chip-solid m-wiggle" data-anim style="background:var(--white); color:var(--green-deep);">{{ t.kampaniyalar.seasonalBadge }}</span>
     <div style="font-family:var(--font-display); font-weight:700; font-size:1.25rem; margin-top:12px;">{{ t.kampaniyalar.seasonalTitle }}</div>
     <div style="margin-top:6px; font-weight:700; font-size:.9rem;">{{ t.kampaniyalar.seasonalLead }}</div>
     <a class="btn-dark" style="margin-top:16px; display:inline-flex;" href="https://wa.me/994558199901?text={{ t.kampaniyalar.seasonalWhatsappText | urlencode }}" target="_blank" rel="noopener">{{ t.kampaniyalar.seasonalCta }}</a>
   </div>
 </section>
 
-<section class="container" style="margin-top:22px;">
+<section style="margin-top:22px;">
   <div class="trust-card" style="background:var(--night); color:var(--cream); box-shadow:0 8px 0 var(--night-deep);">
     <div style="display:flex; justify-content:space-between; align-items:flex-start;">
       <div>
@@ -33,9 +37,9 @@
     <div style="font-size:.88rem; font-weight:700; color:#C9D3E8; margin-top:8px;">{{ t.kampaniyalar.passportLead }}</div>
 
     {% if lookup %}
-    <div class="stamp-grid">
+    <div class="stamp-grid" data-anim>
       {% for i in range(0, 5) %}
-      <div class="stamp-slot {{ 'is-filled' if i < lookup.stamp_count }}"></div>
+      <div class="stamp-slot {{ 'is-filled' if i < lookup.stamp_count }}" style="--i:{{ i }};"></div>
       {% endfor %}
     </div>
     {% if lookup.free_sessions_available > 0 %}
@@ -68,6 +72,7 @@
     {% endif %}
   </div>
 </section>
+</div>
 
 <section class="container" style="margin-top:24px;">
   <div class="trust-card" style="background:var(--white);">

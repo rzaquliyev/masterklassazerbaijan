@@ -3,10 +3,17 @@
 .town-sky{ position:absolute; inset:0; }
 .town-sun{ position:absolute; right:30px; top:6px; width:56px; height:56px; border-radius:50%; background:var(--sun); box-shadow:inset -6px -7px 0 rgba(0,0,0,.14), inset 5px 5px 0 rgba(255,255,255,.4), 0 0 0 10px rgba(255,194,61,.22); }
 .town-cloud{ position:absolute; left:26px; top:26px; width:76px; height:30px; border-radius:30px; background:var(--white); box-shadow:inset -4px -5px 0 rgba(0,0,0,.06); }
-@media (prefers-reduced-motion:no-preference){
-  .float{ animation:townFloat 3.4s ease-in-out 3; }
-  @keyframes townFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-7px); } }
-}
+.town-cloud--2{ left:auto; right:110px; top:58px; width:54px; height:22px; opacity:.85; }
+/* Ağaclar — kənarlarda, evlərin arxasında; görünəndə 3 dəfə yellənir (motion.css .m-sway) */
+.town-trees{ position:absolute; inset:0; pointer-events:none; }
+.town-hill{ position:absolute; left:-10%; bottom:56px; width:48%; height:78px; border-radius:50% 50% 0 0; background:#A6D9A1; }
+.town-hill--2{ left:auto; right:-12%; width:44%; height:64px; background:#B5E0AE; }
+.town-tree{ position:absolute; bottom:124px; left:7%; display:flex; flex-direction:column; align-items:center; pointer-events:auto; cursor:pointer; }
+.town-tree--2{ left:auto; right:6%; bottom:112px; scale:.8; }
+.town-tree-crown{ width:46px; height:46px; border-radius:50%; background:var(--green-deep); }
+.town-tree-trunk{ width:9px; height:18px; margin-top:-4px; border-radius:0 0 4px 4px; background:#8A5A3B; }
+.house-panel.is-entering{ animation:mPanelIn .45s cubic-bezier(.3,1.3,.5,1) both; }
+@media (prefers-reduced-motion:reduce){ .house-panel.is-entering{ animation:none; } }
 .town-ground{ position:absolute; left:0; right:0; bottom:0; height:84px; border-radius:50% 50% 0 0 / 30px 30px 0 0; background:var(--green); box-shadow:inset 0 10px 0 rgba(255,255,255,.18); }
 
 .town-houses{ position:relative; z-index:1; height:100%; display:flex; align-items:flex-end; justify-content:space-evenly; gap:8px; padding-bottom:24px; }
@@ -59,3 +66,26 @@
 .town-tile-icon{ display:block; width:40px; height:36px; border-radius:14px 14px 4px 4px; background:rgba(255,255,255,.55); }
 .town-tile-place{ display:block; margin-top:12px; font-family:var(--font-display); font-weight:700; font-size:.95rem; line-height:1.1; }
 .town-tile-what{ display:block; margin-top:3px; font-size:.78rem; font-weight:800; opacity:.85; }
+
+/* ---------- Kompüter (≥960px): böyük səhnə, mərkəzdə başlıq, dar panel ---------- */
+@media (min-width:960px){
+  .home-head{ text-align:center; }
+  .home-head .page-lead{ max-width:560px; margin-left:auto; margin-right:auto; }
+  .town-scene{ height:380px; }
+  .town-houses{ justify-content:center; gap:64px; padding-bottom:30px; }
+  .town-house-roof{ border-left-width:54px; border-right-width:54px; border-bottom-width:44px; }
+  .town-house-body{ width:100px; height:90px; border-radius:14px 14px 20px 20px; }
+  .town-house-tag{ font-size:.9rem; padding:6px 14px; margin-top:12px; }
+  .town-ground{ height:120px; }
+  .town-sun{ width:88px; height:88px; right:12%; top:20px; }
+  .town-cloud{ width:120px; height:44px; left:10%; top:40px; }
+  .town-cloud--2{ left:auto; right:30%; top:90px; width:84px; height:32px; }
+  .town-hill{ bottom:90px; height:120px; width:40%; }
+  .town-hill--2{ height:100px; width:38%; }
+  .town-tree{ bottom:200px; left:9%; }
+  .town-tree--2{ left:auto; right:9%; bottom:182px; }
+  .town-tree-crown{ width:70px; height:70px; }
+  .town-tree-trunk{ width:12px; height:26px; }
+  .house-panel{ max-width:760px; margin:0 auto; }
+  .roadmap-visual{ max-width:520px; }
+}

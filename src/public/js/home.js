@@ -51,7 +51,13 @@
 
       document.querySelectorAll('.house-panel').forEach(function (p) { p.hidden = true; });
       var target = document.getElementById(btn.getAttribute('data-target'));
-      if (target) target.hidden = false;
+      if (target) {
+        target.hidden = false;
+        // Panel 3D "açılma" ilə gəlir (motion.css mPanelIn); reduced-motion-da CSS özü söndürür.
+        target.classList.remove('is-entering');
+        void target.offsetWidth;
+        target.classList.add('is-entering');
+      }
     });
   });
 })();

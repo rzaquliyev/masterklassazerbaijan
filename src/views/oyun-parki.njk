@@ -10,6 +10,30 @@
   <span class="chip-solid" style="background:var(--butter);" id="hunt-counter-display">★ <span data-star-counter>0</span>/5 {{ t.gizlenqach.counterLabel }}</span>
 </section>
 
+<section class="container">
+  <div class="park-scene" aria-hidden="true" data-replay>
+    <span class="park-grass"></span>
+    <span class="ferris">
+      <span class="ferris-leg"></span><span class="ferris-leg ferris-leg--2"></span>
+      <span class="ferris-wheel m-spin" data-anim>
+        <span class="ferris-cab" style="--a:0deg; background:var(--orange);"></span>
+        <span class="ferris-cab" style="--a:60deg; background:var(--sun);"></span>
+        <span class="ferris-cab" style="--a:120deg; background:var(--blue);"></span>
+        <span class="ferris-cab" style="--a:180deg; background:var(--pink);"></span>
+        <span class="ferris-cab" style="--a:240deg; background:var(--green);"></span>
+        <span class="ferris-cab" style="--a:300deg; background:var(--butter);"></span>
+      </span>
+      <span class="ferris-hub"></span>
+    </span>
+    <span class="swing-set">
+      <span class="swing-bar"></span>
+      <span class="swing-leg"></span><span class="swing-leg swing-leg--2"></span>
+      <span class="swing-seat m-swing" data-anim><span class="swing-rope"></span><span class="swing-rope swing-rope--2"></span><span class="swing-board clay-sm"></span></span>
+      <span class="swing-seat swing-seat--2 m-swing" data-anim style="--d:.5s;"><span class="swing-rope"></span><span class="swing-rope swing-rope--2"></span><span class="swing-board clay-sm" style="background:var(--blue);"></span></span>
+    </span>
+  </div>
+</section>
+
 <section class="container" style="margin-top:26px;">
   <div style="display:flex; justify-content:space-between; align-items:flex-end;">
     <div>
@@ -28,20 +52,20 @@
 
 <section class="container" style="margin-top:40px;">
   <h2>{{ t.oyunParki.moreTitle }}</h2>
-  <div class="card-grid cols-2" style="margin-top:14px;">
-    <a href="/{{ lang }}/oyun-parki/yogur" class="park-tile wide" style="background:var(--orange); color:var(--white);">
+  <div class="card-grid cols-2" style="margin-top:14px;" data-stagger>
+    <a href="/{{ lang }}/oyun-parki/yogur" data-tilt class="park-tile wide" style="background:var(--orange); color:var(--white);">
       <span class="park-tile-icon clay" style="background:var(--sun);" aria-hidden="true"></span>
       <span><span class="park-tile-title">{{ t.oyunParki.yogurTitle }}</span><span class="park-tile-text">{{ t.oyunParki.yogurLead }}</span></span>
     </a>
-    <a href="/{{ lang }}/oyun-parki/pizza" class="park-tile" style="background:var(--sun); color:var(--night);">
+    <a href="/{{ lang }}/oyun-parki/pizza" data-tilt class="park-tile" style="background:var(--sun); color:var(--night);">
       <span class="park-tile-icon clay" style="background:var(--white);" aria-hidden="true"></span>
       <span><span class="park-tile-title">{{ t.oyunParki.pizzaTitle }}</span><span class="park-tile-text">{{ t.oyunParki.pizzaLead }}</span></span>
     </a>
-    <a href="/{{ lang }}/oyun-parki/rengleme" class="park-tile" style="background:var(--blue); color:var(--white);">
+    <a href="/{{ lang }}/oyun-parki/rengleme" data-tilt class="park-tile" style="background:var(--blue); color:var(--white);">
       <span class="park-tile-icon clay" aria-hidden="true"></span>
       <span><span class="park-tile-title">{{ t.oyunParki.rengTitle }}</span><span class="park-tile-text">{{ t.oyunParki.rengLead }}</span></span>
     </a>
-    <a href="/{{ lang }}/#tour" class="park-tile" style="background:var(--night); color:var(--cream);" id="hunt-tile">
+    <a href="/{{ lang }}/#tour" data-tilt class="park-tile" style="background:var(--night); color:var(--cream);" id="hunt-tile">
       <span class="park-tile-stars" aria-hidden="true">★★★★★</span>
       <span><span class="park-tile-title">{{ t.oyunParki.huntTitle }}</span><span class="park-tile-text">{{ t.oyunParki.huntLead }}</span></span>
     </a>

@@ -6,3 +6,6 @@
 @media (min-width:640px){ .gallery-wall{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
 .gallery-frame{ border:0; cursor:pointer; padding:10px; border-radius:22px; text-align:left; }
 .gallery-frame .foto-placeholder{ height:130px; }
+/* Muzey divarı: hər çərçivə mismardan asılıb, görünəndə 3 dəfə yüngülcə yellənir */
+.gallery-frame{ position:relative; }
+.gallery-frame::before{ content:""; position:absolute; left:50%; top:-12px; width:12px; height:12px; margin-left:-6px; border-radius:50%; background:var(--night-2); box-shadow:inset -2px -2px 0 rgba(0,0,0,.25); }

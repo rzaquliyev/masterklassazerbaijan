@@ -6,7 +6,12 @@
 {% block extra_css %}<link rel="stylesheet" href="/css/tapsiriq.css?v={{ assetV }}">{% endblock %}
 
 {% block content %}
-<section class="container page-head">
+<section class="container page-head head-with-deco head-with-deco--robot">
+  <span class="robot" aria-hidden="true" data-replay>
+    <span class="robot-antenna m-antenna" data-anim><span class="robot-light m-blink" data-anim></span></span>
+    <span class="robot-head clay-sm"><span class="robot-eye m-eye" data-anim></span><span class="robot-eye m-eye" data-anim></span></span>
+    <span class="robot-body clay-sm"><span class="robot-arm m-arm" data-anim></span></span>
+  </span>
   {% if current %}<span class="chip-solid" style="background:var(--night); color:var(--butter); float:right;">{{ t.tapsiriq.weekBadgeTemplate | replace('{n}', current.week_number) }}</span>{% endif %}
   <h1 style="white-space:pre-line;">{{ t.tapsiriq.title }}</h1>
   <p class="page-lead">{{ t.tapsiriq.lead }}</p>
@@ -15,8 +20,8 @@
 {% if current %}
 <section class="container" style="margin-top:18px;">
   <div class="cork-board">
-    <div class="cork-card">
-      <span class="cork-pin" aria-hidden="true"></span>
+    <div class="cork-card m-drop" data-anim>
+      <span class="cork-pin m-pop" data-anim style="--d:.45s;" aria-hidden="true"></span>
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <span style="font-size:.76rem; font-weight:800; letter-spacing:.06em; color:var(--night-2);">{{ t.tapsiriq.boardLabel }}</span>
         <span class="chip-solid" style="background:var(--butter);">{{ (t.tapsiriq.daysLeftTemplate | replace('{n}', daysLeft)) if daysLeft > 0 else t.tapsiriq.daysLeftToday }}</span>

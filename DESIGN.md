@@ -85,6 +85,14 @@ Maketlərdə bir neçə dekorativ animasiya (`float`, `sway`, `spin`, `swing`, `
 6. Bütün yuxarıdakılar `prefers-reduced-motion:reduce`-da **ya tam söndürülür (dekorativ), ya animasiyasız dərhal son vəziyyətə keçir (funksional)**.
 7. Yalnız `transform` və `opacity` animasiya olunur (performans), rənglərin/kölgələrin dəyişməsi `transition` ilə qısa (≤300ms) saxlanılır.
 
+**Tətbiq (2026-11-24 — "canlı animasiyalar" mərhələsi):** hamısı bir ortaq sistemdədir — `src/public/css/motion.css` + `src/public/js/motion.js` (hər səhifədə yüklənir, kitabxana yoxdur):
+- `data-anim` + `m-*` sinfi: element görünəndə (IntersectionObserver) bir dəfə `.is-in` alır → ambient animasiya **3 dövr** edib dayanır (`m-float`, `m-sway`, `m-spin`, `m-swing`, `m-flag`, `m-rise`, `m-flicker` və s.), bir dəfəliklər (`m-print`, `m-pop`, `m-drop`, bus `m-bus-in`) bir dəfə oynayır. `data-replay` olan səhnəyə toxunanda 1 tur yenidən.
+- `data-stagger` / `data-reveal`: scroll ilə ardıcıl, yaylı giriş; `data-reveal="flap"` Təqvim lövhəsində split-flap çevrilməsi.
+- Basılan bütün düymələrdə plastilin "squish" (`scale`), siçanlı ekranlarda kartlarda 3D əyilmə (`data-tilt`, perspective + rotateX/Y), menyu/panel 3D açılma, yaddaş kartlarında 3D çevrilmə.
+- Hadisə animasiyaları: bilet çapı → möhür → konfeti (Kassa təsdiqi), şam üfürmə → tüstü → konfeti (Ad günü), yaddaş oyununda qələbə konfetisi.
+- Animasiyalar ayrıca `translate`/`rotate`/`scale` xüsusiyyətləri ilə yazılıb ki, elementlərin mövcud `transform`-ları ilə toqquşmasın.
+- `prefers-reduced-motion: reduce`: motion.js heç nə etmir (`.js-motion` sinfi qoyulmur, reveal gizlətməsi yoxdur), bütün keyframe-lər `no-preference` media daxilindədir.
+
 Bu qaydalar Mərhələ 4 tətbiqində `design-motion-principles` (Jhey Tompkins — oynaq — əsas yanaşma) ilə qurulacaq, Mərhələ 6-da Audit rejimi ilə yenidən yoxlanılacaq.
 
 ## 7. Qadağalar (BRIEF §6 yoxlama siyahısı — son auditdə `redesign-existing-projects` ilə təkrarlanacaq)

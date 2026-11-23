@@ -1,0 +1,114 @@
+/* Hərəkət sistemi — DESIGN.md §6 / CLAUDE.md "Hərəkət qaydası".
+   - Dekorativ (ambient) animasiyalar element görünəndə başlayır və ən çoxu 3 dövr edib dayanır
+     (`.is-in` sinfini motion.js IntersectionObserver ilə bir dəfə əlavə edir; `data-replay` olan
+     elementə toxunanda yenidən 1 tur oynayır).
+   - Hadisə-bağlı (klik, uğur, möhür) animasiyalar bir dəfəlikdir.
+   - Hamısı `prefers-reduced-motion: no-preference` daxilindədir — reduce-da heç nə hərəkət etmir,
+     motion.js də `.js-motion` sinfini əlavə etmir, ona görə gizlənən (reveal) məzmun da görünür qalır.
+   - Mövcud `transform`-larla toqquşmasın deyə əksər animasiyalar ayrıca `translate`/`rotate`/`scale`
+     xüsusiyyətlərini dəyişir. */
+
+@media (prefers-reduced-motion:no-preference){
+
+  /* ---------- Scroll ilə görünmə (reveal) + ardıcıllıq (stagger) ---------- */
+  .js-motion [data-reveal]{
+    opacity:0; translate:0 18px;
+    transition:opacity .5s ease, translate .65s cubic-bezier(.3,1.45,.5,1);
+    transition-delay:calc(var(--i, 0) * 80ms);
+  }
+  .js-motion [data-reveal].is-in{ opacity:1; translate:0 0; }
+  /* Reys lövhəsi: split-flap kimi yuxarıdan aşağı çevrilir */
+  .js-motion [data-reveal="flap"]{
+    translate:none; transform-origin:50% 0; rotate:x -90deg;
+    transition:opacity .25s ease, rotate .55s cubic-bezier(.3,1.5,.5,1);
+    transition-delay:calc(var(--i, 0) * 110ms);
+  }
+  .js-motion [data-reveal="flap"].is-in{ rotate:x 0deg; }
+
+  /* ---------- Plastilin "squish" — basılan hər düymə (motion.js .is-squish verir) ---------- */
+  .is-squish{ animation:mSquish .42s cubic-bezier(.3,1.6,.5,1); }
+  @keyframes mSquish{ 0%,100%{ scale:1 1; } 35%{ scale:1.08 .9; } 70%{ scale:.96 1.05; } }
+
+  /* ---------- 3D əyilmə (yalnız siçan olan ekranlarda, motion.js --rx/--ry verir) ---------- */
+  .js-motion [data-tilt]{
+    transform:perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+    transition:transform .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .js-motion [data-tilt].is-tilting{ transition:transform .08s linear; }
+
+  /* ---------- Ambient: görünəndə 3 dövr, sonra dayanır ---------- */
+  .m-float.is-in  { animation:mFloat 3.4s ease-in-out var(--d, 0s) 3; }
+  .m-bob.is-in    { animation:mBob 2.4s ease-in-out var(--d, 0s) 3; }
+  .m-sway.is-in   { transform-origin:50% 100%; animation:mSway 3s ease-in-out var(--d, 0s) 3; }
+  .m-wiggle.is-in { animation:mWiggle 1.6s ease-in-out var(--d, 0s) 3; }
+  .m-swing.is-in  { transform-origin:50% 0; animation:mSwing 2.2s ease-in-out var(--d, 0s) 3; }
+  .m-swing-s.is-in{ transform-origin:50% 0; animation:mSwingS 3.2s ease-in-out var(--d, 0s) 3; }
+  .m-spin.is-in   { animation:mSpin 5s linear var(--d, 0s) 3; }
+  .m-flag.is-in   { transform-origin:50% 0; animation:mFlag 1.8s ease-in-out var(--d, 0s) 3; }
+  .m-rise.is-in   { animation:mRise 3.6s ease-in-out var(--d, 0s) 3; }
+  .m-flicker.is-in{ transform-origin:50% 100%; animation:mFlicker .7s ease-in-out var(--d, 0s) 3; }
+  .m-spin-y.is-in { animation:mSpinY 2.8s ease-in-out var(--d, 0s) 3; }
+  .m-steam.is-in  { animation:mSteam 2.2s ease-out var(--d, 0s) 3 both; }
+  .m-antenna.is-in{ transform-origin:50% 100%; animation:mAntenna 1.4s ease-in-out var(--d, 0s) 3; }
+  .m-arm.is-in    { transform-origin:50% 8%; animation:mArm 1.2s ease-in-out var(--d, 0s) 3; }
+  .m-blink.is-in  { animation:mBlink 1.4s ease-in-out var(--d, 0s) 3; }
+  .m-eye.is-in    { transform-origin:50% 50%; animation:mEye 3s ease-in-out var(--d, 0s) 3; }
+  .m-bounce.is-in { animation:mBounce .5s ease-in-out var(--d, 0s) 3; }
+
+  /* ---------- Bir dəfəlik (hadisə / ilk görünüş) ---------- */
+  .m-pop.is-in    { animation:mPop .55s cubic-bezier(.3,1.6,.5,1) var(--d, 0s) both; }
+  .m-print.is-in  { animation:mPrint .6s cubic-bezier(.2,1.2,.4,1) var(--d, 0s) both; }
+  /* Ekrandan kənarda başlayan element özü "görünə" bilmir — tətik valideyndədir (.is-in > ...) */
+  .is-in > .m-bus-in { animation:mBusIn 1.4s cubic-bezier(.25,.9,.3,1) var(--d, 0s) both; }
+  .m-flag-up.is-in{ transform-origin:0 100%; animation:mFlagUp .7s cubic-bezier(.3,1.6,.5,1) var(--d, .3s) both; }
+  .m-fly-out.is-in{ animation:mFlyOut 1.3s cubic-bezier(.5,0,.6,1) var(--d, .2s) both; }
+  .m-drop.is-in   { animation:mDrop .6s cubic-bezier(.3,1.6,.5,1) var(--d, 0s) both; }
+  /* Bir dəfəlik girişlər görünməmişdən əvvəl öz başlanğıc vəziyyətində gözləyir (sıçrayış olmasın) */
+  .js-motion .m-pop:not(.is-in), .js-motion .m-print:not(.is-in), .js-motion .m-drop:not(.is-in){ opacity:0; }
+  .js-motion :not(.is-in) > .m-bus-in{ translate:-120vw 0; }
+
+  @keyframes mFloat  { 0%,100%{ translate:0 0; } 50%{ translate:0 -7px; } }
+  @keyframes mBob    { 0%,100%{ translate:0 0; } 50%{ translate:0 -6px; } }
+  @keyframes mSway   { 0%,100%{ rotate:-4deg; } 50%{ rotate:4deg; } }
+  @keyframes mWiggle { 0%,100%{ rotate:-3deg; } 50%{ rotate:3deg; } }
+  @keyframes mSwing  { 0%,100%{ rotate:-16deg; } 50%{ rotate:16deg; } }
+  @keyframes mSwingS { 0%,100%{ rotate:-2.2deg; } 50%{ rotate:2.2deg; } }
+  @keyframes mSpin   { to{ rotate:360deg; } }
+  @keyframes mFlag   { 0%,100%{ transform:skewY(0); } 50%{ transform:skewY(-7deg); } }
+  @keyframes mRise   { 0%,100%{ translate:0 0; rotate:-3deg; } 50%{ translate:0 -14px; rotate:3deg; } }
+  @keyframes mFlicker{ 0%,100%{ scale:1 1; } 50%{ scale:.85 1.15; } }
+  @keyframes mSpinY  { 0%,100%{ rotate:-8deg; scale:1 1; } 50%{ rotate:8deg; scale:.82 1; } }
+  @keyframes mSteam  { 0%{ translate:0 0; opacity:0; } 30%{ opacity:.75; } 100%{ translate:0 -30px; opacity:0; } }
+  @keyframes mAntenna{ 0%,100%{ rotate:-10deg; } 50%{ rotate:10deg; } }
+  @keyframes mArm    { 0%,100%{ rotate:10deg; } 50%{ rotate:-35deg; } }
+  @keyframes mBlink  { 0%,100%{ opacity:1; } 50%{ opacity:.3; } }
+  @keyframes mEye    { 0%,90%,100%{ scale:1 1; } 94%{ scale:1 .1; } }
+  @keyframes mBounce { 0%,100%{ translate:0 0; } 50%{ translate:0 -3px; } }
+  @keyframes mPop    { 0%{ scale:.4; opacity:0; } 70%{ scale:1.12; opacity:1; } 100%{ scale:1; } }
+  @keyframes mPrint  { from{ translate:0 -34px; opacity:0; clip-path:inset(0 0 100% 0); } to{ translate:0 0; opacity:1; clip-path:inset(0 0 0 0); } }
+  @keyframes mBusIn  { 0%{ translate:-120vw 0; } 72%{ translate:10px 0; } 86%{ translate:-4px 0; } 100%{ translate:0 0; } }
+  @keyframes mFlagUp { from{ rotate:90deg; } to{ rotate:0deg; } }
+  @keyframes mFlyOut { 0%{ translate:0 0; scale:1; rotate:0deg; opacity:1; } 60%{ translate:40px -120px; scale:.6; rotate:-12deg; opacity:1; } 100%{ translate:70px -200px; scale:.2; rotate:-20deg; opacity:0; } }
+  @keyframes mDrop   { 0%{ translate:0 -40px; scale:1.2; opacity:0; } 70%{ translate:0 3px; scale:.95; opacity:1; } 100%{ translate:0 0; scale:1; } }
+  @keyframes mZoomIn { from{ scale:.7; opacity:0; } to{ scale:1; opacity:1; } }
+  @keyframes mOpen   { from{ opacity:0; translate:0 -6px; } to{ opacity:1; translate:0 0; } }
+  @keyframes mPanelIn{ from{ opacity:0; transform:perspective(800px) rotateX(-16deg) translateY(10px); } to{ opacity:1; transform:none; } }
+  @keyframes mCardFlip{ from{ transform:perspective(500px) rotateY(-90deg); } to{ transform:perspective(500px) rotateY(0); } }
+
+  /* Hər yerdə işləyən kiçik hadisə animasiyaları */
+  .accordion-panel:not([hidden]){ animation:mOpen .28s ease both; }
+  .lightbox:not([hidden]) .lightbox-card{ animation:mZoomIn .3s cubic-bezier(.3,1.4,.5,1) both; }
+  .menu-overlay:not([hidden]) .menu-panel{ animation:mPanelIn .35s cubic-bezier(.3,1.3,.5,1) both; }
+  .menu-overlay:not([hidden]) .menu-list li{ animation:mOpen .3s ease both; animation-delay:calc(var(--i, 0) * 35ms); }
+}
+
+/* ---------- Konfeti (motion.js MKMotion.confetti) ---------- */
+.confetti-layer{ position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:5; }
+.confetti-piece{
+  position:absolute; top:-12px; width:9px; height:14px; border-radius:3px;
+  animation:mConfetti var(--t, 1.6s) cubic-bezier(.25,.6,.4,1) var(--d, 0s) forwards;
+}
+@keyframes mConfetti{
+  0%{ translate:0 0; rotate:0deg; opacity:1; }
+  100%{ translate:var(--x, 0) var(--y, 260px); rotate:var(--r, 360deg); opacity:0; }
+}

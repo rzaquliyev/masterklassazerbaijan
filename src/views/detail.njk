@@ -9,8 +9,20 @@
 <article class="container detail-page">
   <a class="back-link" href="/{{ lang }}/">← {{ t.nav.catalog }}</a>
 
-  <div class="house-interior clay" style="background:{{ masterclass.house_color }}1a; margin-top:14px;">
-    <div class="house-interior-plate clay" aria-hidden="true" style="background:{{ masterclass.house_color }};"></div>
+  <div class="detail-hero">
+  <div class="house-interior clay" style="background:{{ masterclass.house_color }}1a; margin-top:14px;" data-replay>
+    <span class="interior-window" aria-hidden="true"></span>
+    <span class="interior-shelf" aria-hidden="true">
+      <span class="shelf-item m-float clay-sm" data-anim style="background:var(--sun); --d:.2s;"></span>
+      <span class="shelf-item shelf-item--cup m-float clay-sm" data-anim style="background:var(--blue); --d:.7s;"></span>
+    </span>
+    <span class="interior-table" aria-hidden="true"></span>
+    <span class="interior-steam" aria-hidden="true">
+      <span class="steam m-steam" data-anim></span>
+      <span class="steam m-steam" data-anim style="--d:.6s;"></span>
+      <span class="steam m-steam" data-anim style="--d:1.2s;"></span>
+    </span>
+    <div class="house-interior-plate clay m-spin-y" data-anim aria-hidden="true" style="background:{{ masterclass.house_color }};"></div>
   </div>
 
   <div class="page-head" style="padding-top:22px;">
@@ -23,13 +35,14 @@
     </div>
     <p class="page-lead" style="margin-top:14px;">{{ masterclass.description or t.detail.bringNothingText }}</p>
   </div>
+  </div>
 
   <section style="margin-top:28px;">
     <h2>{{ t.detail.sessionPicker }}</h2>
     {% if sessions.length == 0 %}
       <p>{{ t.home.noUpcoming }}</p>
     {% else %}
-    <div class="stack" style="margin-top:14px;">
+    <div class="stack session-list" style="margin-top:14px;" data-stagger>
       {% for s in sessions %}
       {% set left = s.capacity - s.booked %}
       {% if left > 0 %}
@@ -59,10 +72,10 @@
 
   <section style="margin-top:36px;">
     <h2>{{ t.detail.whatHappens }}</h2>
-    <div class="stack" style="margin-top:14px;">
+    <div class="stack step-list" style="margin-top:14px;" data-stagger>
       {% for step in t.detail.steps %}
       <div style="display:flex; gap:14px; align-items:center;">
-        <span class="clay-sm" style="min-width:52px; height:52px; border-radius:50%; background:{{ masterclass.house_color }}; flex:none;" aria-hidden="true"></span>
+        <span class="clay-sm step-dot" style="background:{{ masterclass.house_color }};" aria-hidden="true">{{ loop.index }}</span>
         <div><div style="font-weight:800;">{{ step.title }}</div><div style="font-size:.88rem; color:var(--night-2); font-weight:700;">{{ step.text }}</div></div>
       </div>
       {% endfor %}
@@ -79,9 +92,9 @@
   {% if neighbors.length %}
   <section style="margin-top:30px;">
     <h2>{{ t.detail.neighborsTitle }}</h2>
-    <div class="card-grid cols-3" style="margin-top:14px;">
+    <div class="card-grid cols-3" style="margin-top:14px;" data-stagger>
       {% for n in neighbors %}
-      <a href="/{{ lang }}/m/{{ n.slug }}" class="clay-sm" style="display:block; text-decoration:none; color:var(--night); background:{{ n.house_color }}; border-radius:var(--radius-md); padding:14px 12px;">
+      <a href="/{{ lang }}/m/{{ n.slug }}" class="clay-sm" data-tilt style="display:block; text-decoration:none; color:var(--night); background:{{ n.house_color }}; border-radius:var(--radius-md); padding:14px 12px;">
         <div style="font-family:var(--font-display); font-weight:600; font-size:.95rem;">{{ n.house_name }}</div>
         <div style="font-size:.82rem; font-weight:800; margin-top:4px;">{{ n.title }}</div>
       </a>

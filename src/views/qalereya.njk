@@ -20,9 +20,9 @@
   {% if photos.length == 0 %}
   <p style="margin-top:24px;">{{ t.qalereya.empty }}</p>
   {% else %}
-  <div class="gallery-wall">
+  <div class="gallery-wall" data-stagger>
     {% for p in photos %}
-    <button type="button" class="gallery-frame clay-sm" style="background:{{ p.house_color or 'var(--butter)' }};" data-lightbox-open="{{ loop.index0 }}" data-lightbox-url="{{ p.url }}" aria-label="{{ p.child_label or p.house_name or t.qalereya.title }}">
+    <button type="button" class="gallery-frame clay-sm m-swing-s" data-anim style="--d:{{ (loop.index0 % 3) * 0.35 }}s; background:{{ p.house_color or 'var(--butter)' }};" data-lightbox-open="{{ loop.index0 }}" data-lightbox-url="{{ p.url }}" aria-label="{{ p.child_label or p.house_name or t.qalereya.title }}">
       <img src="{{ p.url }}" alt="" loading="lazy" style="width:100%; height:130px; object-fit:cover; border-radius:14px; display:block;">
     </button>
     {% endfor %}

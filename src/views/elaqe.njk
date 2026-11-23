@@ -4,10 +4,18 @@
 {% block meta_description %}{{ t.elaqe.lead }}{% endblock %}
 
 {% block content %}
-<section class="container page-head">
+<section class="container page-head head-with-deco">
+  <span class="mailbox {{ 'is-sent' if sent }}" aria-hidden="true" {{ 'data-anim' | safe if sent }}>
+    <span class="mailbox-post"></span>
+    <span class="mailbox-box clay-sm"><span class="mailbox-slot"></span></span>
+    <span class="mailbox-flag {{ 'm-flag-up' if sent }}" {{ 'data-anim' | safe if sent }}></span>
+    {% if sent %}<span class="mailbox-letter m-fly-out" data-anim></span>{% endif %}
+  </span>
   <h1 style="white-space:pre-line;">{{ t.elaqe.title }}</h1>
   <p class="page-lead">{{ t.elaqe.lead }}</p>
 
+  <div class="contact-grid">
+  <div>
   {% if sent %}
   <div class="callout on-green" style="margin-top:20px;">
     <div style="font-family:var(--font-display); font-weight:700; font-size:1.3rem;">{{ t.elaqe.sentTitle }}</div>
@@ -24,8 +32,10 @@
     <button type="submit" class="btn-primary" style="width:100%;">{{ t.elaqe.send }}</button>
   </form>
   {% endif %}
+  </div>
 
-  <div class="card-grid cols-2" style="margin-top:30px;">
+  <div>
+  <div class="card-grid cols-2 contact-cards" style="margin-top:30px;">
     <div class="trust-card" style="grid-column:1/-1;"><div style="font-size:.8rem; font-weight:800; color:var(--night-2);">{{ t.elaqe.addressLabel }}</div><div style="font-weight:800; margin-top:2px;">{{ t.elaqe.address }}</div></div>
     <div class="trust-card"><div style="font-size:.8rem; font-weight:800; color:var(--night-2);">{{ t.elaqe.hoursLabel }}</div><div style="font-weight:800; margin-top:2px;">{{ t.elaqe.hours }}</div></div>
     <div class="trust-card"><div style="font-size:.8rem; font-weight:800; color:var(--night-2);">{{ t.elaqe.phoneLabel }}</div><a href="tel:+994558199901" style="font-weight:800; margin-top:2px; display:block;">+994 55 819 99 01</a></div>
@@ -34,5 +44,7 @@
   </div>
 
   <a class="btn-secondary" style="margin-top:16px; display:inline-flex;" href="https://www.google.com/maps/search/?api=1&query={{ t.elaqe.address | urlencode }}" target="_blank" rel="noopener">{{ t.elaqe.mapOpen }}</a>
+  </div>
+  </div>
 </section>
 {% endblock %}

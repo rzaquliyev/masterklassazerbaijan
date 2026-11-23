@@ -6,17 +6,23 @@
 {% block extra_css %}<link rel="stylesheet" href="/css/home.css?v={{ assetV }}">{% endblock %}
 
 {% block content %}
-<section class="container page-head">
+<section class="container page-head home-head">
   <h1 style="white-space:pre-line;">{{ t.home.title }}</h1>
   <p class="page-lead">{{ t.home.lead }}</p>
 </section>
 
 <section class="town-scene" id="town-scene" aria-label="{{ t.home.townSceneLabel }}">
   <div class="town-sky" aria-hidden="true">
-    <span class="town-sun float"></span>
-    <span class="town-cloud float"></span>
+    <span class="town-sun m-float" data-anim data-replay></span>
+    <span class="town-cloud m-float" data-anim style="--d:.5s;"></span>
+    <span class="town-cloud town-cloud--2 m-float" data-anim style="--d:1.1s;"></span>
   </div>
   <div class="town-ground" aria-hidden="true"></div>
+  <div class="town-trees" aria-hidden="true">
+    <span class="town-hill"></span><span class="town-hill town-hill--2"></span>
+    <span class="town-tree m-sway" data-anim data-replay><span class="town-tree-crown clay-sm"></span><span class="town-tree-trunk"></span></span>
+    <span class="town-tree town-tree--2 m-sway" data-anim data-replay style="--d:.4s;"><span class="town-tree-crown clay-sm"></span><span class="town-tree-trunk"></span></span>
+  </div>
   <div class="town-houses container">
     {% for house in featured %}
     <button type="button"
@@ -82,7 +88,7 @@
           <circle cx="-23.5" cy="8" r="1.8" fill="#C0392B"></circle>
         </g>
       </svg>
-      <ol class="roadmap-steps roadmap-steps--road">
+      <ol class="roadmap-steps roadmap-steps--road" data-stagger>
         {% for step in t.home.steps %}
         <li class="roadmap-step roadmap-step-{{ loop.index }}">
           <span class="roadmap-num" aria-hidden="true">{{ step.n }}</span>
@@ -103,14 +109,14 @@
       <h2 style="color:var(--cream);">{{ t.home.museumTitle }}</h2>
       <a href="/{{ lang }}/qalereya" style="color:var(--sun); font-weight:800; font-size:.9rem; text-decoration:none;">{{ t.home.museumAll }}</a>
     </div>
-    <div class="museum-grid">
+    <div class="museum-grid" data-stagger>
       {% for photo in gallery %}
-      <div class="museum-frame clay-sm" style="background:{{ photo.house_color or '#FFE08A' }};">
+      <div class="museum-frame clay-sm" data-tilt style="background:{{ photo.house_color or '#FFE08A' }};">
         <img src="{{ photo.url }}" alt="{{ photo.child_label or photo.house_name or '' }}" loading="lazy" style="width:100%; height:100%; object-fit:cover; border-radius:16px; display:block;">
       </div>
       {% else %}
       {% for i in range(0, 4) %}
-      <div class="museum-frame clay-sm" style="background:var(--butter);">
+      <div class="museum-frame clay-sm" data-tilt style="background:var(--butter);">
         <div class="foto-placeholder" style="height:100%;">[FOTO] ({{ t.card.sample }})</div>
       </div>
       {% endfor %}
@@ -122,9 +128,9 @@
 <section class="container" id="tour" style="padding-top:44px;">
   <h2>{{ t.home.tourTitle }}</h2>
   <p class="page-lead">{{ t.home.tourLead }}</p>
-  <div class="card-grid cols-4" style="margin-top:16px;">
+  <div class="card-grid cols-4" style="margin-top:16px;" data-stagger>
     {% for p in t.places %}
-    <a class="town-tile {{ 'town-tile--dark' if p.color == '#1B2A4A' }}" href="{{ p.href | replace('{lang}', lang) }}" style="background:{{ p.color }};">
+    <a data-tilt class="town-tile {{ 'town-tile--dark' if p.color == '#1B2A4A' }}" href="{{ p.href | replace('{lang}', lang) }}" style="background:{{ p.color }};">
       <span class="town-tile-icon clay-sm" aria-hidden="true"></span>
       <span class="town-tile-place">{{ p.place }}</span>
       <span class="town-tile-what">{{ p.what }}</span>
@@ -138,7 +144,7 @@
     <h2 style="white-space:pre-line;">{{ t.home.trustTitle }}</h2>
     {{ m.hiddenStar('home', t) }}
   </div>
-  <div class="stack" style="margin-top:14px;">
+  <div class="stack" style="margin-top:14px;" data-stagger>
     {% for item in t.home.trust %}
     <div style="display:flex; gap:12px; align-items:center; background:var(--white); border-radius:var(--radius-md); padding:14px 16px; box-shadow:0 5px 0 var(--card-shadow);">
       <span class="clay-sm" style="min-width:40px; height:40px; border-radius:50%; background:var(--green); flex:none;" aria-hidden="true"></span>

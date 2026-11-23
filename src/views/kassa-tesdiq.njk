@@ -5,8 +5,9 @@
 {% block extra_css %}<link rel="stylesheet" href="/css/kassa.css?v={{ assetV }}">{% endblock %}
 
 {% block content %}
-<section class="container kassa-page">
-  <div class="ticket-card clay-card {{ 'has-stamp' if booking.status == 'confirmed' }}" style="margin-top:16px; position:relative;">
+<section class="container kassa-page" {{ 'data-anim data-confetti="1100"' | safe if booking.status == 'confirmed' }}>
+  <div class="ticket-slot" aria-hidden="true"></div>
+  <div class="ticket-card clay-card m-print {{ 'has-stamp' if booking.status == 'confirmed' }}" data-anim style="position:relative;">
     {% if booking.status == 'confirmed' %}
     <div class="ticket-stamp" aria-hidden="true">{{ t.kassa.confirmed }}</div>
     {% endif %}

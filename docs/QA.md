@@ -127,3 +127,18 @@ Bu layihə əvvəlcədən `design-taste-frontend` skili ilə Greenfield rejimind
 | Nəyin yoxlanıldığı/yoxlanılmadığı açıq yazılıb | ✅ (bu sənəd) |
 
 **Qalan, bloklamayan maddələr:** `docs/CONTENT-TODO.md`-dəki real məzmun boşluqları (iş saatları, qiymətlər, say həddləri). (Ev/FAQ CRUD və endirim kodu UI 2026-10-11-də tətbiq olunub — bax `docs/ARCHITECTURE.md` §4.)
+
+---
+
+## 6. Canlı animasiyalar + kompüter düzülüşü (2026-11-24)
+
+**Edilən:** ortaq hərəkət sistemi (`motion.css`/`motion.js`, bax `DESIGN.md` §6 "Tətbiq"); maketlərdəki səhnələr əlavə olundu — ana səhifə (təpələr, yellənən ağaclar, buludlar, panelin 3D açılması), Detal (evin içi: pəncərə, rəf, fırlanan boşqab, buxar), Kassa təsdiqi (bilet çapı → möhür → konfeti), Təqvim (avtobus gəlir, reyslər split-flap), Oyun parkı (çarx + yelləncək, kartların 3D çevrilməsi, qələbə konfetisi), Ad günü (qalxan şarlar + **şam üfürmə oyunu** — BRIEF §5-də tələb olunurdu, əvvəl yox idi), Kampaniyalar (bayraqcıqlar, möhürlərin basılması), Qalereya (asılan çərçivələr), Suallar ("?" balonu), Tapşırıq (robot, lövhəyə sancılan kart), Əlaqə (poçt qutusu, göndərəndə bayraq qalxır + məktub uçur).
+
+**Düzəldilən layout xətaları:** `.page-head{padding:28px 0 0}` `.container`-in yan boşluğunu ləğv edirdi — başlıqlar telefonda ekranın kənarına yapışırdı (bütün səhifələr); Ad günü şarları başlığın üstünə düşürdü.
+
+**Kompüter (≥960px):** ana səhifə səhnəsi böyüdü, başlıq mərkəzdə, panel 760px; Detal — interyer + başlıq 2 sütun, seanslar/addımlar 2 sütun; Ad günü — tort (yapışqan) + paket forması 2 sütun; Əlaqə — forma + əlaqə kartları 2 sütun; Kampaniyalar — mövsüm kartı + pasport 2 sütun; Oyun parkı — böyük səhnə, yaddaş kartları sabit ölçü; Tapşırıq lövhəsi maks. 760px.
+
+**Yoxlanıldı:** 375px və 1440px-də bütün dəyişən səhifələr brauzerdə (ekran görüntüsü ilə); şam üfürmə klik ilə sınandı (alov söndü, tüstü, konfeti, mesaj, "yenidən yandır"); bron təsdiqi real sınaq bronu ilə; `infinite` 0, 3-dən çox dövr edən animasiya 0 (grep); reduced-motion qoruması kodla yoxlanıldı (bütün keyframe-lər `no-preference` daxilində, JS reduce-da çıxır); konsolda yeni xəta yoxdur; testlər 29/29.
+
+**Yoxlanılmadı:** reduced-motion rejimi brauzerdə vizual emulyasiya ilə (yalnız kod yoxlaması); real telefonda toxunma; Safari (ayrıca `translate`/`rotate`/`scale` xüsusiyyətləri Safari 14.1+ tələb edir — köhnə Safari-də animasiyalar sadəcə görünmür, məzmun pozulmur).
+

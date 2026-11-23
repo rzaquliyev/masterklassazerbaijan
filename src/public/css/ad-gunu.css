@@ -1,5 +1,37 @@
-.birthday-hero{ position:relative; padding-top:10px; }
-.birthday-balloons{ position:absolute; left:50%; top:0; transform:translateX(-50%); display:flex; gap:16px; }
-.balloon{ width:40px; height:50px; border-radius:50% 50% 46% 46%; position:relative; top:0; }
+.birthday-hero{ position:relative; padding-top:18px; }
+/* Şarlar başlığın ÜSTÜNDƏ ayrıca sırada (əvvəl absolute idi və başlığın üstünə düşürdü) */
+.birthday-balloons{ display:flex; justify-content:center; gap:16px; height:96px; margin-bottom:6px; cursor:pointer; }
+.balloon{ display:flex; flex-direction:column; align-items:center; }
+.balloon--low{ margin-top:18px; }
+.balloon-body{ width:42px; height:52px; border-radius:50% 50% 46% 46%; }
+.balloon-string{ width:2px; height:30px; background:var(--night-2); opacity:.5; }
 .package-option{ display:flex; gap:14px; align-items:flex-start; cursor:pointer; }
 .package-option:has(input:checked){ box-shadow:0 8px 0 var(--orange-deep); outline:2px solid var(--orange); }
+
+/* Şam üfürmə oyunu (AdGunu maketi): şama toxun → alov söner, tüstü qalxır; hamısı sönəndə konfeti */
+.cake-card{ position:relative; overflow:hidden; text-align:center; background:var(--white); border-radius:var(--radius-lg); padding:20px 16px 22px; box-shadow:0 8px 0 var(--card-shadow); }
+.cake-title{ font-family:var(--font-display); font-weight:700; font-size:1.3rem; }
+.cake-lead{ font-weight:700; font-size:.9rem; color:var(--night-2); margin-top:2px; }
+.cake{ position:relative; width:220px; margin:18px auto 0; }
+.cake-candles{ display:flex; justify-content:center; gap:22px; position:relative; z-index:2; margin-bottom:-6px; }
+.candle{ position:relative; width:44px; height:86px; border:0; padding:0; background:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; }
+.candle-stick{ width:14px; height:44px; border-radius:6px 6px 2px 2px; background:var(--candle); box-shadow:inset -3px 0 0 rgba(0,0,0,.14), inset 3px 0 0 rgba(255,255,255,.35); }
+.candle-flame{ width:16px; height:24px; margin-bottom:4px; border-radius:50% 50% 50% 50% / 60% 60% 40% 40%; background:radial-gradient(circle at 50% 70%, #FFF6C8 0 28%, var(--sun) 30% 60%, var(--orange) 62%); transition:opacity .2s ease, scale .2s ease; }
+.candle.is-out .candle-flame{ opacity:0; scale:.2; }
+.candle-smoke{ position:absolute; left:50%; top:20px; width:10px; height:10px; margin-left:-5px; border-radius:50%; background:rgba(140,150,168,.6); opacity:0; }
+.cake-top{ height:34px; border-radius:20px 20px 6px 6px; background:var(--pink); }
+.cake-base{ height:58px; border-radius:6px 6px 16px 16px; background:var(--butter); margin-top:-4px; }
+.cake-plate{ height:12px; margin:0 -14px; border-radius:8px; background:var(--card-shadow); }
+.cake-done{ min-height:1.4em; margin-top:14px; font-family:var(--font-display); font-weight:700; font-size:1.1rem; color:var(--green-deep); }
+#cake-reset{ margin-top:8px; }
+#cake-reset[hidden]{ display:none; }
+@media (prefers-reduced-motion:no-preference){
+  .candle.is-out .candle-smoke{ animation:mCandleSmoke 1.2s ease-out both; }
+  @keyframes mCandleSmoke{ 0%{ opacity:.8; translate:0 0; scale:.6; } 100%{ opacity:0; translate:6px -46px; scale:2.4; } }
+}
+@media (min-width:960px){
+  .birthday-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:36px; align-items:start; }
+  .birthday-grid > section:first-child{ position:sticky; top:20px; }
+  .birthday-grid > section:last-child{ margin-top:22px !important; }
+  .cake{ width:250px; }
+}

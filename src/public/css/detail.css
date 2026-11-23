@@ -1,5 +1,25 @@
-.house-interior{ height:220px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; overflow:hidden; }
-.house-interior-plate{ width:150px; height:150px; border-radius:50%; }
+.house-interior{ position:relative; height:220px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; overflow:hidden; cursor:pointer; }
+.house-interior-plate{ position:relative; z-index:2; width:132px; height:132px; border-radius:50%; margin-top:44px; }
+.house-interior-plate::after{ content:""; position:absolute; inset:22px; border-radius:50%; box-shadow:inset 5px 5px 0 rgba(0,0,0,.14), inset -4px -4px 0 rgba(255,255,255,.3); }
+/* "Evin içi" səhnəsi (Detal maketi): pəncərə, rəf, masa, buxar — hamısı dekorativdir */
+.interior-window{ position:absolute; left:18px; top:18px; width:62px; height:62px; border-radius:16px; background:#CFE6F7; box-shadow:inset 0 0 0 5px var(--white); }
+.interior-window::before{ content:""; position:absolute; left:50%; top:5px; bottom:5px; width:4px; margin-left:-2px; background:var(--white); }
+.interior-shelf{ position:absolute; right:18px; top:46px; width:96px; height:8px; border-radius:4px; background:#C79A6B; display:flex; justify-content:space-around; align-items:flex-end; }
+.shelf-item{ width:24px; height:28px; border-radius:10px 10px 6px 6px; margin-bottom:8px; }
+.shelf-item--cup{ width:22px; height:20px; border-radius:4px 4px 10px 10px; }
+.interior-table{ position:absolute; left:8%; right:8%; bottom:0; height:46px; border-radius:22px 22px 0 0; background:#E2C9A6; box-shadow:inset 0 6px 0 rgba(255,255,255,.35); }
+.interior-steam{ position:absolute; z-index:3; left:50%; top:22px; width:60px; margin-left:-30px; display:flex; justify-content:space-between; }
+.steam{ width:10px; height:26px; border-radius:10px; background:rgba(255,255,255,.85); opacity:0; }
+@media (prefers-reduced-motion:reduce){ .steam{ display:none; } }
+.step-dot{ min-width:52px; height:52px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:1.2rem; color:var(--white); text-shadow:0 2px 0 rgba(0,0,0,.18); }
 .session-row{ text-decoration:none; color:var(--night); display:block; transition:transform .15s ease; }
 .session-row:hover{ transform:translateY(-2px); }
 .session-row.is-full{ opacity:.85; }
+@media (min-width:960px){
+  .detail-hero{ display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:36px; align-items:center; margin-top:14px; }
+  .detail-hero .house-interior{ height:340px; margin-top:0 !important; }
+  .detail-hero .house-interior-plate{ width:170px; height:170px; margin-top:70px; }
+  .detail-hero .page-head{ padding-top:0 !important; }
+  .session-list{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:16px; }
+  .step-list{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:18px 28px; }
+}

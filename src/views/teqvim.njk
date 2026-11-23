@@ -29,14 +29,27 @@
   </form>
   {% endif %}
 
+  <div class="bus-scene" aria-hidden="true" data-anim data-replay>
+    <span class="bus-road"></span>
+    <span class="bus-stop-sign"><span class="bus-stop-plate">A</span></span>
+    <span class="bus m-bus-in">
+      <span class="bus-body m-bounce" data-anim style="--d:1.4s;">
+        <span class="bus-window"></span><span class="bus-window"></span><span class="bus-window"></span>
+        <span class="bus-door"></span>
+      </span>
+      <span class="bus-wheel"></span><span class="bus-wheel bus-wheel--2"></span>
+    </span>
+  </div>
+
   <div class="board">
-    <div class="board-head"><span>{{ t.teqvim.boardLabel }}</span><span class="board-live">● {{ t.teqvim.boardLive }}</span></div>
+    <div class="board-head"><span>{{ t.teqvim.boardLabel }}</span><span class="board-live"><span class="board-live-dot m-blink" data-anim aria-hidden="true">●</span> {{ t.teqvim.boardLive }}</span></div>
     {% if rows.length == 0 %}
     <div class="board-empty">{{ t.teqvim.empty }}</div>
     {% endif %}
+    <div class="board-rows" data-stagger>
     {% for s in rows %}
     {% set left = s.capacity - s.booked %}
-    <a href="/{{ lang }}/kassa/{{ s.id }}" class="board-row">
+    <a href="/{{ lang }}/kassa/{{ s.id }}" class="board-row" data-reveal="flap">
       <span class="board-time">{{ s.starts_at | formatTimeAz }}</span>
       <span class="board-dot" style="background:{{ s.house_color }};" aria-hidden="true"></span>
       <span class="board-info">
@@ -48,6 +61,7 @@
       </span>
     </a>
     {% endfor %}
+    </div>
   </div>
 
   <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">

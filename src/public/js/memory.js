@@ -13,7 +13,7 @@
   var SHAPE_CLASSES = ['shape-ball', 'shape-ring', 'shape-cube', 'shape-drop', 'shape-triangle', 'shape-capsule'];
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var order = [], open = [], done = [], moves = 0, lock = false;
+  var order = [], open = [], done = [], moves = 0, lock = false, lastFlipped = -1;
 
   function shuffle(arr) {
     for (var i = arr.length - 1; i > 0; i--) {
@@ -39,7 +39,8 @@
       var isOpen = isDone || open.indexOf(i) !== -1;
       var btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'memory-card' + (isOpen ? ' is-open' : '') + (isDone ? ' is-done' : '');
+      // just-flipped: yalnız indicə açılan kart 3D çevrilmə ilə açılır (hadisə-bağlı hərəkət)
+      btn.className = 'memory-card' + (isOpen ? ' is-open' : '') + (isDone ? ' is-done' : '') + (i === lastFlipped ? ' just-flipped' : '');
       btn.setAttribute('aria-label', isOpen ? shapeClass : 'Kart ' + (i + 1));
       if (isOpen) {
         var shape = document.createElement('span');
@@ -57,6 +58,7 @@
   function flip(i) {
     if (lock || open.indexOf(i) !== -1 || done.indexOf(i) !== -1) return;
     open.push(i);
+    lastFlipped = i;
     if (open.length < 2) { render(); return; }
     moves++;
     if (order[open[0]] === order[open[1]]) {
@@ -66,12 +68,13 @@
       if (done.length === order.length) {
         wonEl.hidden = false;
         wonMovesEl.textContent = moves + ' ' + movesLabel;
+        if (window.MKMotion) window.MKMotion.confetti(grid.parentNode, 36);
       }
       return;
     }
     lock = true;
     render();
-    setTimeout(function () { open = []; lock = false; render(); }, reduceMotion ? 200 : 800);
+    setTimeout(function () { open = []; lock = false; lastFlipped = -1; render(); }, reduceMotion ? 200 : 800);
   }
 
   function reset() {

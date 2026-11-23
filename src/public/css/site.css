@@ -245,7 +245,9 @@ p { margin: 0 0 var(--space-4); }
 .site-footer .foot-meta{ font-size:.8rem; font-weight:700; color:#FFE4D2; }
 
 /* ---------- Səhifə başlıq bölməsi (ortaq) ---------- */
-.page-head{ padding:28px 0 0; }
+/* Yalnız üst boşluq: `.container`-in 20px yan boşluğunu ləğv etməsin (əvvəl `padding:28px 0 0`
+   başlıqları telefonda ekranın kənarına yapışdırırdı). */
+.page-head{ padding-top:28px; }
 .page-lead{ font-size:1rem; font-weight:700; color:var(--night-2); margin-top:6px; }
 .back-link{
   min-height:44px; padding:0 14px; display:inline-flex; align-items:center; border-radius:16px;
@@ -281,6 +283,14 @@ p { margin: 0 0 var(--space-4); }
 .stamp-grid{ display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:8px; margin-top:16px; background:var(--cream); border-radius:18px; padding:14px 10px; }
 .stamp-slot{ aspect-ratio:1/1; border-radius:50%; border:3px dashed #C9B89A; box-sizing:border-box; }
 .stamp-slot.is-filled{ border-style:solid; border-color:var(--orange); background:rgba(232,104,42,.15); }
+@media (prefers-reduced-motion:no-preference){
+  /* Pasport açılanda dolu möhürlər bir-bir "basılır" */
+  .stamp-grid.is-in .stamp-slot.is-filled{ animation:mStampSlot .5s cubic-bezier(.2,1.5,.4,1) calc(var(--i, 0) * 140ms + .2s) both; }
+  @keyframes mStampSlot{ 0%{ scale:2.2; rotate:-24deg; opacity:0; } 60%{ scale:.9; rotate:-6deg; opacity:1; } 100%{ scale:1; rotate:0deg; } }
+}
+/* Bayraqcıq zolağı (Kampaniyalar — bazar meydanı) */
+.bunting{ display:flex; justify-content:space-between; gap:4px; margin-bottom:14px; padding-top:4px; border-top:3px solid var(--night-2); }
+.bunting-flag{ width:30px; height:30px; clip-path:polygon(0 0, 100% 0, 50% 100%); }
 .code-box{
   flex:1; min-height:50px; border-radius:14px; background:var(--white); display:flex; align-items:center; justify-content:center;
   font-family:var(--font-mono); font-weight:700; font-size:1.05rem; letter-spacing:.08em; border:3px dashed var(--night); color:var(--night);
@@ -302,3 +312,39 @@ p { margin: 0 0 var(--space-4); }
 .btn-row{ display:flex; gap:10px; flex-wrap:wrap; }
 .mt-0{ margin-top:0; }
 .center-text{ text-align:center; }
+
+/* ---------- Başlıq dekorları (Suallar "?" balonu, Tapşırıq robotu, Əlaqə poçt qutusu) ---------- */
+.head-with-deco{ position:relative; }
+.head-with-deco > .info-bubble, .head-with-deco > .robot, .head-with-deco > .mailbox{ position:absolute; right:20px; top:30px; }
+.head-with-deco--robot > .robot{ top:64px; }
+.head-with-deco > .mailbox{ right:36px; }
+/* Dekor sağ küncdə — başlıq/alt mətn onun altına girməsin */
+.head-with-deco > h1, .head-with-deco > .page-lead{ max-width:calc(100% - 86px); }
+.info-bubble{ width:58px; height:58px; border-radius:50% 50% 50% 12px; background:var(--blue); color:var(--white); display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:700; font-size:2rem; cursor:pointer; box-shadow:inset -5px -6px 0 rgba(0,0,0,.16), inset 5px 5px 0 rgba(255,255,255,.3); }
+.robot{ display:flex; flex-direction:column; align-items:center; width:64px; cursor:pointer; }
+.robot-antenna{ width:4px; height:16px; background:var(--night-2); position:relative; }
+.robot-light{ position:absolute; left:50%; top:-8px; width:12px; height:12px; margin-left:-6px; border-radius:50%; background:var(--orange); }
+.robot-head{ width:56px; height:40px; border-radius:14px; background:var(--blue); display:flex; justify-content:center; align-items:center; gap:10px; }
+.robot-eye{ width:10px; height:10px; border-radius:50%; background:var(--night); }
+.robot-body{ position:relative; width:44px; height:34px; margin-top:3px; border-radius:10px 10px 14px 14px; background:var(--sun); }
+.robot-arm{ position:absolute; right:-14px; top:4px; width:12px; height:28px; border-radius:6px; background:var(--sun-deep); }
+.mailbox{ width:70px; height:96px; }
+.mailbox-post{ position:absolute; left:31px; bottom:0; width:8px; height:46px; background:#8A5A3B; border-radius:3px; }
+.mailbox-box{ position:absolute; left:0; top:12px; width:64px; height:44px; border-radius:22px 22px 8px 8px; background:var(--orange); }
+.mailbox-slot{ position:absolute; left:16px; top:16px; width:32px; height:6px; border-radius:3px; background:var(--orange-deep); }
+.mailbox-flag{ position:absolute; right:-2px; top:4px; width:5px; height:28px; background:var(--night-2); transform-origin:0 100%; rotate:90deg; }
+.mailbox-flag::after{ content:""; position:absolute; left:5px; top:0; width:14px; height:10px; background:var(--pink); border-radius:0 3px 3px 0; }
+.mailbox.is-sent .mailbox-flag{ rotate:0deg; }
+.mailbox-letter{ position:absolute; left:14px; top:0; width:34px; height:22px; border-radius:4px; background:var(--white); box-shadow:0 3px 0 var(--card-shadow); opacity:0; }
+.mailbox-letter::after{ content:""; position:absolute; inset:0; clip-path:polygon(0 0, 50% 60%, 100% 0); background:#EFE3CF; }
+@media (max-width:380px){ .head-with-deco > .info-bubble, .head-with-deco > .robot, .head-with-deco > .mailbox{ scale:.82; transform-origin:100% 0; } }
+
+/* ---------- Kompüter (≥960px) ümumi düzülüşlər ---------- */
+@media (min-width:960px){
+  .contact-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:40px; align-items:start; }
+  .contact-grid .contact-cards{ margin-top:20px !important; }
+  .contact-grid form{ max-width:none !important; }
+  .camp-duo{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; align-items:start; }
+  .camp-duo > section{ margin-top:22px !important; padding:0; max-width:none; }
+  .menu-panel{ max-width:520px; }
+}

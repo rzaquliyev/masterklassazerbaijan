@@ -247,6 +247,11 @@
     "mapOpen": "Xəritədə aç"
   },
   "adGunu": {
+    "cakeTitle": "Şamları üfür!",
+    "cakeLead": "Hər şama toxun — arzunu tut və üfür.",
+    "candleLabel": "Şamı üfür",
+    "cakeDone": "Arzun qəbul olundu! Ad günün mübarək!",
+    "cakeAgain": "Yenidən yandır",
     "title": "Ad günü\nbizdə keçsin!",
     "lead": "Paketini seç, qonaq sayını bildir, biz hazırlayaq.",
     "packagesTitle": "Paketini seç",
